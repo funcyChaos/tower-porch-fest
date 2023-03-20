@@ -61,33 +61,31 @@
         </div>
 
         <div class="col-md-5">
-        <div id="carouselExampleIndicators" class="carousel" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
-        
-        
+        <div id="porch_carousel" class="carousel" data-bs-ride="carousel">
+    <div class="carousel-indicators" id="porch_indicator">
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
     </div>
-    <div class="carousel-inner">
+    <div class="carousel-inner" id="test_carousel">
         <!-- card 1 -->
         <div class="carousel-item active">
-        <div class="card">
-        <h5 class="card-title">ROCKING PORCH</h5>
-        <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <p class="item">YOGA</p>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <p class="time"> <b> 11am - 2pm </b> </p>
-        <a href="#" class="button4">SEE LINEUP</a>
-    </div>
-    </div>
-        </div>
-        <!-- card 2 -->
+                <div class="card">
+                    <h5 class="card-title">ROCKING PORCH</h5>
+                    <p class="address">123 Olive Dr. Fresno CA 93728</p>
+                    <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="item">YOGA</p>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="time"> <b> 11am - 2pm </b> </p>
+                        <a href="#" class="button4">SEE LINEUP</a>
+                    </div>
+                </div>
+            </div>
+            <!-- card 2 -->
         <div class="carousel-item">
         <div class="card">
         <h5 class="card-title">GREEN HOUSE PORCH</h5>
@@ -157,20 +155,17 @@
     </div>
     </div>
         </div>
-    </div>
+            </div>
         </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <button class="carousel-control-prev" type="button" data-bs-target="#porch_carousel" data-bs-slide="prev" id="test_prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#porch_carousel" data-bs-slide="next" id="test_next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
-    </button>
+        </button>
     </div>
-
-        </div>
 </div>
 <!-- End of second featurette -->
 
@@ -184,7 +179,7 @@
 
       <div class="col-md-5">
         <!-- MAP PLACEHOLDER -->
-        <img class="" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="" height="" alt="">
+        <img class="map" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="" height="" alt="">
 
       </div>
 </div>

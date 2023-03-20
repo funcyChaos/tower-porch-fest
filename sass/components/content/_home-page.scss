@@ -228,6 +228,27 @@
 
   }
 
+  .carousel-indicators{
+    width: 6.3rem;
+    bottom: .4rem;
+    left: 2.8rem;
+
+    button{
+      border-radius: 50%;
+    }
+  }
+  .carousel-indicators [data-bs-target] {
+    height: 11px;
+    background-color: $violet;
+  }
+
+  .carousel-control-prev{
+    display: none;
+  }
+  .carousel-control-next{
+    display: none;
+  }
+
 
   @media screen and (min-width:576px){
     .carousel-inner{
@@ -240,6 +261,9 @@
       flex: 0 0 calc(100%/3);
     }  
   }
+
+  //third section
+
 
   //card section below maps
     //card 1
@@ -409,4 +433,3 @@
       margin-top: 7rem;
     }
   }
-

@@ -30,13 +30,22 @@
 		<div class="site-branding">
 			<?php
 			the_custom_logo();
-			
 				?>
-				
 		</div><!-- .site-branding -->
 
 		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'towerpf-site' ); ?></button>
+			<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"> -->
+			<input type="checkbox" id="checkbox3" aria-controls="primary-menu" aria-expanded="false" class="checkbox3 visuallyHidden menu-toggle">
+        <label for="checkbox3">
+            <div class="hamburger hamburger3">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
+                <span class="bar bar4"></span>
+            </div>
+        </label>
+
+			<!--</button> -->
 			<?php
 			wp_nav_menu(
 				array(
