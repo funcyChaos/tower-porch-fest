@@ -43,15 +43,14 @@
         <a href="#" class="button">VIEW PORCH MAP</a>
       </div>
 
-      <div class="col-md-5">
-        <img class="img1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6.jpg" width="" height="" alt="">
-        <img class="img2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-7.jpg" width="145" height="145" alt="">
-        <img class="img3" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-8.jpg" width="145" height="145" alt="">
+      <div class=" row4 col-md-5">
+        <img class="img1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6.jpg" width="500" height="500" alt="">
+        <img class="img2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-7.jpg" width="248" height="248" alt="">
+        <img class="img3" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-8.jpg" width="248" height="248" alt="">
 
       </div>
 </div>
-<!-- End of first featurette -->
-
+<!-- End of first featurette --25
 <!-- Start of second featurette -->
 <div class="row featurette color">
         <div class="col-md-7">
@@ -179,7 +178,7 @@
 
       <div class="col-md-5">
         <!-- MAP PLACEHOLDER -->
-        <img class="map" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="" height="" alt="">
+        <img class="map" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="500" height="" alt="">
 
       </div>
 </div>

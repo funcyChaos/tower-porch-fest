@@ -90,7 +90,7 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 	}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 576px) {
 
 /* Small menu. */
 .visuallyHidden {
@@ -114,13 +114,14 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
   margin-top: 16px;
   margin-left: 285px;
   scale: 0.75;
+  z-index: 999;
 }
 
 .hamburger .bar {
   padding: 0;
   width: 25px;
   height: 4px;
-  background-color: rgb(255, 255, 255);
+  background-color: $white;
   display: block;
   border-radius: 4px;
   transition: all 0.4s ease-in-out;
@@ -182,6 +183,10 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 	display: block;
 }
 
+// .v{
+// 	background-color: orange;
+	
+// }
 
 .menu-toggle {
   margin-top: 5px;

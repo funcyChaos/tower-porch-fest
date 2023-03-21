@@ -37,7 +37,7 @@
 			<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"> -->
 			<input type="checkbox" id="checkbox3" aria-controls="primary-menu" aria-expanded="false" class="checkbox3 visuallyHidden menu-toggle">
         <label for="checkbox3">
-            <div class="hamburger hamburger3">
+            <div class="hamburger v hamburger3">
                 <span class="bar bar1"></span>
                 <span class="bar bar2"></span>
                 <span class="bar bar3"></span>
