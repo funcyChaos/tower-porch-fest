@@ -1,26 +1,7 @@
 <?php
 add_action('wp_enqueue_scripts', function() {
-	wp_enqueue_script( 'mapScript', get_stylesheet_directory_uri().'/js/map.js', [], '1.0', true);
+	
 } );
-
-
-function display_profiles() {
-    $args = [
-        'numberprofiles' => 1,
-        'post_type' => 'post'
-    ];
-
-    $posts = get_posts($args);
-
-    return $posts;
-}
-
-add_action('rest_api_init', function() {
-    register_rest_route('wp/v2/', 'profiles', [
-        'method' => 'GET',
-        'callback' => 'display_profiles',  
-    ]);
-});
 
 /**
  * towerpf-site functions and definitions
@@ -166,6 +147,8 @@ function towerpf_site_scripts() {
 	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
 
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	
+	if(is_page(54)) wp_enqueue_script( 'mapScript', get_stylesheet_directory_uri().'/js/map.js', [], '1.0', true); 
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -200,3 +183,73 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+function setup_porch_type() {
+	register_post_type('porch', array(
+		'label'									=> 'Porch',
+		'slug'                  => 'porch',
+		'singular'              => 'Porch',
+		'plural'                => 'Porches',
+		'menu_name'             => 'Porches',
+		'tax_name'              => 'porch',
+		'tax_label'             => 'Porch',
+		'tax_slug'              => 'porch',
+		'description'           => 'Porches',
+		'has_archive'           => true,
+		'hierarchical'          => true,
+		'menu_icon'             => 'dashicons-admin-home',
+		'menu_position'         => 2,
+		'public'                => true,
+		'map_meta_cap'          => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'query_var'             => true,
+		'show_in_admin_bar'     => true,
+		'show_in_rest'          => true,
+		'show_in_nav_menus'     => false,
+		'supports'              => array('title', 'editor', 'comments', 'excerpt', 'custom-fields', 'thumbnail'),
+		'custom_caps'           => false,
+		'capabilities' => array(
+			'create_posts'              => 'edit_posts',
+			'delete_published_posts'    => 'manage_options',
+	),
+	));
+	// register_taxonomy(
+	// 	'customer_blog_categories',
+	// 	'customer_blog',
+	// 	array(
+	// 		'hierarchical' => true,
+	// 		'label' => 'Customer Categories',
+	// 		'query_var' => true,
+	// 		'has_archive' => true,
+	// 		'rewrite' => array('slug' => 'customer_category'),
+	// 		'show_ui' => true,
+	// 		'show_in_rest' => true
+	// 	)
+	// );
+}
+
+function remove_default_post_type()
+{
+    remove_menu_page('edit.php');
+}
+add_action('admin_menu', 'remove_default_post_type');
+
+add_action('init', 'setup_porch_type');
+
+// function display_profiles() {
+// 	    $args = [
+// 	        'numberprofiles' => 1,
+// 	        'post_type' => 'post'
+// 	    ];
+	
+// 	    $posts = get_posts($args);
+	
+// 	    return $posts;
+// 	}
+
+// add_action('rest_api_init', function() {
+//     register_rest_route('wp/v2/', 'profiles', [
+//         'method' => 'GET',
+//         'callback' => 'display_profiles',  
+//     ]);
+// });
