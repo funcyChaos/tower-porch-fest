@@ -681,7 +681,6 @@ textarea {
   .menu-toggle {
     display: none;
   }
-
   .main-navigation ul {
     display: flex;
   }
@@ -983,7 +982,6 @@ footer ul li a:visited {
   .carousel-inner {
     display: flex;
   }
-
   .carousel-item {
     display: block;
     margin-right: 0;
@@ -1127,7 +1125,6 @@ footer ul li a:visited {
     font-size: 1.25rem;
     line-height: 1.4;
   }
-
   .featurette-heading {
     font-size: 50px;
   }
@@ -1156,6 +1153,11 @@ footer ul li a:visited {
 .page-links {
   clear: both;
   margin: 0 0 1.5em;
+}
+
+#map {
+  height: 90vh;
+  width: 100%;
 }
 
 /* Comments

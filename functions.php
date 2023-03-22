@@ -1,4 +1,27 @@
 <?php
+add_action('wp_enqueue_scripts', function() {
+	wp_enqueue_script( 'mapScript', get_stylesheet_directory_uri().'/js/map.js', [], '1.0', true);
+} );
+
+
+function display_profiles() {
+    $args = [
+        'numberprofiles' => 1,
+        'post_type' => 'post'
+    ];
+
+    $posts = get_posts($args);
+
+    return $posts;
+}
+
+add_action('rest_api_init', function() {
+    register_rest_route('wp/v2/', 'profiles', [
+        'method' => 'GET',
+        'callback' => 'display_profiles',  
+    ]);
+});
+
 /**
  * towerpf-site functions and definitions
  *
