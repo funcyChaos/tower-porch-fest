@@ -1276,12 +1276,128 @@ footer ul li a:visited {
     margin-top: 7rem;
   }
 }
-@media (max-width: 575.98px) {
+@media (min-width: 575px) {
   .top {
     height: 12rem;
   }
 
   .middle {
+    width: 5.8rem;
+    height: 39.3rem;
+    margin: -17.3rem 0 -11.5rem 14rem;
+  }
+
+  .bottom {
+    height: 17rem;
+  }
+
+  .center1 {
+    left: 45%;
+    font-size: 1.9rem;
+  }
+
+  .center2 {
+    left: 45%;
+    top: 46%;
+    font-size: 1.9rem;
+  }
+
+  .center3 {
+    top: 64%;
+    left: 27%;
+    font-size: 0.9rem;
+  }
+
+  .center4 {
+    left: 34%;
+    font-size: 1.8rem;
+    top: 19rem;
+  }
+
+  .lead {
+    margin-right: 1.5rem;
+  }
+
+  .lead2 {
+    margin-right: 1.5rem;
+  }
+
+  .button {
+    margin: 0.1rem 0 3.8rem 10rem;
+  }
+
+  .button2 {
+    margin: 0.1rem 0 3.8rem 11.7rem;
+  }
+
+  .button3 {
+    margin: 0.1rem 0 3.8rem 9.5rem;
+  }
+
+  .row4 {
+    margin-left: 0.8rem;
+  }
+
+  .carousel-indicators {
+    left: 7.8rem;
+  }
+
+  .map {
+    margin-left: 1rem;
+  }
+
+  .box1 {
+    margin: 4rem 0 7rem 8rem;
+  }
+
+  .box2 {
+    margin: 4rem 0 7rem 8rem;
+  }
+
+  .box3 {
+    margin: 4rem 0 7rem 8rem;
+  }
+
+  .box4 {
+    margin: 4rem 0 7rem 8rem;
+  }
+
+  .one {
+    margin-left: 3rem;
+  }
+
+  .two {
+    margin-left: -1rem;
+  }
+
+  .three {
+    margin-left: 3rem;
+  }
+
+  .four {
+    margin-left: 3rem;
+  }
+
+  .five {
+    margin-left: 5rem;
+  }
+
+  .six {
+    margin-left: 7rem;
+  }
+
+  .seven {
+    margin-left: -1rem;
+  }
+}
+@media (min-width: 768px) {
+  .top {
+    height: 10rem;
+    margin: 0 0 0 -16.7rem;
+  }
+
+  .middle {
+    rotate: 0deg;
     width: 5.8rem;
     height: 39.3rem;
     margin: -17.3rem 0 -11.5rem 14rem;

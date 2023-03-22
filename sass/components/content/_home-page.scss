@@ -429,7 +429,7 @@
 
   // Media queries
 // X-Small devices (portrait phones, less than 576px)
-@media (max-width: 575.98px) {
+@media (min-width: 575px) {
   //top rectangle
   .top{
     height: 12rem;
@@ -547,19 +547,132 @@
   }
 }
 
-// Small devices (landscape phones, less than 768px)
-@media (max-width: 767.98px) {
-  
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+   //top rectangle
+   .top{
+    height: 10rem;
+    margin: 0 0 0 -16.7rem;
+  }
+
+  // triangle
+  .middle{
+    rotate: 0deg;
+    width: 5.800000000000001rem;
+    height: 39.3rem;
+    margin: -17.3rem 0 -11.5rem 14rem;
+  }
+
+  // bottom rectangle
+  .bottom{
+    height: 17rem;
+  }
+
+  // text over image
+  .center1 {
+    left: 45%;
+    font-size: 1.9rem;
+  }  
+
+  .center2 {
+    left: 45%;
+    top: 46%;
+    font-size: 1.9rem;
+  }
+
+  .center3 {
+    top: 64%;
+    left: 27%;
+    font-size: .9rem;
+  }
+
+  .center4 {
+    left: 34%;
+    font-size: 1.8rem;
+    top: 19rem;
+  }
+
+  .lead{
+    margin-right: 1.5rem;
+  }
+  .lead2{
+    margin-right: 1.5rem;
+  }
+
+  .button{
+    margin: 0.1rem 0 3.8rem 10rem;
+  }
+  .button2{
+    margin: 0.1rem 0 3.8rem 11.7rem;
+  }
+  .button3{
+    margin: 0.1rem 0 3.8rem 9.5rem;
+  }
+
+  .row4{
+    margin-left: .8rem;
+  }
+  .carousel-indicators {
+    left: 7.800000000000001rem;
+  }
+  .map{
+    margin-left: 1rem;
+  }
+
+  .box1{
+    margin: 4rem 0 7rem 8rem;
+  }
+  .box2{
+    margin: 4rem 0 7rem 8rem;
+  }
+  .box3{
+    margin: 4rem 0 7rem 8rem;
+  }
+  .box4{
+    margin: 4rem 0 7rem 8rem;
+  }
+
+  .one {
+    margin-left: 3rem;
+  }
+
+  //Spokeasy
+  .two {
+    margin-left: -1rem;
+  }
+
+  //Neighborhood Thrift
+  .three {
+    margin-left: 3rem;
+  }
+
+  //Hi-top Coffe
+  .four{
+    margin-left: 3rem;
+  }
+
+  //The Brass Unicorn
+  .five{
+    margin-left: 5rem;
+  }
+
+  //CF
+  .six{
+    margin-left: 7rem;
+  }
+
+  //Blkmktplc
+  .seven{
+    margin-left: -1rem;
+  }
 }
 
-// Medium devices (tablets, less than 992px)
-//@media (max-width: 991.98px) { ... }
+// Large devices (desktops, 992px and up)
+// @media (min-width: 992px) { ... }
 
-// Large devices (desktops, less than 1200px)
-//@media (max-width: 1199.98px) { ... }
+// X-Large devices (large desktops, 1200px and up)
+// @media (min-width: 1200px) { ... }
 
-// X-Large devices (large desktops, less than 1400px)
-//@media (max-width: 1399.98px) { ... }
-
-// XX-Large devices (larger desktops)
-// No media query since the xxl breakpoint has no upper bound on its width
+// XX-Large devices (larger desktops, 1400px and up)
+// @media (min-width: 1400px) { ... }

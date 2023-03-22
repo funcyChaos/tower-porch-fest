@@ -23,6 +23,8 @@
     ?>
    
 </div>
+
+
 <div class="contain">
         <img class="top" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-11.jpg" alt="">
         <div class="center1">FRESNO, CA</div>
@@ -54,9 +56,10 @@
 <!-- Start of second featurette -->
 <div class="row featurette color">
         <div class="col-md-7">
-            <h2 class="featurette-heading2">BUILDING COMMUNITY <br> THROUGH MUSIC AND ART</h2>
-            <p class="lead2">Porches throughout Fresno's historic Tower neighborhood host performances in a day of revelry celebrating local music and art! We do this through the collaboration of Tower residents who provide venue for local musicians to perform.</p>
-            <a href="#" class="button">VIEW PORCH MAP</a>
+            <h2 class="featurette-heading2">COME BACK FOR MORE PORCHES</h2>
+            <p class="lead2">Do you have a porch in the Tower that would make a sweet stage?
+Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fresno’s Tower District neighborhood! Porch Host signups are open now through March 6, 2023.</p>
+            <a href="#" class="button">VIEW ALL PORCHES</a>
         </div>
 
         <div class="col-md-5">
