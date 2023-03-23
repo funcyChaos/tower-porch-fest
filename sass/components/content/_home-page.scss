@@ -105,8 +105,17 @@
     font-size: .8rem;
     font-weight: 400;
   }
+  .lead3{
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 400;
+  }
   
   //Buttons start
+
+  a:visited {
+    color: $white;
+  }
   .button {
     background-color: $teal;
     border: none;
@@ -644,7 +653,7 @@
     width: 76.666667%;
   }
 
-.row4 {
+  .row4 {
   margin: 0 0 -17.2rem;
   }
   .row {
@@ -654,7 +663,7 @@
   .img1 {
     width: 436px;
     height: 252px;
-}
+  }
   .img2 {
   width: 144px;
   height: 132px;
@@ -671,13 +680,177 @@
   .lead2{
     margin-right: 1.5rem;
   }
+  .lead3{
+    margin: 0 9rem 1.7rem 9rem;
+  }
+
   .button {
     margin: 0.1rem 0 3.8rem 0rem;
-}
+  }
+
+  .col-md-78 {
+    flex: 0 0 auto;
+    width: 50.333333%;
+    margin: 0 0 0 1rem;
+  }
+
+  .button2 {
+    margin: 0.1rem 0 3.8rem -.1rem;
+  }
+
+  .map{
+    display: none;
+  }
+
+  .map2 {
+    width: 35rem;
+    height: 19rem;
+  }
+
+  .box1 {
+    margin: 4rem 0 7rem 4rem;
+  }
+  .box2 {
+    margin: -25rem 0 10rem 26rem;
+  }
+  .box3 {
+    margin: -2rem 0 7rem 4rem;
+  }
+  .box4 {
+    margin: -25rem 0 7rem 26rem;
+  }
+
+  .featurette-heading3{
+    text-align: center;
+    margin: 3.5rem 0 1.1rem 0;
+  }
+  .col-md-71 {
+    flex: 0 0 auto;
+    width: 96.333333%;
+    margin: 0 0 0 1rem;
+  }
+  .col-md-58 {
+    flex: 0 0 auto;
+    width: 119.666667%;
+  }
+
+  .button3 {
+    margin: 0 0 4rem 15rem;
+  }
+
+  .grid {
+    color: white;
+    height: 44vh;
+    margin: 0 1rem 0 0.2999999999999998rem;
+    max-width: 92vw;
+    display: grid;
+    grid-gap: -2rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  //Spokeasy
+  .two {
+    margin: 0 0 0 1rem;
+  }
+
+  //Neighborhood Thrift
+  .three {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  //Hi-top Coffe
+  .four{
+    grid-column: 4 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  //The Brass Unicorn
+  .five{
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 2;
+  }
+
+  //CF
+  .six{
+    grid-column: 3 / span 1;
+    grid-row: 2 / span 1;
+    margin: 0 0 0 3rem;
+  }
+
+  //Blkmktplc
+  .seven{
+    grid-column: 4 / span 1;
+    grid-row: 2 / span 1;
+  }
+  
+
 }
 
 // Large devices (desktops, 992px and up)
-// @media (min-width: 992px) { ... }
+@media (min-width: 992px) {
+  .top {
+    width: 33rem;
+    margin: 0 0 0 -29.700000000000003rem;
+  }
+  .bottom {
+    width: 30rem;
+    margin: -27.3rem 0 -13.5rem 31.9rem;
+  }
+  .middle {
+    margin: -23.3rem 0 -12.5rem 32.5rem;
+  }
+
+  .col-md-75 {
+    margin: -0.1rem 0 0 2.4rem;
+  }
+  .img1 {
+    width: 371px;
+    height: 272px;
+  }
+  .img2 {
+    width: 182px;
+    height: 155px;
+  }
+  .img3 {
+    width: 185px;
+    height: 158px;
+  }
+  .row4 {
+    margin: 0 0 -3.200000000000003rem;
+  }
+  .lead {
+    margin-right: 9.5rem;
+  }
+
+  .map2{
+    height: 23rem;
+  }
+  .col-md-78 {
+    margin: 0 0 0 3rem;
+  }
+
+  .box1 {
+    margin: 4rem 0 7rem 9rem;
+  }
+  .box2 {
+    margin: -25rem 0 10rem 36rem;
+  }
+  .box3 {
+    margin: -2rem 0 7rem 9rem;
+  }
+  .box4 {
+    margin: -25rem 0 7rem 36rem;
+  }
+
+  .button3 {
+    margin: 0 0 4rem 23rem;
+  }
+  .grid {
+    margin: 0 1rem 0 2.3rem;
+  }
+}
 
 // X-Large devices (large desktops, 1200px and up)
 // @media (min-width: 1200px) { ... }

@@ -173,7 +173,7 @@ Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fres
 
 <!-- Start of third featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
+      <div class="col-md-78">
         <h2 class="featurette-heading">TOWER PORCHFEST <br> MAP</h2>
         <p class="lead">Tower Porchfest takes place in the Historic Tower District neighborhood in Fresno, California. Made up of an incredible array of classic housing types - ranging from granny flats, townhouses, and apartments to craftsman bungalows and mansions.</p>
         <a href="#" class="button2">VISIT MAP</a>
@@ -182,6 +182,7 @@ Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fres
       <div class="col-md-5">
         <!-- MAP PLACEHOLDER -->
         <img class="map" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="500" height="" alt="">
+        <img class="map2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-2.jpg" alt="">
 
       </div>
 </div>
@@ -225,13 +226,13 @@ Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fres
 
 <!-- Start of forth featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading3">SPONSOR</h2>
-        <p class="lead">Last year we had 60 porches with over 130 performances. There were over 5,000 views of the interactive map and our Social Media grew to 2,000+ followers (and counting). On behalf of the Tower Porchfest Committee, we ask you to consider sponsoring this awesome event!</p>
+      <div class="col-md-71">
+        <h2 class="featurette-heading3">THANK YOU SPONSORS</h2>
+        <p class="lead3">Last year we had 60 porches with over 130 performances. There were over 5,000 views of the interactive map and our Social Media grew to 2,000+ followers (and counting). On behalf of the Tower Porchfest Committee, we ask you to consider sponsoring this awesome event!</p>
         <a href="#" class="button3">BECOME A SPONSOR</a>
       </div>
-
-      <div class="col-md-5">
+        <br>
+      <div class="col-md-58">
         <div class="grid">
             <div class="one">
                 <img src="http://towerpf-site.local/wp-content/uploads/2023/03/raging-records-logo-1.png" alt="Ragging" >

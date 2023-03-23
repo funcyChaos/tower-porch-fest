@@ -8,7 +8,7 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 
 .site-header{
 	background-color: #000;
-	height: 3.5rem;
+	height: 4.5rem
 }
 
 .main-navigation {
@@ -18,7 +18,7 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 	ul {
 		display: none;
 		list-style: none;
-		margin: 0;
+		margin: -0.5rem 0 0 0;
 		padding-left: 0;
 		justify-content: center;
 

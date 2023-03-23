@@ -621,7 +621,7 @@ textarea {
 --------------------------------------------- */
 .site-header {
   background-color: #000;
-  height: 3.5rem;
+  height: 4.5rem;
 }
 
 .main-navigation {
@@ -631,7 +631,7 @@ textarea {
 .main-navigation ul {
   display: none;
   list-style: none;
-  margin: 0;
+  margin: -0.5rem 0 0 0;
   padding-left: 0;
   justify-content: center;
 }
@@ -975,6 +975,16 @@ footer ul li a:visited {
   text-align: center;
   font-size: 0.8rem;
   font-weight: 400;
+}
+
+.lead3 {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+a:visited {
+  color: #fff;
 }
 
 .button {
@@ -1520,8 +1530,182 @@ footer ul li a:visited {
     margin-right: 1.5rem;
   }
 
+  .lead3 {
+    margin: 0 9rem 1.7rem 9rem;
+  }
+
   .button {
     margin: 0.1rem 0 3.8rem 0rem;
+  }
+
+  .col-md-78 {
+    flex: 0 0 auto;
+    width: 50.333333%;
+    margin: 0 0 0 1rem;
+  }
+
+  .button2 {
+    margin: 0.1rem 0 3.8rem -0.1rem;
+  }
+
+  .map {
+    display: none;
+  }
+
+  .map2 {
+    width: 35rem;
+    height: 19rem;
+  }
+
+  .box1 {
+    margin: 4rem 0 7rem 4rem;
+  }
+
+  .box2 {
+    margin: -25rem 0 10rem 26rem;
+  }
+
+  .box3 {
+    margin: -2rem 0 7rem 4rem;
+  }
+
+  .box4 {
+    margin: -25rem 0 7rem 26rem;
+  }
+
+  .featurette-heading3 {
+    text-align: center;
+    margin: 3.5rem 0 1.1rem 0;
+  }
+
+  .col-md-71 {
+    flex: 0 0 auto;
+    width: 96.333333%;
+    margin: 0 0 0 1rem;
+  }
+
+  .col-md-58 {
+    flex: 0 0 auto;
+    width: 119.666667%;
+  }
+
+  .button3 {
+    margin: 0 0 4rem 15rem;
+  }
+
+  .grid {
+    color: white;
+    height: 44vh;
+    margin: 0 1rem 0 0.3rem;
+    max-width: 92vw;
+    display: grid;
+    grid-gap: -2rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  .two {
+    margin: 0 0 0 1rem;
+  }
+
+  .three {
+    grid-column: 3/span 1;
+    grid-row: 1/span 1;
+  }
+
+  .four {
+    grid-column: 4/span 1;
+    grid-row: 1/span 1;
+  }
+
+  .five {
+    grid-column: 1/span 2;
+    grid-row: 2/span 2;
+  }
+
+  .six {
+    grid-column: 3/span 1;
+    grid-row: 2/span 1;
+    margin: 0 0 0 3rem;
+  }
+
+  .seven {
+    grid-column: 4/span 1;
+    grid-row: 2/span 1;
+  }
+}
+@media (min-width: 992px) {
+  .top {
+    width: 33rem;
+    margin: 0 0 0 -29.7rem;
+  }
+
+  .bottom {
+    width: 30rem;
+    margin: -27.3rem 0 -13.5rem 31.9rem;
+  }
+
+  .middle {
+    margin: -23.3rem 0 -12.5rem 32.5rem;
+  }
+
+  .col-md-75 {
+    margin: -0.1rem 0 0 2.4rem;
+  }
+
+  .img1 {
+    width: 371px;
+    height: 272px;
+  }
+
+  .img2 {
+    width: 182px;
+    height: 155px;
+  }
+
+  .img3 {
+    width: 185px;
+    height: 158px;
+  }
+
+  .row4 {
+    margin: 0 0 -3.2rem;
+  }
+
+  .lead {
+    margin-right: 9.5rem;
+  }
+
+  .map2 {
+    height: 23rem;
+  }
+
+  .col-md-78 {
+    margin: 0 0 0 3rem;
+  }
+
+  .box1 {
+    margin: 4rem 0 7rem 9rem;
+  }
+
+  .box2 {
+    margin: -25rem 0 10rem 36rem;
+  }
+
+  .box3 {
+    margin: -2rem 0 7rem 9rem;
+  }
+
+  .box4 {
+    margin: -25rem 0 7rem 36rem;
+  }
+
+  .button3 {
+    margin: 0 0 4rem 23rem;
+  }
+
+  .grid {
+    margin: 0 1rem 0 2.3rem;
   }
 }
 /* Posts and pages
