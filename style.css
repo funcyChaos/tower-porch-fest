@@ -1277,6 +1277,24 @@ footer ul li a:visited {
   }
 }
 @media (min-width: 575px) {
+  figure {
+    margin: -5.3em 0 0;
+    background-color: #000;
+    height: 392px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 4;
+  }
+
+  .wp-block-image img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: bottom;
+    margin: -26.2px 0 -25px 0;
+  }
+
   .top {
     height: 12rem;
   }
@@ -1314,6 +1332,21 @@ footer ul li a:visited {
     top: 19rem;
   }
 
+  .img1 {
+    width: 470px;
+    height: 379px;
+  }
+
+  .img2 {
+    width: 232px;
+    height: 213px;
+  }
+
+  .img3 {
+    width: 232px;
+    height: 213px;
+  }
+
   .lead {
     margin-right: 1.5rem;
   }
@@ -1335,7 +1368,7 @@ footer ul li a:visited {
   }
 
   .row4 {
-    margin-left: 0.8rem;
+    margin-left: 1.8rem;
   }
 
   .carousel-indicators {
@@ -1392,46 +1425,95 @@ footer ul li a:visited {
 }
 @media (min-width: 768px) {
   .top {
-    height: 10rem;
-    margin: 0 0 0 -16.7rem;
+    height: 9rem;
+    margin: 0 0 0 -20.7rem;
   }
 
   .middle {
     rotate: 0deg;
-    width: 5.8rem;
-    height: 39.3rem;
-    margin: -17.3rem 0 -11.5rem 14rem;
+    width: 2.8rem;
+    height: 9.2rem;
+    margin: -23.3rem 0 -12.5rem 27.2rem;
   }
 
   .bottom {
-    height: 17rem;
+    height: 9rem;
+    margin: -27.3rem 0 -13.5rem 21.4rem;
   }
 
   .center1 {
-    left: 45%;
-    font-size: 1.9rem;
+    left: 27%;
+    font-size: 1.3rem;
   }
 
   .center2 {
-    left: 45%;
+    left: 27%;
     top: 46%;
-    font-size: 1.9rem;
+    font-size: 2.1rem;
   }
 
   .center3 {
-    top: 64%;
-    left: 27%;
-    font-size: 0.9rem;
+    top: 66%;
+    left: 19%;
+    font-size: 0.6rem;
   }
 
   .center4 {
-    left: 34%;
-    font-size: 1.8rem;
-    top: 19rem;
+    left: 71%;
+    font-size: 1.3rem;
+    top: 2.3rem;
+  }
+
+  .featurette-heading {
+    font-weight: 650;
+    line-height: 1;
+    text-align: left;
+    font-size: 1.4rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .col-md-77 {
+    flex: 0 0 auto;
+    width: 101.333333%;
+  }
+
+  .col-md-75 {
+    flex: 0 0 auto;
+    width: 54.333333%;
+    margin: 6rem 0 0 1rem;
+  }
+
+  .col-md-57 {
+    flex: 0 0 auto;
+    width: 76.666667%;
+  }
+
+  .row4 {
+    margin: 0 0 -17.2rem;
+  }
+
+  .row {
+    margin: 0 auto 4rem 0;
+  }
+
+  .img1 {
+    width: 436px;
+    height: 252px;
+  }
+
+  .img2 {
+    width: 144px;
+    height: 132px;
+  }
+
+  .img3 {
+    width: 147px;
+    height: 149px;
   }
 
   .lead {
     margin-right: 1.5rem;
+    text-align: left;
   }
 
   .lead2 {
@@ -1439,71 +1521,7 @@ footer ul li a:visited {
   }
 
   .button {
-    margin: 0.1rem 0 3.8rem 10rem;
-  }
-
-  .button2 {
-    margin: 0.1rem 0 3.8rem 11.7rem;
-  }
-
-  .button3 {
-    margin: 0.1rem 0 3.8rem 9.5rem;
-  }
-
-  .row4 {
-    margin-left: 0.8rem;
-  }
-
-  .carousel-indicators {
-    left: 7.8rem;
-  }
-
-  .map {
-    margin-left: 1rem;
-  }
-
-  .box1 {
-    margin: 4rem 0 7rem 8rem;
-  }
-
-  .box2 {
-    margin: 4rem 0 7rem 8rem;
-  }
-
-  .box3 {
-    margin: 4rem 0 7rem 8rem;
-  }
-
-  .box4 {
-    margin: 4rem 0 7rem 8rem;
-  }
-
-  .one {
-    margin-left: 3rem;
-  }
-
-  .two {
-    margin-left: -1rem;
-  }
-
-  .three {
-    margin-left: 3rem;
-  }
-
-  .four {
-    margin-left: 3rem;
-  }
-
-  .five {
-    margin-left: 5rem;
-  }
-
-  .six {
-    margin-left: 7rem;
-  }
-
-  .seven {
-    margin-left: -1rem;
+    margin: 0.1rem 0 3.8rem 0rem;
   }
 }
 /* Posts and pages

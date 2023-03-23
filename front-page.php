@@ -39,30 +39,30 @@
 
 <!-- Start of first featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
+      <div class="col-md-75">
         <h2 class="featurette-heading">BUILDING COMMUNITY <br> THROUGH MUSIC AND ART</h2>
         <p class="lead">Porches throughout Fresno's historic Tower neighborhood host performances in a day of revelry celebrating local music and art! We do this through the collaboration of Tower residents who provide venue for local musicians to perform.</p>
         <a href="#" class="button">VIEW PORCH MAP</a>
       </div>
 
       <div class=" row4 col-md-5">
-        <img class="img1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6.jpg" width="500" height="500" alt="">
-        <img class="img2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-7.jpg" width="248" height="248" alt="">
-        <img class="img3" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-8.jpg" width="248" height="248" alt="">
+        <img class="img1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6.jpg" width="300" height="300" alt="">
+        <img class="img2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-7.jpg" width="145" height="145" alt="">
+        <img class="img3" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-8.jpg" width="145" height="145" alt="">
 
       </div>
 </div>
 <!-- End of first featurette --25
 <!-- Start of second featurette -->
 <div class="row featurette color">
-        <div class="col-md-7">
+        <div class="col-md-77">
             <h2 class="featurette-heading2">COME BACK FOR MORE PORCHES</h2>
             <p class="lead2">Do you have a porch in the Tower that would make a sweet stage?
 Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fresno’s Tower District neighborhood! Porch Host signups are open now through March 6, 2023.</p>
             <a href="#" class="button">VIEW ALL PORCHES</a>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-57">
         <div id="porch_carousel" class="carousel" data-bs-ride="carousel">
     <div class="carousel-indicators" id="porch_indicator">
         <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
