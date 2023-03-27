@@ -477,11 +477,7 @@
   }
 
   // triangle
-  .middle{
-    width: 5.800000000000001rem;
-    height: 39.3rem;
-    margin: -17.3rem 0 -11.5rem 14rem;
-  }
+  width
 
   // bottom rectangle
   .bottom{
@@ -525,9 +521,10 @@
     height: 213px;
   }
 
-  .lead{
-    margin-right: 1.5rem;
-  }
+  .lead {
+    margin: 0 1.5rem 2rem 1rem;
+    font-size: .9rem;
+}
   .lead2{
     margin-right: 1.5rem;
   }
@@ -557,9 +554,6 @@
     margin-left: 4.5rem;
     height: 32rem;
     width: 25rem;
-  }
-  .map2{
-    display: none;
   }
 
   .box1{
@@ -718,20 +712,11 @@
   .col-md-78 {
     flex: 0 0 auto;
     width: 50.333333%;
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 3rem;
   }
 
   .button2 {
     margin: 0.1rem 0 3.8rem -.1rem;
-  }
-
-  .map{
-    display: none;
-  }
-
-  .map2 {
-    width: 35rem;
-    height: 19rem;
   }
 
   .box1 {
@@ -853,12 +838,13 @@
   .lead2 {
     margin: 0 16rem 0 16rem;
   }
-
-  .map2{
-    height: 23rem;
-  }
   .col-md-78 {
     margin: 0 0 0 3rem;
+  }
+  .map {
+    margin-left: -0.5rem;
+    height: 26rem;
+    width: 28rem;
   }
 
   .box1 {
@@ -925,12 +911,14 @@
   .lead {
     font-size: .9rem;
   }
+  .map {
+    margin-left: -1.5rem;
+    height: 32rem;
+    width: 74rem;
+}
 
   .col-md-78 {
     margin: -1rem 0 0 3rem;
-  }
-  .map2 {
-    height: 27rem;
   }
 
   .box1 {
@@ -973,10 +961,10 @@
 @media (min-width: 1400px) {
   .top {
     width: 43.1rem;
-    margin: 0 0 0 -44.1rem;
+    margin: 0 0 0 -45.1rem;
   }
   .middle {
-    margin: -23.3rem 0 -12.5rem 43.2rem;
+    margin: -23.3rem 0 -12.5rem 42.7rem;
   }
   .bottom {
     width: 46.6rem;
@@ -1013,6 +1001,11 @@
   .box4 {
     margin: -25rem 0 7rem 65rem;
   }
+  .map {
+    width: 519px;
+    height: 477px;
+    margin-left: 1rem;
+}
 
   .button3 {
     margin: 0 0 4rem 35rem;

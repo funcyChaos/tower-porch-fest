@@ -58,7 +58,7 @@
         <div class="col-md-77">
             <h2 class="featurette-heading2">COME BACK FOR MORE PORCHES</h2>
             <p class="lead2">Do you have a porch in the Tower that would make a sweet stage?
-Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fresno’s Tower District neighborhood! Porch Host signups are open now through March 6, 2023.</p>
+Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fresno's Tower District neighborhood! Porch Host signups are open now through March 6, 2023.</p>
             <a href="#" class="button5">VIEW ALL PORCHES</a>
         </div>
 
@@ -182,7 +182,6 @@ Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fres
       <div class="col-md-5">
         <!-- MAP PLACEHOLDER -->
         <img class="map" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="500" height="" alt="">
-        <img class="map2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-2.jpg" alt="">
 
       </div>
 </div>
