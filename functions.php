@@ -181,11 +181,10 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
 function setup_porch_type() {
 	register_post_type('porch', array(
-		'label'					=> 'Porch',
+		'label'					=> 'Porches',
 		'slug'                  => 'porch',
 		'singular'              => 'Porch',
 		'plural'                => 'Porches',
-		'menu_name'             => 'Porches',
 		'menu_icon'             => 'dashicons-admin-home',
 		'menu_position'         => 2,
 		'public'                => true,
