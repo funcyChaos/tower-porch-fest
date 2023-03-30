@@ -1137,6 +1137,24 @@ footer ul li a:visited {
     margin-top: 7rem;
   }
 }
+aside#secondary {
+  display: none;
+}
+
+.porchespost {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.porchcard {
+  height: 300px;
+  width: 300px;
+  background-color: #a33c97;
+  border: 1px solid black;
+}
+
 /* Posts and pages
 --------------------------------------------- */
 .sticky {
