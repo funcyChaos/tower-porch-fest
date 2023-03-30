@@ -26,39 +26,38 @@
 
 
 <div class="contain">
-        <img class="top" src="http://tower-porchfest-official.local/wp-content/uploads/2023/03/Rectangle-11.jpg" alt="">
+        <img class="top" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-11.jpg" alt="">
         <div class="center1"><?php the_field('location'); ?></div>
         <div class="center2"><?php the_field('date'); ?></div>
         <div class="center3"><?php the_field('title'); ?></div>
         <div class="center4"><?php the_field('countdown'); ?></div>
 </div>
 
-<img class="middle" src="http://tower-porchfest-official.local/wp-content/uploads/2023/03/Polygon-1.png" alt="">
+<img class="middle" src="http://towerpf-site.local/wp-content/uploads/2023/03/Polygon-1.png" alt="">
 
-<img class="bottom" src="http://tower-porchfest-official.local/wp-content/uploads/2023/03/Rectangle-2.jpg" alt="">
+<img class="bottom" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-2.jpg" alt="">
 
 <!-- Start of first featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">BUILDING COMMUNITY <br> THROUGH MUSIC AND ART</h2>
-        <p class="lead">Porches throughout Fresno's historic Tower neighborhood host performances in a day of revelry celebrating local music and art! We do this through the collaboration of Tower residents who provide venue for local musicians to perform.</p>
+      <div class="col-md-75">
+        <h2 class="featurette-heading"><?php the_field('heading_1'); ?><br> <?php the_field('heading_2'); ?></h2>
+        <p class="lead"><?php the_field('paragraph'); ?></p>
         <a href="#" class="button">VIEW PORCH MAP</a>
       </div>
 
-      <div class="col-md-5">
-        <img class="img1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6.jpg" width="" height="" alt="">
-        <img class="img2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-7.jpg" width="145" height="145" alt="">
-        <img class="img3" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-8.jpg" width="145" height="145" alt="">
-
-      </div>
+      <div class=" row4 col-md-5">
+        <img class="img1" src="<?php the_field('image_1'); ?>" width="300" height="300" alt="">
+        <img class="img2" src="<?php the_field('image_2'); ?>" width="145" height="145" alt="">
+        <img class="img3" src="<?php the_field('image_3'); ?>" width="145" height="145" alt="">
+    </div>
 </div>
-<!-- End of first featurette --25
+<!-- End of first featurette -->
 <!-- Start of second featurette -->
 <div class="row featurette color">
-        <div class="col-md-7">
-            <h2 class="featurette-heading2">BUILDING COMMUNITY <br> THROUGH MUSIC AND ART</h2>
-            <p class="lead2">Porches throughout Fresno's historic Tower neighborhood host performances in a day of revelry celebrating local music and art! We do this through the collaboration of Tower residents who provide venue for local musicians to perform.</p>
-            <a href="#" class="button">VIEW PORCH MAP</a>
+        <div class="col-md-77">
+            <h2 class="featurette-heading2"><?php the_field('carousel_heading'); ?></h2>
+            <p class="lead2"><?php the_field('carousel_paragraph'); ?></p>
+            <a href="#" class="button5">VIEW ALL PORCHES</a>
         </div>
 
         <div class="col-md-57">
@@ -74,19 +73,19 @@
     <div class="carousel-inner" id="test_carousel">
         <!-- card 1 -->
         <div class="carousel-item active">
-        <div class="card">
-        <h5 class="card-title">ROCKING PORCH</h5>
-        <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <p class="item">YOGA</p>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <p class="time"> <b> 11am - 2pm </b> </p>
-        <a href="#" class="button4">SEE LINEUP</a>
-    </div>
-    </div>
-        </div>
-        <!-- card 2 -->
+                <div class="card">
+                    <h5 class="card-title">ROCKING PORCH</h5>
+                    <p class="address">123 Olive Dr. Fresno CA 93728</p>
+                    <img class="image1" src="<?php the_field('card_image_1'); ?>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="item">YOGA</p>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="time"> <b> 11am - 2pm </b> </p>
+                        <a href="#" class="button4">SEE LINEUP</a>
+                    </div>
+                </div>
+            </div>
+            <!-- card 2 -->
         <div class="carousel-item">
         <div class="card">
         <h5 class="card-title">GREEN HOUSE PORCH</h5>
@@ -172,15 +171,15 @@
 
 <!-- Start of third featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">TOWER PORCHFEST <br> MAP</h2>
-        <p class="lead">Tower Porchfest takes place in the Historic Tower District neighborhood in Fresno, California. Made up of an incredible array of classic housing types - ranging from granny flats, townhouses, and apartments to craftsman bungalows and mansions.</p>
+      <div class="col-md-78">
+        <h2 class="featurette-heading"><?php the_field('heading_part_1'); ?> <br> <?php the_field('heading_part_2'); ?></h2>
+        <p class="lead"><?php the_field('paragraph_part_1'); ?></p>
         <a href="#" class="button2">VISIT MAP</a>
       </div>
 
       <div class="col-md-5">
         <!-- MAP PLACEHOLDER -->
-        <img class="" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="" height="" alt="">
+        <img class="map" src="<?php the_field('placeholder'); ?>" width="500" height="" alt="">
 
       </div>
 </div>
@@ -200,7 +199,7 @@
     <div class="box2">
         <img class="food" src="<?php the_field('food_image'); ?>" width="130" height="130">
         <h2 class="h22"><?php the_field('food_heading'); ?></h2>
-        <p class="p2"> <?php the_field('food_paragraph'); ?></p>
+        <p class="p2"><?php the_field('food_paragraph'); ?></p>
         <a href="url" class="spon">PORCHES WITH FOOD</a>
     </div>
 
@@ -224,9 +223,9 @@
 
 <!-- Start of forth featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading3">SPONSOR</h2>
-        <p class="lead">Last year we had 60 porches with over 130 performances. There were over 5,000 views of the interactive map and our Social Media grew to 2,000+ followers (and counting). On behalf of the Tower Porchfest Committee, we ask you to consider sponsoring this awesome event!</p>
+      <div class="col-md-71">
+        <h2 class="featurette-heading3"><?php the_field('sponsors_heading'); ?></h2>
+        <p class="lead3"><?php the_field('sponsors_paragraph'); ?></p>
         <a href="#" class="button3">BECOME A SPONSOR</a>
       </div>
         <br>
@@ -247,7 +246,6 @@
             <div class="four">
                 <img src="<?php the_field('hi-top_coffee'); ?>" alt="Hi-top Coffee" >
             </div>
-
             <div class=" five">
                 <img src="<?php the_field('the_brass_unicorn'); ?>" alt="The Brass Unicorn" >
             </div>
