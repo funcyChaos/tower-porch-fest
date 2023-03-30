@@ -26,16 +26,16 @@
 
 
 <div class="contain">
-        <img class="top" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-11.jpg" alt="">
+        <img class="top" src="<?php the_field('top'); ?>" alt="">
         <div class="center1"><?php the_field('location'); ?></div>
         <div class="center2"><?php the_field('date'); ?></div>
         <div class="center3"><?php the_field('title'); ?></div>
         <div class="center4"><?php the_field('countdown'); ?></div>
 </div>
 
-<img class="middle" src="http://towerpf-site.local/wp-content/uploads/2023/03/Polygon-1.png" alt="">
+<img class="middle" src="<?php the_field('middle'); ?>" alt="">
 
-<img class="bottom" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-2.jpg" alt="">
+<img class="bottom" src="<?php the_field('bottom'); ?>" alt="">
 
 <!-- Start of first featurette -->
 <div class="row featurette">
