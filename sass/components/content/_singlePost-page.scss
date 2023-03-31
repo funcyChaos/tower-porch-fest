@@ -1,0 +1,46 @@
+section#block-2 {
+    display: none;
+}
+section#block-3 {
+    display: none;
+}
+section#block-4 {
+    display: none;
+}
+section#block-5 {
+    display: none;
+}
+
+// Single Page Styling 
+
+.prochesSingle{
+    background-color: #462D62;
+    height: 500px;
+    display: flex;
+    justify-content: right;
+    article {
+        width: 495px;
+        h1{
+            margin: 0 ;
+            color: #fff;
+        }
+        p{
+            color: #fff;
+        }   
+
+    }
+    .singleButton {
+        background-color: $teal;
+        border: none;
+        color: white;
+        padding: 8px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: -.5rem 0 .2rem 0;
+        width: 100%;
+        cursor: pointer;
+      }
+      
+}
