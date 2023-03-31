@@ -1143,16 +1143,48 @@ aside#secondary {
 
 .porchespost {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .porchcard {
-  height: 300px;
-  width: 300px;
+  height: 611px;
+  width: 340px;
   background-color: #a33c97;
   border: 1px solid black;
+  margin: 3rem 3rem 3rem 0;
+}
+
+.porchimage {
+  margin: 0 0 0 1.4rem;
+}
+
+.porchheading {
+  color: #fff;
+  text-align: center;
+  font-size: 1.3rem;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.porchparagraph {
+  color: #fff;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.button7 {
+  background-color: #4fc3c9;
+  border: none;
+  color: white;
+  width: 89%;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0.1rem 0 3rem 1.2rem;
+  cursor: pointer;
 }
 
 /* Posts and pages

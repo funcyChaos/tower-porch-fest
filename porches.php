@@ -22,13 +22,14 @@
     while($args->have_posts()){
         $args->the_post();?>
          <div class="porchcard" id="<?php echo "card_". get_the_id();?>">
-            <h2 class="" > <?php the_field('porch_name'); ?> </h2>
-            <p class=""> <?php the_field('porch_address'); ?> </p>
-            <img src="<?php the_field('porch_image'); ?>" alt="" />
+            <h2 class="porchheading" > <?php the_field('porch_name'); ?> </h2>
+            <p class="porchparagraph"> <?php the_field('porch_address'); ?> </p>
+            <img class="porchimage" src="<?php the_field('porch_image'); ?>" alt="" />
 
             <div class="porchlinks"> 
 
             <p><?php the_field('typegenre'); ?></p>
+            <a href="#" class="button7">SEE LINEUP</a>
 
             </div>
             
