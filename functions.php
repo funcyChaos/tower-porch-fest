@@ -179,7 +179,52 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+function setup_porch_type() {
+	register_post_type('porch', array(
+		'label'					=> 'Porches',
+		'slug'                  => 'porch',
+		'singular'              => 'Porch',
+		'plural'                => 'Porches',
+		'menu_icon'             => 'dashicons-admin-home',
+		'menu_position'         => 2,
+		'public'                => true,
+		'show_in_rest' 			=> true,
+	));
+}
+add_action('init', 'setup_porch_type');
 
 
+function remove_default_post_type()
+{
+    remove_menu_page('edit.php');
+}
+add_action('admin_menu', 'remove_default_post_type');
 
+add_action('rest_api_init', function(){
+	register_rest_route('porches/v1', '/adds', [
+		[
+			'methods'	=> 'GET',
+			'callback'	=> function (WP_REST_Request $req){
+				return [
+					'response'	=> 'GET successful',
+					'request'		=> $req['param'],
+				];
+			}
+		],
+		[
+			'methods'	=> 'POST',
+			'callback'	=> function (WP_REST_Request $req){
+				update_field('longitude', $req->get_param('lon'), $req->get_param('id'));
+				update_field('latitude', $req->get_param('lat'), $req->get_param('id'));
+				
 
+				return [
+					'response'		=> 'POST successful',
+					'id'			=> $req->get_param('id'),
+					'address'		=> $req->get_param('address'),
+				];
+			},
+			
+		]
+	]);
+});
