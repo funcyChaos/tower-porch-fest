@@ -46,8 +46,8 @@ function initMap() {
     center: { lat: 36.7650533, lng: -119.7995578 },
     zoom,
     mapId: '4049b264513558e3',
-    minZoom: zoom - 2,
-    maxZoom: zoom + 3,
+    // minZoom: zoom - 2,
+    // maxZoom: zoom + 3,
     // restriction: {
     //   latLngBounds: {
     //     north: 37.9176,
@@ -72,8 +72,18 @@ function initMap() {
         const lat = Number(porch.acf.latitude);
         const lng = Number(porch.acf.longitude);
 
+        const directionsBtn = document.createElement('button');
+        directionsBtn.id = 'direct-btn';
+        directionsBtn.type = 'button';
+        directionsBtn.textContent = 'GET DIRECTIONS';
+
+        const contentDiv = document.createElement('div');
+        contentDiv.id = 'content';
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.id = 'btn-container';
+
         const contentString =
-          '<div id="content">' +
           '<img src="https://images.unsplash.com/photo-1631458325834-8f678e48912c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8" alt="porch" />' +
           '<div id="content-header">' +
           `<h3>${porchName}</h3>` +
@@ -85,11 +95,42 @@ function initMap() {
           '<div id="lineup-info">' +
           `<p>11AM - 2PM</p>` +
           '<a href="/">SEE LINEUP</a>' +
-          '</div>' +
-          '<div id="directions-btn">' +
-          '<button type="button">GET DIRECTIONS</button>' +
           '</div>';
-        ('</div>');
+
+        buttonContainer.appendChild(directionsBtn);
+        contentDiv.innerHTML = contentString;
+        contentDiv.appendChild(buttonContainer);
+
+        directionsBtn.addEventListener('click', () => {
+          console.log('clicked');
+
+          const directions = new google.maps.DirectionsService();
+          directions.route(
+            {
+              origin: '815 E Olive Ave, Fresno, CA 93728',
+              destination: `${address}`,
+              provideRouteAlternatives: false,
+              travelMode: 'WALKING',
+              drivingOptions: {
+                departureTime: new Date(),
+                trafficModel: 'pessimistic',
+              },
+              unitSystem: google.maps.UnitSystem.IMPERIAL,
+            },
+            (response, status) => {
+              if (status === 'OK') {
+                new google.maps.DirectionsRenderer({
+                  suppressMarkers: true,
+                  directions: response,
+                  map: map,
+                });
+              }
+
+              console.log(response);
+              console.log(status);
+            }
+          );
+        });
 
         const marker = new google.maps.Marker({
           position: { lat, lng },
@@ -97,8 +138,7 @@ function initMap() {
         });
 
         const infoWindow = new google.maps.InfoWindow({
-          content: contentString,
-          ariaLabel: 'Uluru',
+          content: contentDiv,
         });
 
         marker.addListener('click', () => {
@@ -106,6 +146,10 @@ function initMap() {
             anchor: marker,
             map,
           });
+        });
+
+        map.addListener('click', function () {
+          if (infoWindow) infoWindow.close();
         });
       });
     });

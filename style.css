@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;300;400;600&family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
 /*!
 Theme Name: towerpf-site
 Theme URI: http://underscores.me/
@@ -224,9 +227,9 @@ select {
  * Correct the inability to style clickable types in iOS and Safari.
  */
 button,
-[type=button],
-[type=reset],
-[type=submit] {
+[type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: button;
 }
 
@@ -234,9 +237,9 @@ button,
  * Remove the inner border and padding in Firefox.
  */
 button::-moz-focus-inner,
-[type=button]::-moz-focus-inner,
-[type=reset]::-moz-focus-inner,
-[type=submit]::-moz-focus-inner {
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
@@ -245,9 +248,9 @@ button::-moz-focus-inner,
  * Restore the focus styles unset by the previous rule.
  */
 button:-moz-focusring,
-[type=button]:-moz-focusring,
-[type=reset]:-moz-focusring,
-[type=submit]:-moz-focusring {
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
@@ -291,8 +294,8 @@ textarea {
  * 1. Add the correct box sizing in IE 10.
  * 2. Remove the padding in IE 10.
  */
-[type=checkbox],
-[type=radio] {
+[type='checkbox'],
+[type='radio'] {
   box-sizing: border-box;
   padding: 0;
 }
@@ -300,8 +303,8 @@ textarea {
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
-[type=number]::-webkit-inner-spin-button,
-[type=number]::-webkit-outer-spin-button {
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -309,7 +312,7 @@ textarea {
  * 1. Correct the odd appearance in Chrome and Safari.
  * 2. Correct the outline style in Safari.
  */
-[type=search] {
+[type='search'] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
@@ -317,7 +320,7 @@ textarea {
 /**
  * Remove the inner padding in Chrome and Safari on macOS.
  */
-[type=search]::-webkit-search-decoration {
+[type='search']::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -388,7 +391,8 @@ select,
 optgroup,
 textarea {
   color: #404040;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -423,7 +427,7 @@ address {
 
 pre {
   background: #eee;
-  font-family: "Courier 10 Pitch", courier, monospace;
+  font-family: 'Courier 10 Pitch', courier, monospace;
   line-height: 1.6;
   margin-bottom: 1.6em;
   max-width: 100%;
@@ -435,7 +439,7 @@ code,
 kbd,
 tt,
 var {
-  font-family: monaco, consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  font-family: monaco, consolas, 'Andale Mono', 'DejaVu Sans Mono', monospace;
 }
 
 abbr,
@@ -523,22 +527,25 @@ a {
 a:visited {
   color: #800080;
 }
-a:hover, a:focus, a:active {
+a:hover,
+a:focus,
+a:active {
   color: #191970;
 }
 a:focus {
   outline: thin dotted;
 }
-a:hover, a:active {
+a:hover,
+a:active {
   outline: 0;
 }
 
 /* Forms
 --------------------------------------------- */
 button,
-input[type=button],
-input[type=reset],
-input[type=submit] {
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
   border: 1px solid;
   border-color: #ccc #ccc #bbb;
   border-radius: 3px;
@@ -548,57 +555,58 @@ input[type=submit] {
   padding: 0.6em 1em 0.4em;
 }
 button:hover,
-input[type=button]:hover,
-input[type=reset]:hover,
-input[type=submit]:hover {
+input[type='button']:hover,
+input[type='reset']:hover,
+input[type='submit']:hover {
   border-color: #ccc #bbb #aaa;
 }
-button:active, button:focus,
-input[type=button]:active,
-input[type=button]:focus,
-input[type=reset]:active,
-input[type=reset]:focus,
-input[type=submit]:active,
-input[type=submit]:focus {
+button:active,
+button:focus,
+input[type='button']:active,
+input[type='button']:focus,
+input[type='reset']:active,
+input[type='reset']:focus,
+input[type='submit']:active,
+input[type='submit']:focus {
   border-color: #aaa #bbb #bbb;
 }
 
-input[type=text],
-input[type=email],
-input[type=url],
-input[type=password],
-input[type=search],
-input[type=number],
-input[type=tel],
-input[type=range],
-input[type=date],
-input[type=month],
-input[type=week],
-input[type=time],
-input[type=datetime],
-input[type=datetime-local],
-input[type=color],
+input[type='text'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+input[type='search'],
+input[type='number'],
+input[type='tel'],
+input[type='range'],
+input[type='date'],
+input[type='month'],
+input[type='week'],
+input[type='time'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='color'],
 textarea {
   color: #666;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 3px;
 }
-input[type=text]:focus,
-input[type=email]:focus,
-input[type=url]:focus,
-input[type=password]:focus,
-input[type=search]:focus,
-input[type=number]:focus,
-input[type=tel]:focus,
-input[type=range]:focus,
-input[type=date]:focus,
-input[type=month]:focus,
-input[type=week]:focus,
-input[type=time]:focus,
-input[type=datetime]:focus,
-input[type=datetime-local]:focus,
-input[type=color]:focus,
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='password']:focus,
+input[type='search']:focus,
+input[type='number']:focus,
+input[type='tel']:focus,
+input[type='range']:focus,
+input[type='date']:focus,
+input[type='month']:focus,
+input[type='week']:focus,
+input[type='time']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='color']:focus,
 textarea:focus {
   color: #111;
 }
@@ -647,7 +655,8 @@ textarea {
   left: -999em;
   top: 0;
 }
-.main-navigation ul ul li:hover > ul, .main-navigation ul ul li.focus > ul {
+.main-navigation ul ul li:hover > ul,
+.main-navigation ul ul li.focus > ul {
   display: block;
   left: auto;
 }
@@ -1082,38 +1091,38 @@ footer ul li a:visited {
 }
 
 .one {
-  grid-column: 1/span 1;
-  grid-row: 1/span 1;
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
 }
 
 .two {
-  grid-column: 2/span 1;
-  grid-row: 1/span 1;
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
 }
 
 .three {
-  grid-column: 1/span 1;
-  grid-row: 2/span 1;
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
 }
 
 .four {
-  grid-column: 2/span 1;
-  grid-row: 2/span 1;
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
 }
 
 .five {
-  grid-column: 1/span 2;
-  grid-row: 3/span 2;
+  grid-column: 1 / span 2;
+  grid-row: 3 / span 2;
 }
 
 .six {
-  grid-column: 1/span 1;
-  grid-row: 4/span 1;
+  grid-column: 1 / span 1;
+  grid-row: 4 / span 1;
 }
 
 .seven {
-  grid-column: 2/span 1;
-  grid-row: 4/span 1;
+  grid-column: 2 / span 1;
+  grid-row: 4 / span 1;
 }
 
 /* RESPONSIVE CSS
@@ -1201,7 +1210,7 @@ footer ul li a:visited {
   margin-bottom: 1.5em;
   max-width: 100%;
 }
-.wp-caption img[class*=wp-image-] {
+.wp-caption img[class*='wp-image-'] {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -1319,7 +1328,7 @@ footer ul li a:visited {
 }
 
 /* Do not show the outline on the skip link target. */
-#primary[tabindex="-1"]:focus {
+#primary[tabindex='-1']:focus {
   outline: 0;
 }
 
@@ -1350,3 +1359,93 @@ footer ul li a:visited {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#map {
+  height: 100vh;
+  width: 100%;
+}
+
+#content {
+  height: 534px;
+  width: 330px;
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: #000;
+}
+
+#content img {
+  height: 200px;
+  width: 330px;
+  margin-bottom: 1rem;
+}
+
+#content-header {
+  margin: 1rem 0;
+}
+
+#content-header h3 {
+  font-family: 'Antonio', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#content-header p {
+  font-size: 16px;
+  margin: 5px 0;
+  font-weight: 500;
+}
+
+#desc {
+  font-size: 16px;
+  margin: 0;
+}
+#desc p {
+  margin: 0;
+  font-weight: 500;
+}
+#lineup-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 16px;
+}
+
+#lineup-info a {
+  text-decoration: none;
+  color: #14a4ab;
+  letter-spacing: 10%;
+  font-weight: bold;
+  font-family: 'Antonio', sans-serif;
+}
+
+#lineup-info p {
+  font-weight: bold;
+  margin: 0;
+}
+
+#btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#btn-container button {
+  width: 330px;
+  height: 46px;
+  font-size: 20px;
+  background: #14a4ab;
+  color: #fff;
+  border: none;
+  letter-spacing: 0.15rem;
+  font-family: 'Antonio', sans-serif;
+  font-weight: 300;
+}
