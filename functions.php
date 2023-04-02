@@ -192,6 +192,8 @@ function setup_porch_type() {
 		'menu_icon'             => 'dashicons-admin-home',
 		'menu_position'         => 2,
 		'public'                => true,
+		'supports' 				=> ['title', 'editor', 'thumbnail'],
+		'taxonomies' 			=> ['category']
 	));
 }
 add_action('init', 'setup_porch_type');
