@@ -11,15 +11,23 @@ section#block-5 {
     display: none;
 }
 
+
+
 // Single Page Styling 
 
 .prochesSingle{
     background-color: #462D62;
     height: 500px;
-    display: flex;
-    justify-content: right;
+
     article {
-        width: 495px;
+        // width: 495px;
+        display: flex;
+        .entry-header{
+            order: 3;
+        }
+        .post-thumbnail{
+
+        }
         h1{
             margin: 0 ;
             color: #fff;

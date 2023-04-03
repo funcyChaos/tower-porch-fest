@@ -1943,11 +1943,12 @@ section#block-5 {
 .prochesSingle {
   background-color: #462D62;
   height: 500px;
-  display: flex;
-  justify-content: right;
 }
 .prochesSingle article {
-  width: 495px;
+  display: flex;
+}
+.prochesSingle article .entry-header {
+  order: 3;
 }
 .prochesSingle article h1 {
   margin: 0;
