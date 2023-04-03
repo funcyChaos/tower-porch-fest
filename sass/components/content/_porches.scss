@@ -29,7 +29,7 @@ aside#secondary {
 }
 
 .porchcard{
-    height: 611px;
+    height: 670px;
     width: 294px;
     background-color: $white;
     border: 1px solid black;
@@ -52,6 +52,11 @@ aside#secondary {
     color: $black;
     text-align: center;
     font-size: 1.1rem;
+}
+.porchDescription{
+    font-size: 16px;
+    text-overflow: ellipsis;
+    padding: 20px;
 }
 
 .textoncard{

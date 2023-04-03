@@ -29,8 +29,8 @@
          <div class="porchcard" id="<?php echo "card_". get_the_id();?>">
             <h2 class="porchheading" > <?php the_field('porch_name'); ?> </h2>
             <p class="porchparagraph"> <?php the_field('porch_address'); ?> </p>
-            <img class="porchimage" src="<?php the_field('porch_image'); ?>" alt="" />
-
+            <img class="porchimage" src="<?php the_field('porch_logo'); ?>" alt="" />
+            <p class="porchDescription"> <?php the_field('description'); ?> </p>
             <div class="porchlinks"> 
 
             <p>categories here</p>
