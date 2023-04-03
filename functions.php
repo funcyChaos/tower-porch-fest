@@ -192,6 +192,8 @@ function setup_porch_type() {
 		'menu_icon'             => 'dashicons-admin-home',
 		'menu_position'         => 2,
 		'public'                => true,
+		'supports' 				=> ['title', 'editor', 'thumbnail'],
+		'taxonomies' 			=> ['category']
 	));
 }
 add_action('init', 'setup_porch_type');
@@ -203,4 +205,12 @@ function remove_default_post_type()
 }
 add_action('admin_menu', 'remove_default_post_type');
 
+
+// REMOVES TEXT EDITOR FOR PORCHES CUSTOM POST TYPE
+
+add_action('init', 'my_remove_editor_from_post_type');
+function my_remove_editor_from_post_type() {
+remove_post_type_support( 'porch', 'editor' );
+
+	}
 

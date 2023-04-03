@@ -1,0 +1,85 @@
+// removing search bar
+aside#secondary {
+    display: none;
+}
+
+.porch{
+    color: $white;
+    text-align: center;
+    font-size: 2rem;
+    padding-top: 1.1rem;
+}
+.paragraph{
+    color: #fff;
+    text-align: center;
+    font-size: .9rem;
+    margin: 1.2rem 1rem 0 1rem;
+}
+
+.background{
+    background-color: $plum;
+    width: 100%;
+}
+
+.porchespost{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.porchcard{
+    height: 670px;
+    width: 294px;
+    background-color: $white;
+    border: 1px solid black;
+    margin: 3rem 3rem .5rem 1rem;
+}
+
+.porchimage{
+    margin: 0 0 0 1.2rem;
+    width: 16rem;
+}
+
+.porchheading{
+    color: $black;
+    text-align: center;
+    font-size: 1.3rem;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+.porchparagraph{
+    color: $black;
+    text-align: center;
+    font-size: 1.1rem;
+}
+.porchDescription{
+    font-size: 16px;
+    text-overflow: ellipsis;
+    padding: 20px;
+}
+
+.textoncard{
+    margin: 0 1rem 1rem 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.timeoncard{
+    font-weight: bold;
+    text-align: center;
+}
+
+  //Buttons start
+  .button7 {
+    background-color: #4fc3c9;
+    border: none;
+    color: white;
+    width: 89%;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0.1rem 0 3rem 1.2rem;
+    cursor: pointer;
+  }
