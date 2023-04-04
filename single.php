@@ -38,6 +38,16 @@ get_header();
 		</main><!-- #main -->
 
 	</section>
+	<section class="categoriesBar">
+			<a href="">INDIE</a>
+			<a href="">VENDORS</a>
+			<a href="">FOOD</a>
+
+	</section>
+
+	<section class="singleArchivesSection">
+			
+	</section>
 <?php
 get_sidebar();
 get_footer();

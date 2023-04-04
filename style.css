@@ -2006,6 +2006,15 @@ aside#secondary {
   border: none;
   color: white;
   width: 89%;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0.1rem 0 3rem 1.2rem;
+  cursor: pointer;
+}
+
 section#block-2 {
   display: none;
 }
@@ -2024,23 +2033,48 @@ section#block-5 {
 
 .prochesSingle {
   background-color: #462D62;
-  height: 500px;
+  height: 600px;
 }
 .prochesSingle article {
   display: flex;
 }
 .prochesSingle article .entry-header {
   order: 3;
+  position: relative;
+  left: -2%;
+  top: 85px;
 }
-.prochesSingle article h1 {
+.prochesSingle article .entry-header h1 {
   margin: 0;
   color: #fff;
+  text-align: left;
 }
-.prochesSingle article p {
+.prochesSingle article .post-thumbnail {
+  position: relative;
+  left: 15%;
+  top: 50px;
+}
+.prochesSingle article .post-thumbnail img {
+  width: 588px;
+  border: 15px solid #FFFFFF;
+}
+.prochesSingle article .entry-content {
+  width: 495px;
+  position: relative;
+  left: 26%;
+  top: 170px;
+}
+.prochesSingle article .entry-content p {
   color: #fff;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: left;
 }
 .prochesSingle .singleButton {
-  background-color: #4fc3c9;
+  background-color: #14A4AB;
   border: none;
   color: white;
   padding: 8px 32px;
@@ -2048,10 +2082,54 @@ section#block-5 {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 0.1rem 0 3rem 1.2rem;
   margin: -0.5rem 0 0.2rem 0;
-  width: 100%;
+  width: 186px;
   cursor: pointer;
+  position: relative;
+  left: 58.8%;
+  top: -40px;
+  font-family: "Antonio";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.categoriesBar {
+  width: 100%;
+  height: 120px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.categoriesBar a {
+  font-family: "Antonio";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+  text-decoration: none;
+  margin: 0 82px;
+  /* identical to box height */
+  text-align: center;
+  text-transform: uppercase;
+  /* Violet */
+  color: #A33C97;
+}
+
+.singleArchivesSection {
+  height: 888px;
+  width: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("http://towerpfdev.wpengine.com/wp-content/uploads/2023/03/Porch-Image-1.jpg");
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 /* Posts and pages
