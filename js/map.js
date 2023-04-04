@@ -40,35 +40,43 @@ function setCoords(id, address, interval) {
 
 // getPorches();
 
+function getLocation() {
+  if (window.navigator.geolocation) {
+    window.navigator.geolocation.getCurrentPosition(console.log, console.log);
+  }
+}
+
+// getLocation();
+
 function initMap() {
   zoom = 14.5;
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 36.7650533, lng: -119.7995578 },
     zoom,
     mapId: '4049b264513558e3',
-    // minZoom: zoom - 2,
-    // maxZoom: zoom + 3,
-    // restriction: {
-    //   latLngBounds: {
-    //     north: 37.9176,
-    //     south: 37.663568,
-    //     east: -121.902542,
-    //     west: -122.515719,
-    //   },
-    // },
+    minZoom: zoom - 2,
+    maxZoom: zoom + 3,
   });
 
+  let infoWindows = [];
+  let markers = [];
+  let openInfoWindow;
+
   // The marker, positioned at coordinates
-  fetch('http://towerporchfest.local/wp-json/wp/v2/porch?per_page=100')
+  fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?per_page=100`)
     .then((res) => res.json())
     .then((data) => {
+      let counter = 0;
+
       data.map((porch) => {
-        // console.log(porch);
+        console.log(porch);
+        const porchID = porch.id;
         const porchName = porch.title.rendered;
         const address = porch.acf.porch_address;
+        const vendorOnSite = porch.acf.food_vendor_on_site;
         const startTime = porch.acf.performer_1_start_time;
         // Need to update acf fields and change this to end time
-        const endTime = porch.acf.performer_5_start_time;
+        const endTime = porch.acf.performer_5_end_time;
         const lat = Number(porch.acf.latitude);
         const lng = Number(porch.acf.longitude);
 
@@ -78,7 +86,7 @@ function initMap() {
         directionsBtn.textContent = 'GET DIRECTIONS';
 
         const contentDiv = document.createElement('div');
-        contentDiv.id = 'content';
+        contentDiv.id = `content`;
 
         const buttonContainer = document.createElement('div');
         buttonContainer.id = 'btn-container';
@@ -93,8 +101,8 @@ function initMap() {
           '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.</p>' +
           '</div>' +
           '<div id="lineup-info">' +
-          `<p>11AM - 2PM</p>` +
-          '<a href="/">SEE LINEUP</a>' +
+          `<p>${startTime} - 2PM</p>` +
+          `<a href='/'>SEE LINEUP</a>` +
           '</div>';
 
         buttonContainer.appendChild(directionsBtn);
@@ -102,8 +110,6 @@ function initMap() {
         contentDiv.appendChild(buttonContainer);
 
         directionsBtn.addEventListener('click', () => {
-          console.log('clicked');
-
           const directions = new google.maps.DirectionsService();
           directions.route(
             {
@@ -125,9 +131,8 @@ function initMap() {
                   map: map,
                 });
               }
-
-              console.log(response);
-              console.log(status);
+              // console.log(response);
+              // console.log(status);
             }
           );
         });
@@ -141,16 +146,26 @@ function initMap() {
           content: contentDiv,
         });
 
-        marker.addListener('click', () => {
-          infoWindow.open({
-            anchor: marker,
+        infoWindows.push(infoWindow);
+        markers.push(marker);
+
+        //end of loop
+      });
+
+      for (let i = 0; i < markers.length; i++) {
+        markers[i].addListener('click', () => {
+          if (openInfoWindow && openInfoWindow != infoWindows[i]) {
+            openInfoWindow.close();
+          }
+          openInfoWindow = infoWindows[i];
+          infoWindows[i].open({
+            anchor: markers[i],
             map,
           });
         });
-
-        map.addListener('click', function () {
-          if (infoWindow) infoWindow.close();
-        });
+      }
+      map.addListener('click', function () {
+        if (openInfoWindow) openInfoWindow.close();
       });
     });
 }
