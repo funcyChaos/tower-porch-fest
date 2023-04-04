@@ -36,7 +36,7 @@
             <p>categories here</p>
             <p class="textoncard"><?php the_field('text_for_card'); ?></p>
             <p class="timeoncard"><?php the_field('time_1'); ?> - <?php the_field('time_2'); ?></p>
-            <a href="#" class="button7">SEE LINEUP</a>
+            <a href="#" class="button8">SEE LINEUP</a>
 
             </div>
             
