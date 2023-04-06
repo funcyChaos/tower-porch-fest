@@ -34,7 +34,10 @@ get_header();
 
 	</section>
 
+	<section class="singlepage">
 	<section class="singleArchivesSection" style="background:linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('<?php the_field('category_background_image'); ?>'); background-position: center; background-size: cover; background-repeat: no-repeat; ">
+	
+	</section>
 	<div class="cardContainer" >
 			<div class="SingleCatCard">
 				<div class="TagImg">
@@ -80,8 +83,8 @@ get_header();
 			</div>
 
 		</div>
+</section>
 
-	</section>
 <?php
 get_sidebar();
 get_footer();

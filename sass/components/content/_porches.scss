@@ -44,7 +44,7 @@
     .porchesposts{
         // background-color: pink;
         width: 1085px;
-        height: 1800px;
+        // height: 1800px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -161,4 +161,20 @@
         }
     }
 
+ }
+
+ @media (max-width: 775px) { 
+
+    .porchesarchiveHeading p {
+        width: 500px;
+    }
+
+ }
+ @media (max-width: 550px) { 
+
+    .porchesarchiveHeading p {
+        width: 350px;
+        font-size: 15px;
+    }
+        
  }
