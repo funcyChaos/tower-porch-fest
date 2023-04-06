@@ -1360,10 +1360,12 @@ footer ul li a:visited {
 
 /*# sourceMappingURL=style.css.map */
 
+/* Styling for the interactive map */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 #map {
@@ -1372,12 +1374,12 @@ footer ul li a:visited {
 }
 
 #content {
-  height: 534px;
+  height: 100% !important;
   width: 330px;
   font-family: 'Open Sans', sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   overflow: hidden;
   color: #000;
 }
@@ -1437,6 +1439,7 @@ footer ul li a:visited {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 #btn-container button {
   width: 330px;
@@ -1448,4 +1451,72 @@ footer ul li a:visited {
   letter-spacing: 0.15rem;
   font-family: 'Antonio', sans-serif;
   font-weight: 300;
+}
+
+/* Mobile Styling */
+@media (min-width: 320px) {
+  #content {
+    height: 516px;
+    width: 200px;
+    overflow-x: hidden;
+  }
+  #content img {
+    width: 200px;
+    height: 200px;
+  }
+  #content-header {
+    margin: 0.5rem 0;
+  }
+  #content-header h3 {
+    font-size: 1.25rem;
+  }
+  #desc p {
+    font-size: 14px;
+  }
+  #btn-container button {
+    width: 270px;
+    height: 46px;
+  }
+}
+
+@media (min-width: 576px) {
+  #content {
+    width: 300px;
+    height: 516px;
+  }
+  #content img {
+    width: 300px;
+    height: 200px;
+  }
+  #header-content {
+    margin: 1rem;
+  }
+  #content-header h3 {
+    font-size: 1.5rem;
+  }
+  #content-header p {
+    font-size: 14px;
+  }
+  #desc {
+    margin: 0.75rem 0;
+  }
+  #desc p {
+    font-size: 14px;
+  }
+  #btn-container button {
+    width: 290px;
+    height: 46px;
+  }
+}
+
+@media (min-width: 768px) {
+  #content {
+    width: 330px;
+  }
+  #content img {
+    width: 330px;
+  }
+  #btn-container button {
+    width: 330px;
+  }
 }
