@@ -1,0 +1,196 @@
+.sponbackground{
+    background-color: $plum;
+    height: 140rem;
+}
+
+.sponbanner {
+    margin: -5rem 0 0 0;
+    display: content;
+}
+.sponbanner2 {
+    display: none;
+}
+
+.sponheading1 {
+    color: $white;
+    margin: -2rem 0 4rem 1rem;
+}
+
+.sponpara1 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.sponpara2 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.sponheading2 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+
+.sponpara3 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.sponpara4 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.sponpara5 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.sponpara6 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.sponimg {
+    width: 18rem;
+    height: 13rem;
+    margin: 0 1rem 0 1rem;
+}
+
+.sponpara7 {
+    color: $white;
+    margin: 0 2.2rem 1rem 1rem;
+}
+
+.button9{
+    background-color: #4fc3c9;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2.0999999999999996rem 0 1.7999999999999998rem 1rem;
+    cursor: pointer;
+}
+
+// media queries
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+    .sponbanner2 {
+        margin: -5rem 0 0 0;
+        display: inline;
+    } 
+    .sponbanner {
+        display: none;
+    }
+
+    .sponbackground{
+        background-color: $plum;
+        height: 107rem;
+    }
+
+    .sponimg {
+        width: 30rem;
+        height: 18rem;
+        margin: 0 2rem 0 3rem;
+    }
+
+    .sponheading1 {
+        margin: -3rem 0 5rem 2.5rem;
+    }
+
+    .sponheading2 {
+        margin: 0 0 1rem 3rem;
+    }
+
+    .sponpara1 {
+        color: $white;
+        margin: 0 3rem 1rem 3rem;
+    }
+    
+    .sponpara2 {
+        color: $white;
+        margin: 0 3rem 1rem 3rem;
+    }
+    
+    .sponpara3 {
+        color: $white;
+        margin: 0 3rem 1rem 3rem;
+    }
+    
+    .sponpara4 {
+        color: $white;
+        margin: 0 3rem 1rem 3rem;
+    }
+    
+    .sponpara5 {
+        color: $white;
+        margin: 0 3rem 1rem 3rem;
+    }
+    
+    .sponpara6 {
+        color: $white;
+        margin: 0 3rem 1rem 3rem;
+    }
+
+    .sponpara7 {
+        color: $white;
+        margin: 0 3rem 1rem 3rem;
+    }
+
+    .button9 {
+        margin: 2.1rem 0 1.8rem 3rem;
+    }
+
+ }
+
+// Medium devices (tablets, 768px and up)
+ @media (min-width: 768px) { 
+    .sponheading1 {
+        margin: -4rem 0 5rem 2.8rem;
+    }
+
+    .sponbackground {
+        height: 104rem;
+    }
+
+    .sponimg {
+        width: 32rem;
+        height: 22rem;
+        margin: 0 2rem 0 3rem;
+    }
+  }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .sponbackground {
+        height: 110rem;
+    }
+
+    .sponimg {
+        width: 46rem;
+        height: 32rem;
+        margin: 2rem 14rem 0 3rem;
+    }
+
+
+ }
+
+// X-Large devices (large desktops, 1200px and up)
+// @media (min-width: 1200px) {  }
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { 
+    .sponbackground {
+        height: 132rem;
+    }
+
+    .sponimg {
+        width: 60rem;
+        height: 40rem;
+        margin: 2rem 10rem 0 3rem;
+    }
+ }

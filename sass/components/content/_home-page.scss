@@ -3,9 +3,14 @@
   height: auto;
   max-width: 100%;
   vertical-align: bottom;
-  margin: -97px 0 -25px 0;
+  margin: 0px 0 -25px 0;
 }
-
+.entry-header{
+  display: none;
+}
+.entry-content {
+  margin: 0 !important;
+}
 //top rectangle
 .top{
   height: 8rem;
@@ -467,7 +472,7 @@ figure {
   height: auto;
   max-width: 100%;
   vertical-align: bottom;
-  margin: -26.2px 0 -25px 0;
+  margin: 0px 0 -25px 0;
 }
 
 //top rectangle
@@ -958,16 +963,16 @@ height: 132px;
 }
 
 // XX-Large devices (larger desktops, 1400px and up)
-@media (min-width: 1400px) {
-.top {
-  width: 43.1rem;
-  margin: 0 0 0 -45.1rem;
+@media (min-width: 1440px) {
+  .top {
+    width: 43.1rem;
+    margin: -2rem 0 0 -47.1rem;
 }
 .middle {
   margin: -23.3rem 0 -12.5rem 42.7rem;
 }
 .bottom {
-  width: 46.6rem;
+  width: 49.1rem;
   margin: -27.3rem 0 -13.5rem 40.9rem;
 }
 .center3 {
@@ -975,9 +980,22 @@ height: 132px;
   left: 22%;
   font-size: 0.6rem;
 }
+.center4 {
+  left: 69%;
+  font-size: 1.7rem;
+  top: 1rem;
+}
+.center1 {
+  left: 27%;
+  font-size: 1.3rem;
+  top: 1rem;
+}
+.center2 {
+  top: 42%;
+}
 
 .row4 {
-  margin: 0 0 0 -2.1999999999999993rem;
+  margin: 0 0 0 0.7999999999999998rem;
 }
 
 .img1 {
@@ -994,21 +1012,21 @@ height: 132px;
 }
 
 .box1 {
-  margin: 4rem 0 7rem 3rem;
+  margin: 4rem 0 7rem 4rem;
 }
 .box2 {
-  margin: -25rem 0 10rem 23rem;
+  margin: -25rem 0 10rem 25rem;
 }
 .box3 {
-  margin: -28rem 0 7rem 43rem;
+  margin: -28rem 0 7rem 46.5rem;
 }
 .box4 {
-  margin: -25rem 0 7rem 63rem;
+  margin: -25rem 0 7rem 68rem;
 }
 .map {
   width: 519px;
   height: 477px;
-  margin-left: 1rem;
+  margin-left: 4rem;
 }
 
 .button {
