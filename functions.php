@@ -145,6 +145,7 @@ function towerpf_site_scripts() {
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	
 	if(is_page(54)){
+		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&callback=initMap', [], false, true);
 		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
 		wp_localize_script('map-script', 'wpVars', ['homeURL' => home_url()]); 
 		wp_enqueue_script('map-script');
@@ -155,6 +156,15 @@ function towerpf_site_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+
+add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+	if ( 'map-api' !== $handle ) {
+		return $tag;
+	}
+	// return str_replace( ' src', ' defer src', $tag ); // defer the script
+	return str_replace( ' src', ' async src', $tag ); // OR async the script
+	//return str_replace( ' src', ' async defer src', $tag ); // OR do both!
+}, 10, 2 );
 
 /**
  * Implement the Custom Header feature.
@@ -204,31 +214,3 @@ function remove_default_post_type()
 }
 add_action('admin_menu', 'remove_default_post_type');
 
-add_action('rest_api_init', function(){
-	register_rest_route('porches/v1', '/adds', [
-		[
-			'methods'	=> 'GET',
-			'callback'	=> function (WP_REST_Request $req){
-				return [
-					'response'	=> 'GET successful',
-					'request'		=> $req['param'],
-				];
-			}
-		],
-		[
-			'methods'	=> 'POST',
-			'callback'	=> function (WP_REST_Request $req){
-				update_field('longitude', $req->get_param('lon'), $req->get_param('id'));
-				update_field('latitude', $req->get_param('lat'), $req->get_param('id'));
-				
-
-				return [
-					'response'		=> 'POST successful',
-					'id'			=> $req->get_param('id'),
-					'address'		=> $req->get_param('address'),
-				];
-			},
-			
-		]
-	]);
-});
