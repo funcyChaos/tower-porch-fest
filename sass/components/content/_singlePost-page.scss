@@ -18,48 +18,56 @@ section#block-5 {
 .prochesSingle{
     background-color: #462D62;
     height: 600px;
-
-    article {
-        // width: 495px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .singleporchImgContainer{
         display: flex;
-        .entry-header{
-            order: 3;
-            position: relative;
-            left: -2%;
-            top: 85px;
-            h1{
-                margin: 0 ;
-                color: #fff;
-                text-align: left;
-                
-            }
-        }
-        .post-thumbnail{
-            position: relative;
-            left: 15%;
-            top: 50px;
-            img{
+        justify-content: center;
+        align-items: center;
+                  .porchimage{
                 width: 588px;
                 border: 15px solid #FFFFFF;
             }
-        }
+    }
+    .singleporchContentContainer{
+        display: flex;
+        flex-direction: column;
+        .porchheading{
+            font-family: 'Antonio';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 62px;
+            text-transform: uppercase;
 
-        .entry-content{
-            width: 495px;
-            position: relative;
-            left: 26%;
-            top: 170px;
-            p{
-                color: #fff;
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 22px;
-                text-align: left;
-            }   
-        }
+            /* White */
 
+            color: #FFFFFF;
+        }
+        .porchaddress{
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            /* identical to box height */
+
+
+            /* White */
+
+            color: #FFFFFF;
+        }
+         .porchDescription{
+        width: 495px;
+            color: #fff;
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: left;
+        
     }
     .singleButton {
         background-color:  #14A4AB;;
@@ -70,12 +78,8 @@ section#block-5 {
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
-        margin: -.5rem 0 .2rem 0;
         width: 186px;
         cursor: pointer;
-        position: relative;
-        left: 58.8%;
-        top: -40px;
         font-family: 'Antonio';
         font-style: normal;
         font-weight: 400;
@@ -84,8 +88,15 @@ section#block-5 {
 
         text-align: center;
         letter-spacing: 0.1em;
-
+        &:hover{
+            background-color: #462D62;
+            border: 2px solid #fff;
+        }
       }
+    }
+
+
+    
       
 }
 
@@ -125,11 +136,111 @@ section#block-5 {
 .singleArchivesSection{
     height: 888px;
     width: 100%;
-
-    background:linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('http://towerpfdev.wpengine.com/wp-content/uploads/2023/03/Porch-Image-1.jpg');
-    filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &::before{
+            filter: blur(8px); 
     -webkit-filter: blur(8px);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+
+    }
+
+    .SingleCatCard{
+        width: 550px;
+        height: 213px;
+        background-color: #fff;
+        border: 1px solid #EAEAEA;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        display: flex;
+        justify-content: center;
+        padding: 15px;
+        margin: 30px 0;
+        .TagImg{
+            width: 200px;
+            height: 180px;
+            img{
+                width: 200px;
+                height: 180px;
+            }
+            .tag{
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+                position: relative;
+                bottom: 26px;
+                p{
+                    background-color:  #A33C97;
+                     padding: 5px 10px;
+                     font-family: 'Antonio';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 16px;
+                    line-height: 100%;
+                    /* identical to box height, or 16px */
+
+                    text-align: right;
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+
+                    /* White */
+
+                    color: #FFFFFF;
+
+                }
+            }
+        }
+        .TagContent{
+            width: 310px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 10px;
+            a{
+                width: 310px;
+                height: 29px;
+                padding: 10px 0;
+                text-decoration: none;
+                /* Black */
+
+                background: #000000;
+                font-family: 'Antonio';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 76%;
+                /* identical to box height, or 11px */
+
+                text-align: center;
+                text-transform: uppercase;
+
+                /* White */
+
+                color: #FFFFFF;
+            }
+            h2{
+                font-family: 'Antonio';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 26px;
+                /* identical to box height */
+
+                text-transform: uppercase;
+                margin: 8px 0;
+                color: #000000;
+            }
+            p{
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 16px;
+
+                color: #000000;
+            }
+        }
+    }
+ 
 }
+

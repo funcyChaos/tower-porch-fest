@@ -1,85 +1,164 @@
-// removing search bar
-aside#secondary {
-    display: none;
-}
-
-.porch{
-    color: $white;
-    text-align: center;
-    font-size: 2rem;
-    padding-top: 1.1rem;
-}
-.paragraph{
-    color: #fff;
-    text-align: center;
-    font-size: .9rem;
-    margin: 1.2rem 1rem 0 1rem;
-}
-
-.background{
-    background-color: $plum;
+.porchesarchiveHeading {
     width: 100%;
-}
-
-.porchespost{
+    height: 285px;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    background:  #462D62;
+    flex-direction: column;
+    align-items: center;
+    h1{
+        font-family: 'Antonio';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 36px;
+        line-height: 47px;
+        /* identical to box height */
+
+        text-align: center;
+        text-transform: uppercase;
+
+        /* White */
+
+        color: #FFFFFF;
+    }
+    p{
+        width: 700px;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+        text-align: center;
+
+        /* White */
+
+        color: #FFFFFF;
+
+    }
+}
+ .porchesarchivesContainer{
+    background-color: #462D62;
+    display: flex;
     justify-content: center;
     align-items: center;
-}
+    .porchesposts{
+        // background-color: pink;
+        width: 1085px;
+        height: 1800px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        .porchcard{
+            width: 330px;
+            height: 650px;
+            background-color: #fff;
+            padding: 15px;
+            margin: 16px 0;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            .porchheading{
+                font-family: 'Antonio';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 24px;
+                line-height: 31px;
+                text-align: center;
+                text-transform: uppercase;
+                color: #000000;
+                margin: 20px 0px 0px 0px;
+            }
+            .porchparagraph{
 
-.porchcard{
-    height: 670px;
-    width: 294px;
-    background-color: $white;
-    border: 1px solid black;
-    margin: 3rem 3rem .5rem 1rem;
-}
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 22px;
+                /* identical to box height */
 
-.porchimage{
-    margin: 0 0 0 1.2rem;
-    width: 16rem;
-}
+                text-align: center;
 
-.porchheading{
-    color: $black;
-    text-align: center;
-    font-size: 1.3rem;
-    margin: 1.5rem 0 0.5rem 0;
-}
+                color: #000000;
+            }
+            .porchimage{
+                width: 300px;
+                height: 200px;
 
-.porchparagraph{
-    color: $black;
-    text-align: center;
-    font-size: 1.1rem;
-}
-.porchDescription{
-    font-size: 16px;
-    text-overflow: ellipsis;
-    padding: 20px;
-}
+            }
+            .porchlinks{
+                display: flex;
+                height: 15px;
+                margin: 20px 15px;
+                a{
+                    font-family: 'Antonio';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 16px;
+                    line-height: 21px;
+                    /* identical to box height */
+                    text-decoration: none;
+                    text-align: center;
+                    text-transform: uppercase;
+                    margin: 0 30px;
+                    /* Violet */
 
-.textoncard{
-    margin: 0 1rem 1rem 1rem;
-    font-size: 0.9rem;
-    text-align: center;
-}
-.timeoncard{
-    font-weight: bold;
-    text-align: center;
-}
+                    color: #A33C97;
+                }
+            }
+            .porchDescription{
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 22px;
+                text-align: center;
 
-  //Buttons start
-  .button8 {
-    background-color: #4fc3c9;
-    border: none;
-    color: white;
-    width: 89%;
-    padding: 8px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 0.1rem 0 3rem 1.2rem;
-    cursor: pointer;
-  }
+                color: #000000;
+            }
+            .timeoncard{
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 22px;
+                /* identical to box height */
+                margin-bottom: 10px;
+                text-align: center;
+
+                color: #000000;
+            }
+            .button7{
+                width: 300px;
+                height: 46px;
+
+                /* Teal */
+
+                background: #14A4AB;
+
+                font-family: 'Antonio';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 26px;
+                /* identical to box height */
+                text-decoration: none;
+                padding: 10px 20px;
+                text-align: center;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+
+                /* White */
+
+                color: #FFFFFF;
+                &:hover{
+                    background-color: #462D62;
+                }
+
+            }
+        }
+    }
+
+ }
