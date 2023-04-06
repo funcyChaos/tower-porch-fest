@@ -20,7 +20,6 @@ function initMap() {
   let markers = [];
   let openInfoWindow;
 
-  // The marker, positioned at coordinates
   fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?per_page=100`)
     .then((res) => res.json())
     .then((data) => {

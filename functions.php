@@ -154,6 +154,10 @@ function towerpf_site_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+
+	if(is_front_page()){
+		wp_enqueue_script('home-page', get_template_directory_uri() . '/js/home-page.js',array('jquery'), _S_VERSION, true );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
 
@@ -203,6 +207,8 @@ function setup_porch_type() {
 		'menu_position'         => 2,
 		'public'                => true,
 		'show_in_rest' 			=> true,
+		'supports' 				=> ['title', 'editor', 'thumbnail'],
+		'taxonomies' 			=> ['category']
 	));
 }
 add_action('init', 'setup_porch_type');
@@ -213,4 +219,13 @@ function remove_default_post_type()
     remove_menu_page('edit.php');
 }
 add_action('admin_menu', 'remove_default_post_type');
+
+
+// REMOVES TEXT EDITOR FOR PORCHES CUSTOM POST TYPE
+
+add_action('init', 'my_remove_editor_from_post_type');
+function my_remove_editor_from_post_type() {
+remove_post_type_support( 'porch', 'editor' );
+
+	}
 

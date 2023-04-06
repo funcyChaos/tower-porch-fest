@@ -1,0 +1,135 @@
+section#block-2 {
+    display: none;
+}
+section#block-3 {
+    display: none;
+}
+section#block-4 {
+    display: none;
+}
+section#block-5 {
+    display: none;
+}
+
+
+
+// Single Page Styling 
+
+.prochesSingle{
+    background-color: #462D62;
+    height: 600px;
+
+    article {
+        // width: 495px;
+        display: flex;
+        .entry-header{
+            order: 3;
+            position: relative;
+            left: -2%;
+            top: 85px;
+            h1{
+                margin: 0 ;
+                color: #fff;
+                text-align: left;
+                
+            }
+        }
+        .post-thumbnail{
+            position: relative;
+            left: 15%;
+            top: 50px;
+            img{
+                width: 588px;
+                border: 15px solid #FFFFFF;
+            }
+        }
+
+        .entry-content{
+            width: 495px;
+            position: relative;
+            left: 26%;
+            top: 170px;
+            p{
+                color: #fff;
+                font-family: 'Open Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 22px;
+                text-align: left;
+            }   
+        }
+
+    }
+    .singleButton {
+        background-color:  #14A4AB;;
+        border: none;
+        color: white;
+        padding: 8px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: -.5rem 0 .2rem 0;
+        width: 186px;
+        cursor: pointer;
+        position: relative;
+        left: 58.8%;
+        top: -40px;
+        font-family: 'Antonio';
+        font-style: normal;
+        font-weight: 400;
+        line-height: 26px;
+        /* identical to box height */
+
+        text-align: center;
+        letter-spacing: 0.1em;
+
+      }
+      
+}
+
+// Categories Bar
+
+.categoriesBar{
+    width: 100%;
+    height: 120px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    a{
+        font-family: 'Antonio';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 26px;
+        text-decoration: none;
+        margin: 0 82px;
+        /* identical to box height */
+
+        text-align: center;
+        text-transform: uppercase;
+
+        /* Violet */
+
+        color: #A33C97;
+
+    }
+ 
+}
+
+// Single Page Archives Section
+
+.singleArchivesSection{
+    height: 888px;
+    width: 100%;
+
+    background:linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('http://towerpfdev.wpengine.com/wp-content/uploads/2023/03/Porch-Image-1.jpg');
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}

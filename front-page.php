@@ -23,76 +23,74 @@
     ?>
    
 </div>
+
+
 <div class="contain">
-        <img class="top" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-11.jpg" alt="">
-        <div class="center1">FRESNO, CA</div>
-        <div class="center2">APRIL 29, 2023</div>
-        <div class="center3">FREE MUSIC AND ART COMMUNITY FESTIVAL</div>
-        <div class="center4">COUNTDOWN</div>
+        <img class="top" src="<?php the_field('top'); ?>" alt="">
+        <div class="center1"><?php the_field('location'); ?></div>
+        <div class="center2"><?php the_field('date'); ?></div>
+        <div class="center3"><?php the_field('title'); ?></div>
+        <div class="center4"><?php the_field('countdown'); ?></div>
 </div>
 
-<img class="middle" src="http://towerpf-site.local/wp-content/uploads/2023/03/Polygon-1.png" alt="">
+<img class="middle" src="<?php the_field('middle'); ?>" alt="">
 
-<img class="bottom" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-2.jpg" alt="">
+<img class="bottom" src="<?php the_field('bottom'); ?>" alt="">
 
 <!-- Start of first featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">BUILDING COMMUNITY <br> THROUGH MUSIC AND ART</h2>
-        <p class="lead">Porches throughout Fresno's historic Tower neighborhood host performances in a day of revelry celebrating local music and art! We do this through the collaboration of Tower residents who provide venue for local musicians to perform.</p>
+      <div class="col-md-75">
+        <h2 class="featurette-heading"><?php the_field('heading_1'); ?><br> <?php the_field('heading_2'); ?></h2>
+        <p class="lead"><?php the_field('paragraph'); ?></p>
         <a href="#" class="button">VIEW PORCH MAP</a>
       </div>
 
-      <div class="col-md-5">
-        <img class="img1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6.jpg" width="" height="" alt="">
-        <img class="img2" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-7.jpg" width="145" height="145" alt="">
-        <img class="img3" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-8.jpg" width="145" height="145" alt="">
-
-      </div>
+      <div class=" row4 col-md-5">
+        <img class="img1" src="<?php the_field('image_1'); ?>" width="300" height="300" alt="">
+        <img class="img2" src="<?php the_field('image_2'); ?>" width="145" height="145" alt="">
+        <img class="img3" src="<?php the_field('image_3'); ?>" width="145" height="145" alt="">
+    </div>
 </div>
 <!-- End of first featurette -->
-
 <!-- Start of second featurette -->
 <div class="row featurette color">
-        <div class="col-md-7">
-            <h2 class="featurette-heading2">BUILDING COMMUNITY <br> THROUGH MUSIC AND ART</h2>
-            <p class="lead2">Porches throughout Fresno's historic Tower neighborhood host performances in a day of revelry celebrating local music and art! We do this through the collaboration of Tower residents who provide venue for local musicians to perform.</p>
-            <a href="#" class="button">VIEW PORCH MAP</a>
+        <div class="col-md-77">
+            <h2 class="featurette-heading2"><?php the_field('carousel_heading'); ?></h2>
+            <p class="lead2"><?php the_field('carousel_paragraph'); ?></p>
+            <a href="#" class="button5">VIEW ALL PORCHES</a>
         </div>
 
-        <div class="col-md-5">
-        <div id="carouselExampleIndicators" class="carousel" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
-        
-        
+        <div class="col-md-57">
+        <div id="porch_carousel" class="carousel" data-bs-ride="carousel">
+    <div class="carousel-indicators" id="porch_indicator">
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#porch_carousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
     </div>
-    <div class="carousel-inner">
+    <div class="carousel-inner" id="test_carousel">
         <!-- card 1 -->
         <div class="carousel-item active">
-        <div class="card">
-        <h5 class="card-title">ROCKING PORCH</h5>
-        <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <p class="item">YOGA</p>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <p class="time"> <b> 11am - 2pm </b> </p>
-        <a href="#" class="button4">SEE LINEUP</a>
-    </div>
-    </div>
-        </div>
-        <!-- card 2 -->
+                <div class="card">
+                    <h5 class="card-title">ROCKING PORCH</h5>
+                    <p class="address">123 Olive Dr. Fresno CA 93728</p>
+                    <img class="image1" src="<?php the_field('card_image_1'); ?>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="item">YOGA</p>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="time"> <b> 11am - 2pm </b> </p>
+                        <a href="#" class="button4">SEE LINEUP</a>
+                    </div>
+                </div>
+            </div>
+            <!-- card 2 -->
         <div class="carousel-item">
         <div class="card">
         <h5 class="card-title">GREEN HOUSE PORCH</h5>
         <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image-1.jpg" class="card-img-top" alt="...">
+        <img class="image1" src="<?php the_field('card_image_2'); ?>" class="card-img-top" alt="...">
     <div class="card-body">
         <p class="item">YOGA</p>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -106,7 +104,7 @@
         <div class="card">
         <h5 class="card-title">YOGA BEARS</h5>
         <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image-2.jpg" class="card-img-top" alt="...">
+        <img class="image1" src="<?php the_field('card_image_3'); ?>" class="card-img-top" alt="...">
     <div class="card-body">
         <p class="item">YOGA</p>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -120,7 +118,7 @@
         <div class="card">
         <h5 class="card-title">THE SMITHS</h5>
         <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image-3.jpg" class="card-img-top" alt="...">
+        <img class="image1" src="<?php the_field('card_image_4'); ?>" class="card-img-top" alt="...">
     <div class="card-body">
         <p class="item">YOGA</p>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -134,7 +132,7 @@
         <div class="card">
         <h5 class="card-title">THE HOUSE ON OLIVE</h5>
         <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image-4.jpg" class="card-img-top" alt="...">
+        <img class="image1" src="<?php the_field('card_image_5'); ?>" class="card-img-top" alt="...">
     <div class="card-body">
         <p class="item">YOGA</p>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -148,7 +146,7 @@
         <div class="card">
         <h5 class="card-title">SPOKEASY</h5>
         <p class="address">123 Olive Dr. Fresno CA 93728</p>
-        <img class="image1" src="http://towerpf-site.local/wp-content/uploads/2023/03/Porch-Image-5.jpg" class="card-img-top" alt="...">
+        <img class="image1" src="<?php the_field('card_image_6'); ?>" class="card-img-top" alt="...">
     <div class="card-body">
         <p class="item">YOGA</p>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -157,34 +155,31 @@
     </div>
     </div>
         </div>
-    </div>
+            </div>
         </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <button class="carousel-control-prev" type="button" data-bs-target="#porch_carousel" data-bs-slide="prev" id="test_prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#porch_carousel" data-bs-slide="next" id="test_next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
-    </button>
+        </button>
     </div>
-
-        </div>
 </div>
 <!-- End of second featurette -->
 
 <!-- Start of third featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">TOWER PORCHFEST <br> MAP</h2>
-        <p class="lead">Tower Porchfest takes place in the Historic Tower District neighborhood in Fresno, California. Made up of an incredible array of classic housing types - ranging from granny flats, townhouses, and apartments to craftsman bungalows and mansions.</p>
+      <div class="col-md-78">
+        <h2 class="featurette-heading"><?php the_field('heading_part_1'); ?> <br> <?php the_field('heading_part_2'); ?></h2>
+        <p class="lead"><?php the_field('paragraph_part_1'); ?></p>
         <a href="#" class="button2">VISIT MAP</a>
       </div>
 
       <div class="col-md-5">
         <!-- MAP PLACEHOLDER -->
-        <img class="" src="http://towerpf-site.local/wp-content/uploads/2023/03/Rectangle-6-1.jpg" width="" height="" alt="">
+        <img class="map" src="<?php the_field('placeholder'); ?>" width="500" height="" alt="">
 
       </div>
 </div>
@@ -194,33 +189,33 @@
 <div class="back">
     <!-- Card 1 -->
     <div class="box1">
-        <img class="ticket" src="http://towerpf-site.local/wp-content/uploads/2023/03/Group-2.png" width="130" height="130">
-        <h2 class="h22">TICKETS</h2>
-        <p class="p2"> <b>No ticket required!</b> The event is open to all and totally free. We all participate as volunteers and all give our time, talents, resources, and hospitality as a gift to the neighborhood and to each other.</p>
+        <img class="ticket" src="<?php the_field('ticket_image'); ?>" width="130" height="130">
+        <h2 class="h22"><?php the_field('ticket_heading'); ?></h2>
+        <p class="p2"> <b><?php the_field('ticket_paragraph_1'); ?></b> <?php the_field('ticket_paragraph_2'); ?></p>
         <a href="url" class="spon">BECOME A SPONSOR</a>
     </div>
     
     <!-- Card 2 -->
     <div class="box2">
-        <img class="food" src="http://towerpf-site.local/wp-content/uploads/2023/03/Group-2-2.png" width="130" height="130">
-        <h2 class="h22">FOOD & DRINKS</h2>
-        <p class="p2"> This is a no-alcohol, family-friendly event. ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation uut aliquip ex ea commodo consequat...</p>
+        <img class="food" src="<?php the_field('food_image'); ?>" width="130" height="130">
+        <h2 class="h22"><?php the_field('food_heading'); ?></h2>
+        <p class="p2"><?php the_field('food_paragraph'); ?></p>
         <a href="url" class="spon">PORCHES WITH FOOD</a>
     </div>
 
     <!-- Card 3 -->
     <div class="box3">
-        <img class="parking" src="http://towerpf-site.local/wp-content/uploads/2023/03/Group-2-1.png" width="130" height="130">
-        <h2 class="h22">PARKING</h2>
-        <p class="p2">Biking, walking, skateboarding, skipping & dancing from porch to porch is encouraged since parking is limited. ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation uut aliquip ex</p>
+        <img class="parking" src="<?php the_field('parking_image'); ?>" width="130" height="130">
+        <h2 class="h22"><?php the_field('parking_heading'); ?></h2>
+        <p class="p2"><?php the_field('parking_paragraph'); ?></p>
         <a href="url" class="spon3">VIEW MAP</a>
     </div>
 
     <!-- Card 4 -->
     <div class="box4">
-        <img class="merch" src="http://towerpf-site.local/wp-content/uploads/2023/03/Group-2-3.png" width="130" height="130">
-        <h2 class="h22">MERCH</h2>
-        <p class="p2">Tower PorchFest merch will be available at the info booth day of. All purchases go back towards supporting this annual event. If you would like to pre-order a t-shirt please tap the link below.</p>
+        <img class="merch" src="<?php the_field('merch_image'); ?>" width="130" height="130">
+        <h2 class="h22"><?php the_field('merch_heading'); ?></h2>
+        <p class="p2"><?php the_field('merch_paragraph'); ?></p>
         <a href="url" class="spon4">MERCH STORE</a>
     </div>
 </div>
@@ -228,39 +223,39 @@
 
 <!-- Start of forth featurette -->
 <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading3">SPONSOR</h2>
-        <p class="lead">Last year we had 60 porches with over 130 performances. There were over 5,000 views of the interactive map and our Social Media grew to 2,000+ followers (and counting). On behalf of the Tower Porchfest Committee, we ask you to consider sponsoring this awesome event!</p>
+      <div class="col-md-71">
+        <h2 class="featurette-heading3"><?php the_field('sponsors_heading'); ?></h2>
+        <p class="lead3"><?php the_field('sponsors_paragraph'); ?></p>
         <a href="#" class="button3">BECOME A SPONSOR</a>
       </div>
-
-      <div class="col-md-5">
+        <br>
+      <div class="col-md-58">
         <div class="grid">
             <div class="one">
-                <img src="http://towerpf-site.local/wp-content/uploads/2023/03/raging-records-logo-1.png" alt="Ragging" >
+                <img src="<?php the_field('ragging'); ?>" alt="Ragging" >
             </div>
 
             <div class="two">
-                <img src="http://towerpf-site.local/wp-content/uploads/2023/03/spokeasy-logo-1.png" alt="Spokeasy" >
+                <img src="<?php the_field('spokeasy'); ?>" alt="Spokeasy" >
             </div>
 
             <div class="three">
-                <img src="http://towerpf-site.local/wp-content/uploads/2023/03/neighborhood-thrift-1.png" alt="Neighborhood Thrift" >
+                <img src="<?php the_field('neighborhood_thrift'); ?>" alt="Neighborhood Thrift" >
             </div>
 
             <div class="four">
-                <img src="http://towerpf-site.local/wp-content/uploads/2023/03/hi-top-coffee-1.png" alt="Hi-top Coffe" >
+                <img src="<?php the_field('hi-top_coffee'); ?>" alt="Hi-top Coffee" >
             </div>
             <div class=" five">
-                <img src="http://towerpf-site.local/wp-content/uploads/2023/03/the-brass-unicorn-1.png" alt="The Brass Unicorn" >
+                <img src="<?php the_field('the_brass_unicorn'); ?>" alt="The Brass Unicorn" >
             </div>
             
             <div class="six">
-                <img src="http://towerpf-site.local/wp-content/uploads/2023/03/image-1.png" alt="CF" >
+                <img src="<?php the_field('cf'); ?>" alt="CF" >
             </div>
 
             <div class="seven">
-                <img src="http://towerpf-site.local/wp-content/uploads/2023/03/blkmktplc-1.png" alt="Blkmktplc" >
+                <img src="<?php the_field('blkmktplc'); ?>" alt="Blkmktplc" >
             </div>
         </div>
         
