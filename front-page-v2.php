@@ -1,11 +1,12 @@
 <?php
 /**
- * Template Name: Homepage v2
+ * Template Name: Front Page v2
  *
  * @package towerpf-site
  *
  */
 ?>
+
 <?php get_header(); ?>
 
 <?php
@@ -17,3 +18,5 @@ if ( has_post_thumbnail() ) {
 }
 ?>
 <h1>ANTONIOOOO</h1>
+<!-- Footer must be included for navigation to display -->
+<?php get_footer(); ?>
