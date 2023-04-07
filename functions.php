@@ -144,7 +144,14 @@ function towerpf_site_scripts() {
 
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	
-	if(is_page(54)) wp_enqueue_script( 'mapScript', get_stylesheet_directory_uri().'/js/map.js', [], '1.0', true); 
+	if(is_page(54)){
+		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&callback=initMap', [], false, true);
+		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
+		wp_localize_script('map-script', 'wpVars', ['homeURL' => home_url()]); 
+		wp_enqueue_script('map-script');
+		wp_register_script( 'import-script', get_template_directory_uri().'/coord-import/import.js', [], '1.0', true);
+		wp_enqueue_script('import-script');
+	} 
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -155,6 +162,15 @@ function towerpf_site_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+
+add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+	if ( 'map-api' !== $handle ) {
+		return $tag;
+	}
+	// return str_replace( ' src', ' defer src', $tag ); // defer the script
+	return str_replace( ' src', ' async src', $tag ); // OR async the script
+	//return str_replace( ' src', ' async defer src', $tag ); // OR do both!
+}, 10, 2 );
 
 /**
  * Implement the Custom Header feature.
@@ -192,7 +208,8 @@ function setup_porch_type() {
 		'menu_icon'             => 'dashicons-admin-home',
 		'menu_position'         => 2,
 		'public'                => true,
-		'supports' 				=> ['title', 'editor', 'thumbnail'],
+		'show_in_rest' 			=> true,
+		'supports' 				=> ['title', 'editor', 'thumbnail', 'excerpt'],
 		'taxonomies' 			=> ['category']
 	));
 }
@@ -208,9 +225,9 @@ add_action('admin_menu', 'remove_default_post_type');
 
 // REMOVES TEXT EDITOR FOR PORCHES CUSTOM POST TYPE
 
-add_action('init', 'my_remove_editor_from_post_type');
-function my_remove_editor_from_post_type() {
-remove_post_type_support( 'porch', 'editor' );
+// add_action('init', 'my_remove_editor_from_post_type');
+// function my_remove_editor_from_post_type() {
+// remove_post_type_support( 'porch', 'editor' );
 
-	}
+// 	}
 
