@@ -18,7 +18,9 @@
   }
   ?>
   <div class="polygon-wrapper">
-    <div class="rectangle"></div>
+    <div class="rectangle">
+      <h2>Fresno, CA</h2>
+    </div>
     <div class="triangle"></div>
   </div>
 

@@ -12,10 +12,12 @@ textarea {
 
 @font-face {
   font-family: 'Antonio';
-  src: url('/wp-content/themes/Tower-Porchfest/fonts/Antonio-Regular.ttf') format('truetype');
-  font-weight: normal;
+  src: url('/wp-content/themes/Tower-Porchfest/fonts/Antonio-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
   font-style: normal;
 }
+
 
 @import "headings";
 @import "copy";
