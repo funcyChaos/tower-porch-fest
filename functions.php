@@ -141,7 +141,8 @@ add_action( 'widgets_init', 'towerpf_site_widgets_init' );
 function towerpf_site_scripts() {
 	wp_enqueue_style( 'towerpf-site-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
-
+	/* homepage countdown */
+	wp_enqueue_script( 'countdown', get_template_directory_uri() . '/js/countdown.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	
 	

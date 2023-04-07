@@ -25,7 +25,29 @@
     </div>
     <div class="triangle"></div>
     <p class="count-down-title">Countdown</p>
-
+    <!-- <div class="counter-wrapper">
+      <p id="counter"></p>
+      <ul>
+        <li>Days</li>
+        <li>Hours</li>
+        <li>Minutes</li>
+        <li>Seconds</li>
+      </ul>
+    </div> -->
+    <div class="counter-wrapper">
+      <div id="counter">
+        <span id="days"></span>
+        <span id="hours"></span>
+        <span id="minutes"></span>
+        <span id="seconds"></span>
+      </div>
+      <ul>
+        <li>Days</li>
+        <li>Hours</li>
+        <li>Minutes</li>
+        <li>Seconds</li>
+      </ul>
+    </div>
   </div>
 
   <!-- <div class="house-shape"></div> -->
