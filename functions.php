@@ -144,6 +144,7 @@ function towerpf_site_scripts() {
 
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	
+	
 	if(is_page(54)){
 		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&callback=initMap', [], false, true);
 		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
@@ -171,6 +172,15 @@ add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 	return str_replace( ' src', ' async src', $tag ); // OR async the script
 	//return str_replace( ' src', ' async defer src', $tag ); // OR do both!
 }, 10, 2 );
+
+/**
+ * Enqueue Fonts
+ */
+function font_enqueue_scripts() {
+	wp_enqueue_style( 'antonio-fonts', get_template_directory_uri() . '/fonts/Antonio-Regular.ttf' );
+}
+add_action( 'wp_enqueue_scripts', 'font_enqueue_scripts' );
+
 
 /**
  * Implement the Custom Header feature.
