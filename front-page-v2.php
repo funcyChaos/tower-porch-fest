@@ -20,8 +20,12 @@
   <div class="polygon-wrapper">
     <div class="rectangle">
       <h2>Fresno, CA</h2>
+      <p>April 29th, 2023</p>
+      <p class="subtext">A free music and art community festival</p>
     </div>
     <div class="triangle"></div>
+    <p class="count-down-title">Countdown</p>
+
   </div>
 
   <!-- <div class="house-shape"></div> -->
