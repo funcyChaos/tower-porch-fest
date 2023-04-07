@@ -41,6 +41,7 @@
       text-transform: uppercase;
       line-height: 46.58px;
       margin: 0;
+      font-family: $font__headers;
     }
     .subtext {
       font-family: $font__text;
@@ -103,11 +104,99 @@
       justify-content: space-evenly;
       text-align: center;
       max-width: 390px;
+      text-transform: uppercase;
       li {
         width: 70px;
         color: #fff;
       };
     }
   }
-
+/** Frontpage Reusables **/
+  .text-and-button {
+    margin: 100px auto 75px;
+    width: 330px;
+    .wrapper {
+      width: 330px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  h2 {
+  font-family: $font__headers;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 47px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+  }
+  p {
+    font-family: $font__text;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #000;
+    margin: 20px 0;
+  }
+  button {
+    height: 46px;
+    min-width: 186px;
+    left: 72px;
+    top: 266px;
+    border-radius: 0px;
+    padding: 10px 20px 10px 20px;
+    background-color: $teal;  
+    color:#fff;
+    font-family: Antonio;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0;
+  }
 }
+/** Three Up Image Section **/
+.three-up {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  .three-up-wrapper {
+    max-width: 550px;
+    margin: 0 30px;
+  }
+  .three-up-wrapper img {
+    width: 100%;
+    display: block;
+  }
+  .image-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+  }
+  .image-row img {
+    width: calc(50% - 9px);
+  }
+  // .img-row {
+  //   border-color: powderblue;
+  //   flex-direction: row;
+  //   display: flex;
+  //   margin-top: 18px;
+    // .small {
+    //   width: 50%;
+    // }
+    // .l-img {
+    //   margin-right: 9px;
+    // }
+    // .r-img {
+    //   margin-left: 9px;
+    // }
+  //}
+//}
