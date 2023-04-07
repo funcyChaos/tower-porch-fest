@@ -10,5 +10,12 @@ textarea {
 	line-height: $font__line-height-body;
 }
 
+@font-face {
+  font-family: 'Antonio';
+  src: url('/wp-content/themes/Tower-Porchfest/fonts/Antonio-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @import "headings";
 @import "copy";
