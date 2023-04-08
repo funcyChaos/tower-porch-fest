@@ -83,46 +83,50 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 	}
 
 	a {
-		display: block;
-		text-decoration: none;
-		color: #fff;
-		font-weight: 490;
-		font-size: .8rem;
-		background-color: #a33c97;
-		padding: .4rem;
-		margin: .6rem .6rem 0 0;
-
-	}
-
-	.current_page_item > a,
-	.current-menu-item > a,
-	.current_page_ancestor > a,
-	.current-menu-ancestor > a {
+		margin: 0 0.6rem;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 100;
+    background-color: #a33c97;
+    padding: 0.5rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 20px;
 	}
 }
 
-/** Toggles between mobile and desktop menu **/
-@media screen and (min-width: 37.5em) {
+/****** Media Queries *******/
 
-	.menu-toggle {
-		display: none;
+	/** Toggles between mobile and desktop menu **/
+	@media screen and (min-width: 37.5em) {
+
+		.menu-toggle {
+			display: none;
+		}
+
+		.main-navigation ul {
+			display: flex;
+		}
 	}
 
-	.main-navigation ul {
-		display: flex;
+	/** Custom Style for Responsive Menu Plugin **/
+	@media screen and (max-width: 599px) {
+		#rmp-menu-wrap-789 .rmp-menu-item {
+			width: 100%;
+			list-style: none;
+			margin: 0;
+			margin: 40px 0;
+			font-family: 'Antonio', sans-serif;
+			text-transform: uppercase;
+			font-size: 20px;
+			letter-spacing: 3px !important;
+		}
 	}
-}
-
-/** Custom Style for Responsive Menu Plugin **/
-@media screen and (max-width: 599px) {
-	#rmp-menu-wrap-789 .rmp-menu-item {
-		width: 100%;
-		list-style: none;
-		margin: 0;
-		margin: 40px 0;
-		font-family: 'Antonio', sans-serif;
-		text-transform: uppercase;
-		font-size: 20px;
-		letter-spacing: 3px !important;
+	@media screen and (min-width: 600px) and (max-width: 608px) {
+		.main-navigation a {
+			font-size: 19px;
+		}
 	}
-}
+//}

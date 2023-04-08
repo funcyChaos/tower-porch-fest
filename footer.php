@@ -27,11 +27,11 @@
 
             if ( $query->have_posts() ) :
                 while ( $query->have_posts() ) : $query->the_post(); ?>
-                    <div class="social icons">
+                    <div class="social-icons">
                         <a href="<?php echo the_field('facebook_url'); ?>" target="_blank"><i role="link"class="fab fa-facebook-f fa-xl"></i></a>
-                        <a href="<?php echo the_field('twitter_url'); ?>" target="_blank"><i role="link" class="fab fa-twitter fa-xl"></i></a>
                         <a href="<?php echo the_field('instagram_url'); ?>" target="_blank"><i role="link" class="fab fa-instagram fa-xl"></i></a>
-                        <a href="<?php echo the_field('youtube_url'); ?>" target="_blank"><i role="link" class="fab fa-youtube fa-xl"></i></a>
+                        <!-- <a href="<?php echo the_field('twitter_url'); ?>" target="_blank"><i role="link" class="fab fa-twitter fa-xl"></i></a> -->
+                        <!-- <a href="<?php echo the_field('youtube_url'); ?>" target="_blank"><i role="link" class="fab fa-youtube fa-xl"></i></a> -->
                     </div>
             <?php endwhile;
                 wp_reset_postdata();
@@ -39,7 +39,7 @@
                     echo __( 'No socials found', 'textdomain' );
                 endif;
             ?>
-            </div>
+            
             <!-- nav menu items -->
             <?php
                 wp_nav_menu(array(
@@ -51,7 +51,7 @@
             ?>
             <!-- end -->
             <p class="copyright"> Copyright &#169; Tower Porchfest 2023 </p>
-
+            </div>
 		</div>
 		
 	</footer><!-- #colophon -->
