@@ -90,12 +90,12 @@
   </section>
   <!-- icons + cards section -->
   <section class="container icons-cards-container">
-    <div class="row">
+    <!-- <div class="row"> -->
       <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
       <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
       <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
       <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
-    </div>
+    <!-- </div> -->
   </section>
 <!-- Sponsors Section -->
   <section>

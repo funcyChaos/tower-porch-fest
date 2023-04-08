@@ -213,9 +213,21 @@
 }
 /** Icons and Cards **/
 .icons-cards-container {
-  background-color: $plum;
+  background-color: #462d62;
   min-height: 100vh;
-  padding: 75px 0 30px 0;
+  padding: 75px 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .card-style {
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    min-width: 320px;
+    margin: 0 10px;
+  }
   .square {
     width: 100px;
     height: 100px;
@@ -251,7 +263,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 330px;
+    width: 100%;
     padding-top: 80px;
   }
   .text-link {

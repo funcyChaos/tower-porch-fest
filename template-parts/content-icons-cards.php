@@ -8,7 +8,7 @@
  */
 
 ?>
-    <div class="col-sm-6 col-lg-3 mb-4">
+    <div class="col-sm-6 col-lg-3 mb-4 card-style">
         <div class="square">
           <img class="icon" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/26.Ticket.png" alt="">
         </div>
