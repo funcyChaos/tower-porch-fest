@@ -198,7 +198,71 @@
     width: calc(50% - 9px);
   }
 }
-/**********************************/
+
+/** Text and Map **/
+.map-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-width: 100%;
+    object-fit: cover;
+    width: 330px;
+    height: 530px;
+  }
+}
+/** Icons and Cards **/
+.icons-cards-container {
+  background-color: $plum;
+  min-height: 100vh;
+  padding-top: 75px;
+  .square {
+    width: 100px;
+    height: 100px;
+    background-color: $violet;
+    border: 8px solid $violetdark;
+    margin: 0 auto;
+    rotate: 45deg;
+    position: relative;
+    top: 50px;
+    rotate: 45deg;
+    position: relative;
+    top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      rotate: -45deg;
+    }
+  }
+  .text-and-button {
+    padding: 100px 0 0 0;
+    width: 100%;
+    min-height: 57vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .content-wrapper {
+    color: #000;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 330px;
+    padding-top: 80px;
+  }
+  .text-link {
+    font-family: $font__headers;
+    font-size: 20px;
+    color: $teal;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+}
+/*********** Archive Styles - experiment *********/
 .porchesarchiveHeading {
   width: 100%;
   height: 285px;

@@ -177,10 +177,6 @@ add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 /**
  * Enqueue Fonts
  */
-function font_enqueue_scripts() {
-	wp_enqueue_style( 'antonio-fonts', get_template_directory_uri() . '/fonts/Antonio-Regular.ttf' );
-}
-add_action( 'wp_enqueue_scripts', 'font_enqueue_scripts' );
 
 
 /**

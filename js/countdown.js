@@ -27,6 +27,6 @@ var x = setInterval(function() {
   // If the count down is over, write some text 
   if (distance < 0) {
     clearInterval(x);
-    document.getElementById("counter").innerHTML = "EXPIRED";
+    document.getElementById("counter").innerHTML = "It was a blast!";
   }
 }, 1000);
