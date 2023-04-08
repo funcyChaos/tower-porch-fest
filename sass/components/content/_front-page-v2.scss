@@ -269,19 +269,6 @@
   justify-content: center;
   padding: 25px;
 }
-// .logo-container {
-//   display: grid;
-//   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-//   grid-gap: 20px;
-//   justify-items: center;
-//   align-items: center;
-//   margin: 0 auto;
-//   max-width: 1000px;
-// }
-
-// .logo-item {
-//   width: 100%;
-// }
 /*********** Archive Styles - experiment *********/
 .porchesarchiveHeading {
   width: 100%;
@@ -321,6 +308,14 @@
 
   }
 }
+/*********************************/
+/* keep for now. styles for
+/* individual post cards that can
+/* potential be used for random
+/* carousel. The cards populated,
+/* but I couldnt get the carousel
+/* to work.                      
+/*********************************/
 // .porchesarchivesContainer{
 //   background-color: #462D62;
 //   display: flex;
@@ -463,3 +458,4 @@
   }
       
 }
+/******** End Post Card Style for Carousel ******/
