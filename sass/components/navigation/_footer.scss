@@ -47,7 +47,7 @@ footer {
 }
 
 .footer-content-wrapper {
-    height: 668px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -93,18 +93,18 @@ footer {
     padding-top: 5px;
 }
 /************* Media Queries **************/
-@media screen and (min-width: 599px) {
+// @media screen and (min-width: 599px) {
+//     .footer-content-wrapper {
+//         height: 416px;
+//     }
+// }
+@media screen and (min-width: 992px) {
     footer {
         height: 450px;
         ul {
             flex-direction: row;
         }
     }
-    .footer-content-wrapper {
-        height: 416px;
-    }
-}
-@media screen and (min-width: 992px) {
     .copyright{
         width: 80%;
         box-sizing: border-box;
