@@ -215,7 +215,7 @@
 .icons-cards-container {
   background-color: $plum;
   min-height: 100vh;
-  padding-top: 75px;
+  padding: 75px 0 30px 0;
   .square {
     width: 100px;
     height: 100px;
@@ -262,6 +262,26 @@
     letter-spacing: 2px;
   }
 }
+/** Sponsor Logos **/
+.center-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+// .logo-container {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+//   grid-gap: 20px;
+//   justify-items: center;
+//   align-items: center;
+//   margin: 0 auto;
+//   max-width: 1000px;
+// }
+
+// .logo-item {
+//   width: 100%;
+// }
 /*********** Archive Styles - experiment *********/
 .porchesarchiveHeading {
   width: 100%;
