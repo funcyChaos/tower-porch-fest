@@ -17,10 +17,13 @@
     echo '</div>';
   }
   ?>
+  <?php
+        $city_state = get_sub_field( 'city_state' );
+  ?>
   <!-- date and counter -->
   <div class="polygon-wrapper">
     <div class="rectangle">
-      <h2>Fresno, CA</h2>
+      <h2><?php the_field('city_state'); ?></h2>
       <p>April 29th, 2023</p>
       <p class="subtext">A free music and art community festival</p>
     </div>
