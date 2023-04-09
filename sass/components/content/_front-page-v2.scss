@@ -199,6 +199,8 @@
   }
 }
 
+/** END STYLES THAT ARE UNDER ".front-page-styles" **/
+
 /** Text and Map **/
 .map-wrapper {
   display: flex;
@@ -272,9 +274,10 @@
     color: $teal;
     text-transform: uppercase;
     letter-spacing: 2px;
+    margin-bottom: 50px;
   }
 }
-/** Sponsor Logos **/
+/** Sponsor Logos and Section **/
 .sponsors {
   display: flex;
   justify-content: center;
@@ -293,13 +296,11 @@
     }
   }
 }
-.center-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 25px;
+@media screen and (min-width: 700px) {
+  .front-page-styles .text-and-button .wrapper {
+    width: 588px;
+  }
 }
-
 /*********** Archive Styles - experiment *********/
 .porchesarchiveHeading {
   width: 100%;
@@ -490,3 +491,26 @@
       
 }
 /******** End Post Card Style for Carousel ******/
+
+@media screen and (min-width: 700px) {
+  .front-page-styles {
+    h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 25px;
+    }
+  }
+}
+@media screen and (min-width: 992px) {
+  .front-page-styles {
+    h2 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 35px;
+    }
+  }
+}
