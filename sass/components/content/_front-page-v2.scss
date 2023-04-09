@@ -510,6 +510,14 @@
       }
     }
   }
+}
+@media screen and (min-width: 762px) {
+  .front-page-styles {
+    .featured-image {
+      height: 500px;
+    }
+  }
+}
 @media screen and (min-width: 992px) {
   .front-page-styles {
     h2 {
@@ -551,5 +559,26 @@
       margin-bottom: 0;
     }
   }
-}
+  @media screen and (min-width: 1140px) {
+    .front-page-styles {
+      .featured-image {
+        height: 575px;;
+      }
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .front-page-styles {
+      .featured-image {
+        height: 665px;;
+      }
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .front-page-styles {
+      .featured-image {
+        height: 665px;
+        background-size: unset;
+      }
+    }
+  }
 }
