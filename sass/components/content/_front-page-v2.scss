@@ -43,7 +43,6 @@
       margin: 0;
       font-family: $font__headers;
       line-height: unset;
-      // margin-bottom: 32px;
       position: relative;
       bottom: 10px;
 
@@ -510,7 +509,7 @@
       margin-bottom: 25px;
     }
   }
-  .section-1 {
+  .section-wrapper {
     .text-and-button {
       .wrapper {
         h2 {
@@ -589,7 +588,7 @@
     }
   }
   /** End Counter Section **/
-  .section-1 {
+  .section-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-around;

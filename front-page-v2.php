@@ -67,7 +67,7 @@
     </div>
   </div>
   <!-- end -->
-  <section class="section-1">
+  <section class="section-wrapper">
   <!-- light text section -->
     <div class="light-section text-and-button">
       <div class="wrapper">
@@ -102,7 +102,7 @@
   </section>
   <!-- Future Carousel -->
   <!-- light text section -->
-  <section>
+  <section class="section-wrapper">
     <div class="light-section text-and-button">
       <div class="wrapper">
         <h2>Tower Porchfest Map</h2>
