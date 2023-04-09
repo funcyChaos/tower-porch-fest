@@ -107,7 +107,15 @@
       </div>
     </div>
     <div class="sponsors">
-      <div class="container">
+      <section class="logo-container">
+        <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/raging-records-logo-1.png">
+        <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/spokeasy-logo-1.png">
+        <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/neighborhood-thrift-1.png">
+        <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/the-brass-unicorn-1.png">
+        <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/blkmktplc-1.png">
+        <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/hi-top-coffee-1.png">
+      </section>
+      <!-- <div class="container">
         <div class="row">
           <div class="col-6 col-md-3 center-logo">
             <img src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/raging-records-logo-1.png">
@@ -119,7 +127,7 @@
             <img src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/neighborhood-thrift-1.png">
           </div>
           <div class="col-6 col-md-3 center-logo">
-            <img src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/hi-top-coffee-1.png">
+            <img src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/neighborhood-thrift-1.png">
           </div>
           <div class="col-6 col-md-3 center-logo">
             <img src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/the-brass-unicorn-1.png">
@@ -129,7 +137,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   <section>
 </main>
 <!-- Footer must be included for navigation to display -->
