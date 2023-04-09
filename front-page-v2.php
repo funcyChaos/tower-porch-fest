@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Front Page v3
+ * Template Name: Front Page v2
  *
  * @package towerpf-site
  *
@@ -8,35 +8,24 @@
 ?>
 
 <?php get_header(); ?>
-<?php if( have_rows('front_page_group') ): ?>
-    <?php while( have_rows('front_page_group') ): the_row(); ?>
-    <?php if( have_rows('where_when_and_countdown_timer') ): ?>
-      <?php while( have_rows('where_when_and_countdown_timer') ): the_row(); 
-
-        // Get sub field values.
-        $city_state = get_sub_field('city_state');
-        $festival_date = get_sub_field('festival_date');
-        $subtext = get_sub_field('subtext');
-
-        ?>
-
-<?php get_header(); ?>
 <main class="front-page-styles">
-  <!-- grabs featured image -->
   <?php
   if ( has_post_thumbnail() ) {
+    /* grabs featured image */
     $image_url = get_the_post_thumbnail_url();
     echo '<div class="featured-image" style="background-image: url(' . $image_url . ');">';
     echo '</div>';
   }
   ?>
-  
+  <?php
+        $city_state = get_sub_field( 'city_state' );
+  ?>
   <!-- date and counter -->
   <div class="polygon-wrapper">
     <div class="rectangle">
-      <h2><?php echo $city_state;?></h2>
-      <p><?php echo $festival_date;?></p>
-      <p class="subtext"><?php echo $subtext;?></p>
+      <h2><?php the_field('city_state'); ?></h2>
+      <p>April 29th, 2023</p>
+      <p class="subtext">A free music and art community festival</p>
     </div>
     <div class="triangle"></div>
     <p class="count-down-title">Countdown</p>
@@ -156,11 +145,5 @@
         <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/hi-top-coffee-1.png">
       </section>
 </main>
-
-      <?php endwhile; ?>
-<?php endif; ?>
-<?php endwhile; ?>
-<?php endif; ?>
-
 <!-- Footer must be included for navigation to display -->
 <?php get_footer(); ?>
