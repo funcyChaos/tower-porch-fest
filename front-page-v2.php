@@ -41,6 +41,32 @@
       </ul>
     </div>
   </div>
+  <!-- polygon wrapper desktop -->
+  <div class="polygon-wrapper-desktop">
+    <div class="rectangle">
+      <h2>Fresno, CA</h2>
+      <p>April 29th, 2023</p>
+      <p class="subtext">A free music and art community festival</p>
+    </div>
+    <div class="triangle">
+    <p class="count-down-title">Countdown</p>
+    <div class="counter-wrapper">
+      <div id="counter">
+        <span id="days-desk"></span>
+        <span id="hours-desk"></span>
+        <span id="minutes-desk"></span>
+        <span id="seconds-desk"></span>
+      </div>
+      <ul>
+        <li>Days</li>
+        <li>Hours</li>
+        <li>Minutes</li>
+        <li>Seconds</li>
+      </ul>
+    </div>
+    </div>
+  </div>
+  <!-- end -->
   <section class="section-1">
   <!-- light text section -->
     <div class="light-section text-and-button">
