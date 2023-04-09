@@ -34,3 +34,10 @@ var x = setInterval(function() {
     document.getElementById("counter").innerHTML = "It was a blast!";
   }
 }, 1000);
+
+// Double checks ACF variable to JS variable
+jQuery( document ).ready( function( $ ) {
+
+  console.log( countdownData.festivalDate );
+
+});

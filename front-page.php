@@ -8,6 +8,7 @@
 ?>
 
 <?php get_header(); ?>
+
 <?php if( have_rows('front_page_group') ): ?>
     <?php while( have_rows('front_page_group') ): the_row(); ?>
     <?php if( have_rows('where_when_and_countdown_timer') ): ?>
@@ -17,6 +18,12 @@
         $city_state = get_sub_field('city_state');
         $festival_date = get_sub_field('festival_date');
         $subtext = get_sub_field('subtext');
+
+        // Passes the countdown to date in a variable and gives to countdown.js
+        wp_localize_script( 'countdown', 'countdownData', array(
+          'festivalDate' => $festival_date
+        ) );
+
 
         ?>
 

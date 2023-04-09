@@ -175,8 +175,13 @@ add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 }, 10, 2 );
 
 /**
- * Enqueue Fonts
+ * Enqueue Countdown Timer ACF variable to JS script
  */
+function countdown_enqueue_scripts() {
+  wp_enqueue_script( 'countdown', get_template_directory_uri() . '/js/countdown.js', array( 'jquery' ), '1.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'countdown_enqueue_scripts' );
+/** End */
 
 
 /**
