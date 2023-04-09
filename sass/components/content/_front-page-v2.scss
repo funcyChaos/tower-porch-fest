@@ -123,7 +123,6 @@
   .text-and-button {
     padding: 100px 0 0 0;
     width: 100%;
-    min-height: 57vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -200,6 +199,7 @@
 }
 
 /** END STYLES THAT ARE UNDER ".front-page-styles" **/
+/** Call for Porches **/
 
 /** Text and Map **/
 .map-wrapper {
@@ -252,7 +252,6 @@
   .text-and-button {
     padding: 100px 0 0 0;
     width: 100%;
-    min-height: 57vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -502,7 +501,15 @@
       margin-bottom: 25px;
     }
   }
-}
+  .section-1 {
+    .text-and-button {
+      .wrapper {
+        h2 {
+          min-width: 700px;
+        }
+      }
+    }
+  }
 @media screen and (min-width: 992px) {
   .front-page-styles {
     h2 {
@@ -513,4 +520,36 @@
       margin-bottom: 35px;
     }
   }
+  .section-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 1350px;
+    margin: 100px auto;
+      .text-and-button {
+        .wrapper {
+          h2 {
+            min-width: 100%;
+            text-align: left;
+          }
+        }
+      }
+    
+    .text-and-button {
+      padding: 0;
+      width: 504px;
+      .wrapper {
+        margin-bottom: 0px;
+        width: 435px;
+        align-items: start;
+        p {
+          text-align: left;
+        }
+      }
+    }
+    .three-up {
+      margin-bottom: 0;
+    }
+  }
+}
 }

@@ -41,7 +41,7 @@
       </ul>
     </div>
   </div>
-  <section class="section 1">
+  <section class="section-1">
   <!-- light text section -->
     <div class="light-section text-and-button">
       <div class="wrapper">
