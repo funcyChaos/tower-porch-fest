@@ -1,0 +1,645 @@
+.front-page-styles {
+  .featured-image {
+      height: 393px;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+    h1 {
+      font-family: $font__headers;
+    }
+    .polygon-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      min-height: 351px;
+      background-color: $violet;
+    }
+  .rectangle {
+    width: 100%;
+    height: 150px;
+    background-color: $violetdark;
+    font-family: $font__headers;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h2 {
+      color: $violet;
+      font-family: $font__text;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 32.68px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 43px;
+    }
+    p {
+      color: #fff;
+      font-weight: 700;
+      font-size: 36px;
+      text-transform: uppercase;
+      line-height: 46.58px;
+      margin: 0;
+      font-family: $font__headers;
+      line-height: unset;
+      position: relative;
+      bottom: 10px;
+
+    }
+    .subtext {
+      font-family: $font__text;
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+  }
+  .triangle {
+    width: 100%;
+    height: 0;
+    border-left: 50vw solid transparent;
+    border-right: 50vw solid transparent;
+    border-top: 60px solid $violetdark;
+  }
+  .count-down-title {
+    color: $violetdark;
+      font-family: $font__text;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 32.68px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 10px auto 0;
+  }
+/** Countdown Styles **/  
+  .counter-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    #counter {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 100vw;
+      text-align: center;
+      font-size: 60px;
+      margin-top: 0px;
+      font-family: $font__headers;
+      font-size: 36px;
+      font-weight: 700;
+      color:#fff;
+      max-width: 390px;
+    }
+    #counter span {
+      margin: 0 10px; /* adjust the value as needed */
+      width: 47px;
+    }
+    ul {
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+      font-family: $font__text;
+      font-size: 12px;
+      font-weight: 400;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      justify-content: space-evenly;
+      text-align: center;
+      max-width: 390px;
+      text-transform: uppercase;
+      li {
+        width: 70px;
+        color: #fff;
+      };
+    }
+  }
+  /** don't delete. hides mobile version of counter **/
+  .polygon-wrapper-desktop {
+    display: none;
+  }
+/** Frontpage Reusables **/
+  .dark-section {
+    color:#fff;
+    background-color: $plum;
+  }
+  .light-section {
+    color: #000;
+    background-color: #fff;
+  }
+  .text-and-button {
+    padding: 100px 0 0 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .wrapper {
+      width: 330px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 75px;
+    }
+  }
+  
+  h2 {
+  font-family: $font__headers;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 47px;
+  letter-spacing: 0em;
+  text-align: center;
+  text-transform: uppercase;
+  }
+  p {
+    font-family: $font__text;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 20px 0;
+  }
+  button {
+    height: 46px;
+    min-width: 186px;
+    left: 72px;
+    top: 266px;
+    border-radius: 0px;
+    padding: 10px 20px 10px 20px;
+    background-color: $teal;  
+    color:#fff;
+    font-family: Antonio;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0;
+  }
+
+/** Three Up Image Section **/
+.three-up {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+  .three-up-wrapper {
+    max-width: 550px;
+    margin: 0 30px;
+  }
+  .three-up-wrapper img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .image-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+  }
+  .image-row img {
+    width: calc(50% - 9px);
+  }
+}
+
+/** END STYLES THAT ARE UNDER ".front-page-styles" **/
+/** Call for Porches **/
+
+/** Text and Map **/
+.map-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-width: 100%;
+    object-fit: cover;
+    width: 330px;
+    height: 530px;
+  }
+}
+/** Icons and Cards **/
+.icons-cards-container {
+  background-color: #462d62;
+  min-height: 100vh;
+  padding: 75px 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .card-style {
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    min-width: 320px;
+    margin: 0 10px;
+  }
+  .square {
+    width: 100px;
+    height: 100px;
+    background-color: $violet;
+    border: 8px solid $violetdark;
+    margin: 0 auto;
+    rotate: 45deg;
+    position: relative;
+    top: 50px;
+    rotate: 45deg;
+    position: relative;
+    top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      rotate: -45deg;
+    }
+  }
+  .text-and-button {
+    padding: 100px 0 0 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .content-wrapper {
+    color: #000;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 80px;
+  }
+  .text-link {
+    font-family: $font__headers;
+    font-size: 20px;
+    color: $teal;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 50px;
+  }
+}
+/** Sponsor Logos and Section **/
+.sponsors {
+  display: flex;
+  justify-content: center;
+  .logo-container {
+    max-width: 100%;
+    max-width: 800px;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .logo-style {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+    }
+  }
+}
+@media screen and (min-width: 700px) {
+  .front-page-styles .text-and-button .wrapper {
+    width: 588px;
+  }
+}
+/*********** Archive Styles - experiment *********/
+.porchesarchiveHeading {
+  width: 100%;
+  height: 285px;
+  display: flex;
+  justify-content: center;
+  background:  #462D62;
+  flex-direction: column;
+  align-items: center;
+  h1{
+      font-family: 'Antonio';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 47px;
+      /* identical to box height */
+
+      text-align: center;
+      text-transform: uppercase;
+
+      /* White */
+
+      color: #FFFFFF;
+  }
+  p{
+      width: 700px;
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      text-align: center;
+
+      /* White */
+
+      color: #FFFFFF;
+
+  }
+}
+/*********************************/
+/* keep for now. styles for
+/* individual post cards that can
+/* potential be used for random
+/* carousel. The cards populated,
+/* but I couldnt get the carousel
+/* to work.                      
+/*********************************/
+// .porchesarchivesContainer{
+//   background-color: #462D62;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+  .porchesposts{
+      // background-color: pink;
+      width: 1085px;
+      // height: 1800px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      .porchcard{
+          width: 330px;
+          height: 650px;
+          background-color: #fff;
+          padding: 15px;
+          margin: 16px 0;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          .porchheading{
+              font-family: 'Antonio';
+              font-style: normal;
+              font-weight: 700;
+              font-size: 24px;
+              line-height: 31px;
+              text-align: center;
+              text-transform: uppercase;
+              color: #000000;
+              margin: 20px 0px 0px 0px;
+          }
+          .porchparagraph{
+
+              font-family: 'Open Sans';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 22px;
+              /* identical to box height */
+
+              text-align: center;
+
+              color: #000000;
+          }
+          .porchimage{
+              width: 300px;
+              height: 200px;
+
+          }
+          .porchlinks{
+              display: flex;
+              height: 15px;
+              margin: 20px 15px;
+              a{
+                  font-family: 'Antonio';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 16px;
+                  line-height: 21px;
+                  /* identical to box height */
+                  text-decoration: none;
+                  text-align: center;
+                  text-transform: uppercase;
+                  margin: 0 30px;
+                  /* Violet */
+
+                  color: #A33C97;
+              }
+          }
+          .porchDescription{
+              font-family: 'Open Sans';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 22px;
+              text-align: center;
+
+              color: #000000;
+          }
+          .timeoncard{
+              font-family: 'Open Sans';
+              font-style: normal;
+              font-weight: 700;
+              font-size: 16px;
+              line-height: 22px;
+              /* identical to box height */
+              margin-bottom: 10px;
+              text-align: center;
+
+              color: #000000;
+          }
+          .button7{
+              width: 300px;
+              height: 46px;
+
+              /* Teal */
+
+              background: #14A4AB;
+
+              font-family: 'Antonio';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 20px;
+              line-height: 26px;
+              /* identical to box height */
+              text-decoration: none;
+              padding: 10px 20px;
+              text-align: center;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+
+              /* White */
+
+              color: #FFFFFF;
+              &:hover{
+                  background-color: #462D62;
+              }
+
+          }
+      }
+  }
+
+// }
+
+@media (max-width: 775px) { 
+
+  .porchesarchiveHeading p {
+      width: 500px;
+  }
+
+}
+@media (max-width: 550px) { 
+
+  .porchesarchiveHeading p {
+      width: 350px;
+      font-size: 15px;
+  }
+      
+}
+/******** End Post Card Style for Carousel ******/
+
+@media screen and (min-width: 700px) {
+  .front-page-styles {
+    h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 25px;
+    }
+  }
+  .section-wrapper {
+    .text-and-button {
+      .wrapper {
+        h2 {
+          min-width: 700px;
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 762px) {
+  .front-page-styles {
+    .featured-image {
+      height: 500px;
+    }
+  }
+}
+@media screen and (min-width: 992px) {
+  .front-page-styles {
+    h2 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 35px;
+    }
+    /** Counter Section **/
+    .rectangle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+      h2 {
+        font-size: 32px;
+        margin: 0;
+        line-height: unset;
+      }
+      p {
+        line-height: unset;
+      }
+    }
+    /** don't delete. hides mobile version of counter **/
+    .polygon-wrapper {
+      display: none;
+    }
+    .polygon-wrapper-desktop {
+      display: flex;
+      flex-direction: row;
+      background-color: $violet;
+      height: 150px;
+    }
+    .triangle {
+      width: 100%;
+      height: 0;
+      border-top: 75px solid transparent;
+      border-bottom: 75px solid transparent;
+      border-left: 60px solid $violetdark;
+      border-right: unset;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+        .count-down-title {
+          font-size: 32px;
+          margin: 10px auto 0;
+          p {
+
+          }
+        }
+    }
+    .counter-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      align-items: center;
+    }
+  }
+  /** End Counter Section **/
+  .section-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 1350px;
+    margin: 100px auto;
+      .text-and-button {
+        .wrapper {
+          h2 {
+            min-width: 100%;
+            text-align: left;
+          }
+        }
+      }
+    
+    .text-and-button {
+      padding: 0;
+      width: 504px;
+      .wrapper {
+        margin-bottom: 0px;
+        width: 435px;
+        align-items: start;
+        p {
+          text-align: left;
+        }
+      }
+    }
+    .three-up {
+      margin-bottom: 0;
+    }
+  }
+  @media screen and (min-width: 1140px) {
+    .front-page-styles {
+      .featured-image {
+        height: 575px;;
+      }
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .front-page-styles {
+      .featured-image {
+        height: 665px;;
+      }
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .front-page-styles {
+      .featured-image {
+        height: 665px;
+        background-size: unset;
+      }
+    }
+  }
+}
