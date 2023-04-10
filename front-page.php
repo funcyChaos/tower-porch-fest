@@ -206,20 +206,8 @@
           <?php endwhile; ?>
         <?php endif; ?>
           <div class="sponsors">
-          <? get_template_part( 'template-parts/content', 'sponsor-logos' ); ?>
-
-          
-                <!-- <h2>Tier 2</h2>
-                <div class="logo-container">  
-                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/raging-records-logo-1.png">
-                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/spokeasy-logo-1.png">
-                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/neighborhood-thrift-1.png">
-                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/the-brass-unicorn-1.png">
-                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/blkmktplc-1.png">
-                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/hi-top-coffee-1.png">
-                </div> -->
-
-            </div>
+            <? get_template_part( 'template-parts/content', 'sponsor-logos' ); ?>
+          </div>
         </section>
       </main>
 

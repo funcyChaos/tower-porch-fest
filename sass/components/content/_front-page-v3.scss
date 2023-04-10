@@ -225,7 +225,7 @@
 /** Icons and Cards **/
 .icons-cards-container {
   background-color: #462d62;
-  min-height: 100vh;
+  // min-height: 100vh;
   padding: 75px 0;
   max-width: 100%;
   flex-wrap: wrap;
@@ -304,9 +304,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  h2 {
+    color: black;
+  }
   .logo-container {
     max-width: 100%;
-    max-width: 800px;
+    max-width: 1240px;
     flex-wrap: wrap;
     display: flex;
     align-items: center;
@@ -319,6 +322,9 @@
       max-width: 248px;
     }
   }
+}
+.title-margin {
+  margin-top: 80px;
 }
 @media screen and (min-width: 700px) {
   .front-page-styles .text-and-button .wrapper {
