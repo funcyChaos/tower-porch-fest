@@ -9,31 +9,81 @@
 
 get_header();
 ?>
+	<section class="prochesSingle">
+	
+		<div class="singleporchImgContainer">
+		<img class="porchimage" src="<?php the_field('porch_image'); ?>" alt="" />
+		</div>
+			
+		<div class="singleporchContentContainer">
+			<h2 class="porchheading" > <?php the_field('porch_name'); ?> </h2>
+			<p class="porchaddress"> <?php the_field('porch_address'); ?> </p>
+			<p class="porchDescription"> <?php the_field('description'); ?> </p>
+					
+			<a href="#" class="singleButton">SEE LINEUP</a>
+		</div>
 
-	<main id="primary" class="site-main">
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
 
-			get_template_part( 'template-parts/content', get_post_type() );
 
-			the_post_navigation(
-				array(
-					'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'towerpf-site' ) . '</span> <span class="nav-title">%title</span>',
-					'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'towerpf-site' ) . '</span> <span class="nav-title">%title</span>',
-				)
-			);
+	</section>
+	<section class="categoriesBar">
+			<a href=""><?php the_field('genre'); ?></a>
+			<a href=""><?php the_field('tag_one'); ?></a>
+			<a href=""><?php the_field('tag_two'); ?></a>
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+	</section>
 
-		endwhile; // End of the loop.
-		?>
+	<section class="singlepage">
+	<section class="singleArchivesSection" style="background:linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('<?php the_field('category_background_image'); ?>'); background-position: center; background-size: cover; background-repeat: no-repeat; ">
+	
+	</section>
+	<div class="cardContainer" >
+			<div class="SingleCatCard">
+				<div class="TagImg">
+					<img class="porchimage" src="<?php the_field('tag_image'); ?>" alt="" />
+					<div class="tag">
+						<p><?php the_field('genre'); ?></p>
+					</div>
+					
+				</div>
+				<div class="TagContent">
+					<a href="#" class="singleButton"><?php the_field('tag_time'); ?></a>
+					<h2 class="tagHeading" > <?php the_field('tag_heading'); ?> </h2>
+					<p class="porchDescription"> <?php the_field('tag_description'); ?> </p>
+				</div>
+			</div>
 
-	</main><!-- #main -->
+			<div class="SingleCatCard">
+			<div class="TagImg">
+					<img class="porchimage" src="<?php the_field('tag_two_image'); ?>" alt="" />
+					<div class="tag">
+						<p><?php the_field('tag_one'); ?></p>
+					</div>
+				</div>
+				<div class="TagContent">
+					<a href="#" class="singleButton"><?php the_field('tag_two_time'); ?></a>
+					<h2 class="tagHeading" > <?php the_field('tag_two_heading'); ?> </h2>
+					<p class="porchDescription"> <?php the_field('tag_two_description'); ?> </p>
+				</div>
+			</div>
+
+			<div class="SingleCatCard">
+			<div class="TagImg">
+					<img class="porchimage" src="<?php the_field('tag_three_image'); ?>" alt="" />
+					<div class="tag">
+						<p><?php the_field('tag_two'); ?></p>
+					</div>
+				</div>
+				<div class="TagContent">
+					<a href="#" class="singleButton"><?php the_field('tag_three_time'); ?></a>
+					<h2 class="tagHeading" > <?php the_field('tag_three_heading'); ?> </h2>
+					<p class="porchDescription"> <?php the_field('tag_three_description'); ?> </p>
+				</div>
+			</div>
+
+		</div>
+</section>
 
 <?php
 get_sidebar();

@@ -1,0 +1,155 @@
+.aboutbackground{
+    background-color: $plum;
+    height: 160rem;
+}
+
+.aboutbanner {
+    margin: -5rem 0 0 0;
+    display: content;
+}
+.aboutbanner2 {
+    display: none;
+}
+
+// about headings
+.aboutheading1 {
+    color: $white;
+    margin: -7rem 0 6rem 1rem;
+}
+.aboutheading2 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+.aboutheading3 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+.aboutheading4 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+.aboutheading5 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+.aboutheading6 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+.aboutheading7 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+.aboutheading8 {
+    color: $white;
+    margin: 0 0 1rem 1rem;
+}
+
+// about paragraphs
+.aboutpara1 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.aboutpara2 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.aboutpara3 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.aboutpara4 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.aboutpara5 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.aboutpara6 {
+    color: $white;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.aboutpara7 {
+    color: $white;
+    margin: 0 2.2rem 1rem 1rem;
+}
+
+.aboutpara8 {
+    color: $white;
+    margin: 0 2.2rem 1rem 1rem;
+}
+
+.aboutpara9 {
+    color: $white;
+    margin: 0 2.2rem 1rem 1rem;
+}
+
+
+// media queries
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+    .aboutbanner2 {
+        margin: -5rem 0 0 0;
+        display: inline;
+    } 
+    .aboutbanner {
+        display: none;
+    }
+
+    .aboutbackground{
+        background-color: $plum;
+        height: 105rem;
+    }
+
+    .aboutheading1 {
+        margin: -5rem 0 6rem 1rem;
+    }
+
+ }
+
+// Medium devices (tablets, 768px and up)
+ @media (min-width: 768px) { 
+    .aboutheading1 {
+        margin: -4rem 0 5rem 2.8rem;
+    }
+
+    .aboutbackground {
+        height: 95rem;
+    }
+
+    .aboutheading1 {
+        margin: -5rem 0 6rem 1rem;
+    }
+
+  }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .aboutbackground {
+        height: 93rem;
+    }
+ }
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+    .aboutbackground {
+        height: 95rem;
+    }
+ }
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { 
+    .aboutbackground {
+        height: 95rem;
+        width: 100%;
+    }
+
+ }

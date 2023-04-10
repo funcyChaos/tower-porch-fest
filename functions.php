@@ -143,12 +143,34 @@ function towerpf_site_scripts() {
 	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
 
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	
+	if(is_page(54)){
+		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&callback=initMap', [], false, true);
+		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
+		wp_localize_script('map-script', 'wpVars', ['homeURL' => home_url()]); 
+		wp_enqueue_script('map-script');
+		wp_register_script( 'import-script', get_template_directory_uri().'/coord-import/import.js', [], '1.0', true);
+		wp_enqueue_script('import-script');
+	} 
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+
+	if(is_front_page()){
+		wp_enqueue_script('home-page', get_template_directory_uri() . '/js/home-page.js',array('jquery'), _S_VERSION, true );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+
+add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+	if ( 'map-api' !== $handle ) {
+		return $tag;
+	}
+	// return str_replace( ' src', ' defer src', $tag ); // defer the script
+	return str_replace( ' src', ' async src', $tag ); // OR async the script
+	//return str_replace( ' src', ' async defer src', $tag ); // OR do both!
+}, 10, 2 );
 
 /**
  * Implement the Custom Header feature.
@@ -176,4 +198,36 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+function setup_porch_type() {
+	register_post_type('porch', array(
+		'label'					=> 'Porches',
+		'slug'                  => 'porch',
+		'singular'              => 'Porch',
+		'plural'                => 'Porches',
+		'menu_icon'             => 'dashicons-admin-home',
+		'menu_position'         => 2,
+		'public'                => true,
+		'show_in_rest' 			=> true,
+		'supports' 				=> ['title', 'editor', 'thumbnail', 'excerpt'],
+		'taxonomies' 			=> ['category']
+	));
+}
+add_action('init', 'setup_porch_type');
+
+
+function remove_default_post_type()
+{
+    remove_menu_page('edit.php');
+}
+add_action('admin_menu', 'remove_default_post_type');
+
+
+// REMOVES TEXT EDITOR FOR PORCHES CUSTOM POST TYPE
+
+// add_action('init', 'my_remove_editor_from_post_type');
+// function my_remove_editor_from_post_type() {
+// remove_post_type_support( 'porch', 'editor' );
+
+// 	}
 

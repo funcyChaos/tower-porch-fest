@@ -1,412 +1,1061 @@
 //Towerpf image
 .wp-block-image img {
-    height: auto;
-    max-width: 100%;
-    vertical-align: bottom;
-    margin: -97px 0 -25px 0;
+  height: auto;
+  max-width: 100%;
+  vertical-align: bottom;
+  margin: 0px 0 -25px 0;
 }
-
+.entry-header{
+  display: none;
+}
+.entry-content {
+  margin: 0 !important;
+}
 //top rectangle
 .top{
-    height: 8rem;
+  height: 8rem;
 
 }
 
 // triangle
 .middle{
-    rotate: 90deg;
-    width: 3.8rem;
-    height: 20.3rem;
-    margin: -8.3rem 0 -1.5rem 8rem;
+  rotate: 90deg;
+  width: 3.8rem;
+  height: 20.3rem;
+  margin: -8.3rem 0 -1.5rem 8rem;
 }
 
 // bottom rectangle
 .bottom{
-    height: 12rem;
-    margin-top: -11rem;
-    margin-bottom: 5rem;
+  height: 12rem;
+  margin-top: -11rem;
+  margin-bottom: 5rem;
 }
 
 // text over image
 .center1 {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    right: -20%;
-    transform: translate(-50%, -50%);
-    color: $violet ;
-    font-weight: 650;
-    font-size: 1.3rem;
-    letter-spacing: 4px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  right: -20%;
+  transform: translate(-50%, -50%);
+  color: $violet ;
+  font-weight: 650;
+  font-size: 1.3rem;
+  letter-spacing: 4px;
 }  
 
 .center2 {
-    position: absolute;
-    top: 53%;
-    left: 50%;
-    right: -20%;
-    transform: translate(-50%, -50%);
-    color: $white ;
-    font-weight: 650;
-    font-size: 1.5rem;
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  right: -20%;
+  transform: translate(-50%, -50%);
+  color: $white ;
+  font-weight: 650;
+  font-size: 1.5rem;
 }
 
 .center3 {
-    position: absolute;
-    top: 70%;
-    left: 25%;
-    transform: translate(-15%, -30%);
-    color: $white ;
-    font-weight: 410;
-    font-size: .7rem;
+  position: absolute;
+  top: 70%;
+  left: 25%;
+  transform: translate(-15%, -30%);
+  color: $white ;
+  font-weight: 410;
+  font-size: .7rem;
 }
 
 .contain {
-    position: relative;
-    text-align: center;
-  }
+  position: relative;
+  text-align: center;
+}
 
-  //text over bottom rectangle
+//text over bottom rectangle
 
-  .center4 {
-    position: absolute;
-    top: 160%;
-    left: 30%;
-    transform: translate(-15%, -30%);
-    color: $violetdark ;
-    font-weight: 800;
-    font-size: 1.6rem;
-    letter-spacing: 4px;
+.center4 {
+  position: absolute;
+  top: 160%;
+  left: 30%;
+  transform: translate(-15%, -30%);
+  color: $violetdark ;
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: 4px;
 }
 
 // first featurette start
 
 .row{
-  margin: 0 auto 3rem 0;
+margin: 0 auto 3rem 0;
 }
 .featurette-heading {
-    font-weight: 650;
-    line-height: 1;
-    text-align: center;
-    font-size: 1.4rem;
-    margin-bottom: 1.1rem;
-  }
+  font-weight: 650;
+  line-height: 1;
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.1rem;
+}
 
-  .featurette-heading3 {
-    font-weight: 650;
-    line-height: 1;
-    text-align: center;
-    font-size: 1.4rem;
-    margin: 3.5rem 0 1.1rem 0;
-  }
+.featurette-heading3 {
+  font-weight: 650;
+  line-height: 1;
+  text-align: center;
+  font-size: 1.4rem;
+  margin: 3.5rem 0 1.1rem 0;
+}
 
-  .lead{
-    text-align: center;
-    font-size: .8rem;
-    font-weight: 400;
-  }
-  
-  //Buttons start
-  .button {
-    background-color: $teal;
-    border: none;
-    color: white;
-    padding: 8px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 0.1rem 0 3.8rem 3rem;
-    cursor: pointer;
-  }
+.lead{
+  text-align: center;
+  font-size: .8rem;
+  font-weight: 400;
+}
+.lead3{
+  text-align: center;
+  font-size: .8rem;
+  font-weight: 400;
+}
 
-  .button2 {
-    background-color: $teal;
-    border: none;
-    color: white;
-    padding: 8px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 0.1rem 0 3.8rem 4.7rem;
-    cursor: pointer;
-  }
+//Buttons start
 
-  .button3 {
-    background-color: $teal;
-    border: none;
-    color: white;
-    padding: 8px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 0.1rem 0 3.8rem 2.5rem;
-    cursor: pointer;
-  }
+a:visited {
+  color: $white;
+}
+.button {
+  background-color: $teal;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0.1rem 0 3.8rem 3rem;
+  cursor: pointer;
+}
 
-  .button4 {
-    background-color: $teal;
-    border: none;
-    color: white;
-    padding: 8px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: -.5rem 0 .2rem 0;
-    width: 100%;
-    cursor: pointer;
-  }
-  //Images in featurette start
-  .img1{
-    padding: .5rem;
-  }
+.button2 {
+  background-color: $teal;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0.1rem 0 3.8rem 4.7rem;
+  cursor: pointer;
+}
 
-  .img2{
-    padding: .5rem;
-  }
+.button3 {
+  background-color: $teal;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0.1rem 0 3.8rem 2.5rem;
+  cursor: pointer;
+}
 
-  .img3{
-    padding: .5rem;
-  }
-  // first featurette end
-  /* -------------------------------------------------- */
+.button4 {
+  background-color: $teal;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: -.5rem 0 .2rem 0;
+  width: 100%;
+  cursor: pointer;
+}
 
-  // second featurette start
-  .featurette-heading2 {
-    font-weight: 650;
-    line-height: 1;
-    text-align: center;
-    font-size: 1.4rem;
-    color: $white;
-    margin: 3.7rem 0 1.1rem 0;
-  }
+.button5 {
+  background-color: $teal;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: -.5rem 0 .2rem 0;
+  width: 100%;
+  cursor: pointer;
+}
+//Images in featurette start
+.img1{
+  padding: .5rem;
+}
 
-  .lead2{
-    text-align: center;
-    font-size: .8rem;
-    font-weight: 400;
-    color: $white;
-  }
+.img2{
+  padding: .5rem;
+}
 
-  .color{
-    background-color: $plum;
-  }
+.img3{
+  padding: .5rem;
+}
+// first featurette end
+/* -------------------------------------------------- */
 
-  .card-title{
-    margin: 1.5rem 0 -.2rem 0;
-    text-align: center;
-  }
-  .address{
-    text-align: center;
-  }
-  .item{
-    color: $violet;
-    text-align: center;
-    font-weight: 500;
-    margin-bottom: 0rem;
-  }
-  .time{
-    text-align: center;
-    margin-bottom: 0.5999999999999996rem;
-  }
+// second featurette start
+.featurette-heading2 {
+  font-weight: 650;
+  line-height: 1;
+  text-align: center;
+  font-size: 1.4rem;
+  color: $white;
+  margin: 3.7rem 0 1.1rem 0;
+}
 
-  .image1{
-    margin: 0 .7rem 0 .7rem;
+.lead2{
+  text-align: center;
+  font-size: .8rem;
+  font-weight: 400;
+  color: $white;
+}
+
+.color{
+  background-color: $plum;
+}
+
+.card-title{
+  margin: 1.5rem 0 -.2rem 0;
+  text-align: center;
+}
+.address{
+  text-align: center;
+}
+.item{
+  color: $violet;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 0rem;
+}
+.time{
+  text-align: center;
+  margin-bottom: 0.5999999999999996rem;
+}
+
+.image1{
+  margin: 0 .7rem 0 .7rem;
+}
+
+
+//carousel
+.carousel-inner{
+  padding: 1em;
+}
+
+.card{
+  margin: 0 .5em 3.5rem 0;
+
+}
+
+.carousel-indicators{
+  width: 6.3rem;
+  bottom: .4rem;
+  left: 2.8rem;
+
+  button{
+    border-radius: 50%;
   }
+}
+.carousel-indicators [data-bs-target] {
+  height: 11px;
+  background-color: $violet;
+}
+
+.carousel-control-prev{
+  display: none;
+}
+.carousel-control-next{
+  display: none;
+}
 
 
-  //carousel
+@media screen and (min-width:576px){
   .carousel-inner{
-    padding: 1em;
+    display: flex;
   }
 
-  .card{
-    margin: 0 .5em 3.5rem 0;
+  .carousel-item{
+    display: block;
+    margin-right: 0;
+    flex: 0 0 calc(100%/3);
+  }  
+}
 
+//third section
+
+
+//card section below maps
+  //card 1
+  .back{
+    background-color: $plum;
+    padding: 5rem 0 2rem 0;
   }
 
-
-  @media screen and (min-width:576px){
-    .carousel-inner{
-      display: flex;
-    }
-  
-    .carousel-item{
-      display: block;
-      margin-right: 0;
-      flex: 0 0 calc(100%/3);
-    }  
+  .ticket{
+    margin: -6.2rem 0 .7rem 2.5rem;
   }
 
-  //card section below maps
-    //card 1
-    .back{
-      background-color: $plum;
-      padding: 5rem 0 2rem 0;
-    }
-
-    .ticket{
-      margin: -6.2rem 0 .7rem 2.5rem;
-    }
-
-    .h22{
-      text-align: center;
-      font-size: 1.5rem;
-    }
-
-    .p2{
-      text-align: center;
-      font-size: .8rem;
-      margin-top: .8rem;
-    }
-
-    .spon{
-      text-decoration: none;
-      color: $teal;
-      margin: 0 0 0 2rem;
-    }
-
-    .box1{
-      background-color: $white;
-      width: 18rem;
-      height: 18rem;
-      padding: 2rem;
-      margin: 4rem 0 7rem 1rem;
-    }
-
-    //card 2
-    .food {
-      margin: -6.2rem 0 .7rem 2.5rem;
-    }
-
-    .box2{
-      background-color: $white;
-      width: 18rem;
-      height: 18rem;
-      padding: 2rem;
-      margin: 0 0 7rem 1rem;
-    }
-
-    //card 3
-    .parking{
-      margin: -6.2rem 0 .9rem 2.5rem;
-    }
-
-    .box3{
-      background-color: $white;
-      width: 18rem;
-      height: 18rem;
-      padding: 2rem;
-      margin: 0 0 7rem 1rem;
-    }
-
-    .spon3{
-      text-decoration: none;
-      color: $teal;
-      margin: 0 0 0 4.5rem;
-    }
-
-    //card 4
-    .merch{
-      margin: -6.2rem 0 .7rem 2.5rem;
-    }
-
-    .box4{
-      background-color: $white;
-      width: 18rem;
-      height: 18rem;
-      padding: 2rem;
-      margin: 0 0 2rem 1rem;
-    }
-
-    .spon4{
-      text-decoration: none;
-      color: $teal;
-      margin: 0 0 0 3.9rem;
-    }
-
-    //Start forth featurette
-    .grid {
-      color: white;
-      height: 60vh;
-      margin: 0 1rem 0 1.3rem;
-      max-width: 80vw;
-      display: grid;
-      grid-gap: 1rem;  
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-    }
-    //Ragging
-    .one {
-      grid-column: 1 / span 1;
-      grid-row: 1 / span 1;
-    }
-
-    //Spokeasy
-    .two {
-      grid-column: 2 / span 1;
-      grid-row: 1 / span 1;
-    }
-
-    //Neighborhood Thrift
-    .three {
-      grid-column: 1 / span 1;
-      grid-row: 2 / span 1;
-    }
-
-    //Hi-top Coffe
-    .four{
-      grid-column: 2 / span 1;
-      grid-row: 2 / span 1;
-    }
-
-    //The Brass Unicorn
-    .five{
-      grid-column: 1 / span 2;
-      grid-row: 3 / span 2;
-    }
-
-    //CF
-    .six{
-      grid-column: 1 / span 1;
-      grid-row: 4 / span 1;
-    }
-
-    //Blkmktplc
-    .seven{
-      grid-column: 2 / span 1;
-      grid-row: 4 / span 1;
-    }
-
-
-
-
-
-
-
-
-  /* RESPONSIVE CSS
-  -------------------------------------------------- */
-  
-  @media (min-width: 40em) {
-    /* Bump up size of carousel content */
-    .carousel-caption p {
-      margin-bottom: 1.25rem;
-      font-size: 1.25rem;
-      line-height: 1.4;
-    }
-  
-    .featurette-heading {
-      font-size: 50px;
-    }
-  }
-  
-  @media (min-width: 62em) {
-    .featurette-heading {
-      margin-top: 7rem;
-    }
+  .h22{
+    text-align: center;
+    font-size: 1.5rem;
   }
 
+  .p2{
+    text-align: center;
+    font-size: .8rem;
+    margin-top: .8rem;
+  }
+
+  .spon{
+    text-decoration: none;
+    color: $teal;
+    margin: 0 0 0 2rem;
+  }
+
+  .box1{
+    background-color: $white;
+    width: 18rem;
+    height: 18rem;
+    padding: 2rem;
+    margin: 4rem 0 7rem 1rem;
+  }
+
+  //card 2
+  .food {
+    margin: -6.2rem 0 .7rem 2.5rem;
+  }
+
+  .box2{
+    background-color: $white;
+    width: 18rem;
+    height: 18rem;
+    padding: 2rem;
+    margin: 0 0 7rem 1rem;
+  }
+
+  //card 3
+  .parking{
+    margin: -6.2rem 0 .9rem 2.5rem;
+  }
+
+  .box3{
+    background-color: $white;
+    width: 18rem;
+    height: 18rem;
+    padding: 2rem;
+    margin: 0 0 7rem 1rem;
+  }
+
+  .spon3{
+    text-decoration: none;
+    color: $teal;
+    margin: 0 0 0 4.5rem;
+  }
+
+  //card 4
+  .merch{
+    margin: -6.2rem 0 .7rem 2.5rem;
+  }
+
+  .box4{
+    background-color: $white;
+    width: 18rem;
+    height: 18rem;
+    padding: 2rem;
+    margin: 0 0 2rem 1rem;
+  }
+
+  .spon4{
+    text-decoration: none;
+    color: $teal;
+    margin: 0 0 0 3.9rem;
+  }
+
+  //Start forth featurette
+  .grid {
+    color: white;
+    height: 60vh;
+    margin: 0 1rem 0 1.3rem;
+    max-width: 80vw;
+    display: grid;
+    grid-gap: 1rem;  
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  //Ragging
+  .one {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  //Spokeasy
+  .two {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  //Neighborhood Thrift
+  .three {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+  }
+
+  //Hi-top Coffe
+  .four{
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+  }
+
+  //The Brass Unicorn
+  .five{
+    grid-column: 1 / span 2;
+    grid-row: 3 / span 2;
+  }
+
+  //CF
+  .six{
+    grid-column: 1 / span 1;
+    grid-row: 4 / span 1;
+  }
+
+  //Blkmktplc
+  .seven{
+    grid-column: 2 / span 1;
+    grid-row: 4 / span 1;
+  }
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 62em) {
+  .featurette-heading {
+    margin-top: 7rem;
+  }
+}
+
+// Media queries
+// X-Small devices (portrait phones, less than 576px)
+@media (min-width: 575px) {
+figure {
+  margin: -5.3em 0 0;
+  background-color: $black;
+  height: 392px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 4;
+}
+.wp-block-image img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: bottom;
+  margin: 0px 0 -25px 0;
+}
+
+//top rectangle
+.top{
+  height: 12rem;
+
+}
+
+// triangle
+width
+
+// bottom rectangle
+.bottom{
+  height: 17rem;
+}
+
+// text over image
+.center1 {
+  left: 45%;
+  font-size: 1.9rem;
+}  
+
+.center2 {
+  left: 45%;
+  top: 46%;
+  font-size: 1.9rem;
+}
+
+.center3 {
+  top: 64%;
+  left: 27%;
+  font-size: .9rem;
+}
+
+.center4 {
+  left: 34%;
+  font-size: 1.8rem;
+  top: 19rem;
+}
+
+.img1{
+  width: 470px;
+  height: 379px;
+}
+.img2{
+  width: 232px;
+  height: 213px;
+}
+.img3{
+  width: 232px;
+  height: 213px;
+}
+
+.lead {
+  margin: 0 1.5rem 2rem 1rem;
+  font-size: .9rem;
+}
+.lead2{
+  margin-right: 1.5rem;
+}
+
+.button{
+  margin: 0.1rem 0 3.8rem 10rem;
+}
+.button2{
+  margin: 0.1rem 0 3.8rem 11.7rem;
+}
+.button3{
+  margin: 0.1rem 0 3.8rem 9.5rem;
+}
+.button5{
+  margin: -0.5rem 0 0.2rem 10rem;
+  width: 37%;
+}
+
+
+.row4{
+  margin-left: 1.7999999999999998rem;
+}
+.carousel-indicators {
+  left: 7.800000000000001rem;
+}
+.map {
+  margin-left: 4.5rem;
+  height: 32rem;
+  width: 25rem;
+}
+
+.box1{
+  margin: 4rem 0 7rem 8rem;
+}
+.box2{
+  margin: 4rem 0 7rem 8rem;
+}
+.box3{
+  margin: 4rem 0 7rem 8rem;
+}
+.box4{
+  margin: 4rem 0 7rem 8rem;
+}
+
+.one {
+  margin-left: 3rem;
+}
+
+//Spokeasy
+.two {
+  margin-left: -1rem;
+}
+
+//Neighborhood Thrift
+.three {
+  margin-left: 3rem;
+}
+
+//Hi-top Coffe
+.four{
+  margin-left: 3rem;
+}
+
+//The Brass Unicorn
+.five{
+  margin-left: 5rem;
+}
+
+//CF
+.six{
+  margin-left: 7rem;
+}
+
+//Blkmktplc
+.seven{
+  margin-left: -1rem;
+}
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+ //top rectangle
+ .top{
+  height: 9rem;
+  margin: 0 0 0 -20.7rem;
+}
+
+// triangle
+.middle{
+  rotate: 0deg;
+  width: 2.8rem;
+  height: 9.2rem;
+  margin: -23.3rem 0 -12.5rem 27.2rem;
+}
+
+// bottom rectangle
+.bottom{
+  height: 9rem;
+  margin: -27.3rem 0 -13.5rem 21.4rem;
+}
+
+ // text over image
+ .center1 {
+  left: 27%;
+  font-size: 1.3rem;
+} 
+
+.center2 {
+  left: 27%;
+  top: 46%;
+  font-size: 2.1rem;
+}
+
+.center3 {
+  top: 66%;
+  left: 19%;
+  font-size: 0.6rem;
+}
+
+.center4 {
+  left: 71%;
+  font-size: 1.3rem;
+  top: 2.3rem;
+}
+.featurette-heading {
+  font-weight: 650;
+  line-height: 1;
+  text-align: left;
+  font-size: 1.4rem;
+  margin-bottom: 1.1rem;
+}
+.col-md-77 {
+flex: 0 0 auto;
+width: 101.333333%;
+}
+.col-md-75 {
+  flex: 0 0 auto;
+  width: 54.333333%;
+  margin: 6rem 0 0 1rem;
+}
+.col-md-57 {
+  flex: 0 0 auto;
+  width: 76.666667%;
+}
+
+.row4 {
+margin: 0 0 -17.2rem;
+}
+.row {
+  margin: 0 auto 4rem 0;
+}
+
+.img1 {
+  width: 436px;
+  height: 252px;
+}
+.img2 {
+width: 144px;
+height: 132px;
+}
+.img3 {
+  width: 147px;
+  height: 149px;
+}
+
+.lead{
+  margin-right: 1.5rem;
+  text-align: left;
+}
+.lead2 {
+  margin: 0 10rem 0 10rem;
+}
+.lead3{
+  margin: 0 9rem 1.7rem 9rem;
+}
+
+.button {
+  margin: 0.1rem 0 3.8rem 0rem;
+}
+.button5{
+  width: 29%;
+  margin: 1.5rem 0 2.2rem 16rem;
+}
+
+.col-md-78 {
+  flex: 0 0 auto;
+  width: 50.333333%;
+  margin: 0 0 0 3rem;
+}
+
+.button2 {
+  margin: 0.1rem 0 3.8rem -.1rem;
+}
+
+.box1 {
+  margin: 4rem 0 7rem 4rem;
+}
+.box2 {
+  margin: -25rem 0 10rem 26rem;
+}
+.box3 {
+  margin: -2rem 0 7rem 4rem;
+}
+.box4 {
+  margin: -25rem 0 7rem 26rem;
+}
+
+.featurette-heading3{
+  text-align: center;
+  margin: 3.5rem 0 1.1rem 0;
+}
+.col-md-71 {
+  flex: 0 0 auto;
+  width: 96.333333%;
+  margin: 0 0 0 1rem;
+}
+.col-md-58 {
+  flex: 0 0 auto;
+  width: 119.666667%;
+}
+
+.button3 {
+  margin: 0 0 4rem 15rem;
+}
+
+.grid {
+  color: white;
+  height: 44vh;
+  margin: 0 1rem 0 0.2999999999999998rem;
+  max-width: 92vw;
+  display: grid;
+  grid-gap: -2rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+//Spokeasy
+.two {
+  margin: 0 0 0 1rem;
+}
+
+//Neighborhood Thrift
+.three {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 1;
+}
+
+//Hi-top Coffe
+.four{
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 1;
+}
+
+//The Brass Unicorn
+.five{
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 2;
+}
+
+//CF
+.six{
+  grid-column: 3 / span 1;
+  grid-row: 2 / span 1;
+  margin: 0 0 0 3rem;
+}
+
+//Blkmktplc
+.seven{
+  grid-column: 4 / span 1;
+  grid-row: 2 / span 1;
+}
+
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+.top {
+  width: 33rem;
+  margin: 0 0 0 -29.700000000000003rem;
+}
+.bottom {
+  width: 30rem;
+  margin: -27.3rem 0 -13.5rem 31.9rem;
+}
+.middle {
+  margin: -23.3rem 0 -12.5rem 32.5rem;
+}
+
+.col-md-75 {
+  margin: -0.1rem 0 0 2.4rem;
+}
+.img1 {
+  width: 371px;
+  height: 272px;
+}
+.img2 {
+  width: 182px;
+  height: 155px;
+}
+.img3 {
+  width: 185px;
+  height: 158px;
+}
+.row4 {
+  margin: 0 0 -3.200000000000003rem;
+}
+.lead {
+  margin-right: 9.5rem;
+}
+.lead2 {
+  margin: 0 16rem 0 16rem;
+}
+.col-md-78 {
+  margin: 0 0 0 3rem;
+}
+.map {
+  margin-left: -0.5rem;
+  height: 26rem;
+  width: 28rem;
+}
+
+.box1 {
+  margin: 4rem 0 7rem 9rem;
+}
+.box2 {
+  margin: -25rem 0 10rem 36rem;
+}
+.box3 {
+  margin: -2rem 0 7rem 9rem;
+}
+.box4 {
+  margin: -25rem 0 7rem 36rem;
+}
+
+.button3 {
+  margin: 0 0 4rem 23rem;
+}
+
+.grid {
+  margin: 0 1rem 0 2.3rem;
+}
+.button5 {
+  width: 24%;
+  margin: 1.5rem 0 2.2rem 23rem;
+}
+
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+.top {
+  width: 39.1rem;
+  margin: 0 0 0 -35.9rem;
+}
+.middle {
+  margin: -23.3rem 0 -12.5rem 39rem;
+}
+.bottom {
+  width: 43.1rem;
+  margin: -27.3rem 0 -13.5rem 31.9rem;
+}
+.center4 {
+  left: 69%;
+  font-size: 1.7rem;
+  top: 2.3rem;
+}
+
+.img1 {
+  width: 447px;
+  height: 343px;
+}
+.img2 {
+  width: 221px;
+  height: 179px;
+}
+.img3 {
+  width: 221px;
+  height: 177px;
+}
+.featurette-heading{
+  font-size: 2rem;
+}
+.lead {
+  font-size: .9rem;
+}
+.map {
+  margin-left: -1.5rem;
+  height: 32rem;
+  width: 74rem;
+}
+
+.col-md-78 {
+  margin: -1rem 0 0 3rem;
+}
+
+.box1 {
+  margin: 4rem 0 7rem 5rem;
+}
+.box2 {
+  margin: -25rem 0 10rem 28rem;
+}
+.box3 {
+  margin: -28rem 0 7rem 52rem;
+}
+.box4 {
+  margin: 1rem 0 7rem 28rem;
+}
+
+.featurette-heading3{
+  font-size: 1.8rem;
+}
+.lead3 {
+  margin: 0 17rem 1.7rem 17rem;
+  font-size: .9rem;
+}
+.lead2 {
+  margin: 0 21rem 0 21rem;
+}
+.button3 {
+  margin: 0 0 4rem 28rem;
+}
+.button5 {
+  width: 20%;
+  margin: 1.5rem 0 2.2rem 30rem;
+}
+.grid {
+  margin: 0 13rem 0 9.3rem;
+}
+
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1440px) {
+  .top {
+    width: 43.1rem;
+    margin: -2rem 0 0 -47.1rem;
+}
+.middle {
+  margin: -23.3rem 0 -12.5rem 42.7rem;
+}
+.bottom {
+  width: 49.1rem;
+  margin: -27.3rem 0 -13.5rem 40.9rem;
+}
+.center3 {
+  top: 66%;
+  left: 22%;
+  font-size: 0.6rem;
+}
+.center4 {
+  left: 69%;
+  font-size: 1.7rem;
+  top: 1rem;
+}
+.center1 {
+  left: 27%;
+  font-size: 1.3rem;
+  top: 1rem;
+}
+.center2 {
+  top: 42%;
+}
+
+.row4 {
+  margin: 0 0 0 0.7999999999999998rem;
+}
+
+.img1 {
+  width: 537px;
+  height: 412px;
+}
+.img2 {
+  width: 266px;
+  height: 214px;
+}
+.img3 {
+  width: 266px;
+  height: 214px;
+}
+
+.box1 {
+  margin: 4rem 0 7rem 4rem;
+}
+.box2 {
+  margin: -25rem 0 10rem 25rem;
+}
+.box3 {
+  margin: -28rem 0 7rem 46.5rem;
+}
+.box4 {
+  margin: -25rem 0 7rem 68rem;
+}
+.map {
+  width: 519px;
+  height: 477px;
+  margin-left: 4rem;
+}
+
+.button {
+  margin: 0.1rem 0 3.8rem 1rem;
+}
+.button2 {
+  margin: 0.1rem 0 3.8rem 0.9000000000000004rem;
+}
+.button3 {
+  margin: 0 0 4rem 35rem;
+}
+.button5 {
+  width: 16%;
+  margin: 1.5rem 0 2.2rem 36rem;
+}
+.grid {
+  margin: 0 13rem 0 11.3rem;
+}
+
+.featurette-heading {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+.featurette-heading2{
+  font-size: 1.7rem;
+}
+.lead2 {
+  margin: 0 22rem 0 22rem;
+  font-size: 1rem;
+}
+
+}

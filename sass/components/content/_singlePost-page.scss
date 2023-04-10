@@ -1,0 +1,324 @@
+section#block-2 {
+    display: none;
+}
+section#block-3 {
+    display: none;
+}
+section#block-4 {
+    display: none;
+}
+section#block-5 {
+    display: none;
+}
+
+
+
+// Single Page Styling 
+
+.prochesSingle{
+    background-color: #462D62;
+    height: 600px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .singleporchImgContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+                  .porchimage{
+                width: 588px;
+                border: 15px solid #FFFFFF;
+            }
+    }
+    .singleporchContentContainer{
+        display: flex;
+        flex-direction: column;
+        .porchheading{
+            font-family: 'Antonio';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 62px;
+            text-transform: uppercase;
+
+            /* White */
+
+            color: #FFFFFF;
+        }
+        .porchaddress{
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            /* identical to box height */
+
+
+            /* White */
+
+            color: #FFFFFF;
+        }
+         .porchDescription{
+        width: 495px;
+            color: #fff;
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: left;
+        
+    }
+    .singleButton {
+        background-color:  #14A4AB;;
+        border: none;
+        color: white;
+        padding: 8px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        width: 186px;
+        cursor: pointer;
+        font-family: 'Antonio';
+        font-style: normal;
+        font-weight: 400;
+        line-height: 26px;
+        /* identical to box height */
+
+        text-align: center;
+        letter-spacing: 0.1em;
+        &:hover{
+            background-color: #462D62;
+            border: 2px solid #fff;
+        }
+      }
+    }
+
+
+    
+      
+}
+
+// Categories Bar
+
+.categoriesBar{
+    width: 100%;
+    height: 120px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    a{
+        font-family: 'Antonio';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 26px;
+        text-decoration: none;
+        margin: 0 82px;
+        /* identical to box height */
+
+        text-align: center;
+        text-transform: uppercase;
+
+        /* Violet */
+
+        color: #A33C97;
+
+    }
+ 
+}
+
+// Single Page Archives Section
+.singlepage{
+    height: 888px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.singleArchivesSection{
+    height: 888px;
+    width: 100%;
+    filter: blur(8px); 
+    -webkit-filter: blur(8px);
+ 
+}
+.cardContainer{
+    position: absolute;
+    z-index: 888;
+}
+
+.SingleCatCard{
+    width: 550px;
+    height: 213px;
+    background-color: #fff;
+    border: 1px solid #EAEAEA;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    margin: 30px 0;
+    .TagImg{
+        width: 200px;
+        height: 180px;
+        img{
+            width: 200px;
+            height: 180px;
+        }
+        .tag{
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            position: relative;
+            bottom: 26px;
+            p{
+                background-color:  #A33C97;
+                 padding: 5px 10px;
+                 font-family: 'Antonio';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 100%;
+                /* identical to box height, or 16px */
+
+                text-align: right;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+
+                /* White */
+
+                color: #FFFFFF;
+
+            }
+        }
+    }
+    .TagContent{
+        width: 310px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 10px;
+        a{
+            width: 310px;
+            height: 29px;
+            padding: 10px 0;
+            text-decoration: none;
+            /* Black */
+
+            background: #000000;
+            font-family: 'Antonio';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 76%;
+            /* identical to box height, or 11px */
+
+            text-align: center;
+            text-transform: uppercase;
+
+            /* White */
+
+            color: #FFFFFF;
+        }
+        h2{
+            font-family: 'Antonio';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 26px;
+            /* identical to box height */
+
+            text-transform: uppercase;
+            margin: 8px 0;
+            color: #000000;
+        }
+        p{
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+
+            color: #000000;
+        }
+    }
+}
+
+@media (max-width: 1200px) { 
+    .prochesSingle .singleporchImgContainer .porchimage {
+        width: 500px;
+    }
+    .prochesSingle .singleporchContentContainer {
+        zoom: 85%;
+    }
+}
+
+@media (max-width: 1200px) { 
+    .prochesSingle{
+        height: 400px;
+        .singleporchImgContainer .porchimage {
+        width: 400px;
+        }
+        .singleporchContentContainer {
+            zoom: 75%;
+        }
+    }
+}
+
+@media (max-width: 900px) { 
+    .prochesSingle{
+        height: 350px;
+        .singleporchImgContainer .porchimage {
+        width: 350px;
+        }
+        .singleporchContentContainer {
+            zoom: 70%;
+        }
+    }
+}
+
+@media (max-width: 775px) { 
+    .prochesSingle {
+    height: 600px;
+    flex-direction: column;
+    .singleporchImgContainer .porchimage {
+        width: 350px;
+        }
+        .singleporchContentContainer {
+            zoom: 73%;
+        }
+    }
+}
+
+@media (max-width: 575px) { 
+    .categoriesBar {
+        width: 100%;
+        height: 280px;
+        background-color: #FFFFFF;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+    }
+    .SingleCatCard {
+        zoom: 80%;
+    }
+    
+
+}
+@media (max-width: 475px) { 
+    .prochesSingle .singleporchContentContainer {
+        zoom: 70%;
+    }
+    .SingleCatCard {
+        zoom: 65%;
+    }
+    .singlepage {
+        height: 600px;
+    }
+
+}
