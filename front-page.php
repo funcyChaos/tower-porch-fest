@@ -106,7 +106,9 @@
               <div class="wrapper">
                 <h2><?php echo $title;?></h2>
                 <p><?php echo $paragraph;?></p>
-                <button><?php echo $button_text;?></button>
+                <a href="<? echo $button_link?>">
+                  <button><?php echo $button_text;?></button>
+                </a>
               </div>
             </div>
           <!-- three up images -->
@@ -137,7 +139,9 @@
             <div class="wrapper">
               <h2><?php echo $title;?></h2>
               <p><?php echo $paragraph;?></p>
-              <button><?php echo $button_text;?></button>
+              <a href="<? echo $button_link?>">
+                <button><?php echo $button_text;?></button>
+              </a>
             </div>
             <!-- Future Carousel -->
             <div class="wrapper">
@@ -162,7 +166,9 @@
               <div class="wrapper">
                 <h2><?php echo $title;?></h2>
                 <p><?php echo $paragraph;?></p>
-                <button><?php echo $button_text;?></button>
+                <a href="<? echo $button_link?>">
+                 <button><?php echo $button_text;?></button>
+                </a>
               </div>
             </div>
             <div class="map-wrapper">
@@ -177,24 +183,44 @@
               <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
           </section>
 
-      <!-- Sponsors Section -->
+  <!-- Sponsors Section -->
+      <?php if( have_rows('sponsor_text') ): ?>
+        <?php while( have_rows('sponsor_text') ): the_row(); 
+
+        $title = get_sub_field('title');
+        $paragraph = get_sub_field('paragraph');
+        $button_text = get_sub_field('button_text');
+        $button_link = get_sub_field('button_link');
+        
+        ?>
         <section>
           <div class="light-section text-and-button">
             <div class="wrapper">
-              <h2>Thank You Sponsors</h2>
-              <p> We thank our sponsors who help us be the best we can be! Last year we had 60 porches with over 130 performances. There were over 5,000 views of the interactive map and our Social Media grew to 2,000+ followers (and counting). On behalf of the Tower Porchfest Committee, we ask you to consider sponsoring this awesome event!</p>
-              <button>Become a Sponsor</button>
+              <h2><?php echo $title;?></h2>
+              <p><?php echo $paragraph;?></p>
+              <a href="<? echo $button_link?>">
+                <button><?php echo $button_text;?></button>
+              </a>
             </div>
           </div>
+          <?php endwhile; ?>
+        <?php endif; ?>
           <div class="sponsors">
-            <section class="logo-container">
-              <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/raging-records-logo-1.png">
-              <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/spokeasy-logo-1.png">
-              <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/neighborhood-thrift-1.png">
-              <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/the-brass-unicorn-1.png">
-              <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/blkmktplc-1.png">
-              <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/hi-top-coffee-1.png">
-            </section>
+          <? get_template_part( 'template-parts/content', 'sponsor-logos' ); ?>
+
+          
+                <!-- <h2>Tier 2</h2>
+                <div class="logo-container">  
+                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/raging-records-logo-1.png">
+                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/spokeasy-logo-1.png">
+                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/neighborhood-thrift-1.png">
+                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/the-brass-unicorn-1.png">
+                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/blkmktplc-1.png">
+                  <img class="logo-style" src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/hi-top-coffee-1.png">
+                </div> -->
+
+            </div>
+        </section>
       </main>
 
 

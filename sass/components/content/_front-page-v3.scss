@@ -301,7 +301,9 @@
 /** Sponsor Logos and Section **/
 .sponsors {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   .logo-container {
     max-width: 100%;
     max-width: 800px;
@@ -314,6 +316,7 @@
       align-items: center;
       justify-content: center;
       padding: 25px;
+      max-width: 248px;
     }
   }
 }
