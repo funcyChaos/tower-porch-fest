@@ -122,21 +122,30 @@
           </section>
         <?php endwhile; ?>
       <?php endif; ?>
-  <!-- end -->    
+  <!-- end -->
+  <!-- Text and Carousel -->    
         <!-- dark text section -->
+      <?php if( have_rows('text_and_carousel') ): ?>
+        <?php while( have_rows('text_and_carousel') ): the_row(); 
+          // Get sub field values.
+          $title = get_sub_field('title');
+          $paragraph = get_sub_field('paragraph');
+          $button_text = get_sub_field('button_text');
+          $button_link = get_sub_field('button_link');
+        ?>  
         <section class="dark-section text-and-button">
           <div class="wrapper">
-            <h2>Call for Porches</h2>
-            <p>Do you have a porch in the Tower that would make a sweet stage? Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fresno’s Tower District neighborhood! Porch Host signups are open now through March 6, 2023.</p>
-            <button>View All Porches</button>
+          <h2><?php echo $title;?></h2>
+                <p><?php echo $paragraph;?></p>
+                <button><?php echo $button_text;?></button>
           </div>
+          <!-- Future Carousel -->
           <div class="wrapper">
-            <h2>Call for Porches</h2>
-            <p>Do you have a porch in the Tower that would make a sweet stage? Tower Porchfest 2023 will happen on Saturday, April 29 from noon to 8 PM in Fresno’s Tower District neighborhood! Porch Host signups are open now through March 6, 2023.</p>
-            <button>View All Porches</button>
+            <h2>Placeholder for Carousel</h2>
           </div>
         </section>
-        <!-- Future Carousel -->
+        <?php endwhile; ?>
+      <?php endif; ?>  
         <!-- light text section -->
         <section class="section-wrapper">
           <div class="light-section text-and-button">
