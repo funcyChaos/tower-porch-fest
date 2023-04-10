@@ -275,6 +275,18 @@
     justify-content: center;
     width: 100%;
     padding-top: 80px;
+    height: 414px;
+  }
+  .max-char {
+    height: 125px;
+    background-color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-height: 1.3rem;
   }
   .text-link {
     font-family: $font__headers;
@@ -283,6 +295,7 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 50px;
+    text-decoration: none;
   }
 }
 /** Sponsor Logos and Section **/
@@ -576,9 +589,9 @@
         .count-down-title {
           font-size: 32px;
           margin: 10px auto 0;
-          p {
+          // p {
 
-          }
+          // }
         }
     }
     .counter-wrapper {

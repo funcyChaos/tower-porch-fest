@@ -133,41 +133,50 @@
           $button_text = get_sub_field('button_text');
           $button_link = get_sub_field('button_link');
         ?>  
-        <section class="dark-section text-and-button">
-          <div class="wrapper">
-          <h2><?php echo $title;?></h2>
+          <section class="dark-section text-and-button">
+            <div class="wrapper">
+              <h2><?php echo $title;?></h2>
+              <p><?php echo $paragraph;?></p>
+              <button><?php echo $button_text;?></button>
+            </div>
+            <!-- Future Carousel -->
+            <div class="wrapper">
+              <h2>Placeholder for Carousel</h2>
+            </div>
+          </section>
+        <?php endwhile; ?>
+      <?php endif; ?>
+  <!-- Text and Map Image -->     
+      <!-- light text section -->
+      <?php if( have_rows('text_and_map_image') ): ?>
+        <?php while( have_rows('text_and_map_image') ): the_row(); 
+          // Get sub field values.
+          $title = get_sub_field('title');
+          $paragraph = get_sub_field('paragraph');
+          $button_text = get_sub_field('button_text');
+          $button_link = get_sub_field('button_link');
+          $map_image = get_sub_field('map_image');
+          ?>  
+          <section class="section-wrapper">
+            <div class="light-section text-and-button">
+              <div class="wrapper">
+                <h2><?php echo $title;?></h2>
                 <p><?php echo $paragraph;?></p>
                 <button><?php echo $button_text;?></button>
-          </div>
-          <!-- Future Carousel -->
-          <div class="wrapper">
-            <h2>Placeholder for Carousel</h2>
-          </div>
-        </section>
-        <?php endwhile; ?>
-      <?php endif; ?>  
-        <!-- light text section -->
-        <section class="section-wrapper">
-          <div class="light-section text-and-button">
-            <div class="wrapper">
-              <h2>Tower Porchfest Map</h2>
-              <p>Tower Porchfest takes place in the Historic Tower District neighborhood in Fresno, California. Made up of an incredible array of classic housing types – ranging from granny flats, townhouses, and apartments to craftsman bungalows and mansions.</p>
-              <button>Visit Map</button>
+              </div>
             </div>
-          </div>
-          <div class="map-wrapper">
-            <img src="http://tpf-4-6-v2.local/wp-content/uploads/2023/04/Rectangle-6.jpg" alt="">
-          </div>
-        </section>
-        <!-- icons + cards section -->
-        <section class="container icons-cards-container">
-          <!-- <div class="row"> -->
-            <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
-            <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
-            <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
-            <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
-          <!-- </div> -->
-        </section>
+            <div class="map-wrapper">
+              <img src="<?php echo $map_image;?>" alt="">
+            </div>
+          </section>
+        <?php endwhile; ?>
+      <?php endif; ?>
+  <!-- icons + cards section -->
+
+          <section class="container icons-cards-container">
+              <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
+          </section>
+
       <!-- Sponsors Section -->
         <section>
           <div class="light-section text-and-button">
