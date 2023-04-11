@@ -213,16 +213,18 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
 function setup_porch_type() {
 	register_post_type('porch', array(
-		'label'					=> 'Porches',
-		'slug'                  => 'porch',
-		'singular'              => 'Porch',
-		'plural'                => 'Porches',
-		'menu_icon'             => 'dashicons-admin-home',
-		'menu_position'         => 2,
-		'public'                => true,
-		'show_in_rest' 			=> true,
-		'supports' 				=> ['title', 'editor', 'thumbnail', 'excerpt'],
-		'taxonomies' 			=> ['category']
+		'label'							=> 'Porches',
+		'slug'          		=> 'porch',
+		'singular'      		=> 'Porch',
+		'plural'        		=> 'Porches',
+		'menu_icon'     		=> 'dashicons-admin-home',
+		'menu_position' 		=> 2,
+		'public'        		=> true,
+		'has_archive'				=> 'porches',
+		'rewrite'						=> true,
+		'show_in_rest'			=> true,
+		'supports'					=> ['title', 'editor', 'thumbnail', 'excerpt'],
+		'taxonomies' 				=> ['category']
 	));
 }
 add_action('init', 'setup_porch_type');
