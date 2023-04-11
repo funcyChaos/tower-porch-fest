@@ -46,9 +46,9 @@ jQuery( document ).ready( function( $ ) {
 const img = document.getElementById('sponsor-logo');
 
 // Check if the src attribute is empty
-if (img.getAttribute('src') === '') {
-  // Add the logo-style class
-  img.classList.add('logo-style');
-}
+// if (img.getAttribute('src') === '') {
+//   // Add the logo-style class
+//   img.classList.add('logo-style');
+// }
 
 
