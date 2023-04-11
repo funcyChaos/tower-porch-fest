@@ -158,9 +158,12 @@ function towerpf_site_scripts() {
 	}
 	
 	if(is_front_page()){
+		wp_register_script( 'countdown', get_template_directory_uri() . '/js/countdown.js', [], _S_VERSION, true );
+		$fields = get_field('front_page_group_where_when_and_countdown_timer_festival_date');
+		wp_localize_script('countdown', 'wpVars', ['acfDate' => $fields]);
+		wp_enqueue_script('countdown');
 		wp_enqueue_script('home-page', get_template_directory_uri() . '/js/home-page.js',array('jquery'), _S_VERSION, true );
 		/* homepage countdown */
-		wp_enqueue_script( 'countdown', get_template_directory_uri() . '/js/countdown.js', array(), _S_VERSION, true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
