@@ -16,6 +16,7 @@
 <section class="porchesarchivesContainer">
 	<section class="porchesposts">
 		<?php
+			$default_image = get_the_post_thumbnail(5, 'medium');
 			while(have_posts()){
 				the_post();
 				?>
@@ -23,16 +24,18 @@
 						<h2 class="porchheading" ><?=the_title()?></h2>
 						<p class="porchparagraph"><?php the_field('porch_address'); ?></p>
 						<?php 
-							if(has_post_thumbnail())the_post_thumbnail('medium');
+							if(has_post_thumbnail()){
+								the_post_thumbnail('medium');
+							}else{
+								echo $default_image;
+							}
 						?>
 						<div class="porchlinks"> 
-							<a href=""><?php the_field('genre');?></a>
 							<a href=""><?php the_field('tag_one');?></a>
 							<a href=""><?php the_field('tag_two');?></a>
+							<a href=""><?php the_field('tag_three');?></a>
 						</div>
-						<!-- <p class="porchDescription"> <?php //the_field('description'); ?> </p> -->
-						<p class="porchDescription"> <?=the_excerpt()?></p>
-						<p class="timeoncard"><?php the_field('performance_time'); ?> <?php the_field('time_2'); ?></p>
+						<p class="porchDescription"><?=get_the_excerpt()?></p>
 						<a href="<?=the_permalink()?>" class="button7">SEE LINEUP</a>
 					</div>
 				<?php 
@@ -40,6 +43,5 @@
 		?>
 	</section>
 </section>
-
 
 <?php get_footer(); ?>
