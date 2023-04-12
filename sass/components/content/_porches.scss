@@ -41,7 +41,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    .porchesposts{
+    .porchescardcontainer{
         // background-color: pink;
         width: 1085px;
         // height: 1800px;
@@ -56,7 +56,7 @@
             padding: 15px;
             margin: 16px 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             flex-direction: column;
             align-items: center;
             .porchheading{
@@ -70,6 +70,11 @@
                 color: #000000;
                 margin: 20px 0px 0px 0px;
             }
+						.content{
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+						}
             .porchparagraph{
 
                 font-family: 'Open Sans';
@@ -89,34 +94,33 @@
 
             }
             .porchlinks{
-                display: flex;
-                height: 15px;
-                margin: 20px 15px;
-                a{
-                    font-family: 'Antonio';
-                    font-style: normal;
-                    font-weight: 700;
-                    font-size: 16px;
-                    line-height: 21px;
-                    /* identical to box height */
-                    text-decoration: none;
-                    text-align: center;
-                    text-transform: uppercase;
-                    margin: 0 30px;
-                    /* Violet */
-
-                    color: #A33C97;
-                }
+							display: flex;
+							height: 15px;
+							margin: 20px 15px;
+							a{
+								font-family: 'Antonio';
+								font-style: normal;
+								font-weight: 700;
+								font-size: 16px;
+								line-height: 21px;
+								/* identical to box height */
+								text-decoration: none;
+								text-align: center;
+								text-transform: uppercase;
+								margin: 0 30px;
+								/* Violet */
+								color: #A33C97;
+							}
             }
             .porchDescription{
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 22px;
-                text-align: center;
-
-                color: #000000;
+							margin: 0 20px;
+							font-family: 'Open Sans';
+							font-style: normal;
+							font-weight: 400;
+							font-size: 16px;
+							line-height: 22px;
+							text-align: center;
+							color: #000000;
             }
             .timeoncard{
                 font-family: 'Open Sans';
