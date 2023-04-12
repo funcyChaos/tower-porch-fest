@@ -229,6 +229,8 @@ function setup_porch_type() {
 }
 add_action('init', 'setup_porch_type');
 
+add_filter('excerpt_length', function($l){return 20;});
+
 
 function remove_default_post_type()
 {
