@@ -1,3 +1,4 @@
+// Function responsible for grabbing the users location (permissions from the user is required)
 function getLocation() {
   if (window.navigator.geolocation) {
     window.navigator.geolocation.getCurrentPosition(console.log, console.log);
@@ -6,6 +7,7 @@ function getLocation() {
 
 // getLocation();
 
+// Initialization of the map
 function initMap() {
   zoom = 14.5;
   map = new google.maps.Map(document.getElementById('map'), {
@@ -20,23 +22,38 @@ function initMap() {
   let markers = [];
   let openInfoWindow;
 
-  fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?per_page=100`)
+  // Fetch for all of the porches
+  fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?_embed&per_page=100`)
     .then((res) => res.json())
     .then((data) => {
       data.map((porch) => {
-        // console.log(porch);
-        const porchID = porch.id;
-        const porchImage = porch.acf.porch_logo;
+        // Initializing the variable that will contain the porch information
         const porchName = porch.title.rendered;
         const address = porch.acf.porch_address;
         const porchDesc = porch.content.rendered;
-        const vendorOnSite = porch.acf.food_vendor_on_site;
-        const startTime = porch.acf.performer_1_start_time;
+        const porchPageURL = porch.link;
+        const lat = Number(porch.acf.latitude);
+        const lng = Number(porch.acf.longitude);
+
+        // If porch has a featured image it will use that, if not it will default to the porch fest logo
+        if (porch._embedded) {
+          porchImage = porch._embedded['wp:featuredmedia'][0].source_url;
+        } else {
+          porchImage =
+            'http://towerporchfest.local/wp-content/uploads/2023/04/Rectangle-1.jpg';
+        }
+
+        // If porch has performer info it will use that, if not it will default to empty string
+        if (porch.acf.performer_1_start_time) {
+          startTime = porch.acf.performer_1_start_time + ' AM';
+        } else {
+          startTime = ' ';
+        }
+
+        // Same logic that is used for start time
         if (porch.acf.performer_5_end_time) {
           return (endTime = parseInt(porch.acf.performer_5_end_time) % 12);
         }
-        const lat = Number(porch.acf.latitude);
-        const lng = Number(porch.acf.longitude);
 
         const directionsBtn = document.createElement('button');
         directionsBtn.id = 'direct-btn';
@@ -49,8 +66,9 @@ function initMap() {
         const buttonContainer = document.createElement('div');
         buttonContainer.id = 'btn-container';
 
+        // The div that contains the information that populates the info window
         const contentString =
-          `<img src="https://images.unsplash.com/photo-1631458325834-8f678e48912c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8" alt="porch" />` +
+          `<img src=${porchImage} alt="porch" />` +
           '<div id="content-header">' +
           `<h3>${porchName}</h3>` +
           `<p>${address}</p>` +
@@ -59,14 +77,15 @@ function initMap() {
           `${porchDesc}` +
           '</div>' +
           '<div id="lineup-info">' +
-          `<p>11AM - ${endTime}PM </p>` +
-          `<a href='/'>SEE LINEUP</a>` +
+          `<p>${startTime} - ${endTime}PM </p>` +
+          `<a href='${porchPageURL}' target="_blank">SEE LINEUP</a>` +
           '</div>';
 
         buttonContainer.appendChild(directionsBtn);
         contentDiv.innerHTML = contentString;
         contentDiv.appendChild(buttonContainer);
 
+        // Event listener to trigger the directions/routing
         directionsBtn.addEventListener('click', () => {
           const directions = new google.maps.DirectionsService();
           directions.route(
@@ -95,11 +114,13 @@ function initMap() {
           );
         });
 
+        // Places a marker on the map for each porch
         const marker = new google.maps.Marker({
           position: { lat, lng },
           map,
         });
 
+        // Creates a info window for each marker
         const infoWindow = new google.maps.InfoWindow({
           content: contentDiv,
         });
@@ -110,6 +131,7 @@ function initMap() {
         //end of loop
       });
 
+      // Handles the open/close functionality of info window when clicking on other markers
       for (let i = 0; i < markers.length; i++) {
         markers[i].addListener('click', () => {
           if (openInfoWindow && openInfoWindow != infoWindows[i]) {
@@ -122,6 +144,8 @@ function initMap() {
           });
         });
       }
+
+      // Closes info window when map is clicked
       map.addListener('click', function () {
         if (openInfoWindow) openInfoWindow.close();
       });

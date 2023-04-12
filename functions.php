@@ -217,14 +217,14 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 function setup_porch_type() {
 	register_post_type('porch', array(
 		'public'        		=> true,
-		'label'							=> 'Porches',
+		'label'					=> 'Porches',
 		'menu_icon'     		=> 'dashicons-admin-home',
 		'menu_position' 		=> 2,
-		'has_archive'				=> 'porches',
-		'rewrite'						=> true,
+		'has_archive'			=> 'porches',
+		'rewrite'				=> true,
 		'show_in_rest'			=> true,
-		'supports'					=> ['title', 'editor', 'thumbnail', 'excerpt'],
-		'taxonomies' 				=> ['category'],
+		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt'],
+		'taxonomies' 			=> ['category'],
 	));
 }
 add_action('init', 'setup_porch_type');
