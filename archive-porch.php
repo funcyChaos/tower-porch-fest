@@ -1,9 +1,10 @@
 <?php
 /**
- * Template Name: Porches
+ * The template for displaying the porch archive
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package towerpf-site
- *
  */
 ?>
 
@@ -13,19 +14,10 @@
     <p>Plan your day by exploring porch lineups. Listen to the bands ahead of time write down their porches. The organizers and performers are not paid, so we encourage all attendees to have cash to tip performers or purchase swag to help support the event.</p>
 </div>
 <section class="porchesarchivesContainer">
-
-
     <section class="porchesposts">
-        <?php 
-            $args = new WP_Query (array(
-                'posts_per_page' => -1,
-                'post_type' => 'porch'
-                
-            ));
-            
-            
-            while($args->have_posts()){
-                $args->the_post();?>
+        <?php
+            while(have_posts()){
+                the_post();?>
 
                 <div class="porchcard" id="<?php echo "card_". get_the_id();?>">
                     <h2 class="porchheading" > <?php the_field('porch_name'); ?> </h2>
@@ -35,7 +27,6 @@
                         <a href=""><?php the_field('genre'); ?></a>
                         <a href=""><?php the_field('tag_one'); ?></a>
                         <a href=""><?php the_field('tag_two'); ?></a>
-                    
                     </div>
                     <p class="porchDescription"> <?php the_field('description'); ?> </p>
                 

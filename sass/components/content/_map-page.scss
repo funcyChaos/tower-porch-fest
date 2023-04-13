@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;200;300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+#map {
+  height: 70vh;
+  width: 100%;
+}
+#content {
+  height: 100%;
+  width: 330px;
+  font-family: 'Open Sans', sans-serif;
+  color: #000;
+  overflow: hidden;
+  & img {
+    height: 200px;
+    width: 330px;
+  }
+  & #content-header {
+    margin: 0.5rem;
+    & h3 {
+      font-family: 'Antonio', sans-serif;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+    & p {
+      font-weight: 500;
+      font-size: 16px;
+    }
+  }
+  & #desc {
+    margin: 0.5rem;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  & #lineup-info {
+    margin: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+
+    & p {
+      font-weight: 700;
+      margin: 0;
+    }
+    & a {
+      color: #14a4ab;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 10%;
+    }
+  }
+  & #btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    & button {
+      width: 310px;
+      height: 46px;
+      background: #14a4ab;
+      color: #fff;
+      font-family: 'Antonio', sans-serif;
+      cursor: pointer;
+      font-size: 20px;
+      letter-spacing: 3px;
+      font-weight: 200;
+    }
+  }
+}
+
+// Mobile Styles
+@media (min-width: 320px) {
+  #content {
+    width: 160px;
+    height: 100%;
+    overflow-y: hidden;
+    & img {
+      width: 160px;
+      height: 100px;
+    }
+  }
+  #content-header {
+    width: 150px;
+    & h3 {
+      font-size: 16px;
+    }
+    & p {
+      font-size: 12px !important;
+    }
+  }
+  #desc {
+    & p {
+      font-size: 12px;
+    }
+  }
+  #lineup-info {
+    width: 150px;
+    & p {
+      font-size: 12px !important;
+    }
+    & a {
+      font-size: 12px;
+    }
+  }
+  #btn-container {
+    width: 160px;
+    & button {
+      width: 160px;
+      height: 35px;
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media (min-width: 576px) {
+  #content {
+    width: 250px;
+    & img {
+      width: 250px;
+      height: 175px;
+    }
+  }
+  #content-header {
+    width: 250px;
+  }
+  #lineup-info {
+    width: 240px;
+  }
+  #btn-container {
+    width: 250px;
+    & button {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  #content {
+    width: 330px;
+    height: 100%;
+    & img {
+      width: 330px;
+      height: 200px;
+    }
+  }
+  #content-header {
+    width: 330px;
+    & h3 {
+      font-size: 22px;
+    }
+    & p {
+      font-size: 16px !important;
+    }
+  }
+  #desc {
+    width: 330px;
+    & p {
+      font-size: 16px;
+    }
+  }
+  #lineup-info {
+    width: 320px;
+    & p {
+      font-size: 16px !important;
+    }
+    & a {
+      font-size: 16px !important;
+    }
+  }
+  #btn-container {
+    width: 330px;
+    & button {
+      width: 100%;
+      height: 46px;
+    }
+  }
+}
