@@ -34,7 +34,7 @@ function initMap() {
         if (porchType === 'Sponsored Porch') {
           markerColor = '#208f95';
         } else if (hasBathroom === 'Yes') {
-          markerColor = '#63a2cd';
+          markerColor = '#1363DF';
         } else if (hasInfoBooth === 'Yes') {
           markerColor = '#F45050';
         } else {
