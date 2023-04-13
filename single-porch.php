@@ -60,15 +60,15 @@ while(have_posts()){
 					?>
 						<div class="SingleCatCard">
 						<div class="TagImg">
-								<img class="porchimage" src="<?php the_field('tag_two_image'); ?>" alt="" />
+								<img class="porchimage" src="<?php the_field('tag_two_image');?>" alt="" />
 								<div class="tag">
 									<p><?=$tagTwo?></p>
 								</div>
 							</div>
 							<div class="TagContent">
-								<a href="#" class="singleButton"><?php the_field('tag_two_time'); ?></a>
-								<h2 class="tagHeading" > <?php the_field('tag_two_heading'); ?> </h2>
-								<p class="porchDescription"> <?php the_field('tag_two_description'); ?> </p>
+								<a href="#" class="singleButton"><?php the_field('tag_two_time');?></a>
+								<h2 class="tagHeading"><?php the_field('tag_two_heading');?></h2>
+								<p class="porchDescription"> <?php the_field('tag_two_description');?></p>
 							</div>
 						</div>
 					<?php
@@ -85,8 +85,8 @@ while(have_posts()){
 							</div>
 							<div class="TagContent">
 								<a href="#" class="singleButton"><?php the_field('tag_three_time'); ?></a>
-								<h2 class="tagHeading" > <?php the_field('tag_three_heading'); ?> </h2>
-								<p class="porchDescription"> <?php the_field('tag_three_description'); ?> </p>
+								<h2 class="tagHeading" ><?php the_field('tag_three_heading'); ?></h2>
+								<p class="porchDescription"><?php the_field('tag_three_description');?></p>
 							</div>
 						</div>
 					<?php
