@@ -26,14 +26,13 @@ function initMap() {
         const porchType = porch.acf.host_type;
         const porchDesc = porch.content.rendered;
         const porchPageURL = porch.link;
-        const hasBathroom = porch.acf.has_bathroom;
         const hasInfoBooth = porch.acf.has_info_booth;
         const lat = Number(porch.acf.latitude);
         const lng = Number(porch.acf.longitude);
         // Marker color is set based upon porch information
         if (porchType === 'Sponsored Porch') {
           markerColor = '#208f95';
-        } else if (hasBathroom === 'Yes') {
+        } else if (porchType === 'Porta Potty') {
           markerColor = '#1363DF';
         } else if (hasInfoBooth === 'Yes') {
           markerColor = '#F45050';
@@ -63,19 +62,31 @@ function initMap() {
         buttonContainer.id = 'btn-container';
 
         // The div that contains the information that populates the info window
-        const contentString =
-          `<img src=${porchImage} alt="porch" />` +
-          '<div id="content-header">' +
-          `<h3>${porchName}</h3>` +
-          `<p>${address}</p>` +
-          '</div>' +
-          '<div id="desc">' +
-          `${porchDesc}` +
-          '</div>' +
-          '<div id="lineup-info">' +
-          `<p>${porchStartTime} - ${porchEndTime}</p>` +
-          `<a href='${porchPageURL}' target="_blank">SEE LINEUP</a>` +
-          '</div>';
+        if (porchType === 'Porta Potty') {
+          contentString =
+            `<img src=${porchImage} alt="porch" />` +
+            '<div id="content-header">' +
+            `<h3>${porchName}</h3>` +
+            `<p>${address}</p>` +
+            '</div>' +
+            '<div id="desc">' +
+            `${porchDesc}` +
+            '</div>';
+        } else {
+          contentString =
+            `<img src=${porchImage} alt="porch" />` +
+            '<div id="content-header">' +
+            `<h3>${porchName}</h3>` +
+            `<p>${address}</p>` +
+            '</div>' +
+            '<div id="desc">' +
+            `${porchDesc}` +
+            '</div>' +
+            '<div id="lineup-info">' +
+            `<p>${porchStartTime} - ${porchEndTime}</p>` +
+            `<a href='${porchPageURL}' target="_blank">SEE LINEUP</a>` +
+            '</div>';
+        }
 
         buttonContainer.appendChild(directionsBtn);
         contentDiv.innerHTML = contentString;
