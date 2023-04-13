@@ -32,9 +32,10 @@ function initMap() {
         const porchDesc = porch.content.rendered;
         const vendorOnSite = porch.acf.food_vendor_on_site;
         const startTime = porch.acf.performer_1_start_time;
-        if (porch.acf.performer_5_end_time) {
-          return (endTime = parseInt(porch.acf.performer_5_end_time) % 12);
-        }
+        const endTime = '10:00';
+        // if (porch.acf.performer_5_end_time) {
+        //   return (endTime = parseInt(porch.acf.performer_5_end_time) % 12);
+        // }
         const lat = Number(porch.acf.latitude);
         const lng = Number(porch.acf.longitude);
 
