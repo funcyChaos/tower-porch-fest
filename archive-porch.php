@@ -40,7 +40,7 @@
 							</div>
 							<p class="porchDescription"><?=get_the_excerpt()?></p>
 						</div>
-						<a href="<?=the_permalink()?>" class="button7">SEE LINEUP</a>
+						<a href="<?=the_permalink()?>/#band_lineup" class="button7">SEE LINEUP</a>
 					</div>
 				<?php 
 			}

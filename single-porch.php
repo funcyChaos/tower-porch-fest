@@ -23,8 +23,11 @@ while(have_posts()){
 				<h2 class="porchheading"><?=the_title()?></h2>
 				<p class="porchaddress"><?=the_field('porch_address')?></p>
 				<?php $content = wp_strip_all_tags(get_the_content());?>
-				<p class="porchDescription"><?=$content?></p>
-				<a href="#" class="singleButton">SEE LINEUP</a>
+				<div class="the-content">
+					<?php the_content();?>
+				</div>
+				<!-- <p class="porchDescription"></p> -->
+				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
 			</div>
 		</section>
 		<section class="categoriesBar">
@@ -32,8 +35,11 @@ while(have_posts()){
 			<a href=""><?php the_field('tag_two'); ?></a>
 			<a href=""><?php the_field('tag_three'); ?></a>
 		</section>
-		<div class="lineup-container" id="lineup_container">
-		<div class="blurred-lineup-background"></div>
+		<div class="lineup-container" id="band_lineup">
+			<?php
+				$imgURL = has_post_thumbnail() ? get_field('category_background_image') : get_the_post_thumbnail_url(5);
+			?>
+		<div class="blurred-lineup-background" style="background-image: url('<?=$imgURL?>');"></div>
 		<div class="band-card-container">
 			<?php
 				for($i=1; $i < 9; $i++){
@@ -42,8 +48,8 @@ while(have_posts()){
 					?>
 						<div class="band-card">
 							<div class="TagContent">
-								<h2 class="tagHeading"><?=$band?></h2>
 								<a href="#" class="singleButton"><?=get_field("performer_{$i}_start_time")?> - <?=get_field("performer_{$i}_end_time")?></a>
+								<h2 class="tagHeading"><?=$band?></h2>
 								<p class="tag"><?=get_field("performer_{$i}_tags")?></p>
 							</div>
 							<p class="porchDescription"><?=get_field("performer_{$i}_description")?></p>
