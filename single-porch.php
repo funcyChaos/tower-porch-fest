@@ -32,10 +32,25 @@ while(have_posts()){
 			<a href=""><?php the_field('tag_two'); ?></a>
 			<a href=""><?php the_field('tag_three'); ?></a>
 		</section>
-		<section class="singlepage">
-		<section class="singleArchivesSection" style="background:linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('<?php the_field('category_background_image'); ?>'); background-position: center; background-size: cover; background-repeat: no-repeat; ">
-		</section>
-		<div class="cardContainer" >
+		<div class="lineup-container" id="lineup_container">
+		<div class="blurred-lineup-background"></div>
+		<div class="band-card-container">
+			<?php
+				for($i=1; $i < 9; $i++){
+					$band = get_field("performer_{$i}_name");
+					if(!$band)continue;
+					?>
+						<div class="band-card">
+							<div class="TagContent">
+								<h2 class="tagHeading"><?=$band?></h2>
+								<a href="#" class="singleButton"><?=get_field("performer_{$i}_start_time")?> - <?=get_field("performer_{$i}_end_time")?></a>
+								<p class="tag"><?=get_field("performer_{$i}_tags")?></p>
+							</div>
+							<p class="porchDescription"><?=get_field("performer_{$i}_description")?></p>
+						</div>
+					<?php
+				}
+			?>
 			<?php
 				$tagOne = get_field('tag_one');
 				if($tagOne){
@@ -92,8 +107,8 @@ while(have_posts()){
 					<?php
 				}
 				?>
-			</div>
-	</section>
+		</div>
+	</div>		
 	<?php
 }
 get_sidebar();
