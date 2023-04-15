@@ -48,6 +48,12 @@ section#block-5 {
       &:first-child {
         margin-top: 2rem;
       }
+			a{
+				color: black;
+				&:visited{
+					color: black;
+				}
+			}
       p {
         margin-top: 0.5rem;
         margin-bottom: 0;
@@ -254,6 +260,22 @@ section#block-5 {
 
       color: #ffffff;
     }
+		.the-content{
+			p{
+				width: 495px;
+				color: #fff;
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 400;
+				font-size: 16px;
+				line-height: 22px;
+				text-align: left;
+			}
+			a{
+				color: #A33C97;
+				color: white;
+			}
+		}
     .porchaddress {
       font-family: 'Open Sans';
       font-style: normal;
