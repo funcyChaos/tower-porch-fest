@@ -38,6 +38,9 @@ while(have_posts()){
 		<div class="lineup-container" id="band_lineup">
 			<?php
 				$imgURL = has_post_thumbnail() ? get_field('category_background_image') : get_the_post_thumbnail_url(5);
+				if(!$imgURL){
+					$imgURL = get_the_post_thumbnail_url(5);
+				}
 			?>
 		<div class="blurred-lineup-background" style="background-image: url('<?=$imgURL?>');"></div>
 		<div class="band-card-container">
