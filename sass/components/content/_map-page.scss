@@ -49,14 +49,22 @@
       letter-spacing: 10%;
     }
   }
+  #directions-btn {
+    color: #14a4ab;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 10%;
+    background: none;
+    outline: none;
+    border: none;
+  }
   & #btn-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
-    & button {
-      width: 310px;
-      height: 46px;
+    & a {
+      padding: 0.5rem 6.75rem;
       background: #14a4ab;
       color: #fff;
       font-family: 'Antonio', sans-serif;
@@ -64,6 +72,7 @@
       font-size: 20px;
       letter-spacing: 3px;
       font-weight: 200;
+      text-align: center;
     }
   }
 }

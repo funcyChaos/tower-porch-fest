@@ -48,10 +48,10 @@ function initMap() {
         }
 
         // Construction of the GET DIRECTIONS button
-        const directionsBtn = document.createElement('button');
-        directionsBtn.id = 'direct-btn';
-        directionsBtn.type = 'button';
-        directionsBtn.textContent = 'GET DIRECTIONS';
+        const seeLineupBtn = document.createElement('a');
+        seeLineupBtn.id = 'lineup-btn';
+        seeLineupBtn.href = porchPageURL;
+        seeLineupBtn.textContent = 'See Lineup';
 
         // Construction of the CONTENT div responsible for populating info window
         const contentDiv = document.createElement('div');
@@ -60,6 +60,18 @@ function initMap() {
         // Contruction of button container to append button to
         const buttonContainer = document.createElement('div');
         buttonContainer.id = 'btn-container';
+
+        const directionsBtn = document.createElement('button');
+        directionsBtn.type = 'button';
+        directionsBtn.id = 'directions-btn';
+        directionsBtn.textContent = 'Get Directions';
+        const porchTimes = document.createElement('p');
+        porchTimes.innerText = `${porchStartTime} - ${porchEndTime}`;
+
+        const lineupInfo = document.createElement('div');
+        lineupInfo.id = 'lineup-info';
+        lineupInfo.appendChild(porchTimes);
+        lineupInfo.appendChild(directionsBtn);
 
         // The div that contains the information that populates the info window
         if (porchType === 'Porta Potty') {
@@ -81,15 +93,12 @@ function initMap() {
             '</div>' +
             '<div id="desc">' +
             `${porchDesc}` +
-            '</div>' +
-            '<div id="lineup-info">' +
-            `<p>${porchStartTime} - ${porchEndTime}</p>` +
-            `<a href='${porchPageURL}' target="_blank">SEE LINEUP</a>` +
             '</div>';
         }
 
-        buttonContainer.appendChild(directionsBtn);
+        buttonContainer.appendChild(seeLineupBtn);
         contentDiv.innerHTML = contentString;
+        contentDiv.appendChild(lineupInfo);
         contentDiv.appendChild(buttonContainer);
 
         // Event listener to trigger the directions/routing
