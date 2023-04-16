@@ -144,9 +144,9 @@
               </a>
             </div>
             <!-- Future Carousel -->
-            <div class="wrapper">
+            <!-- <div class="wrapper">
               <h2>Placeholder for Carousel</h2>
-            </div>
+            </div> -->
           </section>
         <?php endwhile; ?>
       <?php endif; ?>

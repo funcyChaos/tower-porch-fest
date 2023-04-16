@@ -13,6 +13,7 @@ while(have_posts()){
 	the_post();
 	?>
 		<section class="prochesSingle">
+			<a href="/map" style="color: white; ">Back To Map</a>
 			<div class="singleporchImgContainer">
 			<?php 
 				$imgURL = has_post_thumbnail() ? get_the_post_thumbnail_url() : get_the_post_thumbnail_url(5);
@@ -30,14 +31,14 @@ while(have_posts()){
 				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
 			</div>
 		</section>
-		<section class="categoriesBar">
-			<a href=""><?php the_field('tag_one'); ?></a>
-			<a href=""><?php the_field('tag_two'); ?></a>
-			<a href=""><?php the_field('tag_three'); ?></a>
-		</section>
+		<!-- <section class="categoriesBar">
+			<a href=""><?php //the_field('tag_one'); ?></a>
+			<a href=""><?php //the_field('tag_two'); ?></a>
+			<a href=""><?php //the_field('tag_three'); ?></a>
+		</section> -->
 		<div class="lineup-container" id="band_lineup">
 			<?php
-				$imgURL = has_post_thumbnail() ? get_field('category_background_image') : get_the_post_thumbnail_url(5);
+				$imgURL = get_field('category_background_image');
 				if(!$imgURL){
 					$imgURL = get_the_post_thumbnail_url(5);
 				}

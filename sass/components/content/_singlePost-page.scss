@@ -73,10 +73,12 @@ section#block-5 {
           font-size: 16px;
           line-height: 100%;
           /* identical to box height, or 16px */
-          height: 30px;
+          min-height: 30px;
+					max-width: 200px;
           text-align: center;
           letter-spacing: 0.1em;
           text-transform: uppercase;
+					align-self: center;
 
           /* White */
 
@@ -241,13 +243,15 @@ section#block-5 {
     justify-content: center;
     align-items: center;
     .porchimage {
-      width: 588px;
+      // width: 588px;
+			max-height: 500px;
       border: 15px solid #ffffff;
     }
   }
   .singleporchContentContainer {
     display: flex;
     flex-direction: column;
+		max-width: 500px;
     .porchheading {
       font-family: 'Antonio';
       font-style: normal;
@@ -262,7 +266,6 @@ section#block-5 {
     }
 		.the-content{
 			p{
-				width: 495px;
 				color: #fff;
 				font-family: 'Open Sans';
 				font-style: normal;
@@ -384,7 +387,8 @@ section#block-5 {
 
 @media (max-width: 1200px) {
   .prochesSingle .singleporchImgContainer .porchimage {
-    width: 500px;
+    // width: 500px;
+		max-height: 300px;
   }
   .prochesSingle .singleporchContentContainer {
     zoom: 85%;
@@ -395,7 +399,7 @@ section#block-5 {
   .prochesSingle {
     height: 400px;
     .singleporchImgContainer .porchimage {
-      width: 400px;
+      // width: 400px;
     }
     .singleporchContentContainer {
       zoom: 75%;
@@ -407,7 +411,8 @@ section#block-5 {
   .prochesSingle {
     height: 350px;
     .singleporchImgContainer .porchimage {
-      width: 350px;
+      // width: 350px;
+			max-height: 300px;
     }
     .singleporchContentContainer {
       zoom: 70%;
@@ -420,7 +425,8 @@ section#block-5 {
     height: 600px;
     flex-direction: column;
     .singleporchImgContainer .porchimage {
-      width: 350px;
+      // width: 350px;
+			max-height: 250px;
     }
     .singleporchContentContainer {
       zoom: 73%;
@@ -446,15 +452,31 @@ section#block-5 {
   }
 }
 @media (max-width: 475px) {
-  .prochesSingle .singleporchContentContainer {
-    zoom: 60%;
-  }
-  .SingleCatCard {
-    zoom: 65%;
-  }
-  .band-card {
-    zoom: 65%;
-  }
+  // .prochesSingle .singleporchContentContainer {
+  //   // zoom: 60%;
+  // }
+	.lineup-container .band-card-container .band-card .TagContent,
+	.lineup-container .band-card-container .SingleCatCard .TagContent
+	{
+		flex-direction: column;
+	}
+	.lineup-container .band-card-container .band-card .TagContent a{
+		font-size: 2rem;
+		height: auto;
+	}
+	.band-card, .SingleCatCard {
+		max-width: 340px;
+		justify-content: space-around;
+	}
+	.lineup-container .band-card-container .SingleCatCard{
+		justify-content: space-around;
+		align-items: center;
+	}
+
+	.SingleCatCard {
+		// zoom: 65%;
+		flex-direction: column;
+	}
   .singlepage {
     height: 600px;
   }
@@ -464,6 +486,6 @@ section#block-5 {
     zoom: 55%;
   }
   .band-card {
-    zoom: 55%;
+    // zoom: 55%;
   }
 }
