@@ -13,6 +13,7 @@ while(have_posts()){
 	the_post();
 	?>
 		<section class="prochesSingle">
+			<a href="/map" style="color: white; ">Back To Map</a>
 			<div class="singleporchImgContainer">
 			<?php 
 				$imgURL = has_post_thumbnail() ? get_the_post_thumbnail_url() : get_the_post_thumbnail_url(5);
@@ -23,19 +24,43 @@ while(have_posts()){
 				<h2 class="porchheading"><?=the_title()?></h2>
 				<p class="porchaddress"><?=the_field('porch_address')?></p>
 				<?php $content = wp_strip_all_tags(get_the_content());?>
-				<p class="porchDescription"><?=$content?></p>
-				<a href="#" class="singleButton">SEE LINEUP</a>
+				<div class="the-content">
+					<?php the_content();?>
+				</div>
+				<!-- <p class="porchDescription"></p> -->
+				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
 			</div>
 		</section>
-		<section class="categoriesBar">
-			<a href=""><?php the_field('tag_one'); ?></a>
-			<a href=""><?php the_field('tag_two'); ?></a>
-			<a href=""><?php the_field('tag_three'); ?></a>
-		</section>
-		<section class="singlepage">
-		<section class="singleArchivesSection" style="background:linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('<?php the_field('category_background_image'); ?>'); background-position: center; background-size: cover; background-repeat: no-repeat; ">
-		</section>
-		<div class="cardContainer" >
+		<!-- <section class="categoriesBar">
+			<a href=""><?php //the_field('tag_one'); ?></a>
+			<a href=""><?php //the_field('tag_two'); ?></a>
+			<a href=""><?php //the_field('tag_three'); ?></a>
+		</section> -->
+		<div class="lineup-container" id="band_lineup">
+			<?php
+				$imgURL = get_field('category_background_image');
+				if(!$imgURL){
+					$imgURL = get_the_post_thumbnail_url(5);
+				}
+			?>
+		<div class="blurred-lineup-background" style="background-image: url('<?=$imgURL?>');"></div>
+		<div class="band-card-container">
+			<?php
+				for($i=1; $i < 9; $i++){
+					$band = get_field("performer_{$i}_name");
+					if(!$band)continue;
+					?>
+						<div class="band-card">
+							<div class="TagContent">
+								<a href="#" class="singleButton"><?=get_field("performer_{$i}_start_time")?> - <?=get_field("performer_{$i}_end_time")?></a>
+								<h2 class="tagHeading"><?=$band?></h2>
+								<p class="tag"><?=get_field("performer_{$i}_tags")?></p>
+							</div>
+							<p class="porchDescription"><?=get_field("performer_{$i}_description")?></p>
+						</div>
+					<?php
+				}
+			?>
 			<?php
 				$tagOne = get_field('tag_one');
 				if($tagOne){
@@ -92,8 +117,8 @@ while(have_posts()){
 					<?php
 				}
 				?>
-			</div>
-	</section>
+		</div>
+	</div>		
 	<?php
 }
 get_sidebar();

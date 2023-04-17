@@ -1,324 +1,491 @@
 section#block-2 {
-    display: none;
+  display: none;
 }
 section#block-3 {
-    display: none;
+  display: none;
 }
 section#block-4 {
-    display: none;
+  display: none;
 }
 section#block-5 {
-    display: none;
+  display: none;
 }
 
+.lineup-container {
+  position: relative;
+  min-height: 100vh;
+  .blurred-lineup-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-image: url('./Porch-Image-1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    filter: blur(3px);
+  }
 
-
-// Single Page Styling 
-
-.prochesSingle{
-    background-color: #462D62;
-    height: 600px;
+  .band-card-container {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
     align-items: center;
-    .singleporchImgContainer{
+    gap: 10px;
+
+    .band-card {
+      width: 550px;
+      background-color: #fff;
+      border: 1px solid #eaeaea;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 15px;
+      margin-bottom: 5px;
+      &:first-child {
+        margin-top: 2rem;
+      }
+			a{
+				color: black;
+				&:visited{
+					color: black;
+				}
+			}
+      p {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+      }
+      .TagContent {
+        width: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-                  .porchimage{
-                width: 588px;
-                border: 15px solid #FFFFFF;
-            }
-    }
-    .singleporchContentContainer{
-        display: flex;
-        flex-direction: column;
-        .porchheading{
-            font-family: 'Antonio';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 48px;
-            line-height: 62px;
-            text-transform: uppercase;
-
-            /* White */
-
-            color: #FFFFFF;
-        }
-        .porchaddress{
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 22px;
-            /* identical to box height */
-
-
-            /* White */
-
-            color: #FFFFFF;
-        }
-         .porchDescription{
-        width: 495px;
-            color: #fff;
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 22px;
-            text-align: left;
-        
-    }
-    .singleButton {
-        background-color:  #14A4AB;;
-        border: none;
-        color: white;
-        padding: 8px 32px;
+        justify-content: space-between;
         text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        width: 186px;
-        cursor: pointer;
-        font-family: 'Antonio';
-        font-style: normal;
-        font-weight: 400;
-        line-height: 26px;
-        /* identical to box height */
 
-        text-align: center;
-        letter-spacing: 0.1em;
-        &:hover{
-            background-color: #462D62;
-            border: 2px solid #fff;
+        .tag {
+          background-color: #a33c97;
+          padding: 5px 10px;
+          font-family: 'Antonio';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 100%;
+          /* identical to box height, or 16px */
+          min-height: 30px;
+					max-width: 200px;
+          text-align: center;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+					align-self: center;
+
+          /* White */
+
+          color: #ffffff;
+        }
+
+        a {
+          height: 30px;
+          padding: 10px;
+          text-decoration: none;
+          margin: 0 0.5rem;
+          /* Black */
+
+          background: #000000;
+          font-family: 'Antonio';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 76%;
+          /* identical to box height, or 11px */
+
+          text-align: center;
+          text-transform: uppercase;
+
+          /* White */
+
+          color: #ffffff;
+        }
+        h2 {
+          font-family: 'Antonio';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 26px;
+          /* identical to box height */
+
+          text-transform: uppercase;
+          color: #000000;
+        }
+        p {
+          font-family: 'Open Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 16px;
+          color: #000000;
+          margin: 0;
         }
       }
     }
 
-
-    
-      
-}
-
-// Categories Bar
-
-.categoriesBar{
-    width: 100%;
-    height: 120px;
-    background-color: #FFFFFF;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    a{
-        font-family: 'Antonio';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 26px;
-        text-decoration: none;
-        margin: 0 82px;
-        /* identical to box height */
-
-        text-align: center;
-        text-transform: uppercase;
-
-        /* Violet */
-
-        color: #A33C97;
-
-    }
- 
-}
-
-// Single Page Archives Section
-.singlepage{
-    height: 888px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.singleArchivesSection{
-    height: 888px;
-    width: 100%;
-    filter: blur(8px); 
-    -webkit-filter: blur(8px);
- 
-}
-.cardContainer{
-    position: absolute;
-    z-index: 888;
-}
-
-.SingleCatCard{
-    width: 550px;
-		min-height: 213px;
-    background-color: #fff;
-    border: 1px solid #EAEAEA;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    justify-content: center;
-    padding: 15px;
-    margin: 30px 0;
-    .TagImg{
+    .SingleCatCard {
+      width: 550px;
+      min-height: 213px;
+      background-color: #fff;
+      border: 1px solid #eaeaea;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 2rem;
+      }
+      .TagImg {
         width: 200px;
         height: 180px;
-        img{
-            width: 200px;
-            height: 180px;
+        img {
+          width: 200px;
+          height: 180px;
         }
-        .tag{
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
-            position: relative;
-            bottom: 26px;
-            p{
-                background-color:  #A33C97;
-                 padding: 5px 10px;
-                 font-family: 'Antonio';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 16px;
-                line-height: 100%;
-                /* identical to box height, or 16px */
+        .tag {
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-end;
+          position: relative;
+          bottom: 26px;
+          p {
+            background-color: #a33c97;
+            padding: 5px 10px;
+            font-family: 'Antonio';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 100%;
+            /* identical to box height, or 16px */
 
-                text-align: right;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
+            text-align: right;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
 
-                /* White */
+            /* White */
 
-                color: #FFFFFF;
-
-            }
+            color: #ffffff;
+          }
         }
-    }
-    .TagContent{
+      }
+      .TagContent {
         width: 310px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin-left: 10px;
-        a{
-            width: 310px;
-            height: 29px;
-            padding: 10px 0;
-            text-decoration: none;
-            /* Black */
+        a {
+          width: 310px;
+          height: 29px;
+          padding: 10px 0;
+          text-decoration: none;
+          /* Black */
 
-            background: #000000;
-            font-family: 'Antonio';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 14px;
-            line-height: 76%;
-            /* identical to box height, or 11px */
+          background: #000000;
+          font-family: 'Antonio';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 76%;
+          /* identical to box height, or 11px */
 
-            text-align: center;
-            text-transform: uppercase;
+          text-align: center;
+          text-transform: uppercase;
 
-            /* White */
+          /* White */
 
-            color: #FFFFFF;
+          color: #ffffff;
         }
-        h2{
-            font-family: 'Antonio';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 20px;
-            line-height: 26px;
-            /* identical to box height */
+        h2 {
+          font-family: 'Antonio';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 26px;
+          /* identical to box height */
 
-            text-transform: uppercase;
-            margin: 8px 0;
-            color: #000000;
+          text-transform: uppercase;
+          margin: 8px 0;
+          color: #000000;
         }
-        p{
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 12px;
-            line-height: 16px;
+        p {
+          font-family: 'Open Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 16px;
 
-            color: #000000;
+          color: #000000;
         }
+      }
     }
+  }
 }
 
-@media (max-width: 1200px) { 
-    .prochesSingle .singleporchImgContainer .porchimage {
-        width: 500px;
+// Single Page Styling
+
+.prochesSingle {
+  background-color: #462d62;
+  height: 600px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  .singleporchImgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .porchimage {
+      // width: 588px;
+			max-height: 500px;
+      border: 15px solid #ffffff;
     }
-    .prochesSingle .singleporchContentContainer {
-        zoom: 85%;
+  }
+  .singleporchContentContainer {
+    display: flex;
+    flex-direction: column;
+		max-width: 500px;
+    .porchheading {
+      font-family: 'Antonio';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 62px;
+      text-transform: uppercase;
+
+      /* White */
+
+      color: #ffffff;
     }
+		.the-content{
+			p{
+				color: #fff;
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 400;
+				font-size: 16px;
+				line-height: 22px;
+				text-align: left;
+			}
+			a{
+				color: #A33C97;
+				color: white;
+			}
+		}
+    .porchaddress {
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      /* identical to box height */
+
+      /* White */
+
+      color: #ffffff;
+    }
+    .porchDescription {
+      width: 495px;
+      color: #fff;
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      text-align: left;
+    }
+    .singleButton {
+      background-color: #14a4ab;
+      border: none;
+      color: white;
+      padding: 8px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      width: 186px;
+      cursor: pointer;
+      font-family: 'Antonio';
+      font-style: normal;
+      font-weight: 400;
+      line-height: 26px;
+      /* identical to box height */
+
+      text-align: center;
+      letter-spacing: 0.1em;
+      &:hover {
+        background-color: #462d62;
+        border: 2px solid #fff;
+      }
+    }
+  }
 }
 
-@media (max-width: 1200px) { 
-    .prochesSingle{
-        height: 400px;
-        .singleporchImgContainer .porchimage {
-        width: 400px;
-        }
-        .singleporchContentContainer {
-            zoom: 75%;
-        }
-    }
+// Categories Bar
+
+.categoriesBar {
+  width: 100%;
+  height: 120px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  a {
+    font-family: 'Antonio';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    text-decoration: none;
+    margin: 0 82px;
+    /* identical to box height */
+
+    text-align: center;
+    text-transform: uppercase;
+
+    /* Violet */
+
+    color: #a33c97;
+  }
 }
 
-@media (max-width: 900px) { 
-    .prochesSingle{
-        height: 350px;
-        .singleporchImgContainer .porchimage {
-        width: 350px;
-        }
-        .singleporchContentContainer {
-            zoom: 70%;
-        }
-    }
+// Single Page Archives Section
+.singlepage {
+  // height: 888px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .singleArchivesSection {
+    position: absolute;
+    z-index: 1;
+
+    width: 100%;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+
+    height: 800px;
+  }
+  .cardContainer {
+    position: absolute;
+    z-index: 888;
+    width: 500px;
+
+    height: 800px;
+  }
 }
 
-@media (max-width: 775px) { 
-    .prochesSingle {
+@media (max-width: 1200px) {
+  .prochesSingle .singleporchImgContainer .porchimage {
+    // width: 500px;
+		max-height: 300px;
+  }
+  .prochesSingle .singleporchContentContainer {
+    zoom: 85%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .prochesSingle {
+    height: 400px;
+    .singleporchImgContainer .porchimage {
+      // width: 400px;
+    }
+    .singleporchContentContainer {
+      zoom: 75%;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .prochesSingle {
+    height: 350px;
+    .singleporchImgContainer .porchimage {
+      // width: 350px;
+			max-height: 300px;
+    }
+    .singleporchContentContainer {
+      zoom: 70%;
+    }
+  }
+}
+
+@media (max-width: 775px) {
+  .prochesSingle {
     height: 600px;
     flex-direction: column;
     .singleporchImgContainer .porchimage {
-        width: 350px;
-        }
-        .singleporchContentContainer {
-            zoom: 73%;
-        }
+      // width: 350px;
+			max-height: 250px;
     }
+    .singleporchContentContainer {
+      zoom: 73%;
+    }
+  }
 }
 
-@media (max-width: 575px) { 
-    .categoriesBar {
-        width: 100%;
-        height: 280px;
-        background-color: #FFFFFF;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-direction: column;
-    }
-    .SingleCatCard {
-        zoom: 80%;
-    }
-    
-
+@media (max-width: 575px) {
+  .categoriesBar {
+    width: 100%;
+    height: 280px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+  }
+  .SingleCatCard {
+    zoom: 80%;
+  }
+  .band-card {
+    zoom: 80%;
+  }
 }
-@media (max-width: 475px) { 
-    .prochesSingle .singleporchContentContainer {
-        zoom: 70%;
-    }
-    .SingleCatCard {
-        zoom: 65%;
-    }
-    .singlepage {
-        height: 600px;
-    }
+@media (max-width: 475px) {
+  // .prochesSingle .singleporchContentContainer {
+  //   // zoom: 60%;
+  // }
+	.lineup-container .band-card-container .band-card .TagContent,
+	.lineup-container .band-card-container .SingleCatCard .TagContent
+	{
+		flex-direction: column;
+	}
+	.lineup-container .band-card-container .band-card .TagContent a{
+		font-size: 2rem;
+		height: auto;
+	}
+	.band-card, .SingleCatCard {
+		max-width: 340px;
+		justify-content: space-around;
+	}
+	.lineup-container .band-card-container .SingleCatCard{
+		justify-content: space-around;
+		align-items: center;
+	}
 
+	.SingleCatCard {
+		// zoom: 65%;
+		flex-direction: column;
+	}
+  .singlepage {
+    height: 600px;
+  }
+}
+@media (max-width: 320px) {
+  .SingleCatCard {
+    zoom: 55%;
+  }
+  .band-card {
+    // zoom: 55%;
+  }
 }
