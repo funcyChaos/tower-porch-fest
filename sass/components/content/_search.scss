@@ -44,7 +44,7 @@ $blue:	 #4fc4c9;
 			border-radius: 0;
 			padding: 0 1rem;
 			width: 300px;
-			height: 40px;
+			height: 50px;
 		}
 		.search-submit{
 			background-color: $blue;
@@ -56,6 +56,9 @@ $blue:	 #4fc4c9;
 
 		@media(max-width: 400px){
 			flex-direction: column;
+			.search-field{
+				height: 40px;
+			}
 		}
 	}
 }
