@@ -1,9 +1,10 @@
-const urlAgrs = window.location.search;
-console.log(urlAgrs);
-console.log(decodeURIComponent(urlAgrs));
-
 // Initialization of the map
 function initMap() {
+  const urlArgs = decodeURIComponent(window.location.search)
+    .split('=')[1]
+    .split(':')[0];
+  // console.log(urlArgs);
+
   zoom = 14.2;
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 36.7650533, lng: -119.7995578 },
@@ -21,33 +22,28 @@ function initMap() {
   fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?_embed&per_page=100`)
     .then((res) => res.json())
     .then((data) => {
-      // Construction of the map filter element
-
       // console.log(getDateFromHours('01:12'));
       const currentDate = new Date();
+      // console.log('current date', currentDate);
       // Will be users input
       let timeSelect = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth(),
         currentDate.getDate(),
-        ...[4, 0]
+        ...[urlArgs, 0]
       );
       // Construction of the select element and its options
       const filterForm = document.createElement('form');
       filterForm.id = 'map-filter';
 
-      const selectList = document.createElement('input');
-      selectList.type = 'time';
-      selectList.id = 'select-list';
-      selectList.name = 'select-list';
-      const option = document.createElement('option');
-      option.value = ' ';
-      option.text = '';
-      selectList.appendChild(option);
-      const selectListLabel = document.createElement('label');
-      selectListLabel.htmlFor = 'select-list';
-      selectListLabel.appendChild(document.createTextNode('View by time'));
-      selectList.addEventListener('change', (e) => {
+      const timeInput = document.createElement('input');
+      timeInput.type = 'time';
+      timeInput.id = 'time-input';
+      timeInput.name = 'time-input';
+      const timeInputLabel = document.createElement('label');
+      timeInputLabel.htmlFor = 'time-input';
+      timeInputLabel.appendChild(document.createTextNode('View by time'));
+      timeInput.addEventListener('change', (e) => {
         timeSelect = e.target.value;
       });
 
@@ -73,8 +69,8 @@ function initMap() {
       submitBtn.type = 'submit';
       submitBtn.id = 'submit-btn';
       submitBtn.innerText = 'Submit';
-      filterForm.appendChild(selectListLabel);
-      filterForm.appendChild(selectList);
+      filterForm.appendChild(timeInputLabel);
+      filterForm.appendChild(timeInput);
       filterForm.appendChild(hasFoodLabel);
       filterForm.appendChild(hasFood);
       filterForm.appendChild(hasPortaPottyLabel);
@@ -83,28 +79,33 @@ function initMap() {
       document.getElementById('map').appendChild(filterForm);
 
       data.map((porch) => {
-        // console.log(porch)
-        // console.log(porch.acf.performer_1_start_time)
+        // console.log(porch);
+        function isPerformance(startTime) {
+          startTime.includes('Performer') || startTime === ''
+            ? null
+            : startTimes.push(startTime);
+        }
 
-        startTimes = [
-          porch.acf.performer_1_start_time,
-          porch.acf.performer_2_start_time,
-          porch.acf.performer_3_start_time,
-          porch.acf.performer_4_start_time,
-          porch.acf.performer_5_start_time,
-          porch.acf.performer_6_start_time,
-          porch.acf.performer_7_start_time,
-          porch.acf.performer_8_start_time,
-        ];
+        const startTimes = [];
+
+        isPerformance(porch.acf.performer_1_start_time);
+        isPerformance(porch.acf.performer_2_start_time);
+        isPerformance(porch.acf.performer_3_start_time);
+        isPerformance(porch.acf.performer_4_start_time);
+        isPerformance(porch.acf.performer_5_start_time);
+        isPerformance(porch.acf.performer_6_start_time);
+        isPerformance(porch.acf.performer_7_start_time);
+        isPerformance(porch.acf.performer_8_start_time);
 
         let showPorch = false;
         startTimes.forEach((time) => {
+          // console.log('Time', time);
           time = time.split(':');
-          if (time[0] < 11) {
-            time[0] = parseInt(time[0]);
-            time[0] += 12;
-            console.log(time);
-          }
+          // if (time[0] < 11) {
+          //   time[0] = parseInt(time[0]);
+          //   time[0] += 12;
+          //   // console.log(time);
+          // }
           let now = new Date();
           const porchTime = new Date(
             now.getFullYear(),
@@ -113,12 +114,15 @@ function initMap() {
             ...time
           );
           if (showPorch) return;
+
           if (porchTime >= timeSelect) {
+            console.log(porchTime, ':', timeSelect);
             showPorch = true;
             return;
           }
         });
-        if (showPorch) {
+
+        if (!showPorch) {
           // console.log(showPorch);
           return;
         }
