@@ -1,53 +1,52 @@
 <?php
-/**
- * The template for displaying search results pages
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
- *
- * @package towerpf-site
- */
 
-get_header();
-?>
-
-	<main id="primary" class="site-main">
-
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<h1 class="page-title">
-					<?php
-					/* translators: %s: search query. */
-					printf( esc_html__( 'Search Results for: %s', 'towerpf-site' ), '<span>' . get_search_query() . '</span>' );
-					?>
-				</h1>
-			</header><!-- .page-header -->
-
+	get_header();
+	?>
+		<div class="search-container">
+			<h1>SEARCH PORCHES</h1>
 			<?php
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
+				get_search_form();
+			?>
+			<div class="results-header">
+				<h1>RESULTS FOR:</h1>
+				<h2><?=get_search_query()?></h2>
+			</div>
+		</div>
+		<section class="porchesarchivesContainer">
+			<section class="porchescardcontainer">
+				<?php
+					$default_image = get_the_post_thumbnail(5, 'medium');
+					while(have_posts()){
+						the_post();
+						?>
+							<div class="porchcard" id="<?php echo "card_". get_the_id();?>">
+								<div class="heading">
+									<h2 class="porchheading" ><?=the_title()?></h2>
+									<p class="porchparagraph"><?php the_field('porch_address');?></p>
+								</div>
+								<div class="content">
+									<?php 
+										if(has_post_thumbnail()){
+											the_post_thumbnail('medium');
+										}else{
+											echo $default_image;
+										}
+									?>
+									<div class="porchlinks">
+										<a href=""><?php the_field('tag_one');?></a>
+										<a href=""><?php the_field('tag_two');?></a>
+										<a href=""><?php the_field('tag_three');?></a>
+									</div>
+									<p class="porchDescription"><?=get_the_excerpt()?></p>
+								</div>
+								<a href="<?=the_permalink()?>/#band_lineup" class="button7">SEE LINEUP</a>
+							</div>
+						<?php 
+					}
+				?>
+			</section>
+		</section>
 
-				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', 'search' );
-
-			endwhile;
-
-			the_posts_navigation();
-
-		else :
-
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
-
-	</main><!-- #main -->
-
-<?php
-get_sidebar();
-get_footer();
+	<?php
+	get_footer();
+?>
