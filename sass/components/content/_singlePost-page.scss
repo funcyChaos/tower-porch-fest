@@ -452,17 +452,21 @@ section#block-5 {
   }
 }
 @media (max-width: 475px) {
-  // .prochesSingle .singleporchContentContainer {
-  //   // zoom: 60%;
-  // }
 	.lineup-container .band-card-container .band-card .TagContent,
 	.lineup-container .band-card-container .SingleCatCard .TagContent
 	{
 		flex-direction: column;
-	}
-	.lineup-container .band-card-container .band-card .TagContent a{
-		font-size: 2rem;
-		height: auto;
+		a{
+			font-size: 2rem;
+			height: auto;
+			line-height: 35px;
+		}
+
+		.tagHeading{
+			font-size: 2rem;
+			margin-top: .5rem;
+			line-height: 35px;
+		}
 	}
 	.band-card, .SingleCatCard {
 		max-width: 340px;
