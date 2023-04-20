@@ -87,7 +87,17 @@ function initMap() {
             : startTimes.push(startTime);
         }
 
-        const startTimes = [];
+        // const startTimes = [];
+        const startTimes = [
+          porch.acf.performer_1_start_time,
+          porch.acf.performer_2_start_time,
+          porch.acf.performer_3_start_time,
+          porch.acf.performer_4_start_time,
+          porch.acf.performer_5_start_time,
+          porch.acf.performer_6_start_time,
+          porch.acf.performer_7_start_time,
+          porch.acf.performer_8_start_time,
+        ];
 
         isPerformance(porch.acf.performer_1_start_time);
         isPerformance(porch.acf.performer_2_start_time);
@@ -168,33 +178,10 @@ function initMap() {
           porchImage = wpVars.defaultImageURL;
         }
 
-        // Construction of the GET DIRECTIONS button
-        const seeLineupBtn = document.createElement('a');
-        seeLineupBtn.id = 'lineup-btn';
-        seeLineupBtn.href = porchPageURL + '#band_lineup';
-        seeLineupBtn.textContent = 'See Lineup';
-
         // Construction of the CONTENT div responsible for populating info window
         const contentDiv = document.createElement('div');
         contentDiv.id = 'content';
 
-        // Contruction of button container to append button to
-        const buttonContainer = document.createElement('div');
-        buttonContainer.id = 'btn-container';
-
-        const directionsBtn = document.createElement('button');
-        directionsBtn.type = 'button';
-        directionsBtn.id = 'directions-btn';
-        directionsBtn.textContent = 'Get Directions';
-        const porchTimes = document.createElement('p');
-        porchTimes.innerText = `${porchStartTime} - ${porchEndTime}`;
-
-        const lineupInfo = document.createElement('div');
-        lineupInfo.id = 'lineup-info';
-        lineupInfo.appendChild(porchTimes);
-        lineupInfo.appendChild(directionsBtn);
-
-        // The div that contains the information that populates the info window
         if (porchType === 'Porta Potty') {
           contentString =
             `<img src=${porchImage} alt="porch" />` +
@@ -211,16 +198,71 @@ function initMap() {
             '<div id="content-header">' +
             `<h3>${porchName}</h3>` +
             `<p>${address}</p>` +
-            '</div>' +
-            '<div id="desc">' +
-            `${porchDesc}` +
             '</div>';
         }
 
-        buttonContainer.appendChild(seeLineupBtn);
         contentDiv.innerHTML = contentString;
-        contentDiv.appendChild(lineupInfo);
-        contentDiv.appendChild(buttonContainer);
+
+        // const startTimes = [
+        //   porch.acf.performer_1_start_time,
+        //   porch.acf.performer_2_start_time,
+        //   porch.acf.performer_3_start_time,
+        //   porch.acf.performer_4_start_time,
+        //   porch.acf.performer_5_start_time,
+        //   porch.acf.performer_6_start_time,
+        //   porch.acf.performer_7_start_time,
+        //   porch.acf.performer_8_start_time,
+        // ];
+
+        const performers = [
+          porch.acf.performer_1_name,
+          porch.acf.performer_2_name,
+          porch.acf.performer_3_name,
+          porch.acf.performer_4_name,
+          porch.acf.performer_5_name,
+          porch.acf.performer_6_name,
+          porch.acf.performer_7_name,
+          porch.acf.performer_8_name,
+        ];
+
+        let tdString = ``;
+
+        for (let i = 0; i < performers.length; i++) {
+          if (!performers[i]) break;
+          tdString +=
+            `<tr>` +
+            `<td>${startTimes[i]}</td>` +
+            `<td>${performers[i]}</td>` +
+            `</tr>`;
+        }
+
+        const contentContainer = document.createElement('div');
+        contentContainer.className = 'content-container';
+        if (tdString) {
+          contentContainer.innerHTML =
+            `<div class="lineup">` +
+            `<table class="lineup-table">` +
+            `<tbody>` +
+            `<tr>` +
+            `<th>START TIME</th>` +
+            `<th>PERFORMER</th>` +
+            `</tr>` +
+            tdString +
+            `</tbody>` +
+            `</table>` +
+            `</div>`;
+        }
+        const directionsBtn = document.createElement('button');
+        directionsBtn.type = 'button';
+        directionsBtn.className = 'directions-btn';
+        directionsBtn.textContent = 'Get Directions';
+        contentContainer.appendChild(directionsBtn);
+        const seeLineupBtn = document.createElement('a');
+        seeLineupBtn.className = 'lineup-btn';
+        seeLineupBtn.href = porchPageURL + '#band_lineup';
+        seeLineupBtn.textContent = 'See Lineup';
+        contentContainer.appendChild(seeLineupBtn);
+        contentDiv.appendChild(contentContainer);
 
         // Event listener to trigger the directions/routing
         directionsBtn.addEventListener('click', () => {

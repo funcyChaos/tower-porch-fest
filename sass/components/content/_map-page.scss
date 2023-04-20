@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;200;300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
-
+$blue: #14a4ab;
 #map {
   height: 70vh;
   width: 100%;
@@ -23,6 +23,48 @@
   font-family: 'Open Sans', sans-serif;
   color: #000;
   overflow: hidden;
+
+	.content-container{
+		display: flex;
+		flex-direction: column;
+
+		.lineup-table{
+			padding: 0 .5rem;
+			text-align: center;
+			font-weight: bold;
+			td:nth-child(1){
+				background-color:black;
+				color:white;
+			}
+			td:nth-child(1),td:nth-child(2){
+				height: 1rem;
+				border:2px solid black;
+			}
+		}
+
+		.directions-btn{
+			color: $blue;
+			font-weight: 600;
+			text-decoration: none;
+			letter-spacing: 10%;
+			background: none;
+			outline: none;
+			border: none;
+		}
+
+		.lineup-btn{
+			padding: 0.5rem 0;
+      background: $blue;
+      color: #fff;
+      font-family: 'Antonio', sans-serif;
+      cursor: pointer;
+      font-size: 20px;
+      letter-spacing: 3px;
+      font-weight: 200;
+      text-align: center;
+		}
+	}
+
   & img {
     height: 200px;
     width: 330px;
@@ -61,15 +103,6 @@
       text-decoration: none;
       letter-spacing: 10%;
     }
-  }
-  #directions-btn {
-    color: #14a4ab;
-    font-weight: 600;
-    text-decoration: none;
-    letter-spacing: 10%;
-    background: none;
-    outline: none;
-    border: none;
   }
   & #btn-container {
     display: flex;
