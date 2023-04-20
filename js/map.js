@@ -3,7 +3,7 @@ function initMap() {
   const urlArgs = decodeURIComponent(window.location.search)
     .split('=')[1]
     .split(':')[0];
-  // console.log(urlArgs);
+  console.log(urlArgs);
 
   zoom = 14.2;
   map = new google.maps.Map(document.getElementById('map'), {
@@ -22,6 +22,7 @@ function initMap() {
   fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?_embed&per_page=100`)
     .then((res) => res.json())
     .then((data) => {
+      console.log(data);
       // console.log(getDateFromHours('01:12'));
       const currentDate = new Date();
       // console.log('current date', currentDate);
@@ -99,13 +100,13 @@ function initMap() {
 
         let showPorch = false;
         startTimes.forEach((time) => {
-          // console.log('Time', time);
           time = time.split(':');
-          // if (time[0] < 11) {
-          //   time[0] = parseInt(time[0]);
-          //   time[0] += 12;
-          //   // console.log(time);
-          // }
+          // console.log(porch);
+          if (time[0] < 11) {
+            time[0] = parseInt(time[0]);
+            time[0] += 12;
+            // console.log(time);
+          }
           let now = new Date();
           const porchTime = new Date(
             now.getFullYear(),
@@ -114,14 +115,22 @@ function initMap() {
             ...time
           );
           if (showPorch) return;
-
+          if (timeSelect === 'Invalid Date') {
+            showPorch == true;
+            return;
+          }
           if (porchTime >= timeSelect) {
-            console.log(porchTime, ':', timeSelect);
             showPorch = true;
             return;
           }
         });
 
+        if (urlArgs === '&Porta+Potty') {
+          if (porch.acf.host_type === 'Porta Potty') {
+            showPorch = true;
+            return;
+          }
+        }
         if (!showPorch) {
           // console.log(showPorch);
           return;

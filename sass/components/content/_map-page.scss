@@ -4,6 +4,19 @@
   height: 70vh;
   width: 100%;
 }
+#map-filter {
+  height: 350px;
+  width: 250px;
+  background: #fff;
+  position: absolute;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & #filter-input {
+    margin: 0.5rem;
+  }
+}
 #content {
   height: 100%;
   width: 330px;
