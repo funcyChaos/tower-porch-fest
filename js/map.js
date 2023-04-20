@@ -23,9 +23,7 @@ function initMap() {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      // console.log(getDateFromHours('01:12'));
       const currentDate = new Date();
-      // console.log('current date', currentDate);
       // Will be users input
       let timeSelect = new Date(
         currentDate.getFullYear(),
@@ -80,14 +78,12 @@ function initMap() {
       document.getElementById('map').appendChild(filterForm);
 
       data.map((porch) => {
-        // console.log(porch);
         function isPerformance(startTime) {
           startTime.includes('Performer') || startTime === ''
             ? null
             : startTimes.push(startTime);
         }
 
-        // const startTimes = [];
         const startTimes = [
           porch.acf.performer_1_start_time,
           porch.acf.performer_2_start_time,
@@ -142,7 +138,6 @@ function initMap() {
           }
         }
         if (!showPorch) {
-          // console.log(showPorch);
           return;
         }
 
@@ -158,9 +153,8 @@ function initMap() {
         const infoBooth = hasInfoBooth === 'Yes' ? true : false;
         const lat = Number(porch.acf.latitude);
         const lng = Number(porch.acf.longitude);
-        // console.log(hasInfoBooth)
+
         // Marker color is set based upon porch information
-        // console.log(infoBooth)
         if (hasInfoBooth === 'Yes') {
           markerColor = '#F45050';
         } else if (porchType === 'Sponsored Porch') {
@@ -202,17 +196,6 @@ function initMap() {
         }
 
         contentDiv.innerHTML = contentString;
-
-        // const startTimes = [
-        //   porch.acf.performer_1_start_time,
-        //   porch.acf.performer_2_start_time,
-        //   porch.acf.performer_3_start_time,
-        //   porch.acf.performer_4_start_time,
-        //   porch.acf.performer_5_start_time,
-        //   porch.acf.performer_6_start_time,
-        //   porch.acf.performer_7_start_time,
-        //   porch.acf.performer_8_start_time,
-        // ];
 
         const performers = [
           porch.acf.performer_1_name,
