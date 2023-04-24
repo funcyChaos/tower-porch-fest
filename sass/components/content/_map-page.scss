@@ -5,17 +5,36 @@ $blue: #14a4ab;
   width: 100%;
 }
 #map-filter {
-  height: 350px;
-  width: 250px;
-  background: #fff;
   position: absolute;
-  margin: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+
+  background: #fff;
+  margin: .8rem;
+	margin-top: 3.5rem;
+	padding: 10px;
+
   & #filter-input {
     margin: 0.5rem;
   }
+	.has-food-label{
+		margin-right: 2rem;
+	}
+	div{
+		margin: .5rem 0;
+	}
+	#submit-btn{
+		color: white;
+		background: #14A4AB;
+		font-family: 'Antonio';
+		font-style: normal;
+		font-weight: 400;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		padding: .5rem;
+		text-align: center;
+		text-transform: uppercase;
+	}
 }
 #content {
   height: 100%;

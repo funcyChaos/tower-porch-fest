@@ -1,9 +1,8 @@
 // Initialization of the map
 function initMap() {
-  const urlArgs = decodeURIComponent(window.location.search)
-    .split('=')[1]
-    .split(':')[0];
-  console.log(urlArgs);
+	const urlArgs = window.location.search
+	const params = new URLSearchParams(urlArgs)
+	const timeArg = params.get('time-input') ? params.get('time-input').split(':') : [0, 0]
 
   zoom = 14.2;
   map = new google.maps.Map(document.getElementById('map'), {
@@ -22,15 +21,16 @@ function initMap() {
   fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?_embed&per_page=100`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
-      const currentDate = new Date();
-      // Will be users input
-      let timeSelect = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate(),
-        ...[urlArgs, 0]
-      );
+			console.log('Raw Porch Data:', data);
+			const currentDate = new Date();
+			// Will be users input
+			let timeSelect = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				currentDate.getDate(),
+				...[...timeArg, 0]
+			);
+
       // Construction of the select element and its options
       const filterForm = document.createElement('form');
       filterForm.id = 'map-filter';
@@ -41,7 +41,8 @@ function initMap() {
       timeInput.name = 'time-input';
       const timeInputLabel = document.createElement('label');
       timeInputLabel.htmlFor = 'time-input';
-      timeInputLabel.appendChild(document.createTextNode('View by time'));
+      timeInputLabel.appendChild(document.createTextNode('Starts After '));
+			timeInputLabel.appendChild(timeInput);
       timeInput.addEventListener('change', (e) => {
         timeSelect = e.target.value;
       });
@@ -53,7 +54,9 @@ function initMap() {
       hasFood.id = 'has-food';
       const hasFoodLabel = document.createElement('label');
       hasFoodLabel.htmlFor = 'has-food';
-      hasFoodLabel.appendChild(document.createTextNode('Food'));
+			hasFoodLabel.className = 'has-food-label'
+			hasFoodLabel.appendChild(hasFood);
+      hasFoodLabel.appendChild(document.createTextNode(' Food'));
 
       const hasPortaPotty = document.createElement('input');
       hasPortaPotty.type = 'checkbox';
@@ -62,18 +65,20 @@ function initMap() {
       hasPortaPotty.id = 'has-porta-potty';
       const hasPortaPottyLabel = document.createElement('label');
       hasPortaPottyLabel.htmlFor = 'has-porta-potty';
-      hasPortaPottyLabel.appendChild(document.createTextNode('Porta Potty'));
+			hasPortaPottyLabel.appendChild(hasPortaPotty);
+      hasPortaPottyLabel.appendChild(document.createTextNode(' Porta Potty'));
 
       const submitBtn = document.createElement('button');
       submitBtn.type = 'submit';
       submitBtn.id = 'submit-btn';
       submitBtn.innerText = 'Submit';
       filterForm.appendChild(timeInputLabel);
-      filterForm.appendChild(timeInput);
-      filterForm.appendChild(hasFoodLabel);
-      filterForm.appendChild(hasFood);
-      filterForm.appendChild(hasPortaPottyLabel);
-      filterForm.appendChild(hasPortaPotty);
+			const line2 = document.createElement('div')
+			line2.appendChild(hasFoodLabel)
+			line2.appendChild(hasPortaPottyLabel)
+			filterForm.appendChild(line2)
+      // filterForm.appendChild(hasFoodLabel);
+      // filterForm.appendChild(hasPortaPottyLabel);
       filterForm.appendChild(submitBtn);
       document.getElementById('map').appendChild(filterForm);
 
@@ -104,40 +109,44 @@ function initMap() {
         isPerformance(porch.acf.performer_7_start_time);
         isPerformance(porch.acf.performer_8_start_time);
 
+				// Porch filtering:
         let showPorch = false;
-        startTimes.forEach((time) => {
-          time = time.split(':');
-          // console.log(porch);
-          if (time[0] < 11) {
-            time[0] = parseInt(time[0]);
-            time[0] += 12;
-            // console.log(time);
-          }
-          let now = new Date();
-          const porchTime = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            ...time
-          );
-          if (showPorch) return;
-          if (timeSelect === 'Invalid Date') {
-            showPorch == true;
-            return;
-          }
-          if (porchTime >= timeSelect) {
-            showPorch = true;
-            return;
-          }
-        });
+				if (params.has('Porta Potty')) {
+					if(porch.acf.host_type === 'Porta Potty'){
+						showPorch = true;
+					}
+        } else if (params.has('Food')) {
+					if(porch.acf.tag_one.toLowerCase().includes('food') || porch.acf.tag_two.toLowerCase().includes('food') || porch.acf.tag_three.toLowerCase().includes('food')){
+						showPorch = true;
+					}else if(porch.acf.host_type === 'Porta Potty'){
+						showPorch = true
+					}
+        } else if(params.get('time-input')){
+					startTimes.forEach((time) => {
+						if (showPorch) return;
+						time = time.split(':');
+						if (time[0] < 11) {
+							time[0] = parseInt(time[0]);
+							time[0] += 12;
+						}
+						let now = new Date();
+						const porchTime = new Date(
+							now.getFullYear(),
+							now.getMonth(),
+							now.getDate(),
+							...time
+						);
+						if (porchTime >= timeSelect) {
+							showPorch = true;
+							return;
+						}
+					});
+				}else{
+					showPorch = true
+				}
 
-        if (urlArgs === '&Porta+Potty') {
-          if (porch.acf.host_type === 'Porta Potty') {
-            showPorch = true;
-            return;
-          }
-        }
         if (!showPorch) {
+					console.log(`Not Show Porch: ${startTimes}`)
           return;
         }
 
@@ -280,14 +289,14 @@ function initMap() {
                     map: map,
                   });
                 }
-                console.log(response);
-                console.log(status);
+                console.log(`Directions Route Response: ${response}`);
+                console.log(`Directions Route Status: ${status}`);
               }
             );
           }
           // Handles functionality if users location can not be requested
           function locationRejected(error) {
-            console.log(error);
+            console.log(`Location Rejected Error: ${error}`);
           }
         });
         let svgMarker;
