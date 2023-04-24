@@ -77,8 +77,6 @@ function initMap() {
 			line2.appendChild(hasFoodLabel)
 			line2.appendChild(hasPortaPottyLabel)
 			filterForm.appendChild(line2)
-      // filterForm.appendChild(hasFoodLabel);
-      // filterForm.appendChild(hasPortaPottyLabel);
       filterForm.appendChild(submitBtn);
       document.getElementById('map').appendChild(filterForm);
 
@@ -251,8 +249,8 @@ function initMap() {
         contentContainer.appendChild(directionsBtn);
         const seeLineupBtn = document.createElement('a');
         seeLineupBtn.className = 'lineup-btn';
-        seeLineupBtn.href = porchPageURL + '#band_lineup';
-        seeLineupBtn.textContent = 'See Lineup';
+        seeLineupBtn.href = porchPageURL;
+        seeLineupBtn.textContent = 'See Porch';
         contentContainer.appendChild(seeLineupBtn);
         contentDiv.appendChild(contentContainer);
 
