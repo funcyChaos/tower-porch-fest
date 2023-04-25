@@ -76,16 +76,39 @@ function initMap() {
 			resetBtn.href			 = '/map'
 			resetBtn.style		 = 'margin-bottom:.5rem;color:#14A4AB;text-decoration:none;'
 
+			let filterShown = false
+			const showToggle = document.createElement('a')
+			showToggle.innerText = 'Show Filter'
+			showToggle.href			 = '#'
+			showToggle.style		 = 'margin-bottom:.5rem;color:#14A4AB;text-decoration:none;'
+			showToggle.addEventListener('click', (e)=>{
+				e.preventDefault()
+				if(!filterShown){
+					filterForm.style.height = 'initial'
+					showToggle.innerText 		= 'Hide Filter'
+					filterShown							= true
+				}else{
+					filterForm.style.height = '45px'
+					showToggle.innerText 		= 'Show Filter'
+					filterShown							= false
+				}
+			})
+
+			const topDiv = document.createElement('div')
+			topDiv.style = 'display: flex;justify-content:space-between;'
+			topDiv.appendChild(resetBtn)
+			topDiv.appendChild(showToggle)
+
       const submitBtn = document.createElement('button');
       submitBtn.type = 'submit';
       submitBtn.id = 'submit-btn';
       submitBtn.innerText = 'Submit';
+			filterForm.appendChild(topDiv)
       filterForm.appendChild(timeInputLabel);
 			const line2 = document.createElement('div')
 			line2.appendChild(hasFoodLabel)
 			line2.appendChild(hasPortaPottyLabel)
 			filterForm.appendChild(line2)
-			filterForm.appendChild(resetBtn)
       filterForm.appendChild(submitBtn);
       document.getElementById('map').appendChild(filterForm);
 
