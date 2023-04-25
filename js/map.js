@@ -39,6 +39,7 @@ function initMap() {
       timeInput.type = 'time';
       timeInput.id = 'time-input';
       timeInput.name = 'time-input';
+			if(params.get('time-input')) timeInput.value = params.get('time-input')
       const timeInputLabel = document.createElement('label');
       timeInputLabel.htmlFor = 'time-input';
       timeInputLabel.appendChild(document.createTextNode('Starts After '));
@@ -52,6 +53,7 @@ function initMap() {
       hasFood.name = 'Food';
       hasFood.value = 'Food';
       hasFood.id = 'has-food';
+			if(params.has('Food')) hasFood.checked = true
       const hasFoodLabel = document.createElement('label');
       hasFoodLabel.htmlFor = 'has-food';
 			hasFoodLabel.className = 'has-food-label'
@@ -63,10 +65,16 @@ function initMap() {
       hasPortaPotty.name = 'Porta Potty';
       hasPortaPotty.value = 'Porta Potty';
       hasPortaPotty.id = 'has-porta-potty';
+			if(params.has('Porta Potty')) hasPortaPotty.checked = true
       const hasPortaPottyLabel = document.createElement('label');
       hasPortaPottyLabel.htmlFor = 'has-porta-potty';
 			hasPortaPottyLabel.appendChild(hasPortaPotty);
       hasPortaPottyLabel.appendChild(document.createTextNode(' Porta Potty'));
+
+			const resetBtn = document.createElement('a')
+			resetBtn.innerText = 'Reset'
+			resetBtn.href			 = '/map'
+			resetBtn.style		 = 'margin-bottom:.5rem;color:#14A4AB;text-decoration:none;'
 
       const submitBtn = document.createElement('button');
       submitBtn.type = 'submit';
@@ -77,6 +85,7 @@ function initMap() {
 			line2.appendChild(hasFoodLabel)
 			line2.appendChild(hasPortaPottyLabel)
 			filterForm.appendChild(line2)
+			filterForm.appendChild(resetBtn)
       filterForm.appendChild(submitBtn);
       document.getElementById('map').appendChild(filterForm);
 
@@ -123,7 +132,7 @@ function initMap() {
 					startTimes.forEach((time) => {
 						if (showPorch) return;
 						time = time.split(':');
-						if (time[0] < 11) {
+						if (time[0] < 10) {
 							time[0] = parseInt(time[0]);
 							time[0] += 12;
 						}
