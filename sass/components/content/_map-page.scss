@@ -4,6 +4,38 @@ $blue: #14a4ab;
   height: 70vh;
   width: 100%;
 }
+#map-filter {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+  margin: .8rem;
+	margin-top: 3.5rem;
+	padding: 10px;
+
+  & #filter-input {
+    margin: 0.5rem;
+  }
+	.has-food-label{
+		margin-right: 2rem;
+	}
+	div{
+		margin: .5rem 0;
+	}
+	#submit-btn{
+		color: white;
+		background: #14A4AB;
+		font-family: 'Antonio';
+		font-style: normal;
+		font-weight: 400;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		padding: .5rem;
+		text-align: center;
+		text-transform: uppercase;
+	}
+}
 #content {
   height: 100%;
   width: 330px;
