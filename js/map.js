@@ -75,6 +75,7 @@ function initMap() {
 			resetBtn.innerText = 'Reset'
 			resetBtn.href			 = '/map'
 			resetBtn.style		 = 'margin-bottom:.5rem;color:#14A4AB;text-decoration:none;'
+			resetBtn.style.display = 'none'
 
 			let filterShown = false
 			const showToggle = document.createElement('a')
@@ -86,10 +87,12 @@ function initMap() {
 				if(!filterShown){
 					filterForm.style.height = 'initial'
 					showToggle.innerText 		= 'Hide Filter'
+					resetBtn.style.display	= 'initial'
 					filterShown							= true
 				}else{
 					filterForm.style.height = '45px'
 					showToggle.innerText 		= 'Show Filter'
+					resetBtn.style.display	= 'none'
 					filterShown							= false
 				}
 			})
