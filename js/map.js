@@ -86,11 +86,13 @@ function initMap() {
 				e.preventDefault()
 				if(!filterShown){
 					filterForm.style.height = 'initial'
+					filterForm.style.width = 'initial'
 					showToggle.innerText 		= 'Hide Filter'
 					resetBtn.style.display	= 'initial'
 					filterShown							= true
 				}else{
 					filterForm.style.height = '45px'
+					filterForm.style.width 	= '103px'
 					showToggle.innerText 		= 'Show Filter'
 					resetBtn.style.display	= 'none'
 					filterShown							= false
