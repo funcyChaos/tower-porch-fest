@@ -23,7 +23,6 @@ function initMap() {
   fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?_embed&per_page=100`)
     .then((res) => res.json())
     .then((data) => {
-      // console.log('Raw Porch Data:', data);
       const currentDate = new Date();
       // Will be users input
       let timeSelect = new Date(
@@ -195,7 +194,6 @@ function initMap() {
 
         // Initializing the variable that will contain the porch information
         const porchName = porch.title.rendered;
-        // console.log(`porch name: ${porch.title.rendered}, ${porchName}`);
         const address = porch.acf.porch_address;
         const porchType = porch.acf.host_type;
         const porchDesc = porch.content.rendered;
@@ -394,11 +392,6 @@ function initMap() {
         markers.push(marker);
 
         if (window.location.hash) {
-          const testParams = new URLSearchParams(window.location.hash);
-          testParams.forEach((value, key) => {
-            // console.log('key' + key, 'porch' + porch.title.rendered);
-          });
-
           const openCardParams = window.location.hash
             .split('#')[1]
             .split('%20')
@@ -406,11 +399,8 @@ function initMap() {
 
           const textArea = document.createElement('textarea');
           textArea.innerHTML = porch.title.rendered;
-          console.log(textArea.value);
-          if (openCardParams) {
-            porch.title.rendered.replace('&amp', '');
 
-            // console.log(decodeURI(porch.title.rendered));
+          if (openCardParams) {
             if (textArea.value === decodeURI(openCardParams)) {
               const openedMarker = new google.maps.Marker({
                 position: { lat, lng },
