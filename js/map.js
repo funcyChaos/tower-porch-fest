@@ -195,6 +195,7 @@ function initMap() {
 
         // Initializing the variable that will contain the porch information
         const porchName = porch.title.rendered;
+        // console.log(`porch name: ${porch.title.rendered}, ${porchName}`);
         const address = porch.acf.porch_address;
         const porchType = porch.acf.host_type;
         const porchDesc = porch.content.rendered;
@@ -393,28 +394,40 @@ function initMap() {
         markers.push(marker);
 
         if (window.location.hash) {
+          const testParams = new URLSearchParams(window.location.hash);
+          testParams.forEach((value, key) => {
+            // console.log('key' + key, 'porch' + porch.title.rendered);
+          });
+
           const openCardParams = window.location.hash
             .split('#')[1]
             .split('%20')
             .join(' ');
+
+          const textArea = document.createElement('textarea');
+          textArea.innerHTML = porch.title.rendered;
+          console.log(textArea.value);
           if (openCardParams) {
-            if (porch.title.rendered === openCardParams) {
-              console.log('Match');
+            porch.title.rendered.replace('&amp', '');
+
+            // console.log(decodeURI(porch.title.rendered));
+            if (textArea.value === decodeURI(openCardParams)) {
               const openedMarker = new google.maps.Marker({
                 position: { lat, lng },
                 map,
                 icon: svgMarker,
               });
-              infoWindow.open({
+              openInfoWindow = infoWindow;
+              openInfoWindow.open({
                 anchor: openedMarker,
                 map,
               });
               map.addListener('click', () => {
-                infoWindow.close();
+                openInfoWindow.close();
               });
               markers.forEach((marker) => {
                 marker.addListener('click', () => {
-                  infoWindow.close();
+                  openInfoWindow.close();
                 });
               });
             }
