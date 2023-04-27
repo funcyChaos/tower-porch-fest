@@ -392,31 +392,32 @@ function initMap() {
         infoWindows.push(infoWindow);
         markers.push(marker);
 
-        const openCardParams = window.location.hash
-          .split('#')[1]
-          .split('%20')
-          .join(' ');
-
-        if (openCardParams) {
-          if (porch.title.rendered === openCardParams) {
-            console.log('Match');
-            const openedMarker = new google.maps.Marker({
-              position: { lat, lng },
-              map,
-              icon: svgMarker,
-            });
-            infoWindow.open({
-              anchor: openedMarker,
-              map,
-            });
-            map.addListener('click', () => {
-              infoWindow.close();
-            });
-            markers.forEach((marker) => {
-              marker.addListener('click', () => {
+        if (window.location.hash) {
+          const openCardParams = window.location.hash
+            .split('#')[1]
+            .split('%20')
+            .join(' ');
+          if (openCardParams) {
+            if (porch.title.rendered === openCardParams) {
+              console.log('Match');
+              const openedMarker = new google.maps.Marker({
+                position: { lat, lng },
+                map,
+                icon: svgMarker,
+              });
+              infoWindow.open({
+                anchor: openedMarker,
+                map,
+              });
+              map.addListener('click', () => {
                 infoWindow.close();
               });
-            });
+              markers.forEach((marker) => {
+                marker.addListener('click', () => {
+                  infoWindow.close();
+                });
+              });
+            }
           }
         }
 
