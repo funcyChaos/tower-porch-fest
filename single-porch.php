@@ -8,12 +8,17 @@
  */
 
 get_header();
+function clean($string) {
+	$string = str_replace('%E2%80%99', ' ', $string); // Replaces all spaces with hyphens.
+ 
+	return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+ }
 
 while(have_posts()){
 	the_post();
 	?>
 		<section class="prochesSingle">
-			<a href="/map" style="color: white; ">Back To Map</a>
+			<a href="/map#<?php the_title();?>" style="color: white; ">Go To Map</a>
 			<div class="singleporchImgContainer">
 			<?php 
 				$imgURL = has_post_thumbnail() ? get_the_post_thumbnail_url() : get_the_post_thumbnail_url(5);
