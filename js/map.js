@@ -18,9 +18,6 @@ function initMap() {
   let infoWindows = [];
   let markers = [];
   let openInfoWindow;
-  const currentPorchInfo = JSON.parse(
-    sessionStorage.getItem('currentOpenPorch')
-  );
 
   // Fetch for all of the porches
   fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?_embed&per_page=100`)
@@ -36,7 +33,7 @@ function initMap() {
         ...[...timeArg, 0]
       );
 
-      // Construction of the select element and its options
+      // Construction of the filter form and its child elements
       const filterForm = document.createElement('form');
       filterForm.id = 'map-filter';
 
@@ -199,8 +196,6 @@ function initMap() {
         // Initializing the variable that will contain the porch information
         const porchName = porch.title.rendered;
         const address = porch.acf.porch_address;
-        const porchStartTime = porch.acf.porch_start_time;
-        const porchEndTime = porch.acf.porch_end_time;
         const porchType = porch.acf.host_type;
         const porchDesc = porch.content.rendered;
         const porchPageURL = porch.link;
@@ -397,8 +392,14 @@ function initMap() {
         infoWindows.push(infoWindow);
         markers.push(marker);
 
-        if (currentPorchInfo) {
-          if (porch.id === currentPorchInfo.id) {
+        const openCardParams = window.location.hash
+          .split('#')[1]
+          .split('%20')
+          .join(' ');
+
+        if (openCardParams) {
+          if (porch.title.rendered === openCardParams) {
+            console.log('Match');
             const openedMarker = new google.maps.Marker({
               position: { lat, lng },
               map,
@@ -409,13 +410,11 @@ function initMap() {
               map,
             });
             map.addListener('click', () => {
-              sessionStorage.setItem('currentOpenPorch', ' ');
               infoWindow.close();
             });
             markers.forEach((marker) => {
               marker.addListener('click', () => {
                 infoWindow.close();
-                sessionStorage.clear();
               });
             });
           }
@@ -431,7 +430,6 @@ function initMap() {
             openInfoWindow.close();
           }
           openInfoWindow = infoWindows[i];
-          // console.log(currentPorchInfo, openInfoWindow);
 
           infoWindows[i].open({
             anchor: markers[i],
