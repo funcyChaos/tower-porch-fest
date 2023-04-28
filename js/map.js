@@ -184,7 +184,6 @@ function initMap() {
           ) {
             showPorch = true;
           }  else {
-            console.log('no food')
             showPorch = false;
           }
         }
@@ -193,6 +192,13 @@ function initMap() {
             showPorch = true;
           }
         }
+				if(params.has('Porta Potty') && !params.has('Food')){
+					if (porch.acf.host_type === 'Porta Potty') {
+            showPorch = true;
+          }else{
+						showPorch = false 
+					}
+				}
 
         if (!showPorch) {
           return;
