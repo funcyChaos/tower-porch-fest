@@ -120,8 +120,6 @@ function initMap() {
       filterForm.appendChild(submitBtn);
       document.getElementById('map').appendChild(filterForm);
       data.map((porch) => {
-        // console.log(porch);
-
         function isPerformance(startTime) {
           startTime.includes('Performer') || startTime === ''
             ? null
@@ -151,7 +149,6 @@ function initMap() {
         // Porch filtering:
         let showPorch = false;
      
-
         if (params.get('time-input')) {
           startTimes.forEach((time) => {
             if (showPorch) return;
@@ -184,7 +181,6 @@ function initMap() {
           ) {
             showPorch = true;
           }  else {
-            console.log('no food')
             showPorch = false;
           }
         }
