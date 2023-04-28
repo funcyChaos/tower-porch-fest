@@ -266,28 +266,42 @@ function initMap() {
         let tdString = ``;
 
         for (let i = 0; i < performers.length; i++) {
-          if (!performers[i]) break;
-          tdString +=
-            `<tr>` +
-            `<td>${startTimes[i]}</td>` +
-            `<td>${performers[i]}</td>` +
-            `</tr>`;
+          if (performers[i]){
+						tdString +=
+							`<tr>` +
+							`<td>${startTimes[i]}</td>` +
+							`<td>${performers[i]}</td>` +
+							`</tr>`;
+					}
         }
+
+				const tags = [porch.acf.tag_one, porch.acf.tag_two, porch.acf.tag_three]
+				const tagHeadings = [porch.acf.tag_heading, porch.acf.tag_two_heading, porch.acf.tag_three_heading]
+
+				for(let i = 0; i < tags.length; i++){
+					if(tags[i]){
+						tdString +=
+						`<tr>` +
+							`<td>${tags[i]}</td>` +
+							`<td>${tagHeadings[i]}</td>` +
+						`</tr>`
+					}
+				}
 
         const contentContainer = document.createElement('div');
         contentContainer.className = 'content-container';
         if (tdString) {
           contentContainer.innerHTML =
             `<div class="lineup">` +
-            `<table class="lineup-table">` +
-            `<tbody>` +
-            `<tr>` +
-            `<th>START TIME</th>` +
-            `<th>PERFORMER</th>` +
-            `</tr>` +
-            tdString +
-            `</tbody>` +
-            `</table>` +
+							`<table class="lineup-table">` +
+								`<tbody>` +
+								`<tr>` +
+								`<th>START TIME</th>` +
+								`<th>PERFORMER</th>` +
+								`</tr>` +
+								tdString +
+								`</tbody>` +
+							`</table>` +
             `</div>`;
         }
         const directionsBtn = document.createElement('button');
