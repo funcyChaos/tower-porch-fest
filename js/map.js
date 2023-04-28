@@ -119,8 +119,9 @@ function initMap() {
       filterForm.appendChild(line2);
       filterForm.appendChild(submitBtn);
       document.getElementById('map').appendChild(filterForm);
-
       data.map((porch) => {
+        // console.log(porch);
+
         function isPerformance(startTime) {
           startTime.includes('Performer') || startTime === ''
             ? null
@@ -149,21 +150,9 @@ function initMap() {
 
         // Porch filtering:
         let showPorch = false;
-        if (params.has('Porta Potty')) {
-          if (porch.acf.host_type === 'Porta Potty') {
-            showPorch = true;
-          }
-        } else if (params.has('Food')) {
-          if (
-            porch.acf.tag_one.toLowerCase().includes('food') ||
-            porch.acf.tag_two.toLowerCase().includes('food') ||
-            porch.acf.tag_three.toLowerCase().includes('food')
-          ) {
-            showPorch = true;
-          } else if (porch.acf.host_type === 'Porta Potty') {
-            showPorch = true;
-          }
-        } else if (params.get('time-input')) {
+     
+
+        if (params.get('time-input')) {
           startTimes.forEach((time) => {
             if (showPorch) return;
             time = time.split(':');
@@ -185,6 +174,24 @@ function initMap() {
           });
         } else {
           showPorch = true;
+        }
+
+        if (params.has('Food') && showPorch) {
+          if (
+            porch.acf.tag_one.toLowerCase().includes('food') ||
+            porch.acf.tag_two.toLowerCase().includes('food') ||
+            porch.acf.tag_three.toLowerCase().includes('food')
+          ) {
+            showPorch = true;
+          }  else {
+            console.log('no food')
+            showPorch = false;
+          }
+        }
+        if (params.has('Porta Potty')) {
+          if (porch.acf.host_type === 'Porta Potty') {
+            showPorch = true;
+          }
         }
 
         if (!showPorch) {
