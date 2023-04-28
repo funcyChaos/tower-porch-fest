@@ -195,7 +195,6 @@ function initMap() {
         }
 
         if (!showPorch) {
-          console.log(`Not Show Porch: ${startTimes}`);
           return;
         }
 
