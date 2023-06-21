@@ -20,7 +20,7 @@ function initMap() {
   let openInfoWindow;
 
   // Fetch for all of the porches
-  fetch(`${wpVars.homeURL}/wp-json/wp/v2/porch?_embed&per_page=100`)
+  fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?_embed&per_page=100`)
     .then((res) => res.json())
     .then((data) => {
       const currentDate = new Date();
@@ -121,12 +121,12 @@ function initMap() {
       document.getElementById('map').appendChild(filterForm);
       data.map((porch) => {
         // console.log(porch);
-
-        function isPerformance(startTime) {
-          startTime.includes('Performer') || startTime === ''
-            ? null
-            : startTimes.push(startTime);
-        }
+				
+        // function isPerformance(startTime) {
+        //   startTime.includes('Performer') || startTime === ''
+        //     ? null
+        //     : startTimes.push(startTime);
+        // }
 
         const startTimes = [
           porch.acf.performer_1_start_time,
@@ -139,14 +139,14 @@ function initMap() {
           porch.acf.performer_8_start_time,
         ];
 
-        isPerformance(porch.acf.performer_1_start_time);
-        isPerformance(porch.acf.performer_2_start_time);
-        isPerformance(porch.acf.performer_3_start_time);
-        isPerformance(porch.acf.performer_4_start_time);
-        isPerformance(porch.acf.performer_5_start_time);
-        isPerformance(porch.acf.performer_6_start_time);
-        isPerformance(porch.acf.performer_7_start_time);
-        isPerformance(porch.acf.performer_8_start_time);
+        // isPerformance(porch.acf.performer_1_start_time);
+        // isPerformance(porch.acf.performer_2_start_time);
+        // isPerformance(porch.acf.performer_3_start_time);
+        // isPerformance(porch.acf.performer_4_start_time);
+        // isPerformance(porch.acf.performer_5_start_time);
+        // isPerformance(porch.acf.performer_6_start_time);
+        // isPerformance(porch.acf.performer_7_start_time);
+        // isPerformance(porch.acf.performer_8_start_time);
 
         // Porch filtering:
         let showPorch = false;
