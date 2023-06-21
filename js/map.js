@@ -32,6 +32,7 @@ function initMap() {
         ...[...timeArg, 0]
       );
 
+			// ***************************************************************************
       // Construction of the filter form and its child elements
       const filterForm = document.createElement('form');
       filterForm.id = 'map-filter';
@@ -119,8 +120,12 @@ function initMap() {
       filterForm.appendChild(line2);
       filterForm.appendChild(submitBtn);
       document.getElementById('map').appendChild(filterForm);
-      data.map((porch) => {
+			// End Filter Build
+			// ***************************************************************************
+      data.map(porch=>{
         // console.log(porch);
+
+				console.log(porch.acf)
 				
         // function isPerformance(startTime) {
         //   startTime.includes('Performer') || startTime === ''
@@ -128,16 +133,24 @@ function initMap() {
         //     : startTimes.push(startTime);
         // }
 
-        const startTimes = [
-          porch.acf.performer_1_start_time,
-          porch.acf.performer_2_start_time,
-          porch.acf.performer_3_start_time,
-          porch.acf.performer_4_start_time,
-          porch.acf.performer_5_start_time,
-          porch.acf.performer_6_start_time,
-          porch.acf.performer_7_start_time,
-          porch.acf.performer_8_start_time,
-        ];
+				let pfmrs = []
+				for (let i = 1; i < 13; i++) {
+					// Technically a debug line:
+					if(!porch.acf[`performer_${i}`])break
+					if(!porch.acf[`performer_${i}`].performer)break
+					pfmrs.push(porch.acf[`performer_${i}`])
+				}
+				console.log(pfmrs)
+        // const startTimes = [
+        //   porch.acf.performer_1_start_time,
+        //   porch.acf.performer_2_start_time,
+        //   porch.acf.performer_3_start_time,
+        //   porch.acf.performer_4_start_time,
+        //   porch.acf.performer_5_start_time,
+        //   porch.acf.performer_6_start_time,
+        //   porch.acf.performer_7_start_time,
+        //   porch.acf.performer_8_start_time,
+        // ];
 
         // isPerformance(porch.acf.performer_1_start_time);
         // isPerformance(porch.acf.performer_2_start_time);
@@ -200,37 +213,39 @@ function initMap() {
 					}
 				}
 
-        if (!showPorch) {
-          return;
+        if(!showPorch){
+          return
         }
 
         // Initializing the variable that will contain the porch information
-        const porchName = porch.title.rendered;
-        const address = porch.acf.porch_address;
-        const porchType = porch.acf.host_type;
-        const porchDesc = porch.content.rendered;
-        const porchPageURL = porch.link;
+        const porchName = porch.title.rendered
+        const address = porch.acf.address
+
+        // const porchType = porch.acf.host_type;
         const hasInfoBooth = porch.acf.has_info_booth;
         const infoBooth = hasInfoBooth === 'Yes' ? true : false;
-        const lat = Number(porch.acf.latitude);
-        const lng = Number(porch.acf.longitude);
+				let porchType = 'general'
+
+        const porchDesc = porch.content.rendered
+        const porchPageURL = porch.link
+        const lat = Number(porch.acf.latitude)
+        const lng = Number(porch.acf.longitude)
 
         // Marker color is set based upon porch information
-        if (hasInfoBooth === 'Yes') {
-          markerColor = '#F45050';
-        } else if (porchType === 'Sponsored Porch') {
-          markerColor = '#208f95';
-        } else if (porchType === 'Porta Potty') {
-          markerColor = '#ffff00';
-        } else {
-          markerColor = '#462d62';
+				let markerColor = '#462d62'
+        if(porch.acf.info_booth){
+          markerColor = '#F45050'
+        }else if(porch.acf.sponsored){
+          markerColor = '#208f95'
+        }else if(porch.acf.porta_potty){
+          markerColor = '#ffff00'
         }
 
         // If porch has a featured image it will use that, if not it will default to the porch fest logo
         if (porch._embedded) {
-          porchImage = porch._embedded['wp:featuredmedia'][0].source_url;
+          porchImage = porch._embedded['wp:featuredmedia'][0].source_url
         } else {
-          porchImage = wpVars.defaultImageURL;
+          porchImage = wpVars.defaultImageURL
         }
 
         // Construction of the CONTENT div responsible for populating info window
@@ -258,27 +273,37 @@ function initMap() {
 
         contentDiv.innerHTML = contentString;
 
-        const performers = [
-          porch.acf.performer_1_name,
-          porch.acf.performer_2_name,
-          porch.acf.performer_3_name,
-          porch.acf.performer_4_name,
-          porch.acf.performer_5_name,
-          porch.acf.performer_6_name,
-          porch.acf.performer_7_name,
-          porch.acf.performer_8_name,
-        ];
+        // const performers = [
+        //   porch.acf.performer_1_name,
+        //   porch.acf.performer_2_name,
+        //   porch.acf.performer_3_name,
+        //   porch.acf.performer_4_name,
+        //   porch.acf.performer_5_name,
+        //   porch.acf.performer_6_name,
+        //   porch.acf.performer_7_name,
+        //   porch.acf.performer_8_name,
+        // ];
 
         let tdString = ``;
 
-        for (let i = 0; i < performers.length; i++) {
-          if (!performers[i]) break;
-          tdString +=
+        // for(let i = 0; i < pfmrs.length; i++){
+        //   if (!performers[i]) break;
+        //   tdString +=
+        //     `<tr>` +
+        //     `<td>${startTimes[i]}</td>` +
+        //     `<td>${performers[i]}</td>` +
+        //     `</tr>`;
+        // }
+
+				pfmrs.map(pfmr=>{
+					console.log(pfmr.performer)
+					
+					tdString +=
             `<tr>` +
-            `<td>${startTimes[i]}</td>` +
-            `<td>${performers[i]}</td>` +
+            `<td>${pfmr.start_time}</td>` +
+            `<td>${pfmr}</td>` +
             `</tr>`;
-        }
+				})
 
         const contentContainer = document.createElement('div');
         contentContainer.className = 'content-container';
