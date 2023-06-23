@@ -12,10 +12,10 @@ async function getPerformer(pfmr){
 	return obj
 }
 
-async function buildPerformers(){
+async function buildPorches(){
 	const porches = await getPorches()
+	let data = []
 	for(const porch of porches){
-		console.log(porch.title.rendered)
 		let pfmrs = []
 		for(let i = 1; i < 13; i++){
 			// Technically a debug line:
@@ -24,14 +24,14 @@ async function buildPerformers(){
 			await getPerformer(porch.acf[`performer_${i}`].performer)
 			.then(pfmr=>pfmrs.push(pfmr))
 		}
-		for(let i = 0; i < pfmrs.length; i++){
-			console.log(pfmrs[i].title.rendered)
-		}
-		console.log('********BREAK********')
+		porch.performers = pfmrs
+		data.push(porch)
 	}
+	return data
 }
 
-buildPerformers()
+buildPorches()
+.then(r=>console.log(r))
 
 // window.initMap = initMap;
 
