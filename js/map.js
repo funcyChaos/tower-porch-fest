@@ -1,3 +1,40 @@
+async function getPorches(){
+	const res 	= fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?_embed&per_page=100`)
+	const data	= (await res).json()
+	const obj		= await data
+	return obj
+}
+
+async function getPerformer(pfmr){
+	const res 	= fetch(`${wpVars.homeURL}/wp-json/wp/v2/performers/${pfmr}`)
+	const data 	= (await res).json()
+	const obj		= await data
+	return obj
+}
+
+async function buildPerformers(){
+	const porches = await getPorches()
+	for(const porch of porches){
+		console.log(porch.title.rendered)
+		let pfmrs = []
+		for(let i = 1; i < 13; i++){
+			// Technically a debug line:
+			if(!porch.acf[`performer_${i}`])break
+			if(!porch.acf[`performer_${i}`].performer)break
+			await getPerformer(porch.acf[`performer_${i}`].performer)
+			.then(pfmr=>pfmrs.push(pfmr))
+		}
+		for(let i = 0; i < pfmrs.length; i++){
+			console.log(pfmrs[i].title.rendered)
+		}
+		console.log('********BREAK********')
+	}
+}
+
+buildPerformers()
+
+// window.initMap = initMap;
+
 // Initialization of the map
 function initMap() {
   const urlArgs = window.location.search;
@@ -125,7 +162,7 @@ function initMap() {
       data.map(porch=>{
         // console.log(porch);
 
-				console.log(porch.acf)
+				// console.log(porch.acf)
 				
         // function isPerformance(startTime) {
         //   startTime.includes('Performer') || startTime === ''
@@ -140,31 +177,11 @@ function initMap() {
 					if(!porch.acf[`performer_${i}`].performer)break
 					pfmrs.push(porch.acf[`performer_${i}`])
 				}
-				console.log(pfmrs)
-        // const startTimes = [
-        //   porch.acf.performer_1_start_time,
-        //   porch.acf.performer_2_start_time,
-        //   porch.acf.performer_3_start_time,
-        //   porch.acf.performer_4_start_time,
-        //   porch.acf.performer_5_start_time,
-        //   porch.acf.performer_6_start_time,
-        //   porch.acf.performer_7_start_time,
-        //   porch.acf.performer_8_start_time,
-        // ];
-
-        // isPerformance(porch.acf.performer_1_start_time);
-        // isPerformance(porch.acf.performer_2_start_time);
-        // isPerformance(porch.acf.performer_3_start_time);
-        // isPerformance(porch.acf.performer_4_start_time);
-        // isPerformance(porch.acf.performer_5_start_time);
-        // isPerformance(porch.acf.performer_6_start_time);
-        // isPerformance(porch.acf.performer_7_start_time);
-        // isPerformance(porch.acf.performer_8_start_time);
+				// console.log(pfmrs)
 
         // Porch filtering:
         let showPorch = false;
      
-
         if (params.get('time-input')) {
           startTimes.forEach((time) => {
             if (showPorch) return;
@@ -295,15 +312,15 @@ function initMap() {
         //     `</tr>`;
         // }
 
-				pfmrs.map(pfmr=>{
-					console.log(pfmr.performer)
-					
-					tdString +=
-            `<tr>` +
-            `<td>${pfmr.start_time}</td>` +
-            `<td>${pfmr}</td>` +
-            `</tr>`;
-				})
+				
+			// tdString +=
+			// `<tr>` +
+			// `<td>${pfmr.start_time}</td>` +
+			// `<td>${pfmr}</td>` +
+			// `</tr>`
+
+
+				
 
         const contentContainer = document.createElement('div');
         contentContainer.className = 'content-container';
@@ -485,4 +502,3 @@ function initMap() {
       });
     });
 }
-window.initMap = initMap;
