@@ -1,9 +1,7 @@
 async function getPorches(){
-	// console.log(wpVars)
 	const res 	= fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?_embed&per_page=100`)
 	const data	= (await res).json()
 	const obj		= await data
-	// console.log(obj)
 	return obj
 }
 
@@ -16,7 +14,6 @@ async function getPerformer(pfmr){
 
 async function buildPorches(){
 	const porches = await getPorches()
-	// console.log(porches)
 	let data = []
 	for(const porch of porches){
 		let pfmrs = []
@@ -33,13 +30,10 @@ async function buildPorches(){
 	return data
 }
 
-// buildPorches()
-// .then(r=>console.log(r))
 // window.initMap = initMap;
 
 // Initialization of the map
 function initMap(){
-	console.log('getting run')
   const urlArgs = window.location.search;
   const params = new URLSearchParams(urlArgs);
   const timeArg = params.get('time-input')
@@ -291,39 +285,17 @@ function initMap(){
 
 			contentDiv.innerHTML = contentString;
 
-			// const performers = [
-			//   porch.acf.performer_1_name,
-			//   porch.acf.performer_2_name,
-			//   porch.acf.performer_3_name,
-			//   porch.acf.performer_4_name,
-			//   porch.acf.performer_5_name,
-			//   porch.acf.performer_6_name,
-			//   porch.acf.performer_7_name,
-			//   porch.acf.performer_8_name,
-			// ];
-
 			let tdString = ``;
 
-			console.log(porch.performers)
-
-			// for(let i = 0; i < porch.performers.length; i++){
-			//   if (!performers[i]) break;
-			//   tdString +=
-			//     `<tr>` +
-			//     `<td>${startTimes[i]}</td>` +
-			//     `<td>${performers[i]}</td>` +
-			//     `</tr>`;
-			// }
-
-			
-		// tdString +=
-		// `<tr>` +
-		// `<td>${pfmr.start_time}</td>` +
-		// `<td>${pfmr}</td>` +
-		// `</tr>`
-
-
-			
+			if(porch.performers){
+				for(let i = 0; i < porch.performers.length; i++){
+				  tdString +=
+				    `<tr>` +
+						`<td>${porch.acf[`performer_${i+1}`].start_time}</td>` +
+				    `<td>${porch.performers[i].title.rendered}</td>` +
+				    `</tr>`;
+				}
+			}			
 
 			const contentContainer = document.createElement('div');
 			contentContainer.className = 'content-container';
