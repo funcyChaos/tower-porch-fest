@@ -319,20 +319,20 @@ function initMap(){
 					`</table>` +
 					`</div>`
 			}
-			const directionsBtn = document.createElement('button');
-			directionsBtn.type = 'button';
-			directionsBtn.className = 'directions-btn';
-			directionsBtn.textContent = 'Get Directions';
-			contentContainer.appendChild(directionsBtn);
-			const seeLineupBtn = document.createElement('a');
-			seeLineupBtn.className = 'lineup-btn';
-			seeLineupBtn.href = porch.link;
-			seeLineupBtn.textContent = 'See Porch';
+			const directionsBtn = document.createElement('button')
+			directionsBtn.type = 'button'
+			directionsBtn.className = 'directions-btn'
+			directionsBtn.textContent = 'Get Directions'
+			contentContainer.appendChild(directionsBtn)
+			const seeLineupBtn = document.createElement('a')
+			seeLineupBtn.className = 'lineup-btn'
+			seeLineupBtn.href = porch.link
+			seeLineupBtn.textContent = 'See Porch'
 			seeLineupBtn.addEventListener('click', () => {
-				sessionStorage.setItem('currentOpenPorch', JSON.stringify(porch));
-			});
-			contentContainer.appendChild(seeLineupBtn);
-			contentDiv.appendChild(contentContainer);
+				sessionStorage.setItem('currentOpenPorch', JSON.stringify(porch))
+			})
+			contentContainer.appendChild(seeLineupBtn)
+			contentDiv.appendChild(contentContainer)
 
 			// Event listener to trigger the directions/routing
 			directionsBtn.addEventListener('click', directionsSubmit)
@@ -345,24 +345,24 @@ function initMap(){
 				position: { lat, lng },
 				map,
 				icon: svgMarker,
-			});
+			})
 
 			// Creates a info window for each marker
 			const infoWindow = new google.maps.InfoWindow({
 				content: contentDiv,
-			});
+			})
 
-			infoWindows.push(infoWindow);
-			markers.push(marker);
+			infoWindows.push(infoWindow)
+			markers.push(marker)
 
 			if (window.location.hash) {
 				const openCardParams = window.location.hash
 					.split('#')[1]
 					.split('%20')
-					.join(' ');
+					.join(' ')
 
-				const textArea = document.createElement('textarea');
-				textArea.innerHTML = porch.title.rendered;
+				const textArea = document.createElement('textarea')
+				textArea.innerHTML = porch.title.rendered
 
 				if (openCardParams) {
 					if (textArea.value === decodeURI(openCardParams)) {
@@ -370,20 +370,20 @@ function initMap(){
 							position: { lat, lng },
 							map,
 							icon: svgMarker,
-						});
+						})
 						openInfoWindow = infoWindow;
 						openInfoWindow.open({
 							anchor: openedMarker,
 							map,
-						});
+						})
 						map.addListener('click', () => {
 							openInfoWindow.close();
-						});
+						})
 						markers.forEach((marker) => {
 							marker.addListener('click', () => {
 								openInfoWindow.close();
-							});
-						});
+							})
+						})
 					}
 				}
 			}
@@ -392,8 +392,8 @@ function initMap(){
 		});
 
 		// Handles the open/close functionality of info window when clicking on other markers
-		for (let i = 0; i < markers.length; i++) {
-			markers[i].addListener('click', () => {
+		for(let i = 0; i < markers.length; i++){
+			markers[i].addListener('click', ()=>{
 				if (openInfoWindow && openInfoWindow != infoWindows[i]) {
 					openInfoWindow.close();
 				}
@@ -402,14 +402,14 @@ function initMap(){
 				infoWindows[i].open({
 					anchor: markers[i],
 					map,
-				});
-			});
+				})
+			})
 		}
 
 		// Closes info window when map is clicked
-		map.addListener('click', function () {
-			if (openInfoWindow) openInfoWindow.close();
-		});
+		map.addListener('click', function(){
+			if(openInfoWindow)openInfoWindow.close()
+		})
 	})
 
   // Fetch for all of the porches
