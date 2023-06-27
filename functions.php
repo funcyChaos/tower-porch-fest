@@ -272,6 +272,7 @@ add_action('init', function(){
 	));
 });
 
+// Organize Porches and Performers as first two menu items after Dashboard
 if(current_user_can( 'edit_posts' )){
 	add_action('admin_head', function(){
 		global $menu;
@@ -279,12 +280,11 @@ if(current_user_can( 'edit_posts' )){
 		unset($menu[4]);
 		$menu[9] = $menu[6];
 		unset($menu[6]);
-		// $menu[15] = $menu[7];
-		// unset($menu[7]);
 		ksort($menu);
 	});
 }
 
+// Add or remove capabilities for roles
 // add_action('admin_init', function(){
 // 	$admin = get_role('administrator');
 // 	$admin->add_cap('edit_performer');
