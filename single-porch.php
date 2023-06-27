@@ -36,11 +36,20 @@ while(have_posts()){
 				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
 			</div>
 		</section>
-		<!-- <section class="categoriesBar">
-			<a href=""><?php //the_field('tag_one'); ?></a>
-			<a href=""><?php //the_field('tag_two'); ?></a>
-			<a href=""><?php //the_field('tag_three'); ?></a>
-		</section> -->
+		<?php
+			$categories = '';
+			if(get_field('sponsored')){
+				$sponsor_name = get_field('sponsor');
+				$categories .= "<a href=''>{$sponsor_name}</a>";
+			}
+			if(get_field('has_food')){
+				$food_name = get_field('food_vendor');
+				$categories .= "<a href=''>{$food_name}</a>";
+			}
+		?>
+		<section class="categoriesBar">
+			<?=$categories?>
+		</section>
 		<div class="lineup-container" id="band_lineup">
 			<?php
 				$imgURL = get_field('category_background_image');
@@ -51,17 +60,18 @@ while(have_posts()){
 		<div class="blurred-lineup-background" style="background-image: url('<?=$imgURL?>');"></div>
 		<div class="band-card-container">
 			<?php
-				for($i=1; $i < 9; $i++){
-					$band = get_field("performer_{$i}_name");
-					if(!$band)continue;
+				for($i=1; $i < 13; $i++){
+					$band = get_field("performer_{$i}");
+					if(!$band['performer'])break;
+					$genre = get_field('genre', $band['performer']->ID);
 					?>
 						<div class="band-card">
 							<div class="TagContent">
-								<a href="#" class="singleButton"><?=get_field("performer_{$i}_start_time")?> - <?=get_field("performer_{$i}_end_time")?></a>
-								<h2 class="tagHeading"><?=$band?></h2>
-								<p class="tag"><?=get_field("performer_{$i}_tags")?></p>
+								<a href="#" class="singleButton"><?=$band['start_time']?> - <?=$band['end_time']?></a>
+								<h2 class="tagHeading"><?=$band['performer']->post_title?></h2>
+								<p class="tag"><?=$genre?></p>
 							</div>
-							<p class="porchDescription"><?=get_field("performer_{$i}_description")?></p>
+							<p class="porchDescription"><?=$band['performer']->post_content?></p>
 						</div>
 					<?php
 				}
