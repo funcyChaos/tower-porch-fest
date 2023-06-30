@@ -52,12 +52,12 @@ while(have_posts()){
 		</section>
 		<div class="lineup-container" id="band_lineup">
 			<?php
-				$imgURL = get_field('category_background_image');
-				if(!$imgURL){
-					$imgURL = get_the_post_thumbnail_url(5);
-				}
+				// $imgURL = get_field('category_background_image');
+				// if(!$imgURL){
+				// 	$imgURL = get_the_post_thumbnail_url(5);
+				// }
 			?>
-		<div class="blurred-lineup-background" style="background-image: url('<?=$imgURL?>');"></div>
+		<div class="blurred-lineup-background" style="background-image: url('<?=get_the_post_thumbnail_url(5)?>');"></div>
 		<div class="band-card-container">
 			<?php
 				for($i=1; $i < 13; $i++){

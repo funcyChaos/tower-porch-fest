@@ -32,84 +32,98 @@ async function buildPorches(){
 
 function filterForm(params){
 	const filterForm = document.createElement('form')
-		filterForm.id = 'map-filter'
-		const timeInput = document.createElement('input')
-		timeInput.type = 'time'
-		timeInput.id = 'time-input'
-		timeInput.name = 'time-input'
-		if (params.get('time-input')) timeInput.value = params.get('time-input')
-		const timeInputLabel = document.createElement('label')
-		timeInputLabel.htmlFor = 'time-input'
-		timeInputLabel.appendChild(document.createTextNode('Starts After '))
-		timeInputLabel.appendChild(timeInput)
-		timeInput.addEventListener('change', (e) => {
-			timeSelect = e.target.value
-		})
-		const hasFood = document.createElement('input')
-		hasFood.type = 'checkbox'
-		hasFood.name = 'Food'
-		hasFood.value = 'Food'
-		hasFood.id = 'has-food'
-		if (params.has('Food')) hasFood.checked = true
-		const hasFoodLabel = document.createElement('label')
-		hasFoodLabel.htmlFor = 'has-food'
-		hasFoodLabel.className = 'has-food-label'
-		hasFoodLabel.appendChild(hasFood)
-		hasFoodLabel.appendChild(document.createTextNode(' Food'))
-		const hasPortaPotty = document.createElement('input')
-		hasPortaPotty.type = 'checkbox'
-		hasPortaPotty.name = 'Porta Potty'
-		hasPortaPotty.value = 'Porta Potty'
-		hasPortaPotty.id = 'has-porta-potty'
-		if (params.has('Porta Potty')) hasPortaPotty.checked = true
-		const hasPortaPottyLabel = document.createElement('label')
-		hasPortaPottyLabel.htmlFor = 'has-porta-potty'
-		hasPortaPottyLabel.appendChild(hasPortaPotty)
-		hasPortaPottyLabel.appendChild(document.createTextNode(' Porta Potty'))
-		const resetBtn = document.createElement('a')
-		resetBtn.innerText = 'Reset'
-		resetBtn.href = '/map'
-		resetBtn.style =
-			'margin-bottom:.5remcolor:#14A4ABtext-decoration:none'
-		resetBtn.style.display = 'none'
-		let filterShown = false
-		const showToggle = document.createElement('a')
-		showToggle.innerText = 'Show Filter'
-		showToggle.href = '#'
-		showToggle.style =
-			'margin-bottom:.5remcolor:#14A4ABtext-decoration:none'
-		showToggle.addEventListener('click', (e) => {
-			e.preventDefault()
-			if (!filterShown) {
-				filterForm.style.height = 'initial'
-				filterForm.style.width = 'initial'
-				showToggle.innerText = 'Hide Filter'
-				resetBtn.style.display = 'initial'
-				filterShown = true
-			} else {
-				filterForm.style.height = '45px'
-				filterForm.style.width = '103px'
-				showToggle.innerText = 'Show Filter'
-				resetBtn.style.display = 'none'
-				filterShown = false
-			}
-		})
-		const topDiv = document.createElement('div');
-		topDiv.style = 'display: flex;justify-content:space-between;';
-		topDiv.appendChild(resetBtn);
-		topDiv.appendChild(showToggle);
-		const submitBtn = document.createElement('button');
-		submitBtn.type = 'submit';
-		submitBtn.id = 'submit-btn';
-		submitBtn.innerText = 'Submit';
-		filterForm.appendChild(topDiv);
-		filterForm.appendChild(timeInputLabel);
-		const line2 = document.createElement('div');
-		line2.appendChild(hasFoodLabel);
-		line2.appendChild(hasPortaPottyLabel);
-		filterForm.appendChild(line2);
-		filterForm.appendChild(submitBtn);
-		return filterForm
+	filterForm.id = 'map-filter'
+	const timeInput = document.createElement('input')
+	timeInput.type = 'time'
+	timeInput.id = 'time-input'
+	timeInput.name = 'time-input'
+	if (params.get('time-input')) timeInput.value = params.get('time-input')
+	const timeInputLabel = document.createElement('label')
+	timeInputLabel.htmlFor = 'time-input'
+	timeInputLabel.appendChild(document.createTextNode('Starts After '))
+	timeInputLabel.appendChild(timeInput)
+	timeInput.addEventListener('change', (e) => {
+		timeSelect = e.target.value
+	})
+	const hasFood = document.createElement('input')
+	hasFood.type = 'checkbox'
+	hasFood.name = 'Food'
+	hasFood.value = 'Food'
+	hasFood.id = 'has-food'
+	if (params.has('Food')) hasFood.checked = true
+	const hasFoodLabel = document.createElement('label')
+	hasFoodLabel.htmlFor = 'has-food'
+	hasFoodLabel.className = 'has-food-label'
+	hasFoodLabel.appendChild(hasFood)
+	hasFoodLabel.appendChild(document.createTextNode(' Food'))
+	const hasPortaPotty = document.createElement('input')
+	hasPortaPotty.type = 'checkbox'
+	hasPortaPotty.name = 'Porta Potty'
+	hasPortaPotty.value = 'Porta Potty'
+	hasPortaPotty.id = 'has-porta-potty'
+	if (params.has('Porta Potty')) hasPortaPotty.checked = true
+	const hasPortaPottyLabel = document.createElement('label')
+	hasPortaPottyLabel.htmlFor = 'has-porta-potty'
+	hasPortaPottyLabel.appendChild(hasPortaPotty)
+	hasPortaPottyLabel.appendChild(document.createTextNode(' Porta Potty'))
+	const resetBtn = document.createElement('a')
+	resetBtn.innerText = 'Reset'
+	resetBtn.href = '/map'
+	resetBtn.style =
+		'margin-bottom:.5remcolor:#14A4ABtext-decoration:none'
+	resetBtn.style.display = 'none'
+	let filterShown = false
+	const showToggle = document.createElement('a')
+	showToggle.innerText = 'Show Filter'
+	showToggle.href = '#'
+	showToggle.style =
+		'margin-bottom:.5remcolor:#14A4ABtext-decoration:none'
+	showToggle.addEventListener('click', (e) => {
+		e.preventDefault()
+		if (!filterShown) {
+			filterForm.style.height = 'initial'
+			filterForm.style.width = 'initial'
+			showToggle.innerText = 'Hide Filter'
+			resetBtn.style.display = 'initial'
+			filterShown = true
+		} else {
+			filterForm.style.height = '45px'
+			filterForm.style.width = '103px'
+			showToggle.innerText = 'Show Filter'
+			resetBtn.style.display = 'none'
+			filterShown = false
+		}
+	})
+	const genreSelect = document.createElement('select')
+	for(let i = 0; i < 2; i++){
+		const option = document.createElement('option')
+		if(i<1){
+			option.selected = true
+			option.value = 'All'
+			option.innerText = 'All Genres'
+		}else{
+			option.value = 'Rock'
+			option.innerText = 'Rock'
+		}
+		genreSelect.appendChild(option)
+	}
+	const topDiv = document.createElement('div')
+	topDiv.style = 'display: flex;justify-content:space-between;'
+	topDiv.appendChild(resetBtn)
+	topDiv.appendChild(showToggle)
+	const submitBtn = document.createElement('button')
+	submitBtn.type = 'submit'
+	submitBtn.id = 'submit-btn'
+	submitBtn.innerText = 'Submit'
+	filterForm.appendChild(topDiv)
+	filterForm.appendChild(timeInputLabel)
+	filterForm.appendChild(genreSelect)
+	const line2 = document.createElement('div')
+	line2.appendChild(hasFoodLabel)
+	line2.appendChild(hasPortaPottyLabel)
+	filterForm.appendChild(line2)
+	filterForm.appendChild(submitBtn)
+	return filterForm
 }
 
 function directionsSubmit(){
@@ -189,29 +203,44 @@ function initMap(){
 		)
 		document.getElementById('map').appendChild(filterForm(params))
 		porches.map(porch=>{
+			// let startTimes = []
+			// if(porch.performers){
+			// 	for(let i = 0; i < porch.performers.length; i++){
+				  
+			// 	}
+			// }
 			// Porch filtering:
 			let showPorch = false
 			if(params.get('time-input')){
-				startTimes.forEach((time) => {
-					if (showPorch) return
-					time = time.split(':')
-					if(time[0] < 10){
-						time[0] = parseInt(time[0])
-						time[0] += 12
+				if(porch.performers){
+					// porch.acf.forEach((pfmr)=>{
+					for(let i = 1; i < porch.performers.length + 1; i++){
+						if(showPorch)return
+						console.log(porch.title.rendered)
+						console.log(porch.acf[`performer_${i}`].start_time)
+						let time = porch.acf[`performer_${i}`].start_time
+						time = time.split(':')
+						// if(time[0] < 10){
+						// 	time[0] = parseInt(time[0])
+						// 	time[0] += 12
+						// }
+						let now = new Date()
+						const porchTime = new Date(
+							now.getFullYear(),
+							now.getMonth(),
+							now.getDate(),
+							...time
+						)
+						console.log(porchTime > timeSelect)
+						console.log('porch', porchTime, 'select', timeSelect)
+						if(porchTime >= timeSelect){
+							showPorch = true
+							break
+						}
+					// })
 					}
-					let now = new Date()
-					const porchTime = new Date(
-						now.getFullYear(),
-						now.getMonth(),
-						now.getDate(),
-						...time
-					)
-					if(porchTime >= timeSelect){
-						showPorch = true
-						return
-					}
-				})
-			} else {
+				}
+			}else{
 				showPorch = true
 			}
 
