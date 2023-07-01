@@ -205,15 +205,14 @@ function initMap(){
 		)
 		document.getElementById('map').appendChild(filterForm(params))
 		porches.map(porch=>{
-			// Porch filtering:
 			let showPorch = false
-			if(params.get('time-input')){
+			const testTime = ()=>{
+				let bool = false
 				if(porch.performers){
+					let now = new Date()
 					for(let i = 1; i < porch.performers.length + 1; i++){
-						if(showPorch)return
 						let time = porch.acf[`performer_${i}`].start_time
 						time = time.split(':') 
-						let now = new Date()
 						const porchTime = new Date(
 							now.getFullYear(),
 							now.getMonth(),
@@ -221,35 +220,39 @@ function initMap(){
 							...time
 						)
 						if(porchTime >= timeSelect){
-							showPorch = true
+							bool = true
 							break
 						}
 					}
 				}
-			}else{
-				showPorch = true
+				return bool
 			}
-			if(params.has('Food')){
-				if(porch.acf.has_food)showPorch = true
-				else showPorch=false
-			}
-			if(params.has('Porta Potty')){
-				if(porch.acf.porta_potty)showPorch = true
-				else if(params.has('Food')){
-					if(porch.acf.has_food)showPorch=true
-				}
-				else showPorch=false
-			}
-			if(params.has('genre') && params.get('genre') != 'All'){
+			const testGenre	= ()=>{
 				if(porch.performers[0]){
 					for(const pfmr of porch.performers){
 						if(pfmr.acf.genre == params.get('genre')){
-							showPorch = true
+							return true
 							break
-						}else showPorch=false
+						}else return false
 					}
-				}else showPorch=false
+				}else return false
 			}
+			const testFood				= ()=>porch.acf.has_food
+			const testPortaPotty	= ()=>porch.acf.porta_potty
+			let tests = []
+			if(params.get('time-input'))tests.push(testTime)
+			if(params.has('genre') && params.get('genre') != 'All')tests.push(testGenre)
+			if(params.has('Food'))tests.push(testFood)
+			if(params.has('Porta Potty'))tests.push(testPortaPotty)
+			// This doesn't allow for food And porta pottys to show because neither can be both. Close though lol
+			if(tests.length){
+				for(const test of tests){
+					if(!test()){
+						showPorch = false
+						break
+					}else showPorch = true
+				}
+			}else showPorch = true
 			if(!showPorch)return
 
 			// If porch has a featured image it will use that, if not it will default to the porch fest logo
