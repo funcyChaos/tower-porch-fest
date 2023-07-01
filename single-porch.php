@@ -60,6 +60,7 @@ while(have_posts()){
 		<div class="blurred-lineup-background" style="background-image: url('<?=get_the_post_thumbnail_url(5)?>');"></div>
 		<div class="band-card-container">
 			<?php
+			if(get_field('performer_1')){
 				for($i=1; $i < 13; $i++){
 					$band = get_field("performer_{$i}");
 					if(!$band['performer'])break;
@@ -75,6 +76,7 @@ while(have_posts()){
 						</div>
 					<?php
 				}
+			}
 			?>
 			<?php
 				$tagOne = get_field('tag_one');

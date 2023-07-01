@@ -150,6 +150,7 @@ function towerpf_site_scripts() {
 		wp_localize_script('map-script', 'wpVars', [
 			'homeURL' => home_url(),
 			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
+			'genres'	=> get_field_object('field_6491fdd624af4')['choices'],
 	]); 
 		wp_enqueue_script('map-script');
 		wp_register_script( 'import-script', get_template_directory_uri().'/coord-import/import.js', [], '1.0', true);
