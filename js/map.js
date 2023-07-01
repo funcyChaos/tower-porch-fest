@@ -229,32 +229,28 @@ function initMap(){
 			}else{
 				showPorch = true
 			}
-			if(params.has('Food') && showPorch && porch.acf.has_food){
-				showPorch = true
+			if(params.has('Food')){
+				if(porch.acf.has_food)showPorch = true
+				else showPorch=false
 			}
-			if(params.has('Porta Potty') && porch.acf.porta_potty){
-				showPorch = true
-			}
-			if(params.has('Porta Potty') && !params.has('Food')){
-				if (porch.acf.porta_potty) {
-					showPorch = true
-				}else{
-					showPorch = false 
+			if(params.has('Porta Potty')){
+				if(porch.acf.porta_potty)showPorch = true
+				else if(params.has('Food')){
+					if(porch.acf.has_food)showPorch=true
 				}
+				else showPorch=false
 			}
-			if(params.get('genre') != 'All'){
+			if(params.has('genre') && params.get('genre') != 'All'){
 				if(porch.performers[0]){
 					for(const pfmr of porch.performers){
 						if(pfmr.acf.genre == params.get('genre')){
 							showPorch = true
 							break
-						}else{showPorch=false}						
+						}else showPorch=false
 					}
-				}else{showPorch=false}
+				}else showPorch=false
 			}
-			if(!showPorch){
-				return
-			}
+			if(!showPorch)return
 
 			// If porch has a featured image it will use that, if not it will default to the porch fest logo
 			let porchImage
