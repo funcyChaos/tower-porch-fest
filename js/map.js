@@ -95,6 +95,8 @@ function filterForm(params){
 		}
 	})
 	const genreSelect = document.createElement('select')
+	genreSelect.name = 'genre'
+	genreSelect.id = 'genre'
 	for(let i = 0; i < 2; i++){
 		const option = document.createElement('option')
 		if(i<1){
@@ -203,27 +205,14 @@ function initMap(){
 		)
 		document.getElementById('map').appendChild(filterForm(params))
 		porches.map(porch=>{
-			// let startTimes = []
-			// if(porch.performers){
-			// 	for(let i = 0; i < porch.performers.length; i++){
-				  
-			// 	}
-			// }
 			// Porch filtering:
 			let showPorch = false
 			if(params.get('time-input')){
 				if(porch.performers){
-					// porch.acf.forEach((pfmr)=>{
 					for(let i = 1; i < porch.performers.length + 1; i++){
 						if(showPorch)return
-						console.log(porch.title.rendered)
-						console.log(porch.acf[`performer_${i}`].start_time)
 						let time = porch.acf[`performer_${i}`].start_time
-						time = time.split(':')
-						// if(time[0] < 10){
-						// 	time[0] = parseInt(time[0])
-						// 	time[0] += 12
-						// }
+						time = time.split(':') 
 						let now = new Date()
 						const porchTime = new Date(
 							now.getFullYear(),
@@ -231,48 +220,41 @@ function initMap(){
 							now.getDate(),
 							...time
 						)
-						console.log(porchTime > timeSelect)
-						console.log('porch', porchTime, 'select', timeSelect)
 						if(porchTime >= timeSelect){
 							showPorch = true
 							break
 						}
-					// })
 					}
 				}
 			}else{
 				showPorch = true
 			}
-
-			if(params.has('Food') && showPorch){
-				if(
-					porch.acf.tag_one.toLowerCase().includes('food') ||
-					porch.acf.tag_two.toLowerCase().includes('food') ||
-					porch.acf.tag_three.toLowerCase().includes('food')
-				){
-					showPorch = true
-				}else{
-					showPorch = false
-				}
+			if(params.has('Food') && showPorch && porch.acf.has_food){
+				showPorch = true
 			}
-			if(params.has('Porta Potty')){
-				if(porch.acf.host_type === 'Porta Potty'){
-					showPorch = true
-				}
+			if(params.has('Porta Potty') && porch.acf.porta_potty){
+				showPorch = true
 			}
 			if(params.has('Porta Potty') && !params.has('Food')){
-				if (porch.acf.host_type === 'Porta Potty') {
+				if (porch.acf.porta_potty) {
 					showPorch = true
 				}else{
 					showPorch = false 
 				}
 			}
+			if(params.get('genre') != 'All'){
+				if(porch.performers[0]){
+					for(const pfmr of porch.performers){
+						if(pfmr.acf.genre == params.get('genre')){
+							showPorch = true
+							break
+						}else{showPorch=false}						
+					}
+				}else{showPorch=false}
+			}
 			if(!showPorch){
 				return
 			}
-			// Initializing the variable that will contain the porch information
-
-			// Marker color is set based upon porch information
 
 			// If porch has a featured image it will use that, if not it will default to the porch fest logo
 			let porchImage
