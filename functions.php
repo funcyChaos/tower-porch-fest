@@ -217,20 +217,88 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
-function setup_porch_type() {
+// Add porch post type:
+add_action('init', function(){
 	register_post_type('porch', array(
-		'public'        		=> true,
-		'label'					=> 'Porches',
-		'menu_icon'     		=> 'dashicons-admin-home',
-		'menu_position' 		=> 2,
+		'public'        	=> true,
+		'labels'					=> [
+			'name'					=> 'Porches',
+			'singular_name'	=> 'Porch'
+		],
+		'menu_icon'     	=> 'dashicons-admin-home',
+		'menu_position' 	=> 2,
 		'has_archive'			=> 'porches',
-		'rewrite'				=> true,
-		'show_in_rest'			=> true,
+		'rewrite'					=> true,
+		'show_in_rest'		=> true,
+		'rest_base'				=> 'porches',
 		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt'],
 		'taxonomies' 			=> ['category'],
+		'capabilities'		=> [
+			'edit_post'						=> 'edit_porch',
+			'edit_posts'					=> 'edit_porches',
+			'edit_others_posts'		=> 'edit_others_porches',
+			'publish_posts'				=> 'publish_porches',
+			'read_post'						=> 'read_porch',
+			'read_private_posts'	=> 'read_private_porches',
+			'delete_posts'				=> 'delete_porches',
+		],
+		'map_meta_cap'		=> true,
 	));
+
+	register_post_type('performer', array(
+		'public'        	=> true,
+		'labels'					=> [
+			'name'					=> 'Performers',
+			'singular_name'	=> 'Performer'
+		],
+		'menu_icon'     	=> 'dashicons-groups',
+		'menu_position' 	=> 3,
+		'has_archive'			=> 'performers',
+		'rewrite'					=> true,
+		'show_in_rest'		=> true,
+		'rest_base'				=> 'performers',
+		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt'],
+		'taxonomies' 			=> ['category'],
+		'capabilities'		=> [
+			'edit_post'						=> 'edit_performer',
+			'edit_posts'					=> 'edit_performers',
+			'edit_others_posts'		=> 'edit_others_performers',
+			'publish_posts'				=> 'publish_performers',
+			'read_post'						=> 'read_performer',
+			'read_private_posts'	=> 'read_private_performers',
+			'delete_posts'				=> 'delete_performers',
+		],
+		'map_meta_cap'		=> true,
+	));
+});
+
+// Organize Porches and Performers as first two menu items after Dashboard
+if(current_user_can( 'edit_posts' )){
+	add_action('admin_head', function(){
+		global $menu;
+		$menu[8] = $menu[4];
+		unset($menu[4]);
+		$menu[9] = $menu[6];
+		unset($menu[6]);
+		ksort($menu);
+	});
 }
-add_action('init', 'setup_porch_type');
+
+// Add or remove capabilities for roles
+// add_action('admin_init', function(){
+// 	$admin = get_role('administrator');
+// 	$admin->add_cap('edit_performer');
+// 	$admin->add_cap('edit_performers');
+// 	$admin->add_cap('edit_others_performers');
+// 	$admin->add_cap('publish_performers');
+// 	$admin->add_cap('read_performer');
+// 	$admin->add_cap('read_private_performers');
+// 	$admin->add_cap('delete_performers');
+// 	// $admin->remove_cap('read_porches');
+// 	// $admin->remove_cap('edit_porch');
+// 	// $admin->remove_cap('delete_porch');
+// 	// $admin->remove_cap('blargalot-fake');
+// });
 
 add_filter('excerpt_length', function($l){return 30;});
 
