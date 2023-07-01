@@ -97,16 +97,16 @@ function filterForm(params){
 	const genreSelect = document.createElement('select')
 	genreSelect.name = 'genre'
 	genreSelect.id = 'genre'
-	for(let i = 0; i < 2; i++){
+	const defOpt = document.createElement('option')
+	if(params.get('genre') == 'all')defOpt.selected = true
+	defOpt.value = 'All'
+	defOpt.innerText = 'All Genres'
+	genreSelect.appendChild(defOpt)
+	for(const genre of Object.keys(wpVars.genres)){
 		const option = document.createElement('option')
-		if(i<1){
-			option.selected = true
-			option.value = 'All'
-			option.innerText = 'All Genres'
-		}else{
-			option.value = 'Rock'
-			option.innerText = 'Rock'
-		}
+		if(params.get('genre') == genre)option.selected = true
+		option.value = genre
+		option.innerText = genre
 		genreSelect.appendChild(option)
 	}
 	const topDiv = document.createElement('div')
