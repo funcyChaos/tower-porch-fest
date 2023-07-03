@@ -240,17 +240,23 @@ function initMap(){
 			const testFood				= ()=>porch.acf.has_food
 			const testPortaPotty	= ()=>porch.acf.porta_potty
 			let tests = []
+			if(params.has('Porta Potty'))tests.push(testPortaPotty)
+			if(params.has('Food'))tests.push(testFood)
 			if(params.get('time-input'))tests.push(testTime)
 			if(params.has('genre') && params.get('genre') != 'All')tests.push(testGenre)
-			if(params.has('Food'))tests.push(testFood)
-			if(params.has('Porta Potty'))tests.push(testPortaPotty)
-			// This doesn't allow for food And porta pottys to show because neither can be both. Close though lol
 			if(tests.length){
 				for(const test of tests){
-					if(!test()){
-						showPorch = false
-						break
-					}else showPorch = true
+					if('testPortaPotty' == test.name){
+						if(test()){
+							showPorch = true
+							break
+						}
+					}else{
+						if(!test()){
+							showPorch = false
+							break
+						}else showPorch = true
+					}
 				}
 			}else showPorch = true
 			if(!showPorch)return
