@@ -14,7 +14,7 @@
 				$start = $pfmr['start_time'][0]."PM";
 				$end	 = $pfmr['end_time'][0]."PM";
 				if(!isset($performances["{$start}_to_{$end}"])){
-					$performances["{$start}_to_{$end}"] = [];
+					$performances["{$start}_to_{$end}"] = ['slot'=>"{$start} to {$end}"];
 				}
 				array_push($performances["{$start}_to_{$end}"], get_The_title($pfmr['performer']->ID));
 				array_push($performances["{$start}_to_{$end}"], get_the_title());
