@@ -1,0 +1,24 @@
+.pfmcs-table-container{
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr;
+	grid-template-areas: ". table .";
+
+	table{
+		grid-area: table;
+		font-weight: bold;
+		th{
+			text-align: center;
+		}
+		td:nth-child(1){
+			background-color:black;
+			color:white;
+			padding-left: 1rem;
+			width: 10rem;
+		}
+		td:nth-child(1),td:nth-child(2){
+			height: 1rem;
+			border:2px solid black;
+			padding-left: 1rem;
+		}
+	}
+}
