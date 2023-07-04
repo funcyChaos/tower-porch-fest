@@ -11,40 +11,58 @@
 		for($i = 1; $i < 13; $i++){
 			$pfmr = get_field("performer_{$i}");
 			if(!empty($pfmr['performer'])){
-				$start = $pfmr['start_time'][0]."PM";
-				$end	 = $pfmr['end_time'][0]."PM";
-				if(!isset($performances["{$start}_to_{$end}"])){
-					$performances["{$start}_to_{$end}"] = ['slot'=>"{$start} to {$end}"];
-				}
-				array_push($performances["{$start}_to_{$end}"], get_The_title($pfmr['performer']->ID));
-				array_push($performances["{$start}_to_{$end}"], get_the_title());
+				$after = $pfmr['start_time'][0];
+				$start = str_replace(' pm', '', $pfmr['start_time']);
+				$end	 = str_replace(' pm', '', $pfmr['end_time']);
+				$performances[$after][] = [
+					'pfmr'	=> get_the_title($pfmr['performer']->ID),
+					'porch'	=> get_the_title(),
+					'slot'	=> "{$start}-{$end}",
+				];
 			}else{break;}
 		}
-		break;
 	}
-	print_r($performances);
 	wp_reset_query();
 ?>
 <div class="pfmcs-table-container">
 	<table>
-		<tbody>
+		<thead>
 			<tr>
-				<th>Time Slot</th>
+				<th>After</th>
 				<th>Performer</th>
 				<th>Porch</th>
+				<th>Time Slot</th>
 			</tr>
-			<tr>
-				<td>1PM to 2PM</td>
-				<td>This Big Giant Band</td>
-				<td>This Porch</td>
-			</tr>
-			<tr>
-				<td>1PM to 2PM</td>
-				<td>This Big Giant Band</td>
-				<td>That Porch</td>
-			</tr>
+		</thead>
+		<tbody>
+			<?php
+				foreach($performances as $start => $pfmrs){
+					$index = $start;
+					$count = count($pfmrs);
+					$th		 = true;
+					foreach($pfmrs as $pfmr){
+						if($th){
+							?><th rowspan="<?=$count?>" scope="rowgroup"><?=$start?>PM</th><?php
+						}else{
+							?><tr><?php
+						}
+						foreach($pfmr as $detail){
+							?><td><?=$detail?></td><?php
+						}
+						?>
+							<td>See on Map</td>
+							<td>Add to Itinerary</td>
+						<?php
+						if($th){
+							?></th><?php
+							$th = false;
+						}else{
+							?></tr><?php
+						}
+					}
+				}
+			?>
 		</tbody>
 	</table>
 </div>
-<?php
-	get_footer();
+<?php get_footer();
