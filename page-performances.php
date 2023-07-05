@@ -42,7 +42,7 @@
 					$th		 = true;
 					foreach($pfmrs as $pfmr){
 						if($th){
-							?><th rowspan="<?=$count?>" scope="rowgroup"><?=$start?>PM</th><?php
+							?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$start?>PM</th><?php
 						}else{
 							?><tr><?php
 						}
@@ -54,7 +54,7 @@
 							<td>Add to Itinerary</td>
 						<?php
 						if($th){
-							?></th><?php
+							?></th></tr><?php
 							$th = false;
 						}else{
 							?></tr><?php
