@@ -50,7 +50,7 @@
 							?><td><?=$detail?></td><?php
 						}
 						?>
-							<td>See on Map</td>
+							<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
 							<td>Add to Itinerary</td>
 						<?php
 						if($th){
