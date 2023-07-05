@@ -24,7 +24,8 @@
 								}
 								if(get_field('has_food')){
 									$food_name = get_field('food_vendor');
-									$categories .= "<a href=''>{$food_name}</a>";
+									$categories .= "<i class='fas fa-hamburger'></i>
+									<a href=''>{$food_name}</a>";
 								}
 							?>
 							<div class="porchlinks">
