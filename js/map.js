@@ -263,7 +263,7 @@ function initMap(){
 
 			// If porch has a featured image it will use that, if not it will default to the porch fest logo
 			let porchImage
-			if (porch._embedded) {
+			if(porch._embedded['wp:featuredmedia']){
 				porchImage = porch._embedded['wp:featuredmedia'][0].source_url
 			} else {
 				porchImage = wpVars.defaultImageURL

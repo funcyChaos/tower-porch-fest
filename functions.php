@@ -232,7 +232,7 @@ add_action('init', function(){
 		'rewrite'					=> true,
 		'show_in_rest'		=> true,
 		'rest_base'				=> 'porches',
-		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt'],
+		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt', 'author'],
 		'taxonomies' 			=> ['category'],
 		'capabilities'		=> [
 			'edit_post'						=> 'edit_porch',
@@ -258,7 +258,7 @@ add_action('init', function(){
 		'rewrite'					=> true,
 		'show_in_rest'		=> true,
 		'rest_base'				=> 'performers',
-		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt'],
+		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt', 'author'],
 		'taxonomies' 			=> ['category'],
 		'capabilities'		=> [
 			'edit_post'						=> 'edit_performer',
