@@ -6,13 +6,6 @@
 
 	table{
 		grid-area: table;
-		font-weight: bold;
-		.row-header{
-			background-color:black;
-			color:white;
-			padding-left: 1rem;
-			width: 6rem;
-		}
 		td,th{
 			border:2px solid black;
 			text-align: center;
