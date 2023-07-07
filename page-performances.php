@@ -43,6 +43,7 @@
 					foreach($pfmrs as $pfmr){
 						if($th){
 							?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$start?>PM</th><?php
+							$th = false;
 						}else{
 							?><tr><?php
 						}
@@ -50,15 +51,10 @@
 							?><td><?=$detail?></td><?php
 						}
 						?>
-							<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
-							<td>Add to Itinerary</td>
+								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
+								<td>Add to Itinerary</td>
+							</tr>
 						<?php
-						if($th){
-							?></th></tr><?php
-							$th = false;
-						}else{
-							?></tr><?php
-						}
 					}
 				}
 			?>
