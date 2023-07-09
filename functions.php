@@ -287,14 +287,16 @@ if(current_user_can( 'edit_posts' )){
 
 // Add or remove capabilities for roles
 // add_action('admin_init', function(){
-// 	$admin = get_role('administrator');
-// 	$admin->add_cap('edit_performer');
-// 	$admin->add_cap('edit_performers');
-// 	$admin->add_cap('edit_others_performers');
-// 	$admin->add_cap('publish_performers');
-// 	$admin->add_cap('read_performer');
-// 	$admin->add_cap('read_private_performers');
-// 	$admin->add_cap('delete_performers');
+// 	// $role = get_role('um_porch-operator');
+// 	// $role->add_cap('level_1');
+// 	// $admin = get_role('administrator');
+// 	// $admin->add_cap('edit_performer');
+// 	// $admin->add_cap('edit_performers');
+// 	// $admin->add_cap('edit_others_performers');
+// 	// $admin->add_cap('publish_performers');
+// 	// $admin->add_cap('read_performer');
+// 	// $admin->add_cap('read_private_performers');
+// 	// $admin->add_cap('delete_performers');
 // 	// $admin->remove_cap('read_porches');
 // 	// $admin->remove_cap('edit_porch');
 // 	// $admin->remove_cap('delete_porch');
