@@ -50,9 +50,28 @@
 						foreach($pfmr as $detail){
 							?><td><?=$detail?></td><?php
 						}
+						$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+						$added = false;
+						if($itinerary){
+							foreach($itinerary as $entry){
+								if($entry == $pfmr)$added = true;
+							}
+						}
 						?>
 								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
-								<td>Add to Itinerary</td>
+								<td>
+									<?php
+										if($added){
+											?>
+												<button onclick=''>Remove</button>
+											<?php
+										}else{
+											?>
+												<button onclick='add_to_itinerary(<?=json_encode($pfmr)?>)'>Add to Itinerary</button>
+											<?php
+										}
+									?>
+								</td>
 							</tr>
 						<?php
 					}
@@ -61,4 +80,18 @@
 		</tbody>
 	</table>
 </div>
+<script>
+	function add_to_itinerary(performance){
+		fetch('<?=home_url()?>/wp-json/itinerary/v1/add-to-itinerary',{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-WP-Nonce':		'<?=wp_create_nonce('wp_rest')?>',
+			},
+			body: JSON.stringify({'to_add': performance}),
+		})
+		.then(res=>res.json())
+		.then(obj=>console.log(obj))
+	}
+</script>
 <?php get_footer();

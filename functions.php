@@ -218,6 +218,8 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+require get_template_directory() . '/inc/itinerary.php';
+
 // Add porch post type:
 add_action('init', function(){
 	register_post_type('porch', array(
