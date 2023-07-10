@@ -53,6 +53,7 @@
 						$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
 						$added = false;
 						if($itinerary){
+							?><script>console.log("Itinerary: ", <?=!!$itinerary?>)</script><?php
 							foreach($itinerary as $entry){
 								if($entry == $pfmr)$added = true;
 							}
@@ -63,7 +64,7 @@
 									<?php
 										if($added){
 											?>
-												<button onclick=''>Remove</button>
+												<button onclick='remove_from_itinerary(<?=json_encode($pfmr)?>)'>Remove</button>
 											<?php
 										}else{
 											?>
@@ -81,6 +82,8 @@
 	</table>
 </div>
 <script>
+	console.log("User ID: ", <?=get_current_user_id()?>)
+	console.log("User Meta: ", <?=json_encode(get_user_meta(get_current_user_id(), 'itinerary', true))?>)
 	function add_to_itinerary(performance){
 		fetch('<?=home_url()?>/wp-json/itinerary/v1/add-to-itinerary',{
 			method: 'POST',
@@ -89,6 +92,19 @@
 				'X-WP-Nonce':		'<?=wp_create_nonce('wp_rest')?>',
 			},
 			body: JSON.stringify({'to_add': performance}),
+		})
+		.then(res=>res.json())
+		.then(obj=>console.log(obj))
+	}
+
+	function remove_from_itinerary(performance){
+		fetch('<?=home_url()?>/wp-json/itinerary/v1/remove-from-itinerary',{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-WP-Nonce':		'<?=wp_create_nonce('wp_rest')?>',
+			},
+			body: JSON.stringify({'to_remove': performance}),
 		})
 		.then(res=>res.json())
 		.then(obj=>console.log(obj))
