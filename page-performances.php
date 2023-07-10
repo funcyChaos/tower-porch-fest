@@ -11,9 +11,9 @@
 		for($i = 1; $i < 13; $i++){
 			$pfmr = get_field("performer_{$i}");
 			if(!empty($pfmr['performer'])){
-				$after = $pfmr['start_time'][0];
-				$start = str_replace(' pm', '', $pfmr['start_time']);
-				$end	 = str_replace(' pm', '', $pfmr['end_time']);
+				$after = strtotime($pfmr['start_time']);
+				$start = str_replace(' ', '', $pfmr['start_time']);
+				$end	 = str_replace(' ', '', $pfmr['end_time']);
 				$performances[$after][] = [
 					'pfmr'	=> get_the_title($pfmr['performer']->ID),
 					'porch'	=> get_the_title(),
@@ -23,7 +23,8 @@
 		}
 	}
 	wp_reset_query();
-?>
+	ksort($performances);
+	?>
 <div class="pfmcs-table-container">
 	<table>
 		<thead>
@@ -39,12 +40,12 @@
 			<?php
 				$btn_id = 0;
 				foreach($performances as $start => $pfmrs){
-					$index = $start;
+					$time = date('ga', $start);
 					$count = count($pfmrs);
 					$th		 = true;
 					foreach($pfmrs as $pfmr){
 						if($th){
-							?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$start?>PM</th><?php
+							?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$time?></th><?php
 							$th = false;
 						}else{
 							?><tr><?php
