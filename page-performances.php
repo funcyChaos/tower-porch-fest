@@ -32,10 +32,12 @@
 				<th>Performer</th>
 				<th>Porch</th>
 				<th>Time Slot</th>
+				<th>Adjust Itinerary</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php
+				$btn_id = 0;
 				foreach($performances as $start => $pfmrs){
 					$index = $start;
 					$count = count($pfmrs);
@@ -50,29 +52,38 @@
 						foreach($pfmr as $detail){
 							?><td><?=$detail?></td><?php
 						}
-						$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
 						$added = false;
-						if($itinerary){
-							?><script>console.log("Itinerary: ", <?=!!$itinerary?>)</script><?php
-							foreach($itinerary as $entry){
-								if($entry == $pfmr)$added = true;
+						$loggedIn = is_user_logged_in();
+						if($loggedIn){
+							$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+							if($itinerary){
+								foreach($itinerary as $entry){
+									if($entry == $pfmr)$added = true;
+								}
 							}
 						}
 						?>
-								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
 								<td>
 									<?php
+									if($loggedIn){
 										if($added){
 											?>
-												<button onclick='remove_from_itinerary(<?=json_encode($pfmr)?>)'>Remove</button>
+												<button id="btn_<?=$btn_id++?>" data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
+												<script>
+
+												</script>
 											<?php
 										}else{
 											?>
-												<button onclick='add_to_itinerary(<?=json_encode($pfmr)?>)'>Add to Itinerary</button>
+												<button id="btn_<?=$btn_id++?>" data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
 											<?php
 										}
+									}else{
+										?>Log In<?php
+									}
 									?>
 								</td>
+								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
 							</tr>
 						<?php
 					}
@@ -84,30 +95,43 @@
 <script>
 	console.log("User ID: ", <?=get_current_user_id()?>)
 	console.log("User Meta: ", <?=json_encode(get_user_meta(get_current_user_id(), 'itinerary', true))?>)
-	function add_to_itinerary(performance){
-		fetch('<?=home_url()?>/wp-json/itinerary/v1/add-to-itinerary',{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-WP-Nonce':		'<?=wp_create_nonce('wp_rest')?>',
-			},
-			body: JSON.stringify({'to_add': performance}),
-		})
-		.then(res=>res.json())
-		.then(obj=>console.log(obj))
-	}
-
-	function remove_from_itinerary(performance){
-		fetch('<?=home_url()?>/wp-json/itinerary/v1/remove-from-itinerary',{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-WP-Nonce':		'<?=wp_create_nonce('wp_rest')?>',
-			},
-			body: JSON.stringify({'to_remove': performance}),
-		})
-		.then(res=>res.json())
-		.then(obj=>console.log(obj))
+	function tglItn(performance, btn){
+		const tgl = btn.dataset.tgl
+		if(tgl == 'add'){
+			fetch('<?=home_url()?>/wp-json/itinerary/v1/add-to-itinerary',{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce':		'<?=wp_create_nonce('wp_rest')?>',
+				},
+				body: JSON.stringify({'to_add': performance}),
+			})
+			.then(res=>res.json())
+			.then(obj=>{
+				console.log(obj)
+				if(obj.res == 'success'){
+					btn.dataset.tgl = 'rmv'
+					btn.innerText		= 'Remove'
+				}
+			})
+		}else{
+			fetch('<?=home_url()?>/wp-json/itinerary/v1/remove-from-itinerary',{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce':		'<?=wp_create_nonce('wp_rest')?>',
+				},
+				body: JSON.stringify({'to_remove': performance}),
+			})
+			.then(res=>res.json())
+			.then(obj=>{
+				console.log(obj)
+				if(obj.res == 'success'){
+					btn.dataset.tgl	= 'add'
+					btn.innerText		= 'Add'
+				}
+			})
+		}
 	}
 </script>
 <?php get_footer();

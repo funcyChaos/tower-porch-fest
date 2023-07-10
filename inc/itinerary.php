@@ -15,10 +15,8 @@ add_action('rest_api_init', function(){
 					update_user_meta(get_current_user_id(), 'itinerary', $currentItinerary);
 				}
 				return [
-					'response'	=> 'POST successful',
-					'request'		=> $req['param'],
-					'param'			=> $req->get_param('to_add'),
-					'nonce'			=> $req->get_header('X-WP-Nonce'),
+					'res'				=> 'success',
+					'add'				=> $req->get_param('to_add'),
 					'current'		=> $currentItinerary,
 				];
 			},
@@ -40,10 +38,8 @@ add_action('rest_api_init', function(){
 				}
 				update_user_meta(get_current_user_id(), 'itinerary', $currentItinerary);
 				return [
-					'response'	=> 'POST successful',
-					'request'		=> $req['param'],
-					'param'			=> $req->get_param('to_remove'),
-					'nonce'			=> $req->get_header('X-WP-Nonce'),
+					'res'				=> 'success',
+					'rmv'				=> $req->get_param('to_remove'),
 					'current'		=> $currentItinerary,
 				];
 			},
