@@ -15,7 +15,7 @@
 				$start = str_replace(' ', '', $pfmr['start_time']);
 				$end	 = str_replace(' ', '', $pfmr['end_time']);
 				$performances[$after][] = [
-					'pfmr'	=> get_the_title($pfmr['performer']->ID),
+					'pfmr'	=> html_entity_decode(get_the_title($pfmr['performer']->ID)),
 					'porch'	=> get_the_title(),
 					'slot'	=> "{$start}-{$end}",
 				];
@@ -38,7 +38,6 @@
 		</thead>
 		<tbody>
 			<?php
-				$btn_id = 0;
 				foreach($performances as $start => $pfmrs){
 					$time = date('ga', $start);
 					$count = count($pfmrs);
@@ -59,7 +58,10 @@
 							$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
 							if($itinerary){
 								foreach($itinerary as $entry){
-									if($entry == $pfmr)$added = true;
+									if($entry == $pfmr){
+										$added = true;
+										break;
+									}
 								}
 							}
 						}
@@ -69,14 +71,14 @@
 									if($loggedIn){
 										if($added){
 											?>
-												<button id="btn_<?=$btn_id++?>" data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
+												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
 												<script>
 
 												</script>
 											<?php
 										}else{
 											?>
-												<button id="btn_<?=$btn_id++?>" data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
+												<button data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
 											<?php
 										}
 									}else{
