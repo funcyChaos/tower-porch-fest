@@ -21,7 +21,7 @@ add_action('rest_api_init', function(){
 				];
 			},
 			'permission_callback' => function(){
-				return current_user_can('subscriber');
+				return current_user_can('read');
 			}
 		]
 	]);
@@ -44,7 +44,7 @@ add_action('rest_api_init', function(){
 				];
 			},
 			'permission_callback' => function(){
-				return current_user_can('subscriber');
+				return current_user_can('read');
 			}
 		]
 	]);
