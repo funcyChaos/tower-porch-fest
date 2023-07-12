@@ -27,12 +27,14 @@
 	ksort($performances);
 	$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
 	ksort($itinerary);
-	?><script>console.log('p', <?=json_encode($performances)?>)</script><?php
-	?><script>console.log('i', <?=json_encode($itinerary)?>)</script><?php
 	?>
 <div class="pfmcs-table-container">
-	<!-- <table class="hide"> -->
-	<table>
+	<div class="menu">
+		<button id="performances_button">Performances</button>
+		<button id="itinerary_button">Itinerary</button>
+	</div>
+
+	<table class="hide" id="itinerary_table">
 		<thead>
 			<tr>
 				<th>After</th>
@@ -59,42 +61,10 @@
 							if($key == 'after')continue;
 							?><td><?=$detail?></td><?php
 						}
-						$added = false;
-						$loggedIn = is_user_logged_in();
-						if($loggedIn){
-							$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
-							$toCheck = $pfmr;
-							unset($toCheck['after']);
-							if($itinerary){
-								foreach($itinerary as $entry){
-									foreach($entry as $ePfmr){
-										?><script>console.log('entry:', <?=json_encode($ePfmr)?>)</script><?php
-										?><script>console.log('tocheck:', <?=json_encode($toCheck)?>)</script><?php
-										if($ePfmr == $toCheck){
-											$added = true;
-											break;
-										}
-									}
-								}
-							}
-						}
 						?>
+						<script>console.log('itn', <?=json_encode($pfmr)?>)</script>
 								<td>
-									<?php
-									if($loggedIn){
-										if($added){
-											?>
-												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
-											<?php
-										}else{
-											?>
-												<button data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
-											<?php
-										}
-									}else{
-										?>Log In<?php
-									}
-									?>
+									<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
 								</td>
 								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
 							</tr>
@@ -105,8 +75,7 @@
 		</tbody>
 	</table>
 
-	<!-- <table> -->
-	<table class="hide">
+	<table class="hide" id="performances_table">
 		<thead>
 			<tr>
 				<th>After</th>
@@ -142,8 +111,6 @@
 							if($itinerary){
 								foreach($itinerary as $entry){
 									foreach($entry as $ePfmr){
-										?><script>console.log('entry:', <?=json_encode($ePfmr)?>)</script><?php
-										?><script>console.log('tocheck:', <?=json_encode($toCheck)?>)</script><?php
 										if($ePfmr == $toCheck){
 											$added = true;
 											break;
@@ -158,7 +125,8 @@
 									if($loggedIn){
 										if($added){
 											?>
-												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
+												<script>console.log('pfmr', <?=json_encode($toCheck)?>)</script>
+												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($toCheck)?>, this)'>Remove</button>
 											<?php
 										}else{
 											?>
@@ -197,8 +165,9 @@
 			.then(obj=>{
 				console.log(obj)
 				if(obj.res == 'success'){
-					btn.dataset.tgl = 'rmv'
-					btn.innerText		= 'Remove'
+					// btn.dataset.tgl = 'rmv'
+					// btn.innerText		= 'Remove'
+					location.reload()
 				}
 			})
 		}else{
@@ -214,11 +183,42 @@
 			.then(obj=>{
 				console.log(obj)
 				if(obj.res == 'success'){
-					btn.dataset.tgl	= 'add'
-					btn.innerText		= 'Add'
+					// btn.dataset.tgl	= 'add'
+					// btn.innerText		= 'Add'
+					location.reload()
 				}
 			})
 		}
 	}
+
+	const pfmrTable = document.getElementById('performances_table')
+	const itnTable	= document.getElementById('itinerary_table')
+	const pfmrBtn		= document.getElementById('performances_button')
+	const itnBtn		= document.getElementById('itinerary_button')
+
+	pfmrBtn.addEventListener('click', ()=>{
+		itnTable.classList.add('hide')
+		pfmrTable.classList.remove('hide')
+		window.location.hash = ''
+	})
+
+	itnBtn.addEventListener('click', ()=>{
+		pfmrTable.classList.add('hide')
+		itnTable.classList.remove('hide')
+		window.location.hash = 'itinerary'
+	})
+
+	document.addEventListener('DOMContentLoaded', ()=>{
+		const hash = window.location.hash
+		if(hash){
+			if(hash == '#itinerary'){
+				itnTable.classList.remove('hide')
+			}else{
+				pfmrTable.classList.remove('hide')
+			}
+		}else{
+			pfmrTable.classList.remove('hide')
+		}
+	})
 </script>
 <?php get_footer();
