@@ -25,8 +25,14 @@
 	}
 	wp_reset_query();
 	ksort($performances);
-	$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
-	ksort($itinerary);
+	$loggedIn = is_user_logged_in();
+	$itinerary;
+	if($loggedIn){
+		$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+		if($itinerary){
+			ksort($itinerary);
+		}
+	}
 	?>
 <div class="pfmcs-table-container">
 	<div class="menu">
@@ -46,6 +52,7 @@
 		</thead>
 		<tbody>
 			<?php
+			if($itinerary){
 				foreach($itinerary as $start => $pfmrs){
 					$time = date('ga', $start);
 					$count = count($pfmrs);
@@ -62,7 +69,6 @@
 							?><td><?=$detail?></td><?php
 						}
 						?>
-						<script>console.log('itn', <?=json_encode($pfmr)?>)</script>
 								<td>
 									<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
 								</td>
@@ -71,6 +77,7 @@
 						<?php
 					}
 				}
+			}
 			?>
 		</tbody>
 	</table>
@@ -125,7 +132,6 @@
 									if($loggedIn){
 										if($added){
 											?>
-												<script>console.log('pfmr', <?=json_encode($toCheck)?>)</script>
 												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($toCheck)?>, this)'>Remove</button>
 											<?php
 										}else{
