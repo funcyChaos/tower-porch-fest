@@ -33,9 +33,11 @@ add_action('rest_api_init', function(){
 			'callback'	=> function (WP_REST_Request $req){
 				$toRemove = $req->get_param('to_remove');
 				$currentItinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
-				for ($i=0; $i < count($currentItinerary); $i++) { 
-					if($currentItinerary[$i] == $toRemove){
-						unset($currentItinerary[$i]);
+				foreach($currentItinerary as $start => $pfmrs){
+					foreach($pfmrs as $key => $pfmr){
+						if($pfmr == $toRemove){
+							unset($currentItinerary[$start][$key]);
+						}	
 					}
 				}
 				update_user_meta(get_current_user_id(), 'itinerary', $currentItinerary);
