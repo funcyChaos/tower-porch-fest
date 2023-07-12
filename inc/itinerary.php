@@ -6,12 +6,14 @@ add_action('rest_api_init', function(){
 			'methods'	=> 'POST',
 			'callback'	=> function (WP_REST_Request $req){
 				$toAdd = $req->get_param('to_add');
+				$after = $toAdd['after'];
+				unset($toAdd['after']);
 				$currentItinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
 				if($currentItinerary){
-					$currentItinerary[] = $toAdd;
+					$currentItinerary[$after][] = $toAdd;
 					update_user_meta(get_current_user_id(), 'itinerary', $currentItinerary);
 				}else{
-					$currentItinerary = [$toAdd];
+					$currentItinerary = [$after => [$toAdd]];
 					update_user_meta(get_current_user_id(), 'itinerary', $currentItinerary);
 				}
 				return [

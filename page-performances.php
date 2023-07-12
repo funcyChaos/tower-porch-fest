@@ -15,6 +15,7 @@
 				$start = str_replace(' ', '', $pfmr['start_time']);
 				$end	 = str_replace(' ', '', $pfmr['end_time']);
 				$performances[$after][] = [
+					'after'	=> $after,
 					'pfmr'	=> html_entity_decode(get_the_title($pfmr['performer']->ID)),
 					'porch'	=> get_the_title(),
 					'slot'	=> "{$start}-{$end}",
@@ -24,8 +25,13 @@
 	}
 	wp_reset_query();
 	ksort($performances);
+	$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+	ksort($itinerary);
+	?><script>console.log('p', <?=json_encode($performances)?>)</script><?php
+	?><script>console.log('i', <?=json_encode($itinerary)?>)</script><?php
 	?>
 <div class="pfmcs-table-container">
+	<!-- <table class="hide"> -->
 	<table>
 		<thead>
 			<tr>
@@ -33,7 +39,81 @@
 				<th>Performer</th>
 				<th>Porch</th>
 				<th>Time Slot</th>
-				<th>Adjust Itinerary</th>
+				<th>Log In for Itinerary</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+				foreach($itinerary as $start => $pfmrs){
+					$time = date('ga', $start);
+					$count = count($pfmrs);
+					$th		 = true;
+					foreach($pfmrs as $pfmr){
+						if($th){
+							?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$time?></th><?php
+							$th = false;
+						}else{
+							?><tr><?php
+						}
+						foreach($pfmr as $key => $detail){
+							if($key == 'after')continue;
+							?><td><?=$detail?></td><?php
+						}
+						$added = false;
+						$loggedIn = is_user_logged_in();
+						if($loggedIn){
+							$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+							$toCheck = $pfmr;
+							unset($toCheck['after']);
+							if($itinerary){
+								foreach($itinerary as $entry){
+									foreach($entry as $ePfmr){
+										?><script>console.log('entry:', <?=json_encode($ePfmr)?>)</script><?php
+										?><script>console.log('tocheck:', <?=json_encode($toCheck)?>)</script><?php
+										if($ePfmr == $toCheck){
+											$added = true;
+											break;
+										}
+									}
+								}
+							}
+						}
+						?>
+								<td>
+									<?php
+									if($loggedIn){
+										if($added){
+											?>
+												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
+											<?php
+										}else{
+											?>
+												<button data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
+											<?php
+										}
+									}else{
+										?>Log In<?php
+									}
+									?>
+								</td>
+								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
+							</tr>
+						<?php
+					}
+				}
+			?>
+		</tbody>
+	</table>
+
+	<!-- <table> -->
+	<table class="hide">
+		<thead>
+			<tr>
+				<th>After</th>
+				<th>Performer</th>
+				<th>Porch</th>
+				<th>Time Slot</th>
+				<th>Log In for Itinerary</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,18 +129,25 @@
 						}else{
 							?><tr><?php
 						}
-						foreach($pfmr as $detail){
+						foreach($pfmr as $key => $detail){
+							if($key == 'after')continue;
 							?><td><?=$detail?></td><?php
 						}
 						$added = false;
 						$loggedIn = is_user_logged_in();
 						if($loggedIn){
 							$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+							$toCheck = $pfmr;
+							unset($toCheck['after']);
 							if($itinerary){
 								foreach($itinerary as $entry){
-									if($entry == $pfmr){
-										$added = true;
-										break;
+									foreach($entry as $ePfmr){
+										?><script>console.log('entry:', <?=json_encode($ePfmr)?>)</script><?php
+										?><script>console.log('tocheck:', <?=json_encode($toCheck)?>)</script><?php
+										if($ePfmr == $toCheck){
+											$added = true;
+											break;
+										}
 									}
 								}
 							}
@@ -72,9 +159,6 @@
 										if($added){
 											?>
 												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
-												<script>
-
-												</script>
 											<?php
 										}else{
 											?>
