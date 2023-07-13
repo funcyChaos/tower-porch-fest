@@ -1,39 +1,39 @@
 <?php
-	get_header();
-	$posts = new WP_Query([
-		'post_type'				=> 'porch',
-		'post_status'			=> 'publish',
-		'posts_per_page'	=> -1
-	]);
-	$performances = [];
-	while($posts->have_posts()){
-		$posts->the_post();
-		for($i = 1; $i < 13; $i++){
-			$pfmr = get_field("performer_{$i}");
-			if(!empty($pfmr['performer'])){
-				$after = strtotime($pfmr['start_time']);
-				$start = str_replace(' ', '', $pfmr['start_time']);
-				$end	 = str_replace(' ', '', $pfmr['end_time']);
-				$performances[$after][] = [
-					'after'	=> $after,
-					'pfmr'	=> html_entity_decode(get_the_title($pfmr['performer']->ID)),
-					'porch'	=> get_the_title(),
-					'slot'	=> "{$start}-{$end}",
-				];
-			}else{break;}
-		}
+get_header();
+$posts = new WP_Query([
+	'post_type'				=> 'porch',
+	'post_status'			=> 'publish',
+	'posts_per_page'	=> -1
+]);
+$performances = [];
+while($posts->have_posts()){
+	$posts->the_post();
+	for($i = 1; $i < 13; $i++){
+		$pfmr = get_field("performer_{$i}");
+		if(!empty($pfmr['performer'])){
+			$after = strtotime($pfmr['start_time']);
+			$start = str_replace(' ', '', $pfmr['start_time']);
+			$end	 = str_replace(' ', '', $pfmr['end_time']);
+			$performances[$after][] = [
+				'after'	=> $after,
+				'pfmr'	=> html_entity_decode(get_the_title($pfmr['performer']->ID)),
+				'porch'	=> get_the_title(),
+				'slot'	=> "{$start}-{$end}",
+			];
+		}else{break;}
 	}
-	wp_reset_query();
-	ksort($performances);
-	$loggedIn = is_user_logged_in();
-	$itinerary;
-	if($loggedIn){
-		$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
-		if($itinerary){
-			ksort($itinerary);
-		}
+}
+wp_reset_query();
+ksort($performances);
+$loggedIn = is_user_logged_in();
+$itinerary = '';
+if($loggedIn){
+	$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+	if($itinerary){
+		ksort($itinerary);
 	}
-	?>
+}
+?>
 <div class="pfmcs-table-container">
 	<div class="menu">
 		<button id="performances_button">Performances</button>
@@ -43,11 +43,19 @@
 	<table class="hide" id="itinerary_table">
 		<thead>
 			<tr>
-				<th>After</th>
-				<th>Performer</th>
-				<th>Porch</th>
-				<th>Time Slot</th>
-				<th>Log In for Itinerary</th>
+			<?php
+				if($loggedIn){
+					?>
+						<th>After</th>
+						<th>Performer</th>
+						<th>Porch</th>
+						<th>Time Slot</th>
+						<th>Itinerary</th>
+					<?php
+				}else{
+					?><th>Log In for Itinerary</th><?php
+				}
+			?>
 			</tr>
 		</thead>
 		<tbody>
@@ -66,13 +74,18 @@
 						}
 						foreach($pfmr as $key => $detail){
 							if($key == 'after')continue;
-							?><td><?=$detail?></td><?php
+							if($key == 'porch'){
+								?>
+									<td><a href="/map#<?=$pfmr['porch'];?>"><?=$detail?></a></td>
+								<?php
+							}else{
+								?><td><?=$detail?></td><?php
+							}
 						}
 						?>
 								<td>
 									<button data-tgl="rmv" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Remove</button>
 								</td>
-								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
 							</tr>
 						<?php
 					}
@@ -89,7 +102,7 @@
 				<th>Performer</th>
 				<th>Porch</th>
 				<th>Time Slot</th>
-				<th>Log In for Itinerary</th>
+				<th><?=$loggedIn ? 'Itinerary' : 'Log In for Itinerary'?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -107,7 +120,13 @@
 						}
 						foreach($pfmr as $key => $detail){
 							if($key == 'after')continue;
-							?><td><?=$detail?></td><?php
+							if($key == 'porch'){
+								?>
+									<td><a href="/map#<?=$pfmr['porch'];?>"><?=$detail?></a></td>
+								<?php
+							}else{
+								?><td><?=$detail?></td><?php
+							}
 						}
 						$added = false;
 						$loggedIn = is_user_logged_in();
@@ -140,11 +159,10 @@
 											<?php
 										}
 									}else{
-										?>Log In<?php
+										?>Log In to Add<?php
 									}
 									?>
 								</td>
-								<td><a href="/map#<?=$pfmr['porch'];?>">See on Map</a></td>
 							</tr>
 						<?php
 					}
@@ -205,12 +223,16 @@
 	pfmrBtn.addEventListener('click', ()=>{
 		itnTable.classList.add('hide')
 		pfmrTable.classList.remove('hide')
+		pfmrBtn.classList.add('active')
+		itnBtn.classList.remove('active')
 		window.location.hash = ''
 	})
 
 	itnBtn.addEventListener('click', ()=>{
 		pfmrTable.classList.add('hide')
 		itnTable.classList.remove('hide')
+		itnBtn.classList.add('active')
+		pfmrBtn.classList.remove('active')
 		window.location.hash = 'itinerary'
 	})
 
@@ -219,11 +241,14 @@
 		if(hash){
 			if(hash == '#itinerary'){
 				itnTable.classList.remove('hide')
+				itnBtn.classList.add('active')
 			}else{
 				pfmrTable.classList.remove('hide')
+				pfmrBtn.classList.add('active')
 			}
 		}else{
 			pfmrTable.classList.remove('hide')
+			pfmrBtn.classList.add('active')
 		}
 	})
 </script>
