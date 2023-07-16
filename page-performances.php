@@ -16,8 +16,8 @@ while($posts->have_posts()){
 			$end	 = str_replace(' ', '', $pfmr['end_time']);
 			$performances[$after][] = [
 				'after'	=> $after,
-				'pfmr'	=> html_entity_decode(get_the_title($pfmr['performer']->ID)),
-				'porch'	=> get_the_title(),
+				'pfmr'	=> $pfmr['performer']->ID,
+				'porch'	=> html_entity_decode(get_the_title()),
 				'slot'	=> "{$start}-{$end}",
 			];
 		}else{break;}
@@ -78,6 +78,14 @@ if($loggedIn){
 								?>
 									<td><a href="/map#<?=$pfmr['porch'];?>"><?=$detail?></a></td>
 								<?php
+							}else if($key == 'pfmr'){
+								?>
+									<td>
+										<a href="<?=get_permalink($pfmr['pfmr'])?>">
+										 <?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
+										</a>
+									</td>
+								<?php
 							}else{
 								?><td><?=$detail?></td><?php
 							}
@@ -123,6 +131,14 @@ if($loggedIn){
 							if($key == 'porch'){
 								?>
 									<td><a href="/map#<?=$pfmr['porch'];?>"><?=$detail?></a></td>
+								<?php
+							}else if($key == 'pfmr'){
+								?>
+									<td>
+										<a href="<?=get_permalink($pfmr['pfmr'])?>">
+										 <?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
+										</a>
+									</td>
 								<?php
 							}else{
 								?><td><?=$detail?></td><?php
