@@ -169,6 +169,11 @@ function towerpf_site_scripts() {
 		wp_enqueue_script('home-page', get_template_directory_uri() . '/js/home-page.js',array('jquery'), _S_VERSION, true );
 		/* homepage countdown */
 	}
+	$screen = get_current_screen();
+	if('porch' == $screen->post_type){
+		wp_register_script( 'rm-f-img', get_template_directory_uri() . '/js/remove-featured-img.js', [], _S_VERSION, true );
+		wp_enqueue_script('rm-f-img');
+	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
 
@@ -245,6 +250,30 @@ add_action('init', function(){
 		],
 		'map_meta_cap'		=> true,
 	));
+
+	add_filter('enter_title_here', function($title){
+		$screen = get_current_screen();
+		if('porch' == $screen->post_type){
+			$title = 'Randomness';
+		}
+		return $title;
+	});
+
+
+
+	// add_action('admin_head', function(){
+	// 	remove_meta_box('postimagediv', 'porch', 'side');
+	// });
+
+	add_action('add_meta_boxes', function(){
+		remove_meta_box('postimagediv', 'porch', 'side');
+		add_meta_box('postimagediv', 'Your Ad', function($post){
+			add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
+			$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
+			echo nl2br("Upload an image to use as your ad. \n \n Recommended dimensions are 728px by 90px." );
+			echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
+		}, 'porch', 'normal', 'high');
+	}, 1);
 
 	register_post_type('performer', array(
 		'public'        	=> true,
