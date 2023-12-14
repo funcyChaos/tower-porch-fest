@@ -138,7 +138,7 @@ add_action( 'widgets_init', 'towerpf_site_widgets_init' );
 /**
  * Enqueue scripts and styles.
  */
-function towerpf_site_scripts() {
+function towerpf_site_scripts(){
 	wp_enqueue_style( 'towerpf-site-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
@@ -169,13 +169,16 @@ function towerpf_site_scripts() {
 		wp_enqueue_script('home-page', get_template_directory_uri() . '/js/home-page.js',array('jquery'), _S_VERSION, true );
 		/* homepage countdown */
 	}
+}
+add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+
+add_action('admin_enqueue_scripts', function(){
 	$screen = get_current_screen();
 	if('porch' == $screen->post_type){
 		wp_register_script( 'rm-f-img', get_template_directory_uri() . '/js/remove-featured-img.js', [], _S_VERSION, true );
 		wp_enqueue_script('rm-f-img');
 	}
-}
-add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+});
 
 add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 	if ( 'map-api' !== $handle ) {
