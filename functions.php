@@ -254,19 +254,36 @@ add_action('init', function(){
 		'map_meta_cap'		=> true,
 	));
 
+	add_action('admin_menu', function(){
+		add_menu_page(
+			'Start Here',
+			'Start Here',
+			'edit_porches',
+			'start-here',
+			function(){?><h1>hello world</h1><?php },
+			'dashicons-visibility',
+			1
+		);
+	});
+
+	add_filter('block_editor_settings_all', function($editor_settings){
+		$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
+		return $editor_settings;
+	});
+
+	add_action('wp_login', function($user_login, $user){
+		if(in_array('um_porch-operator', $user->roles)){
+			exit(wp_redirect('wp-admin/admin.php?page=start-here'));
+		}
+	},10,2);
+
 	add_filter('enter_title_here', function($title){
 		$screen = get_current_screen();
 		if('porch' == $screen->post_type){
-			$title = 'Randomness';
+			$title = 'Enter your porch name here';
 		}
 		return $title;
 	});
-
-
-
-	// add_action('admin_head', function(){
-	// 	remove_meta_box('postimagediv', 'porch', 'side');
-	// });
 
 	add_action('add_meta_boxes', function(){
 		remove_meta_box('postimagediv', 'porch', 'side');
