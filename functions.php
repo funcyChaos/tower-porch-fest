@@ -232,7 +232,9 @@ add_action('init', function(){
 		'public'        	=> true,
 		'labels'					=> [
 			'name'					=> 'Porches',
-			'singular_name'	=> 'Porch'
+			'singular_name'	=> 'Porch',
+			'add_new'				=> 'Add Porch!',
+			'add_new_item'	=> 'Add Porch!',
 		],
 		'menu_icon'     	=> 'dashicons-admin-home',
 		'menu_position' 	=> 2,
@@ -287,10 +289,10 @@ add_action('init', function(){
 
 	add_action('add_meta_boxes', function(){
 		remove_meta_box('postimagediv', 'porch', 'side');
-		add_meta_box('postimagediv', 'Your Ad', function($post){
+		add_meta_box('postimagediv', 'Picture of your porch', function($post){
 			add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
 			$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
-			echo nl2br("Upload an image to use as your ad. \n \n Recommended dimensions are 728px by 90px." );
+			echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px." );
 			echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
 		}, 'porch', 'normal', 'high');
 	}, 1);
@@ -299,7 +301,9 @@ add_action('init', function(){
 		'public'        	=> true,
 		'labels'					=> [
 			'name'					=> 'Performers',
-			'singular_name'	=> 'Performer'
+			'singular_name'	=> 'Performer',
+			'add_new'				=> 'Add Performer!',
+			'add_new_item'	=> 'Add Performer!',
 		],
 		'menu_icon'     	=> 'dashicons-groups',
 		'menu_position' 	=> 3,
