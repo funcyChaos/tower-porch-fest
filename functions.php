@@ -262,14 +262,26 @@ add_action('init', function(){
 			'Start Here',
 			'edit_porches',
 			'start-here',
-			function(){?><h1>hello world</h1><?php },
+			function(){
+				?>
+					<p>Greetings Porch Host! Here are steps you should take to fill out your custome porch page:</p>
+					<p>Click Add Porch! or click here, and completed the form.</p>
+					<p>Create your performers: Click Add Performer in the menu, or click here to Add Performer.</p>
+					<p>Return to your Porch Page and add performers and times.</p>
+					<p>Send an email to towerporchinfo@gmail.com - letting us know you are ready to go live.</p>
+					<p>If things change, come back and update your porch and performers. All porch lineups must be completed by April 1.</p>
+				<?php
+			},
 			'dashicons-visibility',
 			1
 		);
 	});
 
 	add_filter('block_editor_settings_all', function($editor_settings){
-		$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
+		$screen = get_current_screen();
+		if('porch' == $screen->post_type){
+			$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
+		}
 		return $editor_settings;
 	});
 
