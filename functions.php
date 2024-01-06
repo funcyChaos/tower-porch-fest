@@ -138,7 +138,7 @@ add_action( 'widgets_init', 'towerpf_site_widgets_init' );
 /**
  * Enqueue scripts and styles.
  */
-function towerpf_site_scripts() {
+function towerpf_site_scripts(){
 	wp_enqueue_style( 'towerpf-site-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
@@ -171,6 +171,14 @@ function towerpf_site_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+
+add_action('admin_enqueue_scripts', function(){
+	$screen = get_current_screen();
+	if('porch' == $screen->post_type){
+		wp_register_script( 'rm-f-img', get_template_directory_uri() . '/js/remove-featured-img.js', [], _S_VERSION, true );
+		wp_enqueue_script('rm-f-img');
+	}
+});
 
 add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 	if ( 'map-api' !== $handle ) {
@@ -224,7 +232,9 @@ add_action('init', function(){
 		'public'        	=> true,
 		'labels'					=> [
 			'name'					=> 'Porches',
-			'singular_name'	=> 'Porch'
+			'singular_name'	=> 'Porch',
+			'add_new'				=> 'Add Porch!',
+			'add_new_item'	=> 'Add Porch!',
 		],
 		'menu_icon'     	=> 'dashicons-admin-home',
 		'menu_position' 	=> 2,
@@ -246,11 +256,66 @@ add_action('init', function(){
 		'map_meta_cap'		=> true,
 	));
 
+	add_action('admin_menu', function(){
+		add_menu_page(
+			'Start Here',
+			'Start Here',
+			'edit_porches',
+			'start-here',
+			function(){
+				?>
+					<p>Greetings Porch Host! Here are steps you should take to fill out your custome porch page:</p>
+					<p>Click Add Porch! or click here, and completed the form.</p>
+					<p>Create your performers: Click Add Performer in the menu, or click here to Add Performer.</p>
+					<p>Return to your Porch Page and add performers and times.</p>
+					<p>Send an email to towerporchinfo@gmail.com - letting us know you are ready to go live.</p>
+					<p>If things change, come back and update your porch and performers. All porch lineups must be completed by April 1.</p>
+				<?php
+			},
+			'dashicons-visibility',
+			1
+		);
+	});
+
+	add_filter('block_editor_settings_all', function($editor_settings){
+		$screen = get_current_screen();
+		if('porch' == $screen->post_type){
+			$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
+		}
+		return $editor_settings;
+	});
+
+	add_action('wp_login', function($user_login, $user){
+		if(in_array('um_porch-operator', $user->roles)){
+			exit(wp_redirect('wp-admin/admin.php?page=start-here'));
+		}
+	},10,2);
+
+	add_filter('enter_title_here', function($title){
+		$screen = get_current_screen();
+		if('porch' == $screen->post_type){
+			$title = 'Enter your porch name here';
+		}
+		return $title;
+	});
+
+	add_action('add_meta_boxes', function(){
+		remove_meta_box('postimagediv', 'porch', 'side');
+		add_meta_box('postimagediv', 'Picture of your porch', function($post){
+			add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
+			$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
+			echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px." );
+			echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
+		}, 'porch', 'normal', 'high');
+	}, 1);
+
 	register_post_type('performer', array(
 		'public'        	=> true,
 		'labels'					=> [
 			'name'					=> 'Performers',
-			'singular_name'	=> 'Performer'
+			'singular_name'	=> 'Performer',
+			'add_new'				=> 'Add Performer!',
+			'add_new_item'	=> 'Add Performer!',
 		],
 		'menu_icon'     	=> 'dashicons-groups',
 		'menu_position' 	=> 3,
