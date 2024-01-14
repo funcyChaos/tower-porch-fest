@@ -262,12 +262,7 @@ add_action('init', function(){
 			'Start Here',
 			'edit_porches',
 			'start-here',
-			function(){
-				get_template_part('template-parts/start-here');
-				?>
-					
-				<?php
-			},
+			function(){get_template_part('template-parts/start-here');},
 			'dashicons-visibility',
 			1
 		);
