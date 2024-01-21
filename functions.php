@@ -292,6 +292,11 @@ add_action('init', function(){
 
 	add_action('add_meta_boxes', function(){
 		remove_meta_box('postimagediv', 'porch', 'side');
+		add_meta_box('instructionsdiv', 'Porch Instructions', function(){
+			?>
+				<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to towerporchfest@gmail.com.</p>
+			<?php
+		}, 'porch', 'normal', 'high');
 		add_meta_box('postimagediv', 'Picture of your porch', function($post){
 			add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
 			$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
