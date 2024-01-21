@@ -289,6 +289,19 @@ add_action('init', function(){
 		}
 		return $title;
 	});
+	
+	add_action('admin_footer', function(){
+		if(did_action('wp_enqueue_media')){
+			?>
+				<script type="text/javascript">
+					jQuery(document).ready(function($){
+						wp.media.controller.Library.prototype.defaults.contentUserSetting = false
+						wp.media.controller.FeaturedImage.prototype.defaults.contentUserSetting = false
+					})
+				</script>
+			<?php
+		}
+	});
 
 	add_action('add_meta_boxes', function(){
 		remove_meta_box('postimagediv', 'porch', 'side');
