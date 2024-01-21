@@ -25,7 +25,7 @@
 	&larr; Head <a href="<?=get_site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to make a new performer to add to your porch!
 </div>
 <div style="position: absolute; top:110px; font-weight:bolder" id="start_here_steps">
-	Once your porch is setup and has performers send an email to towerporchinfo@gmail.com - letting us know you are ready to go live.
+	Once your porch is setup and has performers send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a> - letting us know you are ready to go live.
 </div>
 
 
