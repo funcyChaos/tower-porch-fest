@@ -308,6 +308,7 @@ add_action('init', function(){
 		add_meta_box('instructionsdiv', 'Porch Instructions', function(){
 			?>
 				<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
+				<p>Add up to 12 performers. If your performer is not in the dropdown, head to the porches pages <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create a new performer.</p>
 			<?php
 		}, 'porch', 'normal', 'high');
 		add_meta_box('postimagediv', 'Picture of your porch', function($post){
