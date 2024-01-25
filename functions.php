@@ -307,7 +307,7 @@ add_action('init', function(){
 		remove_meta_box('postimagediv', 'porch', 'side');
 		add_meta_box('instructionsdiv', 'Porch Instructions', function(){
 			?>
-				<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to towerporchfest@gmail.com.</p>
+				<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
 			<?php
 		}, 'porch', 'normal', 'high');
 		add_meta_box('postimagediv', 'Picture of your porch', function($post){
