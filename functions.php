@@ -262,16 +262,7 @@ add_action('init', function(){
 			'Start Here',
 			'edit_porches',
 			'start-here',
-			function(){
-				?>
-					<p>Greetings Porch Host! Here are steps you should take to fill out your custome porch page:</p>
-					<p>Click Add Porch! or click here, and completed the form.</p>
-					<p>Create your performers: Click Add Performer in the menu, or click here to Add Performer.</p>
-					<p>Return to your Porch Page and add performers and times.</p>
-					<p>Send an email to towerporchinfo@gmail.com - letting us know you are ready to go live.</p>
-					<p>If things change, come back and update your porch and performers. All porch lineups must be completed by April 1.</p>
-				<?php
-			},
+			function(){get_template_part('template-parts/start-here');},
 			'dashicons-visibility',
 			1
 		);
@@ -298,9 +289,28 @@ add_action('init', function(){
 		}
 		return $title;
 	});
+	
+	add_action('admin_footer', function(){
+		if(did_action('wp_enqueue_media')){
+			?>
+				<script type="text/javascript">
+					jQuery(document).ready(function($){
+						wp.media.controller.Library.prototype.defaults.contentUserSetting = false
+						wp.media.controller.FeaturedImage.prototype.defaults.contentUserSetting = false
+					})
+				</script>
+			<?php
+		}
+	});
 
 	add_action('add_meta_boxes', function(){
 		remove_meta_box('postimagediv', 'porch', 'side');
+		add_meta_box('instructionsdiv', 'Porch Instructions', function(){
+			?>
+				<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
+				<p>Add up to 12 performers. If your performer is not in the dropdown, head to the porches pages <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create a new performer.</p>
+			<?php
+		}, 'porch', 'normal', 'high');
 		add_meta_box('postimagediv', 'Picture of your porch', function($post){
 			add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
 			$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
@@ -308,6 +318,12 @@ add_action('init', function(){
 			echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
 		}, 'porch', 'normal', 'high');
 	}, 1);
+
+	// Remove Dashboard and Post menus
+	add_action('admin_menu', function(){
+		remove_menu_page('edit.php');
+		remove_menu_page('index.php');
+	});
 
 	register_post_type('performer', array(
 		'public'        	=> true,
@@ -336,19 +352,19 @@ add_action('init', function(){
 		],
 		'map_meta_cap'		=> true,
 	));
-});
 
-// Organize Porches and Performers as first two menu items after Dashboard
-if(current_user_can( 'edit_posts' )){
-	add_action('admin_head', function(){
-		global $menu;
-		$menu[8] = $menu[4];
-		unset($menu[4]);
-		$menu[9] = $menu[6];
-		unset($menu[6]);
-		ksort($menu);
-	});
-}
+	// Organize Porches and Performers as first two menu items after Dashboard
+	if(current_user_can( 'edit_posts' )){
+		add_action('admin_head', function(){
+			global $menu;
+			$menu[8] = $menu[4];
+			unset($menu[4]);
+			$menu[9] = $menu[6];
+			unset($menu[6]);
+			ksort($menu);
+		});
+	}
+});
 
 // Add or remove capabilities for roles
 // add_action('admin_init', function(){
@@ -367,12 +383,6 @@ if(current_user_can( 'edit_posts' )){
 // });
 
 add_filter('excerpt_length', function($l){return 30;});
-
-function remove_default_post_type()
-{
-    remove_menu_page('edit.php');
-}
-add_action('admin_menu', 'remove_default_post_type');
 
 // *********** Social Media Accounts Custom Post Type *****************//
 function social_custom_post_type() {
