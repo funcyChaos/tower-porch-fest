@@ -226,6 +226,85 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+add_action('rest_api_init', function(){
+	register_rest_field('porch', 'acff', [
+		'get_callback' => function($object){
+			return get_fields($object['id']);
+		},
+		'update_callback' => null,
+		'schema' => null,
+	]);
+});
+
+add_action('admin_menu', function(){
+	add_menu_page(
+		'Start Here',
+		'Start Here',
+		'edit_porches',
+		'start-here',
+		function(){get_template_part('template-parts/start-here');},
+		'dashicons-visibility',
+		1
+	);
+});
+
+add_filter('block_editor_settings_all', function($editor_settings){
+	$screen = get_current_screen();
+	if('porch' == $screen->post_type){
+		$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
+	}
+	return $editor_settings;
+});
+
+add_action('wp_login', function($user_login, $user){
+	if(in_array('um_porch-operator', $user->roles)){
+		exit(wp_redirect('wp-admin/admin.php?page=start-here'));
+	}
+},10,2);
+
+add_filter('enter_title_here', function($title){
+	$screen = get_current_screen();
+	if('porch' == $screen->post_type){
+		$title = 'Enter your porch name here';
+	}
+	return $title;
+});
+
+add_action('admin_footer', function(){
+	if(did_action('wp_enqueue_media')){
+		?>
+			<script type="text/javascript">
+				jQuery(document).ready(function($){
+					wp.media.controller.Library.prototype.defaults.contentUserSetting = false
+					wp.media.controller.FeaturedImage.prototype.defaults.contentUserSetting = false
+				})
+			</script>
+		<?php
+	}
+});
+
+add_action('add_meta_boxes', function(){
+	remove_meta_box('postimagediv', 'porch', 'side');
+	add_meta_box('instructionsdiv', 'Porch Instructions', function(){
+		?>
+			<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
+			<p>Add up to 12 performers. If your performer is not in the dropdown, head to the porches pages <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create a new performer.</p>
+		<?php
+	}, 'porch', 'normal', 'high');
+	add_meta_box('postimagediv', 'Picture of your porch', function($post){
+		add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
+		$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
+		echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px." );
+		echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
+	}, 'porch', 'normal', 'high');
+}, 1);
+
+// Remove Dashboard and Post menus
+add_action('admin_menu', function(){
+	remove_menu_page('edit.php');
+	remove_menu_page('index.php');
+});
+
 // Add porch post type:
 add_action('init', function(){
 	register_post_type('porch', array(
@@ -255,75 +334,6 @@ add_action('init', function(){
 		],
 		'map_meta_cap'		=> true,
 	));
-
-	add_action('admin_menu', function(){
-		add_menu_page(
-			'Start Here',
-			'Start Here',
-			'edit_porches',
-			'start-here',
-			function(){get_template_part('template-parts/start-here');},
-			'dashicons-visibility',
-			1
-		);
-	});
-
-	add_filter('block_editor_settings_all', function($editor_settings){
-		$screen = get_current_screen();
-		if('porch' == $screen->post_type){
-			$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
-		}
-		return $editor_settings;
-	});
-
-	add_action('wp_login', function($user_login, $user){
-		if(in_array('um_porch-operator', $user->roles)){
-			exit(wp_redirect('wp-admin/admin.php?page=start-here'));
-		}
-	},10,2);
-
-	add_filter('enter_title_here', function($title){
-		$screen = get_current_screen();
-		if('porch' == $screen->post_type){
-			$title = 'Enter your porch name here';
-		}
-		return $title;
-	});
-	
-	add_action('admin_footer', function(){
-		if(did_action('wp_enqueue_media')){
-			?>
-				<script type="text/javascript">
-					jQuery(document).ready(function($){
-						wp.media.controller.Library.prototype.defaults.contentUserSetting = false
-						wp.media.controller.FeaturedImage.prototype.defaults.contentUserSetting = false
-					})
-				</script>
-			<?php
-		}
-	});
-
-	add_action('add_meta_boxes', function(){
-		remove_meta_box('postimagediv', 'porch', 'side');
-		add_meta_box('instructionsdiv', 'Porch Instructions', function(){
-			?>
-				<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
-				<p>Add up to 12 performers. If your performer is not in the dropdown, head to the porches pages <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create a new performer.</p>
-			<?php
-		}, 'porch', 'normal', 'high');
-		add_meta_box('postimagediv', 'Picture of your porch', function($post){
-			add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
-			$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
-			echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px." );
-			echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
-		}, 'porch', 'normal', 'high');
-	}, 1);
-
-	// Remove Dashboard and Post menus
-	add_action('admin_menu', function(){
-		remove_menu_page('edit.php');
-		remove_menu_page('index.php');
-	});
 
 	register_post_type('performer', array(
 		'public'        	=> true,
