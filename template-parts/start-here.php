@@ -21,12 +21,15 @@
 <div style="position: absolute; top:55px; font-weight:bolder;" id="porch_arrow">
 	&larr; Head <a href="<?=get_site_url();?>/wp-admin/edit.php?post_type=porch">here</a> to see your porch or make a new one!
 </div>
-<div style="position: absolute; top:89px; font-weight:bolder;" id="pfmrs_arrow">
+<!-- <div style="position: absolute; top:89px; font-weight:bolder;" id="pfmrs_arrow">
 	&larr; Head <a href="<?=get_site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to make a new performer to add to your porch!
+</div> -->
+<div style="position: absolute; top:89px; font-weight:bolder;" id="pfmrs_arrow">
+	&larr; Performer pages are coming soon, for now we ask that you focus on your porch details
 </div>
-<div style="position: absolute; top:110px; font-weight:bolder" id="start_here_steps">
+<!-- <div style="position: absolute; top:110px; font-weight:bolder" id="start_here_steps">
 	Once your porch is setup and has performers send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a> - letting us know you are ready to go live.
-</div>
+</div> -->
 
 
 
@@ -35,6 +38,6 @@
 	document.getElementById('porch_arrow').style.top = porchMenu.top - 23 + 'px'
 	const pfmrsMenu = document.getElementById('menu-posts-performer').getBoundingClientRect()
 	document.getElementById('pfmrs_arrow').style.top = pfmrsMenu.top - 23 + 'px'
-	const startSteps = document.getElementById('start_here_steps')
-	startSteps.style.top = pfmrsMenu.top + 10 + 'px'
+	// const startSteps = document.getElementById('start_here_steps')
+	// startSteps.style.top = pfmrsMenu.top + 10 + 'px'
 </script>

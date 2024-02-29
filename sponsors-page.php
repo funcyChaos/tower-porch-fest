@@ -26,7 +26,7 @@
     <p class="sponpara6"><?php the_field('sponsor_paragraph_6'); ?></p>
 
     <img class="sponimg" src="<?php the_field('sponsor_image'); ?>" alt="">
-    <a href="#" class="button9">SPONSOR SIGN-UP</a>
+    <!-- <a href="#" class="button9">SPONSOR SIGN-UP</a> -->
 
     <p class="sponpara7"><?php the_field('sponsor_paragraph_7'); ?></p>
 
