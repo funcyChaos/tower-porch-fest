@@ -174,7 +174,7 @@ add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
 
 add_action('admin_enqueue_scripts', function(){
 	$screen = get_current_screen();
-	if('porch' == $screen->post_type){
+	if('porch' == $screen->post_type || 'performer' == $screen->post_type){
 		wp_register_script( 'rm-f-img', get_template_directory_uri() . '/js/remove-featured-img.js', [], _S_VERSION, true );
 		wp_enqueue_script('rm-f-img');
 	}
@@ -284,7 +284,6 @@ add_action('admin_footer', function(){
 });
 
 add_action('add_meta_boxes', function(){
-	remove_meta_box('postimagediv', 'porch', 'side');
 	add_meta_box('instructionsdiv', 'Porch Instructions', function(){
 		?>
 			<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
@@ -297,6 +296,12 @@ add_action('add_meta_boxes', function(){
 		echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px." );
 		echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
 	}, 'porch', 'normal', 'high');
+	add_meta_box('postimagediv', 'Featured image!', function($post){
+		add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
+		$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
+		echo nl2br("Set a Featured Image! \n \n Recommended dimensions are 728px by 90px." );
+		echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
+	}, 'performer', 'normal', 'high');
 }, 1);
 
 // Remove Dashboard and Post menus
