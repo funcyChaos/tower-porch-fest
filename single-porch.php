@@ -8,22 +8,17 @@
  */
 
 get_header();
-function clean($string) {
-	$string = str_replace('%E2%80%99', ' ', $string); // Replaces all spaces with hyphens.
- 
-	return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
- }
 
 while(have_posts()){
 	the_post();
 	?>
-		<section class="prochesSingle">
-			<a href="/map#<?php the_title();?>" style="color: white; ">Go To Map</a>
+		<section class="porch-content">
+			<a class="go-to-map" href="/map#<?php the_title();?>">Go To Map</a>
 			<div class="singleporchImgContainer">
 			<?php 
 				$imgURL = has_post_thumbnail() ? get_the_post_thumbnail_url() : get_the_post_thumbnail_url(5);
 			?>
-				<img class="porchimage" src="<?=$imgURL?>" alt="Picture of Porch"/>
+			<img class="porchimage" src="<?=$imgURL?>" alt="Picture of Porch"/>
 			</div>
 			<div class="singleporchContentContainer">
 				<h2 class="porchheading"><?=the_title()?></h2>
@@ -35,20 +30,6 @@ while(have_posts()){
 				<!-- <p class="porchDescription"></p> -->
 				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
 			</div>
-		</section>
-		<?php
-			$categories = '';
-			if(get_field('sponsored')){
-				$sponsor_name = get_field('sponsor');
-				$categories .= "<a href=''>{$sponsor_name}</a>";
-			}
-			if(get_field('has_food')){
-				$food_name = get_field('food_vendor');
-				$categories .= "<a href=''>{$food_name}</a>";
-			}
-		?>
-		<section class="categoriesBar">
-			<?=$categories?>
 		</section>
 		<div class="lineup-container" id="band_lineup">
 			<?php
