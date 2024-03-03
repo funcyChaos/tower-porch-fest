@@ -21,8 +21,8 @@ while(have_posts()){
 			<img class="porchimage" src="<?=$imgURL?>" alt="Picture of Porch"/>
 			</div>
 			<div class="singleporchContentContainer">
-				<h2 class="porchheading"><?=the_title()?></h2>
-				<p class="porchaddress"><?=the_field('porch_address')?></p>
+				<h2 class="porchheading"><?php the_title();?></h2>
+				<p class="porchaddress"><?php the_field('porch_address');?></p>
 				<?php $content = wp_strip_all_tags(get_the_content());?>
 				<div class="the-content">
 					<?php the_content();?>

@@ -8,6 +8,19 @@
 	padding: 1rem;
   background-color: #462d62;
 
+	.porchheading {
+		font-family: 'Antonio';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 48px;
+		line-height: 62px;
+		text-transform: uppercase;
+
+		/* White */
+
+		color: #ffffff;
+	}
+	
 	.go-to-map{
 		align-self: flex-start;
 		color: white;
@@ -28,18 +41,6 @@
     display: flex;
     flex-direction: column;
 		max-width: 500px;
-    .porchheading {
-      font-family: 'Antonio';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 48px;
-      line-height: 62px;
-      text-transform: uppercase;
-
-      /* White */
-
-      color: #ffffff;
-    }
 		.the-content{
 			p{
 				color: #fff;
