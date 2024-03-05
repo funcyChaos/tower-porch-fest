@@ -3,13 +3,9 @@ function checkPorches(){
 	.then(res=>res.json())
 	.then(data=>{
 		let interval = 1000
-		// console.log(data)
-		// let isBreak = false
 		data.map(porch=>{
-			// if(isBreak)return
 			setCoords(porch.id, porch.acf.porch_address, interval)
 			interval += 1000
-			// isBreak = true
 		})
 	})
 }
@@ -21,8 +17,6 @@ function setCoords(id, address, interval){
     )
 		.then(res=>res.json())
 		.then(data=>{
-			// console.log(data.results[0].geometry.location.lng)
-			// console.log(data.results[0].geometry.location)
 			const lon = data.results[0].geometry.location.lng
 			const lat = data.results[0].geometry.location.lat
 			fetch('/wp-json/porches/v1/adds', {
