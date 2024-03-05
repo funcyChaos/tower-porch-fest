@@ -12,7 +12,9 @@ add_action('rest_api_init', function(){
 					'id'			=> $req->get_param('id'),
 				];
 			},
-			'permission_callback' => '__return_true',	
+			'permission_callback' => function(){
+				return current_user_can('edit_others_posts');
+			}
 		]
 	]);
 });
