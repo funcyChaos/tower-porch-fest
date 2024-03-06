@@ -2,67 +2,9 @@
 	<section class="porchescardcontainer">
 		<?php
 			$default_image = get_the_post_thumbnail(5, 'medium');
-			?><script>
-				class FetchQueue {
-					constructor() {
-						this.queue = [];
-						this.isProcessing = false;
-					}
-
-					add(fetchPromise) {
-						this.queue.push(fetchPromise);
-						if (!this.isProcessing) {
-							this.processQueue();
-						}
-					}
-
-					async processQueue() {
-						if (this.queue.length > 0) {
-							this.isProcessing = true;
-							const fetchPromise = this.queue.shift();
-							try {
-								await fetchPromise();
-							} catch (error) {
-								console.error('Error in fetch:', error);
-							}
-							this.processQueue();
-						} else {
-							this.isProcessing = false;
-						}
-					}
-				}
-
-				const fetchQueue = new FetchQueue();
-
-				async function updateCoords(address, id){
-					const coords = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=<?=map_api_key?>`)
-					const cData		= await coords.json()
-					const cObject	= await cData
-					const lon = cObject.results[0].geometry.location.lng
-					const lat = cObject.results[0].geometry.location.lat
-					const update = await fetch('/wp-json/porches/v1/adds', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/JSON',
-						},
-						body: JSON.stringify({
-							id,
-							lon,
-							lat,
-						}),
-					})
-					const uData = await update.json()
-					const uObject = await uData
-					console.log(uObject, cObject)
-				}
-			</script><?php
 			while(have_posts()){
 				the_post();
 				?>
-					<script>
-						fetchQueue.add(()=>updateCoords("<?php the_field('porch_address');?>", <?=get_the_id()?>))
-					</script>
-					
 					<div class="porchcard" id="<?php echo "card_". get_the_id();?>">
 						<div class="heading">
 							<h2 class="porchheading" ><?=the_title()?></h2>
