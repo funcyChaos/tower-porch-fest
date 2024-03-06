@@ -143,7 +143,6 @@ function towerpf_site_scripts(){
 	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	
-	
 	if(is_page(54)){
 		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&loading=async&callback=initMap', [], false, true);
 		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
@@ -196,7 +195,6 @@ function countdown_enqueue_scripts() {
 // add_action( 'wp_enqueue_scripts', 'countdown_enqueue_scripts' );
 /** End */
 
-
 /**
  * Implement the Custom Header feature.
  */
@@ -224,16 +222,6 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
-add_action('rest_api_init', function(){
-	register_rest_field('porch', 'acff', [
-		'get_callback' => function($object){
-			return get_fields($object['id']);
-		},
-		'update_callback' => null,
-		'schema' => null,
-	]);
-});
-
 add_action('admin_menu', function(){
 	add_menu_page(
 		'Start Here',
@@ -246,100 +234,17 @@ add_action('admin_menu', function(){
 	);
 });
 
-add_filter('block_editor_settings_all', function($editor_settings){
-	$screen = get_current_screen();
-	if('porch' == $screen->post_type){
-		$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
-	}
-	return $editor_settings;
-});
-
-add_action('wp_login', function($user_login, $user){
-	if(in_array('um_porch-operator', $user->roles)){
-		exit(wp_redirect('wp-admin/admin.php?page=start-here'));
-	}
-},10,2);
-
-add_filter('enter_title_here', function($title){
-	$screen = get_current_screen();
-	if('porch' == $screen->post_type){
-		$title = 'Enter your porch name here';
-	}
-	return $title;
-});
-
-add_action('admin_footer', function(){
-	if(did_action('wp_enqueue_media')){
-		?>
-			<script type="text/javascript">
-				jQuery(document).ready(function($){
-					wp.media.controller.Library.prototype.defaults.contentUserSetting = false
-					wp.media.controller.FeaturedImage.prototype.defaults.contentUserSetting = false
-				})
-			</script>
-		<?php
-	}
-});
-
-add_action('add_meta_boxes', function(){
-	add_meta_box('instructionsdiv', 'Porch Instructions', function(){
-		?>
-			<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
-			<p>Add up to 12 performers. If your performer is not in the dropdown, head to the porches pages <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create a new performer.</p>
-		<?php
-	}, 'porch', 'normal', 'high');
-	add_meta_box('postimagediv', 'Picture of your porch', function($post){
-		add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
-		$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
-		echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px." );
-		echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
-	}, 'porch', 'normal', 'high');
-	add_meta_box('postimagediv', 'Featured image!', function($post){
-		add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
-		$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
-		echo nl2br("Set a Featured Image! \n \n Recommended dimensions are 728px by 90px." );
-		echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
-	}, 'performer', 'normal', 'high');
-}, 1);
-
 // Remove Dashboard and Post menus
 add_action('admin_menu', function(){
 	remove_menu_page('edit.php');
 	remove_menu_page('index.php');
 });
 
-require get_template_directory() . '/coord-import/import.php';
+// All porch related:
+require get_template_directory() . '/inc/porches.php';
 
 // Add porch post type:
 add_action('init', function(){
-	register_post_type('porch', array(
-		'public'        	=> true,
-		'labels'					=> [
-			'name'					=> 'Porches',
-			'singular_name'	=> 'Porch',
-			'add_new'				=> 'Add Porch!',
-			'add_new_item'	=> 'Add Porch!',
-		],
-		'menu_icon'     	=> 'dashicons-admin-home',
-		'menu_position' 	=> 2,
-		'has_archive'			=> 'porches',
-		'rewrite'					=> true,
-		'show_in_rest'		=> true,
-		'rest_base'				=> 'porches',
-		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt', 'author'],
-		'taxonomies' 			=> ['category'],
-		'capabilities'		=> [
-			'edit_post'						=> 'edit_porch',
-			'edit_posts'					=> 'edit_porches',
-			'edit_others_posts'		=> 'edit_others_porches',
-			'publish_posts'				=> 'publish_porches',
-			'read_post'						=> 'read_porch',
-			'read_private_posts'	=> 'read_private_porches',
-			'delete_posts'				=> 'delete_porches',
-		],
-		'map_meta_cap'		=> true,
-	));
-
 	register_post_type('performer', array(
 		'public'        	=> true,
 		'labels'					=> [
@@ -380,22 +285,6 @@ add_action('init', function(){
 		});
 	}
 });
-
-// Add or remove capabilities for roles
-// add_action('admin_init', function(){
-// 	$admin = get_role('administrator');
-// 	$admin->add_cap('edit_performer');
-// 	$admin->add_cap('edit_performers');
-// 	$admin->add_cap('edit_others_performers');
-// 	$admin->add_cap('publish_performers');
-// 	$admin->add_cap('read_performer');
-// 	$admin->add_cap('read_private_performers');
-// 	$admin->add_cap('delete_performers');
-// 	// $admin->remove_cap('read_porches');
-// 	// $admin->remove_cap('edit_porch');
-// 	// $admin->remove_cap('delete_porch');
-// 	// $admin->remove_cap('blargalot-fake');
-// });
 
 add_filter('excerpt_length', function($l){return 30;});
 
@@ -452,7 +341,6 @@ function social_custom_post_type() {
 			 
 			// Registering your Custom Post Type
 			register_post_type( 'socials', $args );
-	 
 	}
 
  /* Hook into the 'init' action so that the function
@@ -463,14 +351,3 @@ function social_custom_post_type() {
  add_action( 'init', 'social_custom_post_type', 0 );
 	
 // *********** End *****************//
-
-
-
-// REMOVES TEXT EDITOR FOR PORCHES CUSTOM POST TYPE
-
-// add_action('init', 'my_remove_editor_from_post_type');
-// function my_remove_editor_from_post_type() {
-// remove_post_type_support( 'porch', 'editor' );
-
-// 	}
-
