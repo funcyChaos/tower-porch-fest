@@ -21,6 +21,7 @@ add_action('init', function(){
 			'edit_post'						=> 'edit_porch',
 			'edit_posts'					=> 'edit_porches',
 			'edit_others_posts'		=> 'edit_others_porches',
+			'edit_published_posts'	=> 'edit_published_porches',
 			'publish_posts'				=> 'publish_porches',
 			'read_post'						=> 'read_porch',
 			'read_private_posts'	=> 'read_private_porches',
@@ -132,6 +133,82 @@ add_action('save_post', function($post_id, $obj, $updating){
 		update_field('longitude', $longitude, $post_id);
 	}
 }, 10, 3);
+
+add_action('login_enqueue_scripts', function(){
+	wp_dequeue_script('user-profile');
+	wp_dequeue_script('password-strength-meter');
+	wp_deregister_script('user-profile');
+
+	$suffix = SCRIPT_DEBUG ? '' : '.min';
+	wp_enqueue_script( 'user-profile', "/wp-admin/js/user-profile$suffix.js", array( 'jquery', 'wp-util' ), false, 1 );
+});
+
+add_action('wp_ajax_email-porch-hosts', function(){
+	if(!wp_verify_nonce($_REQUEST['nonce'], 'super_secret_code')){
+		wp_send_json(['response'=>'bad nonce']);
+		wp_die();
+	}
+	ob_start();
+	?>
+		<p><?=$_REQUEST['body']?></p>
+	<?php
+	$content = ob_get_clean();
+	$users = get_users(['role'=>'um_porch-operator']);
+	foreach($users as $key => $value){
+		$email_success[] = wp_mail($value->data->user_email,$_REQUEST['subject'], $content, array('Content-Type: text/html; charset=UTF-8'));
+	}
+	if($email_success){
+		wp_send_json(['response'=>'success']);
+	}else{
+		wp_send_json(['response'=>'failed']);
+	}
+	wp_die();
+});
+
+add_action('wp_ajax_nopriv_email-porch-hosts', function(){
+	wp_send_json(['response'=>'nopriv']);
+	wp_die();
+});
+
+add_action('admin_menu', function(){
+	add_menu_page(
+		'Porch Admin Tools',
+		'Porch Admin Tools',
+		'administrator',
+		'porch-admin-tools',
+		function(){
+			?>
+				<form id="email_porch_hosts_form" style="display:flex;flex-direction:column;padding:1rem;padding-right:2rem;">
+					<label for="Email Subject">Email Subject</label>
+					<input type="text" name="Email Subject" id="email_subject">
+					<label for="Email Body">Email Body</label>
+					<textarea name="Email Body" id="email_body" cols="30" rows="10" wrap="hard"></textarea>
+					<button type="submit">Send Email</button>
+				</form>
+				<script>
+					const emailForm = document.getElementById('email_porch_hosts_form')
+					emailForm.addEventListener('submit', (e)=>{
+						e.preventDefault()
+						const subject = document.getElementById('email_subject').value
+						const body = document.getElementById('email_body').value.replace(/\n/g, "<br />");
+						fetch('<?=admin_url('admin-ajax.php')?>', {
+							method: 'POST',
+							headers: {
+								'content-Type': 'application/x-www-form-urlencoded; charset-UTF-8'
+							},
+							body: `action=email-porch-hosts&nonce=<?=wp_create_nonce('super_secret_code')?>&subject=${subject}&body=${body}`,
+						})
+						.then(heck=>heck.json())
+						.then(flubber=>console.log(flubber))
+					})
+				</script>
+			<?php
+		},
+		'dashicons-admin-tools
+		',
+		1
+	);
+});
 
 function updatePorchesTemp(){
 	?><script>
