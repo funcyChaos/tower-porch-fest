@@ -16,15 +16,15 @@ async function buildPorches(){
 	const porches = await getPorches()
 	let data = []
 	for(const porch of porches){
-		let pfmrs = []
-		for(let i = 1; i < 13; i++){
-			// Technically a debug line:
-			if(!porch.acff[`performer_${i}`])break
-			if(!porch.acff[`performer_${i}`].performer)break
-			await getPerformer(porch.acff[`performer_${i}`].performer.ID)
-			.then(pfmr=>pfmrs.push(pfmr))
-		}
-		porch.performers = pfmrs
+		// let pfmrs = []
+		// for(let i = 1; i < 13; i++){
+		// 	// Technically a debug line:
+		// 	if(!porch.acff[`performer_${i}`])break
+		// 	if(!porch.acff[`performer_${i}`].performer)break
+		// 	await getPerformer(porch.acff[`performer_${i}`].performer.ID)
+		// 	.then(pfmr=>pfmrs.push(pfmr))
+		// }
+		// porch.performers = pfmrs
 		data.push(porch)
 	}
 	return data
@@ -277,7 +277,7 @@ function initMap(){
 				`<img src=${porchImage} alt="porch" />` +
 				'<div id="content-header">' +
 				`<h3>${porch.title.rendered}</h3>` +
-				`<p>${porch.acff.address}</p>` +
+				`<p>${porch.acff.porch_address}</p>` +
 				'</div>' +
 				'<div id="desc">' +
 				`${porch.content.rendered}` +
