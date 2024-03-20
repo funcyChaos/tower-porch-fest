@@ -45,15 +45,25 @@ while(have_posts()){
 				for($i=1; $i < 13; $i++){
 					$band = get_field("performer_{$i}");
 					if(!$band['performer'])break;
-					$genre = get_field('genre', $band['performer']->ID);
+					// $genre = get_field('genre', $band['performer']->ID);
+					$genres = get_field('genre', $band['performer']);
+					// $band['performer']
+					// You need to get the band here first because now it's a post id instead of field contents :P
+					// $bandPost = get_post($band['performer'])
 					?>
 						<div class="band-card">
 							<div class="TagContent">
 								<a href="#" class="singleButton"><?=$band['start_time']?> - <?=$band['end_time']?></a>
-								<h2 class="tagHeading"><?=$band['performer']->post_title?></h2>
-								<p class="tag"><?=$genre?></p>
+								<h2 class="tagHeading"><?=get_the_title($band['performer']);?></h2>
+								<p class="tag">
+									<?php
+										foreach($genres as $genre){
+											echo $genre;
+										}
+									?>
+								</p>
 							</div>
-							<p class="porchDescription"><?=$band['performer']->post_content?></p>
+							<p class="porchDescription"><?=get_the_content($band['performer']);?></p>
 						</div>
 					<?php
 				}
