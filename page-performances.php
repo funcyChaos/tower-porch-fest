@@ -14,12 +14,20 @@ while($posts->have_posts()){
 			$after = strtotime($pfmr['start_time']);
 			$start = str_replace(' ', '', $pfmr['start_time']);
 			$end	 = str_replace(' ', '', $pfmr['end_time']);
-			$performances[$after][] = [
-				'after'	=> $after,
-				'pfmr'	=> $pfmr['performer']->ID,
-				'porch'	=> html_entity_decode(get_the_title()),
-				'slot'	=> "{$start}-{$end}",
-			];
+			if($pfmr['performer'] instanceof WP_Post){
+				$performances[$after][] = [
+					'after'	=> $after,
+					'pfmr'	=> $pfmr['performer']->ID,
+					'porch'	=> html_entity_decode(get_the_title()),
+					'slot'	=> "{$start}-{$end}",
+				];
+			}else{
+				$performances[$after][] = [
+					'pfmr'	=> $pfmr['performer'],
+					'porch'	=> html_entity_decode(get_the_title()),
+					'slot'	=> "{$start}-{$end}",
+				];
+			}
 		}else{break;}
 	}
 }
@@ -81,7 +89,7 @@ if($loggedIn){
 							}else if($key == 'pfmr'){
 								?>
 									<td>
-										<a href="<?=get_permalink($pfmr['pfmr'])?>">
+										<a id="performer_data" href="<?=get_permalink($pfmr['pfmr'])?>">
 										 <?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
 										</a>
 									</td>
