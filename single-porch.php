@@ -57,8 +57,16 @@ while(have_posts()){
 								<h2 class="tagHeading"><?=get_the_title($band['performer']);?></h2>
 								<p class="tag">
 									<?php
-										foreach($genres as $genre){
-											echo $genre;
+										// foreach($genres as $genre){
+										// 	echo $genre;
+										// }
+										$genreCount = count($genres);
+										for($g=0; $g < $genreCount; $g++){ 
+											if($g == $genreCount - 1){
+												echo $genres[$g];
+											}else{
+												echo $genres[$g] . ', ';
+											}
 										}
 									?>
 								</p>
