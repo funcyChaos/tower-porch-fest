@@ -9,21 +9,25 @@ $performances = [];
 while($posts->have_posts()){
 	$posts->the_post();
 	for($i = 1; $i < 13; $i++){
-		$pfmr = get_field("performer_{$i}");
-		if(!empty($pfmr['performer'])){
-			$after = strtotime($pfmr['start_time']);
-			$start = str_replace(' ', '', $pfmr['start_time']);
-			$end	 = str_replace(' ', '', $pfmr['end_time']);
-			if($pfmr['performer'] instanceof WP_Post){
+		$performer = get_field("performer_{$i}");
+		if(!empty($performer['performer'])){
+			$after	 = intval(date('H', strtotime($performer['start_time'])));
+			$epoch = strtotime($performer['start_time']);
+			$start = str_replace(' ', '', $performer['start_time']);
+			$end	 = str_replace(' ', '', $performer['end_time']);
+			if($performer['performer'] instanceof WP_Post){
 				$performances[$after][] = [
+					'epoch'	=> $epoch,
 					'after'	=> $after,
-					'pfmr'	=> $pfmr['performer']->ID,
+					'pfmr'	=> $performer['performer']->ID,
 					'porch'	=> html_entity_decode(get_the_title()),
 					'slot'	=> "{$start}-{$end}",
 				];
 			}else{
 				$performances[$after][] = [
-					'pfmr'	=> $pfmr['performer'],
+					'epoch'	=> $epoch,
+					'after'	=> $after,
+					'pfmr'	=> $performer['performer'],
 					'porch'	=> html_entity_decode(get_the_title()),
 					'slot'	=> "{$start}-{$end}",
 				];
@@ -47,6 +51,91 @@ if($loggedIn){
 		<button id="performances_button">Performances</button>
 		<button id="itinerary_button">Itinerary</button>
 	</div>
+
+	<table class="hide" id="performances_table">
+		<thead>
+			<tr>
+				<th>After</th>
+				<th>Performer</th>
+				<th>Porch</th>
+				<th>Time Slot</th>
+				<th><?=$loggedIn ? 'Itinerary' : 'Log In for Itinerary'?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+				foreach($performances as $start => $pfmrs){
+					$time  = date('ga', $pfmrs[0]['epoch']);
+					$count = count($pfmrs);
+					$th		 = true;
+					foreach($pfmrs as $pfmr){
+						if($th){
+							?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$time?></th><?php
+							$th = false;
+						}else{
+							?><tr><?php
+						}
+						foreach($pfmr as $key => $detail){
+							if($key == 'after')continue;
+							if($key == 'epoch')continue;
+							if($key == 'porch'){
+								?>
+									<td><a href="/map#<?=$pfmr['porch'];?>"><?=$detail?></a></td>
+								<?php
+							}else if($key == 'pfmr'){
+								?>
+									<td>
+										<a href="<?=get_permalink($pfmr['pfmr'])?>">
+										 <?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
+										</a>
+									</td>
+								<?php
+							}else{
+								?><td><?=$detail?></td><?php
+							}
+						}
+						$added = false;
+						$loggedIn = is_user_logged_in();
+						if($loggedIn){
+							$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
+							$toCheck = $pfmr;
+							unset($toCheck['after']);
+							if($itinerary){
+								foreach($itinerary as $entry){
+									foreach($entry as $ePfmr){
+										if($ePfmr == $toCheck){
+											$added = true;
+											break;
+										}
+									}
+								}
+							}
+						}
+						?>
+								<td>
+									<?php
+									if($loggedIn){
+										if($added){
+											?>
+												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($toCheck)?>, this)'>Remove</button>
+											<?php
+										}else{
+											?>
+												<button data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
+											<?php
+										}
+									}else{
+										?>Log In to Add<?php
+									}
+									?>
+								</td>
+							</tr>
+						<?php
+					}
+				}
+			?>
+		</tbody>
+	</table>
 
 	<table class="hide" id="itinerary_table">
 		<thead>
@@ -107,90 +196,6 @@ if($loggedIn){
 					}
 				}
 			}
-			?>
-		</tbody>
-	</table>
-
-	<table class="hide" id="performances_table">
-		<thead>
-			<tr>
-				<th>After</th>
-				<th>Performer</th>
-				<th>Porch</th>
-				<th>Time Slot</th>
-				<th><?=$loggedIn ? 'Itinerary' : 'Log In for Itinerary'?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-				foreach($performances as $start => $pfmrs){
-					$time = date('ga', $start);
-					$count = count($pfmrs);
-					$th		 = true;
-					foreach($pfmrs as $pfmr){
-						if($th){
-							?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$time?></th><?php
-							$th = false;
-						}else{
-							?><tr><?php
-						}
-						foreach($pfmr as $key => $detail){
-							if($key == 'after')continue;
-							if($key == 'porch'){
-								?>
-									<td><a href="/map#<?=$pfmr['porch'];?>"><?=$detail?></a></td>
-								<?php
-							}else if($key == 'pfmr'){
-								?>
-									<td>
-										<a href="<?=get_permalink($pfmr['pfmr'])?>">
-										 <?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
-										</a>
-									</td>
-								<?php
-							}else{
-								?><td><?=$detail?></td><?php
-							}
-						}
-						$added = false;
-						$loggedIn = is_user_logged_in();
-						if($loggedIn){
-							$itinerary = get_user_meta(get_current_user_id(), 'itinerary', true);
-							$toCheck = $pfmr;
-							unset($toCheck['after']);
-							if($itinerary){
-								foreach($itinerary as $entry){
-									foreach($entry as $ePfmr){
-										if($ePfmr == $toCheck){
-											$added = true;
-											break;
-										}
-									}
-								}
-							}
-						}
-						?>
-								<td>
-									<?php
-									if($loggedIn){
-										if($added){
-											?>
-												<button data-tgl="rmv" onclick='tglItn(<?=json_encode($toCheck)?>, this)'>Remove</button>
-											<?php
-										}else{
-											?>
-												<button data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
-											<?php
-										}
-									}else{
-										?>Log In to Add<?php
-									}
-									?>
-								</td>
-							</tr>
-						<?php
-					}
-				}
 			?>
 		</tbody>
 	</table>
