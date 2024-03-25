@@ -242,6 +242,7 @@ add_action('admin_menu', function(){
 
 // All porch related:
 require get_template_directory() . '/inc/porches.php';
+require get_template_directory() . '/inc/itinerary.php';
 
 // Add porch post type:
 add_action('init', function(){
