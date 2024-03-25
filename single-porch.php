@@ -8,26 +8,21 @@
  */
 
 get_header();
-function clean($string) {
-	$string = str_replace('%E2%80%99', ' ', $string); // Replaces all spaces with hyphens.
- 
-	return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
- }
 
 while(have_posts()){
 	the_post();
 	?>
-		<section class="prochesSingle">
-			<a href="/map#<?php the_title();?>" style="color: white; ">Go To Map</a>
+		<section class="porch-content">
+			<a class="go-to-map" href="/map#<?php the_title();?>">Go To Map</a>
 			<div class="singleporchImgContainer">
 			<?php 
 				$imgURL = has_post_thumbnail() ? get_the_post_thumbnail_url() : get_the_post_thumbnail_url(5);
 			?>
-				<img class="porchimage" src="<?=$imgURL?>" alt="Picture of Porch"/>
+			<img class="porchimage" src="<?=$imgURL?>" alt="Picture of Porch"/>
 			</div>
 			<div class="singleporchContentContainer">
-				<h2 class="porchheading"><?=the_title()?></h2>
-				<p class="porchaddress"><?=the_field('porch_address')?></p>
+				<h2 class="porchheading"><?php the_title();?></h2>
+				<p class="porchaddress"><?php the_field('porch_address');?></p>
 				<?php $content = wp_strip_all_tags(get_the_content());?>
 				<div class="the-content">
 					<?php the_content();?>
@@ -35,20 +30,6 @@ while(have_posts()){
 				<!-- <p class="porchDescription"></p> -->
 				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
 			</div>
-		</section>
-		<?php
-			$categories = '';
-			if(get_field('sponsored')){
-				$sponsor_name = get_field('sponsor');
-				$categories .= "<a href=''>{$sponsor_name}</a>";
-			}
-			if(get_field('has_food')){
-				$food_name = get_field('food_vendor');
-				$categories .= "<a href=''>{$food_name}</a>";
-			}
-		?>
-		<section class="categoriesBar">
-			<?=$categories?>
 		</section>
 		<div class="lineup-container" id="band_lineup">
 			<?php
@@ -64,15 +45,32 @@ while(have_posts()){
 				for($i=1; $i < 13; $i++){
 					$band = get_field("performer_{$i}");
 					if(!$band['performer'])break;
-					$genre = get_field('genre', $band['performer']->ID);
+					// $genre = get_field('genre', $band['performer']->ID);
+					$genres = get_field('genre', $band['performer']);
+					// $band['performer']
+					// You need to get the band here first because now it's a post id instead of field contents :P
+					// $bandPost = get_post($band['performer'])
 					?>
 						<div class="band-card">
 							<div class="TagContent">
 								<a href="#" class="singleButton"><?=$band['start_time']?> - <?=$band['end_time']?></a>
-								<h2 class="tagHeading"><?=$band['performer']->post_title?></h2>
-								<p class="tag"><?=$genre?></p>
+								<h2 class="tagHeading"><?=get_the_title($band['performer']);?></h2>
+								<p class="tag">
+									<?php
+										if(is_array($genres)){
+											$genreCount = count($genres);
+											for($g=0; $g < $genreCount; $g++){ 
+												if($g == $genreCount - 1){
+													echo $genres[$g];
+												}else{
+													echo $genres[$g] . ', ';
+												}
+											}
+										}
+									?>
+								</p>
 							</div>
-							<p class="porchDescription"><?=$band['performer']->post_content?></p>
+							<p class="porchDescription"><?=get_the_content(null, false, $band['performer']);?></p>
 						</div>
 					<?php
 				}
