@@ -1,8 +1,23 @@
 .pfmcs-table-container{
 	display: grid;
 	grid-template-columns: 1fr 10fr 1fr;
-	grid-template-areas: ". table .";
+	grid-template-rows: auto auto;
+	grid-template-areas: 
+		". menu ."
+		". table ."
+	;
+
+	gap: 1rem;
 	margin-top: 5rem;
+
+	.menu{
+		grid-area: menu;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		.active{background-color: rgb(98, 12, 88);}
+		button{color: white;}
+	}
 
 	table{
 		grid-area: table;
@@ -10,5 +25,10 @@
 			border:2px solid black;
 			text-align: center;
 		}
+		a{color:#4fc3c9;}
+	}
+
+	.hide{
+		display: none;
 	}
 }
