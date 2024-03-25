@@ -138,24 +138,21 @@ add_action( 'widgets_init', 'towerpf_site_widgets_init' );
 /**
  * Enqueue scripts and styles.
  */
-function towerpf_site_scripts() {
+function towerpf_site_scripts(){
 	wp_enqueue_style( 'towerpf-site-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	
-	
 	if(is_page(54)){
-		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&callback=initMap', [], false, true);
+		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&loading=async&callback=initMap', [], false, true);
 		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
 		wp_localize_script('map-script', 'wpVars', [
 			'homeURL' => home_url(),
 			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
 			'genres'	=> get_field_object('field_6491fdd624af4')['choices'],
-	]); 
+		]); 
 		wp_enqueue_script('map-script');
-		wp_register_script( 'import-script', get_template_directory_uri().'/coord-import/import.js', [], '1.0', true);
-		wp_enqueue_script('import-script');
-	} 
+	}
 	
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -171,6 +168,14 @@ function towerpf_site_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+
+add_action('admin_enqueue_scripts', function(){
+	$screen = get_current_screen();
+	if('porch' == $screen->post_type || 'performer' == $screen->post_type){
+		wp_register_script( 'rm-f-img', get_template_directory_uri() . '/js/remove-featured-img.js', [], _S_VERSION, true );
+		wp_enqueue_script('rm-f-img');
+	}
+});
 
 add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 	if ( 'map-api' !== $handle ) {
@@ -189,7 +194,6 @@ function countdown_enqueue_scripts() {
 }
 // add_action( 'wp_enqueue_scripts', 'countdown_enqueue_scripts' );
 /** End */
-
 
 /**
  * Implement the Custom Header feature.
@@ -218,41 +222,36 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
-require get_template_directory() . '/inc/itinerary.php';
+add_action('admin_menu', function(){
+	add_menu_page(
+		'Start Here',
+		'Start Here',
+		'edit_porches',
+		'start-here',
+		function(){get_template_part('template-parts/start-here');},
+		'dashicons-visibility',
+		1
+	);
+});
+
+// Remove Dashboard and Post menus
+add_action('admin_menu', function(){
+	remove_menu_page('edit.php');
+	remove_menu_page('index.php');
+});
+
+// All porch related:
+require get_template_directory() . '/inc/porches.php';
 
 // Add porch post type:
 add_action('init', function(){
-	register_post_type('porch', array(
-		'public'        	=> true,
-		'labels'					=> [
-			'name'					=> 'Porches',
-			'singular_name'	=> 'Porch'
-		],
-		'menu_icon'     	=> 'dashicons-admin-home',
-		'menu_position' 	=> 2,
-		'has_archive'			=> 'porches',
-		'rewrite'					=> true,
-		'show_in_rest'		=> true,
-		'rest_base'				=> 'porches',
-		'supports'				=> ['title', 'editor', 'thumbnail', 'excerpt', 'author'],
-		'taxonomies' 			=> ['category'],
-		'capabilities'		=> [
-			'edit_post'						=> 'edit_porch',
-			'edit_posts'					=> 'edit_porches',
-			'edit_others_posts'		=> 'edit_others_porches',
-			'publish_posts'				=> 'publish_porches',
-			'read_post'						=> 'read_porch',
-			'read_private_posts'	=> 'read_private_porches',
-			'delete_posts'				=> 'delete_porches',
-		],
-		'map_meta_cap'		=> true,
-	));
-
 	register_post_type('performer', array(
 		'public'        	=> true,
 		'labels'					=> [
 			'name'					=> 'Performers',
-			'singular_name'	=> 'Performer'
+			'singular_name'	=> 'Performer',
+			'add_new'				=> 'Add Performer!',
+			'add_new_item'	=> 'Add Performer!',
 		],
 		'menu_icon'     	=> 'dashicons-groups',
 		'menu_position' 	=> 3,
@@ -273,45 +272,21 @@ add_action('init', function(){
 		],
 		'map_meta_cap'		=> true,
 	));
+
+	// Organize Porches and Performers as first two menu items after Dashboard
+	if(current_user_can( 'edit_posts' )){
+		add_action('admin_head', function(){
+			global $menu;
+			$menu[8] = $menu[4];
+			unset($menu[4]);
+			$menu[9] = $menu[6];
+			unset($menu[6]);
+			ksort($menu);
+		});
+	}
 });
 
-// Organize Porches and Performers as first two menu items after Dashboard
-if(current_user_can( 'edit_posts' )){
-	add_action('admin_head', function(){
-		global $menu;
-		$menu[8] = $menu[4];
-		unset($menu[4]);
-		$menu[9] = $menu[6];
-		unset($menu[6]);
-		ksort($menu);
-	});
-}
-
-// Add or remove capabilities for roles
-// add_action('admin_init', function(){
-// 	// $role = get_role('um_porch-operator');
-// 	// $role->add_cap('level_1');
-// 	// $admin = get_role('administrator');
-// 	// $admin->add_cap('edit_performer');
-// 	// $admin->add_cap('edit_performers');
-// 	// $admin->add_cap('edit_others_performers');
-// 	// $admin->add_cap('publish_performers');
-// 	// $admin->add_cap('read_performer');
-// 	// $admin->add_cap('read_private_performers');
-// 	// $admin->add_cap('delete_performers');
-// 	// $admin->remove_cap('read_porches');
-// 	// $admin->remove_cap('edit_porch');
-// 	// $admin->remove_cap('delete_porch');
-// 	// $admin->remove_cap('blargalot-fake');
-// });
-
 add_filter('excerpt_length', function($l){return 30;});
-
-function remove_default_post_type()
-{
-    remove_menu_page('edit.php');
-}
-add_action('admin_menu', 'remove_default_post_type');
 
 // *********** Social Media Accounts Custom Post Type *****************//
 function social_custom_post_type() {
@@ -366,7 +341,6 @@ function social_custom_post_type() {
 			 
 			// Registering your Custom Post Type
 			register_post_type( 'socials', $args );
-	 
 	}
 
  /* Hook into the 'init' action so that the function
@@ -377,14 +351,3 @@ function social_custom_post_type() {
  add_action( 'init', 'social_custom_post_type', 0 );
 	
 // *********** End *****************//
-
-
-
-// REMOVES TEXT EDITOR FOR PORCHES CUSTOM POST TYPE
-
-// add_action('init', 'my_remove_editor_from_post_type');
-// function my_remove_editor_from_post_type() {
-// remove_post_type_support( 'porch', 'editor' );
-
-// 	}
-
