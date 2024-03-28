@@ -41,97 +41,37 @@ while(have_posts()){
 		<div class="blurred-lineup-background" style="background-image: url('<?=get_the_post_thumbnail_url(5)?>');"></div>
 		<div class="band-card-container">
 			<?php
-			if(get_field('performer_1')){
-				for($i=1; $i < 13; $i++){
-					$band = get_field("performer_{$i}");
-					if(!$band['performer'])break;
-					// $genre = get_field('genre', $band['performer']->ID);
-					$genres = get_field('genre', $band['performer']);
-					// $band['performer']
-					// You need to get the band here first because now it's a post id instead of field contents :P
-					// $bandPost = get_post($band['performer'])
-					?>
-						<div class="band-card">
-							<div class="TagContent">
-								<a href="#" class="singleButton"><?=$band['start_time']?> - <?=$band['end_time']?></a>
-								<h2 class="tagHeading"><?=get_the_title($band['performer']);?></h2>
-								<p class="tag">
-									<?php
-										if(is_array($genres)){
-											$genreCount = count($genres);
-											for($g=0; $g < $genreCount; $g++){ 
-												if($g == $genreCount - 1){
-													echo $genres[$g];
-												}else{
-													echo $genres[$g] . ', ';
+				if(get_field('performer_1')){
+					for($i=1; $i < 13; $i++){
+						$band = get_field("performer_{$i}");
+						if(!$band['performer'])break;
+						$genres = get_field('genre', $band['performer']);
+						?>
+							<div class="band-card">
+								<div class="TagContent">
+									<a href="#" class="singleButton"><?=$band['start_time']?> - <?=$band['end_time']?></a>
+									<h2 class="tagHeading"><?=get_the_title($band['performer']);?></h2>
+									<p class="tag">
+										<?php
+											if(is_array($genres)){
+												$genreCount = count($genres);
+												for($g=0; $g < $genreCount; $g++){ 
+													if($g == $genreCount - 1){
+														echo $genres[$g];
+													}else{
+														echo $genres[$g] . ', ';
+													}
 												}
 											}
-										}
-									?>
-								</p>
+										?>
+									</p>
+								</div>
+								<p class="porchDescription"><?=get_the_content(null, false, $band['performer']);?></p>
 							</div>
-							<p class="porchDescription"><?=get_the_content(null, false, $band['performer']);?></p>
-						</div>
-					<?php
+						<?php
+					}
 				}
-			}
 			?>
-			<?php
-				$tagOne = get_field('tag_one');
-				if($tagOne){
-					?>
-						<div class="SingleCatCard">
-							<div class="TagImg">
-								<img class="porchimage" src="<?php the_field('tag_image'); ?>" alt="" />
-								<div class="tag">
-									<p><?=$tagOne?></p>
-								</div>
-							</div>
-							<div class="TagContent">
-								<a href="#" class="singleButton"><?php the_field('tag_time'); ?></a>
-								<h2 class="tagHeading" > <?php the_field('tag_heading');?> </h2>
-								<p class="porchDescription"> <?php the_field('tag_description'); ?> </p>
-							</div>
-						</div>
-					<?php
-				}
-				$tagTwo = get_field('tag_two');
-				if($tagTwo){
-					?>
-						<div class="SingleCatCard">
-						<div class="TagImg">
-								<img class="porchimage" src="<?php the_field('tag_two_image');?>" alt="" />
-								<div class="tag">
-									<p><?=$tagTwo?></p>
-								</div>
-							</div>
-							<div class="TagContent">
-								<a href="#" class="singleButton"><?php the_field('tag_two_time');?></a>
-								<h2 class="tagHeading"><?php the_field('tag_two_heading');?></h2>
-								<p class="porchDescription"> <?php the_field('tag_two_description');?></p>
-							</div>
-						</div>
-					<?php
-				}
-				$tagThree = get_field('tag_three');
-				if($tagThree){
-					?>
-						<div class="SingleCatCard">
-						<div class="TagImg">
-								<img class="porchimage" src="<?php the_field('tag_three_image'); ?>" alt="" />
-								<div class="tag">
-									<p><?=$tagThree?></p>
-								</div>
-							</div>
-							<div class="TagContent">
-								<a href="#" class="singleButton"><?php the_field('tag_three_time'); ?></a>
-								<h2 class="tagHeading" ><?php the_field('tag_three_heading'); ?></h2>
-								<p class="porchDescription"><?php the_field('tag_three_description');?></p>
-							</div>
-						</div>
-					<?php
-				}
-				?>
 		</div>
 	</div>		
 	<?php
