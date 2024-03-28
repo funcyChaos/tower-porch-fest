@@ -16,15 +16,20 @@ async function buildPorches(){
 	const porches = await getPorches()
 	let data = []
 	for(const porch of porches){
-		// let pfmrs = []
-		// for(let i = 1; i < 13; i++){
-		// 	// Technically a debug line:
-		// 	if(!porch.acff[`performer_${i}`])break
-		// 	if(!porch.acff[`performer_${i}`].performer)break
-		// 	await getPerformer(porch.acff[`performer_${i}`].performer.ID)
-		// 	.then(pfmr=>pfmrs.push(pfmr))
-		// }
-		// porch.performers = pfmrs
+		let pfmrs = []
+		for(let i = 1; i < 13; i++){
+			if(typeof porch.acff[`performer_${i}`] == "undefined")break
+			if(porch.acff[`performer_${i}`].performer != false){
+				if(typeof porch.acff[`performer_${i}`].performer === 'object'){
+					await getPerformer(porch.acff[`performer_${i}`].performer.ID)
+					.then(pfmr=>pfmrs.push(pfmr))
+				}else{
+					await getPerformer(porch.acff[`performer_${i}`].performer)
+					.then(pfmr=>pfmrs.push(pfmr))
+				}
+			}else break
+		}
+		porch.performers = pfmrs
 		data.push(porch)
 	}
 	return data
@@ -310,7 +315,7 @@ function initMap(){
 			}
 			contentDiv.innerHTML = contentString
 			let tdString = ``
-			if(porch.performers){
+			if(porch.performers.length != 0){
 				for(let i = 0; i < porch.performers.length; i++){
 				  tdString +=
 				    `<tr>` +
