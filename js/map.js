@@ -1,40 +1,3 @@
-async function getPorches(){
-	const res 	= fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?_embed&per_page=100`)
-	const data	= (await res).json()
-	const obj		= await data
-	return obj
-}
-
-async function getPerformer(pfmr){
-	const res 	= fetch(`${wpVars.homeURL}/wp-json/wp/v2/performers/${pfmr}`)
-	const data 	= (await res).json()
-	const obj		= await data
-	return obj
-}
-
-async function buildPorches(){
-	const porches = await getPorches()
-	let data = []
-	for(const porch of porches){
-		let pfmrs = []
-		for(let i = 1; i < 13; i++){
-			if(typeof porch.acff[`performer_${i}`] == "undefined")break
-			if(porch.acff[`performer_${i}`].performer != false){
-				if(typeof porch.acff[`performer_${i}`].performer === 'object'){
-					await getPerformer(porch.acff[`performer_${i}`].performer.ID)
-					.then(pfmr=>pfmrs.push(pfmr))
-				}else{
-					await getPerformer(porch.acff[`performer_${i}`].performer)
-					.then(pfmr=>pfmrs.push(pfmr))
-				}
-			}else break
-		}
-		porch.performers = pfmrs
-		data.push(porch)
-	}
-	return data
-}
-
 function filterForm(params){
 	const filterForm = document.createElement('form')
 	filterForm.id = 'map-filter'
@@ -198,7 +161,8 @@ function initMap(){
   let markers = [];
   let openInfoWindow;
 
-	buildPorches()
+	fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?_embed&per_page=100`)
+	.then(res=>res.json())
 	.then(porches=>{
 		const currentDate = new Date()
 		// Will be users input
@@ -320,7 +284,7 @@ function initMap(){
 				  tdString +=
 				    `<tr>` +
 						`<td>${porch.acff[`performer_${i+1}`].start_time}</td>` +
-				    `<td>${porch.performers[i].title.rendered}</td>` +
+				    `<td>${porch.performers[i].post_title}</td>` +
 				    `</tr>`;
 				}
 			}

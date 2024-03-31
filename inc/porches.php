@@ -32,6 +32,22 @@ add_action('init', function(){
 });
 
 add_action('rest_api_init', function(){
+	register_rest_field('porch', 'performers', [
+		'get_callback' => function($object){
+			$performers = [];
+			for($i = 1; $i < 13; $i++){
+				$field = get_field("performer_{$i}", $object['id']);
+				if(!is_null($field)){
+					if($field['performer']){
+						$performers[] = get_post($field['performer']);
+					}
+				}else break;
+			}
+			return $performers;
+		},
+		'update_callback' => null,
+		'schema' => null,
+	]);
 	register_rest_field('porch', 'acff', [
 		'get_callback' => function($object){
 			return get_fields($object['id']);
