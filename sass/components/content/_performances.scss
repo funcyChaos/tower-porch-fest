@@ -19,8 +19,13 @@
 		button{color: white;}
 	}
 
-	table{
+	.table-wrapper{
 		grid-area: table;
+		overflow-x: scroll;
+	}
+	
+	table{
+		width: 1200px;
 		td,th{
 			border:2px solid black;
 			text-align: center;
