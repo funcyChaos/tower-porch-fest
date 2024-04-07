@@ -20,7 +20,7 @@ while($posts->have_posts()){
 					'epoch'	=> $epoch,
 					'after'	=> $after,
 					'pfmr'	=> $performer['performer']->ID,
-					'porch'	=> html_entity_decode(get_the_title()),
+					'porch'	=> get_the_ID(),
 					'slot'	=> "{$start}-{$end}",
 				];
 			}else{
@@ -28,7 +28,7 @@ while($posts->have_posts()){
 					'epoch'	=> $epoch,
 					'after'	=> $after,
 					'pfmr'	=> $performer['performer'],
-					'porch'	=> html_entity_decode(get_the_title()),
+					'porch'	=> get_the_ID(),
 					'slot'	=> "{$start}-{$end}",
 				];
 			}
@@ -82,7 +82,7 @@ if($loggedIn){
 								if($key == 'epoch')continue;
 								if($key == 'porch'){
 									?>
-										<td><a href="<?=get_permalink($pfmr['porch']);?>"><?=$detail?></a></td>
+										<td><a href="<?=get_permalink($detail);?>"><?=get_the_title($detail)?></a></td>
 									<?php
 								}else if($key == 'pfmr'){
 									?>
