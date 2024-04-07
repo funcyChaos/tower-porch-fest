@@ -53,6 +53,14 @@ if($loggedIn){
 	</div>
 
 	<div class="table-wrapper">
+		<div class="times">
+			<?php
+				foreach($performances as $start => $pfmrs){
+					$time  = date('ga', $pfmrs[0]['epoch']);
+					?><a href="#<?=$time?>"><?=$time?></a><?php
+				}
+			?>
+		</div>
 		<table id="performances_table">
 			<thead>
 				<tr>
@@ -72,7 +80,7 @@ if($loggedIn){
 						$th		 = true;
 						foreach($pfmrs as $pfmr){
 							if($th){
-								?><tr><th rowspan="<?=$count?>" scope="rowgroup"><?=$time?></th><?php
+								?><tr><th id="<?=$time?>" rowspan="<?=$count?>" scope="rowgroup"><?=$time?></th><?php
 								$th = false;
 							}else{
 								?><tr><?php
