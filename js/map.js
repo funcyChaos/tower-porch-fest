@@ -174,6 +174,8 @@ function initMap(){
 		)
 		document.getElementById('map').appendChild(filterForm(params))
 		porches.map(porch=>{
+			// ********************************************
+			// Filters Begin
 			let showPorch = false
 			const testTime = ()=>{
 				let bool = false
@@ -181,28 +183,32 @@ function initMap(){
 					let now = new Date()
 					for(let i = 1; i < porch.performers.length + 1; i++){
 						let time = porch.acff[`performer_${i}`].start_time
-						time = time.split(':') 
-						const porchTime = new Date(
-							now.getFullYear(),
-							now.getMonth(),
-							now.getDate(),
-							...time
-						)
-						if(porchTime >= timeSelect){
-							bool = true
-							break
+						if(time){
+							time = time.split(':')
+							const porchTime = new Date(
+								now.getFullYear(),
+								now.getMonth(),
+								now.getDate(),
+								...time
+							)
+							if(porchTime >= timeSelect){
+								bool = true
+								break
+							}
 						}
 					}
 				}
 				return bool
 			}
 			const testGenre	= ()=>{
-				if(porch.performers[0]){
-					for(const pfmr of porch.performers){
-						if(pfmr.acff.genre == params.get('genre')){
-							return true
-							break
-						}else return false
+				if(porch.performers.length != 0){
+					for(let i = 0; i < porch.performers.length; i++){
+						if(porch.performers[i][1] != null && porch.performers[i][1].length != 0){
+							if(porch.performers[i][1] == params.get('genre')){
+								return true
+								break
+							}else return false
+						}
 					}
 				}else return false
 			}
@@ -215,20 +221,25 @@ function initMap(){
 			if(params.has('genre') && params.get('genre') != 'All')tests.push(testGenre)
 			if(tests.length){
 				for(const test of tests){
-					if('testPortaPotty' == test.name){
-						if(test()){
-							showPorch = true
-							break
-						}
-					}else{
-						if(!test()){
-							showPorch = false
-							break
-						}else showPorch = true
-					}
+					if(test()){
+						showPorch = true
+					}else break
+					// if('testPortaPotty' == test.name){
+					// 	if(test()){
+					// 		showPorch = true
+					// 		break
+					// 	}
+					// }else{
+					// 	if(!test()){
+					// 		showPorch = false
+					// 		break
+					// 	}else showPorch = true
+					// }
 				}
 			}else showPorch = true
 			if(!showPorch)return
+			// Filters End
+			// ********************************************
 
 			// If porch has a featured image it will use that, if not it will default to the porch fest logo
 			let porchImage
@@ -284,7 +295,7 @@ function initMap(){
 				  tdString +=
 				    `<tr>` +
 						`<td>${porch.acff[`performer_${i+1}`].start_time}</td>` +
-				    `<td>${porch.performers[i].post_title}</td>` +
+				    `<td>${porch.performers[i][0].post_title}</td>` +
 				    `</tr>`;
 				}
 			}

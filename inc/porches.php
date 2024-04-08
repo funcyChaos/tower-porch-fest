@@ -39,7 +39,9 @@ add_action('rest_api_init', function(){
 				$field = get_field("performer_{$i}", $object['id']);
 				if(!is_null($field)){
 					if($field['performer']){
-						$performers[] = get_post($field['performer']);
+						$post = get_post($field['performer']);
+						$genre = get_field("genre", $field['performer']);
+						$performers[] = [$post, $genre];
 					}
 				}else break;
 			}
