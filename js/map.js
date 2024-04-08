@@ -292,9 +292,25 @@ function initMap(){
 			let tdString = ``
 			if(porch.performers.length != 0){
 				for(let i = 0; i < porch.performers.length; i++){
+					let start_time
+					if(porch.acff[`performer_${i+1}`].start_time){
+						const milTime = porch.acff[`performer_${i+1}`].start_time.split(':')
+						const hours = Number(milTime[0])
+						const minutes = Number(milTime[1])
+						if(hours > 0 && hours <= 12){
+							start_time = "" + hours
+						}else if(hours > 12){
+							start_time = "" + (hours - 12)
+						}else if(hours == 0){
+							start_time = "12"
+						}
+						start_time += minutes < 10 ? ":0" + minutes : ":" + minutes
+						start_time += hours >= 12 ? "PM" : "AM"
+						console.log(start_time)
+					}
 				  tdString +=
 				    `<tr>` +
-						`<td>${porch.acff[`performer_${i+1}`].start_time}</td>` +
+						`<td>${start_time}</td>` +
 				    `<td>${porch.performers[i][0].post_title}</td>` +
 				    `</tr>`;
 				}

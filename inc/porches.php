@@ -152,14 +152,15 @@ add_action('save_post', function($post_id, $obj, $updating){
 	}
 }, 10, 3);
 
-add_action('login_enqueue_scripts', function(){
-	wp_dequeue_script('user-profile');
-	wp_dequeue_script('password-strength-meter');
-	wp_deregister_script('user-profile');
 
-	$suffix = SCRIPT_DEBUG ? '' : '.min';
-	wp_enqueue_script( 'user-profile', "/wp-admin/js/user-profile$suffix.js", array( 'jquery', 'wp-util' ), false, 1 );
-});
+// add_action('login_enqueue_scripts', function(){
+// 	wp_dequeue_script('user-profile');
+// 	wp_dequeue_script('password-strength-meter');
+// 	wp_deregister_script('user-profile');
+
+// 	$suffix = SCRIPT_DEBUG ? '' : '.min';
+// 	wp_enqueue_script( 'user-profile', "/wp-admin/js/user-profile$suffix.js", array( 'jquery', 'wp-util' ), false, 1 );
+// });
 
 add_action('wp_ajax_email-porch-hosts', function(){
 	if(!wp_verify_nonce($_REQUEST['nonce'], 'super_secret_code')){
