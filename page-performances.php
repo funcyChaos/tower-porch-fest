@@ -66,6 +66,7 @@ if($loggedIn){
 				<tr>
 					<th>After</th>
 					<th style="width:300px">Performer</th>
+					<th style="width:200px">Genre</th>
 					<th># of Performers</th>
 					<th style="width:200px;">Porch</th>
 					<th>Time Slot</th>
@@ -99,6 +100,7 @@ if($loggedIn){
 											 <?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
 											</a>
 										</td>
+										<td><?php the_field('genre', $pfmr['pfmr']);?></td>
 										<td><?php the_field('member_count', $pfmr['pfmr']);?></td>
 									<?php
 								}else{
