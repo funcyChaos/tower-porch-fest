@@ -173,9 +173,11 @@ function initMap(){
 			...[...timeArg, 0]
 		)
 		document.getElementById('map').appendChild(filterForm(params))
+		let porchNumber = 0
 		porches.map(porch=>{
 			// ********************************************
 			// Filters Begin
+			porchNumber++
 			let showPorch = false
 			const testTime = ()=>{
 				let bool = false
@@ -306,7 +308,6 @@ function initMap(){
 						}
 						start_time += minutes < 10 ? ":0" + minutes : ":" + minutes
 						start_time += hours >= 12 ? "PM" : "AM"
-						console.log(start_time)
 					}
 				  tdString +=
 				    `<tr>` +
@@ -356,9 +357,11 @@ function initMap(){
 			
 			// says deprecated lmao use google.maps.marker.AdvancedMarkerElement (but it doesn't work x.x)
 			const marker = new google.maps.Marker({
-				position: { lat, lng },
+				position: {lat, lng},
 				map,
+				title: "1",
 				icon: svgMarker,
+				label: {className: 'marker-label', text: `${porchNumber}`}
 			})
 
 			// Creates a info window for each marker
