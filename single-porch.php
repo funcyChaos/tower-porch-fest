@@ -9,6 +9,24 @@
 
 get_header();
 
+function getPorchNumber($inPost){
+	$count = 0;
+	$posts = new WP_Query([
+		'post_type'				=> 'porch',
+		'post_status'			=> 'publish',
+		'posts_per_page'	=> -1
+	]);
+	while($posts->have_posts()){
+		$posts->the_post();
+		$count++;
+		if(get_the_ID() == $inPost){
+			echo $count;
+			break;
+		}
+	}
+	wp_reset_query();
+}
+
 while(have_posts()){
 	the_post();
 	?>
@@ -29,6 +47,7 @@ while(have_posts()){
 				</div>
 				<!-- <p class="porchDescription"></p> -->
 				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
+				<p>Porch number <?php getPorchNumber(get_the_ID());?></p>
 			</div>
 		</section>
 		<div class="lineup-container" id="band_lineup">
