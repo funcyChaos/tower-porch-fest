@@ -204,14 +204,18 @@ function initMap(){
 			}
 			const testGenre	= ()=>{
 				if(porch.performers.length != 0){
+					let bool = false
 					for(let i = 0; i < porch.performers.length; i++){
 						if(porch.performers[i][1] != null && porch.performers[i][1].length != 0){
-							if(porch.performers[i][1] == params.get('genre')){
-								return true
-								break
-							}else return false
+							for (let index = 0; index < porch.performers[i][1].length; index++) {
+								if(porch.performers[i][1][index] == params.get('genre')){
+									bool = true
+									break
+								}else bool = false
+							}
 						}
 					}
+					return bool
 				}else return false
 			}
 			const testFood				= ()=>porch.acff.has_food
@@ -223,9 +227,13 @@ function initMap(){
 			if(params.has('genre') && params.get('genre') != 'All')tests.push(testGenre)
 			if(tests.length){
 				for(const test of tests){
+					if(test.name == 'testGenre'){
+					}
 					if(test()){
 						showPorch = true
-					}else break
+					}else {
+						showPorch = false
+					}
 					// if('testPortaPotty' == test.name){
 					// 	if(test()){
 					// 		showPorch = true
