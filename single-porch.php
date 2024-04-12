@@ -47,7 +47,7 @@ while(have_posts()){
 				</div>
 				<!-- <p class="porchDescription"></p> -->
 				<a href="#band_lineup" class="singleButton">SEE LINEUP</a>
-				<p>Porch number <?php getPorchNumber(get_the_ID());?></p>
+				<!-- <p>Porch number <?php //getPorchNumber(get_the_ID());?></p> -->
 			</div>
 		</section>
 		<div class="lineup-container" id="band_lineup">
@@ -60,6 +60,29 @@ while(have_posts()){
 		<div class="blurred-lineup-background" style="background-image: url('<?=get_the_post_thumbnail_url(5)?>');"></div>
 		<div class="band-card-container">
 			<?php
+						$food = get_field('has_food');
+						if($food){
+							$foodDetails = get_field('food_vendor');
+							?>
+								<div class="band-card">
+									<div class="TagContent">
+										<a href="#" class="singleButton"><?=$foodDetails['start_time']?> - <?=$foodDetails['end_time']?></a>
+										<h2 class="tagHeading"><?=$foodDetails['food_name']?></h2>
+									</div>
+									<p class="porchDescription"><?=$foodDetails['description']?></p>
+								</div>
+							<?php
+						}
+						$sponsor = get_field('sponsor_name');
+						if($sponsor){
+							?>
+								<div class="band-card">
+									<div class="TagContent">
+										<h2 class="tagHeading">Sponsored by <?=$sponsor?></h2>
+									</div>
+								</div>
+							<?php
+						}
 			if(get_field('performer_1')){
 				for($i=1; $i < 13; $i++){
 					$band = get_field("performer_{$i}");
@@ -94,63 +117,9 @@ while(have_posts()){
 					<?php
 				}
 			}
+
 			?>
-			<?php
-				$tagOne = get_field('tag_one');
-				if($tagOne){
-					?>
-						<div class="SingleCatCard">
-							<div class="TagImg">
-								<img class="porchimage" src="<?php the_field('tag_image'); ?>" alt="" />
-								<div class="tag">
-									<p><?=$tagOne?></p>
-								</div>
-							</div>
-							<div class="TagContent">
-								<a href="#" class="singleButton"><?php the_field('tag_time'); ?></a>
-								<h2 class="tagHeading" > <?php the_field('tag_heading');?> </h2>
-								<p class="porchDescription"> <?php the_field('tag_description'); ?> </p>
-							</div>
-						</div>
-					<?php
-				}
-				$tagTwo = get_field('tag_two');
-				if($tagTwo){
-					?>
-						<div class="SingleCatCard">
-						<div class="TagImg">
-								<img class="porchimage" src="<?php the_field('tag_two_image');?>" alt="" />
-								<div class="tag">
-									<p><?=$tagTwo?></p>
-								</div>
-							</div>
-							<div class="TagContent">
-								<a href="#" class="singleButton"><?php the_field('tag_two_time');?></a>
-								<h2 class="tagHeading"><?php the_field('tag_two_heading');?></h2>
-								<p class="porchDescription"> <?php the_field('tag_two_description');?></p>
-							</div>
-						</div>
-					<?php
-				}
-				$tagThree = get_field('tag_three');
-				if($tagThree){
-					?>
-						<div class="SingleCatCard">
-						<div class="TagImg">
-								<img class="porchimage" src="<?php the_field('tag_three_image'); ?>" alt="" />
-								<div class="tag">
-									<p><?=$tagThree?></p>
-								</div>
-							</div>
-							<div class="TagContent">
-								<a href="#" class="singleButton"><?php the_field('tag_three_time'); ?></a>
-								<h2 class="tagHeading" ><?php the_field('tag_three_heading'); ?></h2>
-								<p class="porchDescription"><?php the_field('tag_three_description');?></p>
-							</div>
-						</div>
-					<?php
-				}
-				?>
+			
 		</div>
 	</div>		
 	<?php
