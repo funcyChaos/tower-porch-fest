@@ -367,9 +367,8 @@ function initMap(){
 			const marker = new google.maps.Marker({
 				position: {lat, lng},
 				map,
-				title: "1",
 				icon: svgMarker,
-				label: {className: 'marker-label', text: `${porchNumber}`}
+				// label: {className: 'marker-label', text: `${porchNumber}`}
 			})
 
 			// Creates a info window for each marker
