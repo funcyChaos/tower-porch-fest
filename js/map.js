@@ -77,6 +77,9 @@ function filterForm(params){
 		option.innerText = genre
 		genreSelect.appendChild(option)
 	}
+	const searchBox = document.createElement('input')
+	searchBox.type = 'text'
+	searchBox.name = 'srch'
 	const topDiv = document.createElement('div')
 	topDiv.style = 'display: flex;justify-content:space-between;'
 	topDiv.appendChild(resetBtn)
@@ -91,7 +94,10 @@ function filterForm(params){
 	const line2 = document.createElement('div')
 	line2.appendChild(hasFoodLabel)
 	line2.appendChild(hasPortaPottyLabel)
+	const line3 = document.createElement('div')
+	line3.appendChild(searchBox)
 	filterForm.appendChild(line2)
+	filterForm.appendChild(line3)
 	filterForm.appendChild(submitBtn)
 	return filterForm
 }
@@ -218,19 +224,32 @@ function initMap(){
 					return bool
 				}else return false
 			}
+			const testSearch			= ()=>{
+				let bool = false
+				for (let i = 0; i < searchResults.length; i++){
+					if(searchResults[i] == porch.id){
+						bool = true
+						break
+					}
+				}
+				return bool
+			}
 			const testFood				= ()=>porch.acff.has_food
 			const testPortaPotty	= ()=>porch.acff.porta_potty
 			let tests = []
+			console.log(params.get('srch'))
 			if(params.has('Porta Potty'))tests.push(testPortaPotty)
 			if(params.has('Food'))tests.push(testFood)
-			if(params.get('time-input'))tests.push(testTime)
 			if(params.has('genre') && params.get('genre') != 'All')tests.push(testGenre)
+			if(params.get('time-input'))tests.push(testTime)
+			if(params.get('srch'))tests.push(testSearch)
 			if(tests.length){
 				for(const test of tests){
-					if(test.name == 'testGenre'){
-					}
+					// if(test.name == 'testGenre'){
+					// }
 					if(test()){
 						showPorch = true
+						break
 					}else {
 						showPorch = false
 					}
@@ -273,10 +292,14 @@ function initMap(){
 				`${porch.content.rendered}` +
 				'</div>'
 			let markerPath = 'M 0 0 q 2.906 0 4.945 2.039 t 2.039 4.945 q 0 1.453 -0.727 3.328 t -1.758 3.516 t -2.039 3.07 t -1.711 2.273 l -0.75 0.797 q -0.281 -0.328 -0.75 -0.867 t -1.688 -2.156 t -2.133 -3.141 t -1.664 -3.445 t -0.75 -3.375 q 0 -2.906 2.039 -4.945 t 4.945 -2.039 z'
+			
 			let markerColor = '#462d62'
+
 			if(porch.acff.info_booth){
 				markerColor = '#F45050'
 				markerPath = 'M 11.25 22.5 c -0.3538 0 -0.6813 -0.187 -0.861 -0.4915 l -1.0962 -1.8542 C 7.0418 16.349 4.916 12.755 4.1898 11.2973 c -0.528 -1.0828 -0.7937 -2.2388 -0.7937 -3.4432 C 3.396 3.5232 6.9192 0 11.25 0 c 4.3308 0 7.854 3.5232 7.854 7.854 c 0 1.2038 -0.2657 2.3595 -0.7893 3.4352 c -0.0063 0.013 -0.0132 0.026 -0.02 0.0387 c -0.7402 1.4772 -2.8525 5.0483 -5.0883 8.8272 l -1.0955 1.8533 C 11.9313 22.313 11.6037 22.5 11.25 22.5 z M 11.25 2.175 c -2.979 0 -5.4028 2.4235 -5.4028 5.4025 c 0 2.979 2.4238 5.4025 5.4028 5.4025 c 2.9787 0 5.4025 -2.4235 5.4025 -5.4025 C 16.6525 4.5985 14.2287 2.175 11.25 2.175 z M 11.25 11.717 c -0.4143 0 -0.75 -0.3357 -0.75 -0.75 V 7.3275 c 0 -0.4143 0.3357 -0.75 0.75 -0.75 c 0.4143 0 0.75 0.3357 0.75 0.75 v 3.6395 C 12 11.3812 11.6642 11.717 11.25 11.717 z M 11.25 5.522 c -0.4143 0 -0.75 -0.3357 -0.75 -0.75 v -0.555 c 0 -0.4143 0.3357 -0.75 0.75 -0.75 c 0.4143 0 0.75 0.3357 0.75 0.75 v 0.555 C 12 5.1863 11.6642 5.522 11.25 5.522 z'
+			}else if(porch.acff.has_food){
+				markerPath = 'M 0 0, q 2.906 0 4.945 2.039, t 2.039 4.945, q 0 1.453 -0.727 3.328, t -1.758 3.516, t -2.039 3.07, t -1.711 2.273, l -0.75 0.797, q -0.281 -0.328 -0.75 -0.867, t -1.688 -2.156, t -2.133 -3.141, t -1.664 -3.445, t -0.75 -3.375, q 0 -2.906 2.039 -4.945, t 4.945 -2.039, z, M 2.5816 3.9656, C 2.3328 3.9656 .591 4.4633 .591 6.7028, V 8.4446, c 0 .549 .4463 .9953 .9953 .9953, h .4977, V 11.4306, c 0 .2753 .2224 .4977 .4977 .4977, s .4977 -.2224 .4977 -.4977, V 9.4399, 7.6981, 4.4633, c 0 -.2753 -.2224 -.4977 -.4977 -.4977, Z, M -2.8927 4.2144, C -2.8927 4.0869 -2.9875 3.9812 -3.1151 3.9672, S -3.3561 4.0371 -3.3841 4.16, L -3.8553 6.2797, C -3.8771 6.3777 -3.888 6.4772 -3.888 6.5768, c 0 .7138 .5459 1.3001 1.2442 1.3639, V 11.4306, c 0 .2753 .2224 .4977 .4977 .4977, s .4977 -.2224 .4977 -.4977, V 7.9407, c .6983 -.0638 1.2442 -.6501 1.2442 -1.3639, c 0 -.0995 -.0109 -.1991 -.0327 -.297, L -.9082 4.16, c -.028 -.1244 -.1446 -.2068 -.2706 -.1928, S -1.3997 4.0869 -1.3997 4.2144, V 6.3015, c 0 .084 -.0684 .1524 -.1524 .1524, c -.0793 0 -.1446 -.0607 -.1524 -.14, L -1.8989 4.1927, C -1.9098 4.0636 -2.0171 3.9656 -2.1462 3.9656, s -.2364 .098 -.2473 .2271, L -2.5863 6.314, c -.0078 .0793 -.0731 .14 -.1524 .14, c -.084 0 -.1524 -.0684 -.1524 -.1524, V 4.2144, z, m .7512 2.3639, -.0047 0, -.0047 0, .0047 -.0109, .0047 .0109, z'
 			}else if(porch.acff.sponsored){
 				markerColor = '#208f95'
 			}else if(porch.acff.porta_potty){
@@ -321,7 +344,14 @@ function initMap(){
 				    `<tr>` +
 						`<td>${start_time}</td>` +
 				    `<td>${porch.performers[i][0].post_title}</td>` +
-				    `</tr>`;
+				    `</tr>`
+				}
+				if(porch.acff.has_food){
+					tdString +=
+					`<tr>` +
+					`<td>Food!</td>` +
+					`<td>${porch.acff.food_vendor.food_name}</td>` +
+					`</tr>`
 				}
 			}
 			const contentContainer = document.createElement('div')
