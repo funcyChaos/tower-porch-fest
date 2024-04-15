@@ -231,13 +231,18 @@ function initMap(){
 						bool = true
 						break
 					}
+					for(let p = 0; p < porch.performers.length; p++){
+						if(searchResults[i] == porch.performers[p][0].ID){
+							bool = true
+							break
+						}
+					}
 				}
 				return bool
 			}
 			const testFood				= ()=>porch.acff.has_food
 			const testPortaPotty	= ()=>porch.acff.porta_potty
 			let tests = []
-			console.log(params.get('srch'))
 			if(params.has('Porta Potty'))tests.push(testPortaPotty)
 			if(params.has('Food'))tests.push(testFood)
 			if(params.has('genre') && params.get('genre') != 'All')tests.push(testGenre)
@@ -324,6 +329,7 @@ function initMap(){
 			contentDiv.innerHTML = contentString
 			let tdString = ``
 			if(porch.performers.length != 0){
+				// Bug: This should only be running twice...
 				for(let i = 0; i < porch.performers.length; i++){
 					let start_time
 					if(porch.acff[`performer_${i+1}`].start_time){
