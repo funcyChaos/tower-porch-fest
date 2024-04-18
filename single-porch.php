@@ -60,66 +60,67 @@ while(have_posts()){
 		<div class="blurred-lineup-background" style="background-image: url('<?=get_the_post_thumbnail_url(5)?>');"></div>
 		<div class="band-card-container">
 			<?php
-						$food = get_field('has_food');
-						if($food){
-							$foodDetails = get_field('food_vendor');
-							?>
-								<div class="band-card">
-									<div class="TagContent">
-										<a href="#" class="singleButton"><?=$foodDetails['start_time']?> - <?=$foodDetails['end_time']?></a>
-										<h2 class="tagHeading"><?=$foodDetails['food_name']?></h2>
-									</div>
-									<p class="porchDescription"><?=$foodDetails['description']?></p>
-								</div>
-							<?php
-						}
-						$sponsor = get_field('sponsor_name');
-						if($sponsor){
-							?>
-								<div class="band-card">
-									<div class="TagContent">
-										<h2 class="tagHeading">Sponsored by <?=$sponsor?></h2>
-									</div>
-								</div>
-							<?php
-						}
+				$food = get_field('has_food');
+				if($food){
+					$foodDetails = get_field('food_vendor');
+					?>
+						<div class="band-card">
+							<div class="TagContent">
+								<a href="#" class="singleButton"><?=$foodDetails['start_time']?> - <?=$foodDetails['end_time']?></a>
+								<h2 class="tagHeading"><?=$foodDetails['food_name']?></h2>
+							</div>
+							<p class="porchDescription"><?=$foodDetails['description']?></p>
+						</div>
+					<?php
+				}
+				$sponsor = get_field('sponsor_name');
+				if($sponsor){
+					?>
+						<div class="band-card">
+							<div class="TagContent">
+								<h2 class="tagHeading">Sponsored by <?=$sponsor?></h2>
+							</div>
+						</div>
+					<?php
+				}
+
 			if(get_field('performer_1')){
 				for($i=1; $i < 13; $i++){
 					$band = get_field("performer_{$i}");
 					if(!$band['performer'])break;
-					// $genre = get_field('genre', $band['performer']->ID);
 					$genres = get_field('genre', $band['performer']);
-					// $band['performer']
-					// You need to get the band here first because now it's a post id instead of field contents :P
-					// $bandPost = get_post($band['performer'])
 					?>
 						<div class="band-card">
 							<div class="TagContent">
-								<a href="#" class="singleButton"><?=$band['start_time']?> - <?=$band['end_time']?></a>
+								<?php
+									?><script>console.log('<?=$band['start_time']?>')</script><?php
+									$th_starts[] = date("h:i A", strtotime($band['start_time']));
+									$th_ends[] = date("h:i A", strtotime($band['end_time']));
+									?><script>console.log('twelve hour: ', '<?=date("h:i A", strtotime($band['end_time']))?>')</script><?php
+								?>
+								<a href="#" class="singleButton"><?=$th_starts[$i - 1]?> - <?=$th_ends[$i - 1]?></a>
 								<h2 class="tagHeading"><?=get_the_title($band['performer']);?></h2>
-								<p class="tag">
-									<?php
-										if(is_array($genres)){
-											$genreCount = count($genres);
-											for($g=0; $g < $genreCount; $g++){ 
-												if($g == $genreCount - 1){
-													echo $genres[$g];
-												}else{
-													echo $genres[$g] . ', ';
+									<p class="tag">
+										<?php
+											if(is_array($genres)){
+												$genreCount = count($genres);
+												for($g=0; $g < $genreCount; $g++){ 
+													if($g == $genreCount - 1){
+														echo $genres[$g];
+													}else{
+														echo $genres[$g] . ', ';
+													}
 												}
 											}
-										}
-									?>
-								</p>
-							</div>
+										?>
+									</p>
+								</div>
 							<p class="porchDescription"><?=get_the_content(null, false, $band['performer']);?></p>
 						</div>
 					<?php
 				}
 			}
-
 			?>
-			
 		</div>
 	</div>		
 	<?php
