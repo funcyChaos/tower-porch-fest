@@ -67,7 +67,6 @@ if($loggedIn){
 					<th>After</th>
 					<th style="width:300px">Performer</th>
 					<th style="width:200px">Genre</th>
-					<th># of Performers</th>
 					<th style="width:200px;">Porch</th>
 					<th>Time Slot</th>
 					<th><?=$loggedIn ? 'Itinerary' : 'Log In for Itinerary'?></th>
@@ -79,7 +78,10 @@ if($loggedIn){
 						$time  = date('ga', $pfmrs[0]['epoch']);
 						$count = count($pfmrs);
 						$th		 = true;
+						$performanceID = 0;
 						foreach($pfmrs as $pfmr){
+							$prchTitle = '';
+							$prchPermalink = '';
 							if($th){
 								?><tr><th id="<?=$time?>" rowspan="<?=$count?>" scope="rowgroup"><?=$time?></th><?php
 								$th = false;
@@ -90,8 +92,11 @@ if($loggedIn){
 								if($key == 'after')continue;
 								if($key == 'epoch')continue;
 								if($key == 'porch'){
+									$prchTitle = get_the_title($detail);
+									$prchPermalink = get_permalink($detail);
+									$prchID = $detail;
 									?>
-										<td><a href="<?=get_permalink($detail);?>"><?=get_the_title($detail)?></a></td>
+										<td><a href="<?=$prchTitle;?>"><?=$prchPermalink?></a></td>
 									<?php
 								}else if($key == 'pfmr'){
 									?>
@@ -101,7 +106,6 @@ if($loggedIn){
 											</a>
 										</td>
 										<td><?php the_field('genre', $pfmr['pfmr']);?></td>
-										<td><?php the_field('member_count', $pfmr['pfmr']);?></td>
 									<?php
 								}else{
 									?><td><?=$detail?></td><?php
@@ -128,13 +132,23 @@ if($loggedIn){
 									<td>
 										<?php
 										if($loggedIn){
+											$obj = [
+												'after'=>$time,
+												'performer'=> get_the_title($pfmr['pfmr']),
+												'performerLink' => get_permalink($pfmr['pfmr']),
+												'genre'=>get_field('genre', $pfmr['pfmr']),
+												'porchTitle'=>$prchTitle,
+												'porchLink'=>$prchPermalink,
+												'performanceID'=>$performanceID++,
+												'time'=>$detail,
+											];
 											if($added){
 												?>
-													<button data-tgl="rmv" onclick='tglItn(<?=json_encode($toCheck)?>, this)'>Remove</button>
+													<button data-tgl="rmv" onclick='tglItn(<?=json_encode($obj)?>, this)'>Remove</button>
 												<?php
 											}else{
 												?>
-													<button data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
+													<button data-tgl="add" onclick='tglItn(<?=json_encode($obj)?>, this)'>Add</button>
 												<?php
 											}
 										}else{
@@ -215,9 +229,37 @@ if($loggedIn){
 	</div>
 </div>
 <script>
-	console.log("User ID: ", <?=get_current_user_id()?>)
-	console.log("User Meta: ", <?=json_encode(get_user_meta(get_current_user_id(), 'itinerary', true))?>)
+	
+	// console.log(JSON.parse(localStorage.getItem('itinerary')))
+</script>
+<script>
+	if(localStorage.getItem('itinerary') == null){
+		localStorage.setItem('itinerary', JSON.stringify({bands: []}))
+	}
+	let itinerary = JSON.parse(localStorage.getItem('itinerary'))
+	console.log(itinerary)
 	function tglItn(performance, btn){
+		const tgl = btn.dataset.tgl
+		if(tgl == 'add'){
+			itinerary.bands.push(performance)
+			console.log(performance)
+			localStorage.setItem('itinerary', JSON.stringify(itinerary))
+			btn.innerText = 'remove'
+			btn.dataset.tgl = 'rmv'
+			console.log(itinerary)
+		}else{
+			// Use the filter method to create a new array without the matching object
+			itinerary.bands = itinerary.bands.filter(obj=>{
+				return obj.performanceID !== performance.performanceID;
+			});
+			localStorage.setItem('itinerary', JSON.stringify(itinerary))
+			btn.innerText = 'add'
+			btn.dataset.tgl = 'add'
+			console.log(itinerary)
+		}
+	}
+
+	function tglItnOld(performance, btn){
 		const tgl = btn.dataset.tgl
 		if(tgl == 'add'){
 			fetch('<?=home_url()?>/wp-json/itinerary/v1/add-to-itinerary',{
@@ -230,7 +272,7 @@ if($loggedIn){
 			})
 			.then(res=>res.json())
 			.then(obj=>{
-				console.log(obj)
+				// console.log(obj)
 				if(obj.res == 'success'){
 					// btn.dataset.tgl = 'rmv'
 					// btn.innerText		= 'Remove'
@@ -248,7 +290,7 @@ if($loggedIn){
 			})
 			.then(res=>res.json())
 			.then(obj=>{
-				console.log(obj)
+				// console.log(obj)
 				if(obj.res == 'success'){
 					// btn.dataset.tgl	= 'add'
 					// btn.innerText		= 'Add'
