@@ -7,10 +7,10 @@ header, footer {
 
 $black: #000;
 $white: #fff;
-$violet: #a33c97;
-$violetdark: #7a0f6e ;
-$teal: #4fc3c9;
-$plum: #462d62;
+// $violet: #a33c97;
+// $violetdark: #7a0f6e ;
+// $teal: #4fc3c9;
+// $plum: #1A2E47;
 $transition: cubic-bezier(.17,.67,.42,1.36);
 
 .site-header{
@@ -85,9 +85,9 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 	a {
 		margin: 0 0.6rem;
     text-decoration: none;
-    color: #fff;
+    color: #000;
     font-weight: 100;
-    background-color: #a33c97;
+    background-color: #F2B814;
     padding: 0.5rem;
     display: inline-flex;
     justify-content: center;

@@ -7,6 +7,7 @@
 
 	padding: 1rem;
   background-color: #462d62;
+	background-color: #1A2E47;
 
 	.porchheading {
 		font-family: 'Antonio';
@@ -79,9 +80,9 @@
       text-align: left;
     }
     .singleButton {
-      background-color: #14a4ab;
+      background-color: #F2B814;
       border: none;
-      color: white;
+      color: black;
       padding: 8px 32px;
       text-align: center;
       text-decoration: none;
@@ -159,7 +160,7 @@
         text-align: center;
 
         .tag {
-          background-color: #a33c97;
+          background-color: #F2B814;
           padding: 5px 10px;
           font-family: 'Antonio';
           font-style: normal;
@@ -176,7 +177,7 @@
 
           /* White */
 
-          color: #ffffff;
+          color: black;
         }
 
         a {
@@ -330,6 +331,7 @@
     display: flex;
     justify-content: center;
     background:  #462D62;
+		background-color: #1A2E47;
     flex-direction: column;
     align-items: center;
     h1{
@@ -364,6 +366,8 @@
 }
  .porchesarchivesContainer{
     background-color: #462D62;
+		background-color: #1A2E47;
+
     display: flex;
     justify-content: center;
     align-items: center;

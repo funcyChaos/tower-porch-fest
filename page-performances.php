@@ -13,8 +13,9 @@ while($posts->have_posts()){
 		if(!empty($performer['performer'])){
 			$after = intval(date('H', strtotime($performer['start_time'])));
 			$epoch = strtotime($performer['start_time']);
-			$start = str_replace(' ', '', $performer['start_time']);
-			$end	 = str_replace(' ', '', $performer['end_time']);
+			// date('h:i', strtotime($detail))
+			$start = str_replace(' ', '', date('h:i', strtotime($performer['start_time'])));
+			$end	 = str_replace(' ', '', date('h:i', strtotime($performer['end_time'])));
 			if($performer['performer'] instanceof WP_Post){
 				$performances[$after][] = [
 					'epoch'	=> $epoch,
@@ -67,10 +68,8 @@ if($loggedIn){
 					<th>After</th>
 					<th style="width:300px">Performer</th>
 					<th style="width:200px">Genre</th>
-					<th># of Performers</th>
 					<th style="width:200px;">Porch</th>
 					<th>Time Slot</th>
-					<th><?=$loggedIn ? 'Itinerary' : 'Log In for Itinerary'?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -96,14 +95,13 @@ if($loggedIn){
 								}else if($key == 'pfmr'){
 									?>
 										<td>
-											<a href="<?=get_permalink($pfmr['pfmr'])?>">
-											 <?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
-											</a>
+											<?=html_entity_decode(get_the_title($pfmr['pfmr']))?>
 										</td>
 										<td><?php the_field('genre', $pfmr['pfmr']);?></td>
-										<td><?php the_field('member_count', $pfmr['pfmr']);?></td>
 									<?php
 								}else{
+									// it's right here
+									
 									?><td><?=$detail?></td><?php
 								}
 							}
@@ -124,26 +122,6 @@ if($loggedIn){
 									}
 								}
 							}
-							?>
-									<td>
-										<?php
-										if($loggedIn){
-											if($added){
-												?>
-													<button data-tgl="rmv" onclick='tglItn(<?=json_encode($toCheck)?>, this)'>Remove</button>
-												<?php
-											}else{
-												?>
-													<button data-tgl="add" onclick='tglItn(<?=json_encode($pfmr)?>, this)'>Add</button>
-												<?php
-											}
-										}else{
-											?>Log In to Add<?php
-										}
-										?>
-									</td>
-								</tr>
-							<?php
 						}
 					}
 				?>

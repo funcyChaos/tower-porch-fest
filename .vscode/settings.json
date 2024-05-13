@@ -1,0 +1,9 @@
+{
+  "saveAndRun": {
+    "commands": [{
+      "match": "\\.scss",
+      "cmd": "sass ./sass/style.scss ./style.css",
+      "silent": true
+    }]
+  }
+}

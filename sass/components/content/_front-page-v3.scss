@@ -123,6 +123,8 @@
   .dark-section {
     color:#fff;
     background-color: $plum;
+		background-color: #1A2E47;
+
   }
   .light-section {
     color: #000;
@@ -225,6 +227,8 @@
 /** Icons and Cards **/
 .icons-cards-container {
   background-color: #462d62;
+	background-color: #1A2E47;
+
   // min-height: 100vh;
   padding: 75px 0;
   max-width: 100%;
@@ -338,6 +342,7 @@
   display: flex;
   justify-content: center;
   background:  #462D62;
+	background-color: #1A2E47;
   flex-direction: column;
   align-items: center;
   h1{
@@ -497,6 +502,7 @@
               color: #FFFFFF;
               &:hover{
                   background-color: #462D62;
+
               }
 
           }
