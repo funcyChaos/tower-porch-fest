@@ -1,6 +1,5 @@
 <?php
 /**
- * Template Name: Front Page v3
  *
  * @package towerpf-site
  *
