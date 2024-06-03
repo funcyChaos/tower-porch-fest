@@ -411,10 +411,10 @@ function initMap(){
 			// Places marker on the map for each porch
 			
 			// says deprecated lmao use google.maps.marker.AdvancedMarkerElement (but it doesn't work x.x)
-			const marker = new google.maps.Marker({
-				position: {lat, lng},
+			const marker = new google.maps.marker.AdvancedMarkerElement({
 				map,
-				icon: svgMarker,
+				position: {lat, lng},
+				// icon: svgMarker,
 				// label: {className: 'marker-label', text: `${porchNumber}`}
 			})
 

@@ -144,7 +144,7 @@ function towerpf_site_scripts(){
 	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	
 	if(is_page(54)){
-		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&loading=async&callback=initMap', [], false, true);
+		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&loading=async&callback=initMap&libraries=marker', [], false, true);
 		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
 		wp_localize_script('map-script', 'wpVars', [
 			'homeURL' => home_url(),
