@@ -51,7 +51,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 --------------------------------------------------------------*/
 
 // Import variables and mixins.
-@import 'abstracts/abstracts';
+// @import 'abstracts/abstracts';
 
 /*--------------------------------------------------------------
 # Generic
@@ -59,27 +59,29 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 
 /* Normalize
 --------------------------------------------- */
-@import 'generic/normalize';
+// @import 'generic/normalize';
 
 /* Box sizing
 --------------------------------------------- */
-@import 'generic/box-sizing';
+// @import 'generic/box-sizing';
 
 /*--------------------------------------------------------------
 # Base
 --------------------------------------------------------------*/
-@import 'base/base';
+// @import 'base/base';
 
 /*--------------------------------------------------------------
 # Layouts
 --------------------------------------------------------------*/
+@use './layouts/layouts.scss';
 // @import "layouts/content-sidebar"; // Uncomment this line for a sidebar on right side of your content.
 // @import "layouts/sidebar-content"; // Uncomment this line for a sidebar on left side of your content.
 
 /*--------------------------------------------------------------
 # Components
 --------------------------------------------------------------*/
-@import 'components/components';
+// @import 'components/components';
+@use './components/components';
 
 /*--------------------------------------------------------------
 # Plugins
@@ -87,7 +89,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 
 /* Jetpack infinite scroll
 --------------------------------------------- */
-@import 'plugins/jetpack/infinite-scroll';
+// @import 'plugins/jetpack/infinite-scroll';
 
 /*--------------------------------------------------------------
 # Utilities
@@ -95,8 +97,8 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 
 /* Accessibility
 --------------------------------------------- */
-@import 'utilities/accessibility';
+// @import 'utilities/accessibility';
 
 /* Alignments
 --------------------------------------------- */
-@import 'utilities/alignments';
+// @import 'utilities/alignments';
