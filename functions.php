@@ -146,7 +146,44 @@ function towerpf_site_scripts(){
 	if(is_page(54)){
 		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&loading=async&callback=initMap', [], false, true);
 		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
+		function porches_with_performances(){
+			$porches = get_posts([
+				'post_type'      => 'porch',
+				'posts_per_page' => -1,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			]);
+
+			$porches_with_performers = array_map(function($porch){
+				$performers = [];
+				for($i = 1; $i <= 12; $i++){
+					$field = get_field("performer_{$i}", $porch->ID);
+					if(!is_null($field) && isset($field['performer'])){
+						$performer = get_post($field['performer']);
+						$genre = get_field("genre", $field['performer']);
+
+						if ($performer) {
+							$performers[] = [
+								'performer'		=> $performer,
+								'genre' 			=> $genre,
+							];
+						}
+					}else{
+						break;
+					}
+				}
+
+				return [
+					'porch'       => $porch,
+					'performers'	=> $performers,
+					'acf'					=> get_fields($porch->ID),
+				];
+			}, $porches);
+
+			return $porches_with_performers;
+		}
 		wp_localize_script('map-script', 'wpVars', [
+			'porches'	=> porches_with_performances(),
 			'homeURL' => home_url(),
 			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
 			'genres'	=> get_field_object('field_6491fdd624af4')['choices'],

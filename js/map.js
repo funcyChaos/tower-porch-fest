@@ -1,3 +1,5 @@
+console.log(wpVars)
+
 function filterForm(params){
 	const filterForm = document.createElement('form')
 	filterForm.id = 'map-filter'
