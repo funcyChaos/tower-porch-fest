@@ -153,6 +153,35 @@ function towerpf_site_scripts(){
 		]); 
 		wp_enqueue_script('map-script');
 	}
+	if(is_page("performances")){
+		wp_register_script( 'performances', get_template_directory_uri().'/js/performances.js', [], '1.0', true);
+		wp_localize_script('performances', 'wpVars', [
+			'homeURL' => home_url(),
+			'performances' => get_posts([
+				'post_type' => 'performance',
+				'posts_per_page' => -1,
+				'orderby' => 'date',
+				'order' => 'ASC',
+			]),
+			'genres' => get_field_object('field_6491fdd624af4')['choices'],
+			'porches' => get_posts([
+				'post_type' => 'porch',
+				'posts_per_page' => -1,
+				'orderby' => 'title',
+				'order' => 'ASC',
+			]),
+			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
+			'socials'=> get_posts([
+				'post_type'=>'socials',
+				'post_status'=>'publish',
+				'showposts'=>-1,
+			]),
+			'socialsURL'=>get_post_type_archive_link('socials'),
+			'socialsTitle'=>'Social Media Accounts'
+			
+		]);
+		wp_enqueue_script('performances');
+	}
 	
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
