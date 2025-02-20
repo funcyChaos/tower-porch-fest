@@ -149,6 +149,7 @@ add_action('save_post', function($post_id, $obj, $updating){
 		$longitude = $data['results'][0]['geometry']['location']['lng'];
 		update_field('latitude', $latitude, $post_id);
 		update_field('longitude', $longitude, $post_id);
+		// update_option('test', $data);
 	}
 }, 10, 3);
 

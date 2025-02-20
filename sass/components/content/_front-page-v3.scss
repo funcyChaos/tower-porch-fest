@@ -19,6 +19,7 @@
     width: 100%;
     height: 150px;
     background-color: $violetdark;
+		background-color: #212133;
     font-family: $font__headers;
     display: flex;
     flex-direction: column;
@@ -26,6 +27,7 @@
     justify-content: center;
     h2 {
       color: $violet;
+			color: #91b1a6;
       font-family: $font__text;
       font-size: 24px;
       font-weight: 800;
@@ -59,7 +61,8 @@
     height: 0;
     border-left: 50vw solid transparent;
     border-right: 50vw solid transparent;
-    border-top: 60px solid $violetdark;
+    // border-top: 60px solid $violetdark;
+		border-top: 60px solid #212133;
   }
   .count-down-title {
     color: $violetdark;
@@ -122,9 +125,10 @@
 /** Frontpage Reusables **/
   .dark-section {
     color:#fff;
+		color: #212133;
     background-color: $plum;
 		background-color: #1A2E47;
-
+		background-color: #91b1a6;
   }
   .light-section {
     color: #000;
@@ -171,8 +175,10 @@
     top: 266px;
     border-radius: 0px;
     padding: 10px 20px 10px 20px;
-    background-color: $teal;  
+    background-color: $teal;
+		background-color: #f2b814;
     color:#fff;
+		color: #212133;
     font-family: Antonio;
     font-size: 20px;
     font-weight: 400;
@@ -228,6 +234,7 @@
 .icons-cards-container {
   background-color: #462d62;
 	background-color: #1A2E47;
+	background-color: #91b1a6;
 
   // min-height: 100vh;
   padding: 75px 0;
@@ -596,6 +603,7 @@
       border-top: 75px solid transparent;
       border-bottom: 75px solid transparent;
       border-left: 60px solid $violetdark;
+			border-left: 60px solid #212133;
       border-right: unset;
       align-items: center;
       display: flex;

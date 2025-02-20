@@ -1,0 +1,10 @@
+$background: #1A2E47;
+
+.type-page{
+	min-height: 50vh;
+	background-color: $background;
+	color: white;
+	border-top: 1rem $background solid;
+	border-bottom: 1rem $background solid;
+	padding: 0 1rem;
+}

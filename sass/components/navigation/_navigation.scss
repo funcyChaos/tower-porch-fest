@@ -1,3 +1,5 @@
+@use '../../abstracts/variables/colors';
+
 header, footer {
 	font-family: 'Antonio', sans-serif;
 	text-transform: uppercase;
@@ -5,7 +7,7 @@ header, footer {
 	letter-spacing: 3px !important;
 }
 
-$black: #000;
+$black: #212133;
 $white: #fff;
 // $violet: #a33c97;
 // $violetdark: #7a0f6e ;
@@ -14,7 +16,8 @@ $white: #fff;
 $transition: cubic-bezier(.17,.67,.42,1.36);
 
 .site-header{
-	background-color: #000;
+	background-color: #212133;
+	background-color: #91b1a6;
 	height: 4.4rem;
 	display: flex;
 	flex-direction: row;

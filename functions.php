@@ -275,17 +275,19 @@ add_action('init', function(){
 	));
 
 	// Organize Porches and Performers as first two menu items after Dashboard
+	
+	
 	if(current_user_can( 'edit_posts' )){
 		add_action('admin_head', function(){
-			global $menu;
-			$menu[8] = $menu[4];
-			unset($menu[4]);
-			$menu[9] = $menu[6];
-			unset($menu[6]);
-			ksort($menu);
+		//			global $menu;
+		//	$menu[8] = $menu[4];
+		//	unset($menu[4]);
+		//	$menu[9] = $menu[6];
+		//	unset($menu[6]);
+		//	ksort($menu);
 		});
 	}
-});
+	});
 
 add_filter('excerpt_length', function($l){return 30;});
 

@@ -1,5 +1,6 @@
 <?php
 /**
+ * Template Name: Front Page v3
  *
  * @package towerpf-site
  *
@@ -13,6 +14,7 @@
   <?php
   if ( has_post_thumbnail() ) {
     $image_url = get_the_post_thumbnail_url();
+		?><script>console.log("<?=$image_url?>")</script><?php
     echo '<div class="featured-image" style="background-image: url(' . $image_url . ');">';
     echo '</div>';
   }
