@@ -5,3 +5,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
 		root.render(React.createElement("h1", null, "React Template"));
 	}
 })
+
+console.log(wpVars)

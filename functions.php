@@ -154,31 +154,45 @@ function towerpf_site_scripts(){
 		wp_enqueue_script('map-script');
 	}
 	if(is_page("performances")){
+		function porches_with_performances(){
+			$porches = get_posts([
+					'post_type'      => 'porch',
+					'posts_per_page' => -1,
+					'orderby'        => 'title',
+					'order'          => 'ASC',
+			]);
+
+			$porches_with_performers = array_map(function($porch){
+				$performers = [];
+				for($i = 1; $i <= 12; $i++){
+					$field = get_field("performer_{$i}", $porch->ID);
+					if(!is_null($field) && isset($field['performer'])){
+						$performer = get_post($field['performer']);
+						$genre = get_field("genre", $field['performer']);
+
+						if ($performer) {
+							$performers[] = [
+								'performer'		=> $performer,
+								'genre' 			=> $genre,
+							];
+						}
+					}else{
+						break;
+					}
+				}
+
+				return [
+					'porch'       => $porch,
+					'performers'	=> $performers,
+				];
+			}, $porches);
+
+			return $porches_with_performers;
+		}
+
 		wp_register_script( 'performances', get_template_directory_uri().'/js/performances.js', [], '1.0', true);
 		wp_localize_script('performances', 'wpVars', [
-			'homeURL' => home_url(),
-			'performances' => get_posts([
-				'post_type' => 'performance',
-				'posts_per_page' => -1,
-				'orderby' => 'date',
-				'order' => 'ASC',
-			]),
-			'genres' => get_field_object('field_6491fdd624af4')['choices'],
-			'porches' => get_posts([
-				'post_type' => 'porch',
-				'posts_per_page' => -1,
-				'orderby' => 'title',
-				'order' => 'ASC',
-			]),
-			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
-			'socials'=> get_posts([
-				'post_type'=>'socials',
-				'post_status'=>'publish',
-				'showposts'=>-1,
-			]),
-			'socialsURL'=>get_post_type_archive_link('socials'),
-			'socialsTitle'=>'Social Media Accounts'
-			
+			'porches' => porches_with_performances(),
 		]);
 		wp_enqueue_script('performances');
 	}
