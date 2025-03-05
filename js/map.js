@@ -1,4 +1,5 @@
 async function initMap(){
+	const {ColorScheme} 				= await google.maps.importLibrary("core")
 	const zoom = 14.2
 	const map = new google.maps.Map(document.getElementById("map"), {
     zoom,
@@ -6,11 +7,14 @@ async function initMap(){
     mapId: "4049b264513558e3",
 		minZoom: zoom - 2,
     maxZoom: zoom + 3,
+		colorScheme:							ColorScheme.DARK,
+		mapTypeControl: 					false,
+		fullscreenControl:				false,
   })
 	class Popup extends google.maps.OverlayView {
     position
     containerDiv
-    constructor(position, content) {
+    constructor(position, content){
       super()
       content.classList.add("popup-bubble")
 
@@ -27,11 +31,11 @@ async function initMap(){
       Popup.preventMapHitsAndGesturesFrom(this.containerDiv);
     }
     /** Called when the popup is added to the map. */
-    onAdd() {
+    onAdd(){
       this.getPanes().floatPane.appendChild(this.containerDiv);
     }
     /** Called when the popup is removed from the map. */
-    onRemove() {
+    onRemove(){
       if (this.containerDiv.parentElement) {
         this.containerDiv.parentElement.removeChild(this.containerDiv);
       }
@@ -47,23 +51,23 @@ async function initMap(){
           ? "block"
           : "none";
 
-      if (display === "block") {
+      if(display === "block"){
         this.containerDiv.style.left = divPosition.x + "px";
         this.containerDiv.style.top = divPosition.y + "px";
       }
 
-      if (this.containerDiv.style.display !== display) {
+      if(this.containerDiv.style.display !== display){
         this.containerDiv.style.display = display;
       }
     }
   }
 
-	const contentDiv = document.createElement("div");
-	contentDiv.id = "content";
+	// const contentDiv = document.createElement("div");
+	// contentDiv.id = "content";
 
   popup = new Popup(
     new google.maps.LatLng(-33.866, 151.196),
-		contentDiv,
+		document.getElementById("content"),
   )
 
   // Create an array of alphabetical characters used to label the markers.
@@ -86,8 +90,13 @@ async function initMap(){
     // open info window when marker is clicked
     marker.addListener("click", ()=>{
 			popup.position = new google.maps.LatLng(lat, lng)
-			contentDiv.innerHTML = `${lat} ${lng}`
+			// contentDiv.innerHTML = `${lat} ${lng}`
 			popup.setMap(map)
+			const newCenter = {
+				lat: popup.position.lat() + 100 / Math.pow(2, map.getZoom()),
+				lng: popup.position.lng(),
+			}
+			map.panTo(newCenter)
     })
     return marker
   })

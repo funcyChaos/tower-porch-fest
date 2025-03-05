@@ -1,5 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;200;300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
+.popup-bubble{
+	visibility: hidden;
+	opacity: 0;
+	max-height: 250px;
+	width: 350px;
+	border: 2px black dashed;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	padding: 1rem;
+	overflow-y: scroll;
+	&::-webkit-scrollbar {
+		-webkit-appearance: none;
+		width: 7px;
+	}
+	
+	&::-webkit-scrollbar-thumb {
+		border-radius: 4px;
+		background-color: rgba(0, 0, 0, .5);
+		box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+	}
+
+	img{
+		width: 300px;
+		height: auto;
+	}
+
+	.lineup-table{
+		padding: 0 .5rem;
+		text-align: center;
+		font-weight: bold;
+		td:nth-child(1){
+			background-color:black;
+			color:white;
+		}
+		td:nth-child(1),td:nth-child(2){
+			height: 1rem;
+			border:2px solid black;
+		}
+	}
+}
+
+
+$popup-color: white;
 
 	/* The popup bubble styling. */
 	.popup-bubble {
@@ -9,12 +55,12 @@
 		left: 0;
 		transform: translate(-50%, -100%);
 		/* Style the bubble. */
-		background-color: white;
+		background-color: $popup-color;
 		padding: 5px;
 		border-radius: 5px;
 		font-family: sans-serif;
 		overflow-y: auto;
-		max-height: 60px;
+		max-height: 250px;
 		box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.5);
 	}
 
@@ -29,6 +75,8 @@
 
 	/* This element draws the tip. */
 	.popup-bubble-anchor::after {
+		// background-color: blue;
+		// color: blue;
 		content: "";
 		position: absolute;
 		top: 0;
@@ -41,7 +89,7 @@
 		/* The tip is 8px high, and 12px wide. */
 		border-left: 6px solid transparent;
 		border-right: 6px solid transparent;
-		border-top: 8px solid white;
+		border-top: 8px solid $popup-color;
 	}
 
 	/* JavaScript will position this div at the bottom of the popup tip. */
@@ -51,6 +99,8 @@
 		position: absolute;
 		/* The max width of the info window. */
 		width: 200px;
+
+		// font-size: 2rem;
 	}
 
 
