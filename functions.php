@@ -312,6 +312,11 @@ add_action('init', function(){
 						.btn:hover {
 							background-color: #005f8d;
 						}
+
+						img{
+							width: 100%;
+							height: auto;
+						}
 					</style>
 				</head>
 				<body>
@@ -322,6 +327,14 @@ add_action('init', function(){
 						<p style="text-align: center;">
 							<a class="btn" href="' . esc_url( $reset_link ) . '">Set Your Password</a>
 						</p>
+						<p>Review this short walkthrough</p>
+						<br/>
+						<p>After logging in, you will be presented with this page. Here you can create your porche or performers as you see fit. If you have quite a few performers to make, it might be best to start there.</p>
+						<img src="http://sandbox.local/wp-content/uploads/2025/03/start-page.png" alt="Porch Page">
+						<p>To create a Porch (Or a Performer) start by clicking "Add Porch!" (Or "Add Performer" under performers)</p>
+						<img src="http://sandbox.local/wp-content/uploads/2025/03/porches-page.png" alt="Porches Page">
+						<p>Fill out the form with the necessary information. Add Performers as depicted in the figure below. When you are done just click "Publish" to save your changes.</p>
+						<img src="http://sandbox.local/wp-content/uploads/2025/03/porch-page.png" alt="Porch Page">
 						<p>If you have any questions, feel free to reach out.</p>
 						<p>Best,<br><strong>' . esc_html( $blogname ) . ' Team</strong></p>
 					</div>
