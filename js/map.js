@@ -62,12 +62,13 @@ async function initMap(){
     }
   }
 
-	// const contentDiv = document.createElement("div");
-	// contentDiv.id = "content";
+	const contentDiv = document.createElement("div");
+	contentDiv.id = "content";
 
   popup = new Popup(
     new google.maps.LatLng(-33.866, 151.196),
-		document.getElementById("content"),
+		// document.getElementById("content"),
+		contentDiv,
   )
 
   // Create an array of alphabetical characters used to label the markers.
@@ -85,12 +86,14 @@ async function initMap(){
       position: {lat, lng},
       content: pinGlyph.element,
     })
+		const imgurl = porch.img ? porch.img : "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png"
 
     // markers can only be keyboard focusable when they have click listeners
     // open info window when marker is clicked
-    marker.addListener("click", ()=>{
+    marker.addListener("gmp-click", ()=>{
 			popup.position = new google.maps.LatLng(lat, lng)
 			// contentDiv.innerHTML = `${lat} ${lng}`
+			contentDiv.innerHTML = `<div id="content"><img src="${imgurl}" alt="Default"><div class="header"><h3>${porch.porch.post_title}</h3><p>${porch.acf.porch_address}</p></div><div class="content"><p>${porch.porch.post_content}</p></div><div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr><tr><td>11:00AM</td><td>The Jazz Cru</td></tr><tr><td>4:00PM</td><td>Ryan Gregory Tallman</td></tr></tbody></table></div></div>`
 			popup.setMap(map)
 			const newCenter = {
 				lat: popup.position.lat() + 100 / Math.pow(2, map.getZoom()),
@@ -104,7 +107,9 @@ async function initMap(){
   // Add a marker clusterer to manage the markers.
   // new MarkerClusterer({markers, map})
 	const markerCluster = new markerClusterer.MarkerClusterer({ markers, map })
-	map.addListener("click", ()=>{
+	map.addListener("gmp-click", ()=>{
 		popup.setMap(null)
 	})
 }
+
+console.log(wpVars)

@@ -171,9 +171,11 @@ function towerpf_site_scripts(){
 						break;
 					}
 				}
+				$imgurl = get_the_post_thumbnail_url($porch->ID, 'full');
 
 				return [
 					'porch'       => $porch,
+					'img'					=> $imgurl,
 					'performers'	=> $performers,
 					'acf'					=> get_fields($porch->ID),
 				];
@@ -282,7 +284,6 @@ add_action('admin_menu', function(){
 require get_template_directory() . '/inc/porches.php';
 require get_template_directory() . '/inc/itinerary.php';
 
-// Add porch post type:
 add_action('init', function(){
 	register_post_type('performer', array(
 		'public'        	=> true,
@@ -313,6 +314,8 @@ add_action('init', function(){
 	));
 
 	// Organize Porches and Performers as first two menu items after Dashboard
+
+
 	
 	
 	if(current_user_can( 'edit_posts' )){
