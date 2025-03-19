@@ -90,10 +90,17 @@ async function initMap(){
 
     // markers can only be keyboard focusable when they have click listeners
     // open info window when marker is clicked
+
+		let lineup = ``
+		if(porch.acf.performer_lineup){
+			porch.acf.performer_lineup.forEach((performer, i)=>{
+				lineup += `<tr><td>${performer.start_time}</td><td>${performer.performer.post_title}</td></tr>`
+			})
+		}
+
     marker.addListener("gmp-click", ()=>{
 			popup.position = new google.maps.LatLng(lat, lng)
-			// contentDiv.innerHTML = `${lat} ${lng}`
-			contentDiv.innerHTML = `<div id="content"><img src="${imgurl}" alt="Default"><div class="header"><h3>${porch.porch.post_title}</h3><p>${porch.acf.porch_address}</p></div><div class="content"><p>${porch.porch.post_content}</p></div><div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr><tr><td>11:00AM</td><td>The Jazz Cru</td></tr><tr><td>4:00PM</td><td>Ryan Gregory Tallman</td></tr></tbody></table></div></div>`
+			contentDiv.innerHTML = `<div id="content"><h3>${porch.porch.post_title}</h3><img src="${imgurl}" alt="Default"><div class="header"><p>${porch.acf.porch_address}</p></div><div class="content"><p>${porch.porch.post_content}</p></div><div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div></div>`
 			popup.setMap(map)
 			const newCenter = {
 				lat: popup.position.lat() + 100 / Math.pow(2, map.getZoom()),
@@ -107,9 +114,7 @@ async function initMap(){
   // Add a marker clusterer to manage the markers.
   // new MarkerClusterer({markers, map})
 	const markerCluster = new markerClusterer.MarkerClusterer({ markers, map })
-	map.addListener("gmp-click", ()=>{
+	map.addListener("click", ()=>{
 		popup.setMap(null)
 	})
 }
-
-console.log(wpVars)
