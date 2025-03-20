@@ -395,3 +395,74 @@ function social_custom_post_type() {
  add_action( 'init', 'social_custom_post_type', 0 );
 	
 // *********** End *****************//
+
+function custom_new_user_notification_email($wp_new_user_notification_email, $user, $blogname){
+	$user_login 																= stripslashes( $user->user_login );
+	$user_email 																= stripslashes( $user->user_email );
+	$key 																				= get_password_reset_key( $user );
+	$wp_new_user_notification_email['subject'] 	= sprintf( __( 'Welcome to %s!' ), $blogname);
+	$reset_link 																= network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login');
+	$wp_new_user_notification_email['message'] 	= '
+		<html>
+			<head>
+				<style>
+					.email-container {
+						font-family: Arial, sans-serif;
+						color: #333;
+						max-width: 600px;
+						margin: auto;
+						padding: 20px;
+						border: 1px solid #ddd;
+						border-radius: 8px;
+						background-color: #f9f9f9;
+					}
+					.logo {
+						text-align: center;
+						margin-bottom: 20px;
+					}
+					.btn {
+						display: inline-block;
+						background-color: #0073aa;
+						color: #ffffff;
+						padding: 10px 20px;
+						border-radius: 5px;
+						text-decoration: none;
+						font-weight: bold;
+					}
+					.btn:hover {
+						background-color: #005f8d;
+					}
+
+					img{
+						width: 100%;
+						height: auto;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="email-container">
+					<h2>Welcome to ' . esc_html( $blogname ) . '!</h2>
+					<p>Hi <strong>' . esc_html( $user_login ) . '</strong>,</p>
+					<p>We’re excited to have you on board. Click the button below to set your password and access your account:</p>
+					<p style="text-align: center;">
+						<a class="btn" href="' . esc_url( $reset_link ) . '">Set Your Password</a>
+					</p>
+					<p>Review this short walkthrough</p>
+					<br/>
+					<p>After logging in, you will be presented with this page. Here you can create your porche or performers as you see fit. If you have quite a few performers to make, it might be best to start there.</p>
+					<img src="http://sandbox.local/wp-content/uploads/2025/03/start-page.png" alt="Porch Page">
+					<p>To create a Porch (Or a Performer) start by clicking "Add Porch!" (Or "Add Performer" under performers)</p>
+					<img src="http://sandbox.local/wp-content/uploads/2025/03/porches-page.png" alt="Porches Page">
+					<p>Fill out the form with the necessary information. Add Performers as depicted in the figure below. When you are done just click "Publish" to save your changes.</p>
+					<img src="http://sandbox.local/wp-content/uploads/2025/03/porch-page.png" alt="Porch Page">
+					<p>If you have any questions, feel free to reach out.</p>
+					<p>Best,<br><strong>' . esc_html( $blogname ) . ' Team</strong></p>
+				</div>
+			</body>
+		</html>
+	';
+
+	return $wp_new_user_notification_email;
+}
+add_filter('wp_new_user_notification_email', 'custom_new_user_notification_email', 10, 3);
+add_filter('wp_mail_content_type', function(){return 'text/html';});
