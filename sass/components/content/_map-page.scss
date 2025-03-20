@@ -111,8 +111,23 @@ $blue: #14a4ab;
 	top: 17px;
 }
 
+.map-header{
+	position: absolute;
+	top: 0;
+	height: 100px;
+	width: 100vw;
+	z-index: 1000;
+	background-color: blue;
+	color: white;
+
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	h3{margin: 0;}
+}
+
 #map {
-  height: 70vh;
+	height: calc(var(--vh, 1vh) * 100);
   width: 100%;
 }
 #map-filter {

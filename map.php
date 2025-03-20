@@ -7,7 +7,7 @@
 */  
 ?>  
 <?php
-	get_header();
+	get_header("map");
 	if(!empty($_REQUEST['srch'])){
 		$s = ['s'=>$_REQUEST['srch']];
 		$query = new WP_Query($s);
@@ -22,6 +22,7 @@
 	}
 ?>
 
+<div class="map-header"><h3>Advertisement and Header Area</h3></div>
 <div id="map"></div>
 
-<?php get_footer();?>
+<?php get_footer("map");?>
