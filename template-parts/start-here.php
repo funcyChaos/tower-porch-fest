@@ -1,22 +1,5 @@
 <h1>Greetings Porch Host!</h1>
-<!-- <h3>Here are steps you should take to fill out your custom porch page:</h3> -->
-<!-- <ol style="font-weight: bolder;">
-	<li style="background-color: blue; position: absolute; top:55px;">
-		<p style="position: absolute; top:55px;">Click Add Porch! or click here, and completed the form.</p>
-	</li>
-	<li>
-		<p>Create your performers: Click Add Performer in the menu, or click here to Add Performer.</p>
-	</li>
-	<li>
-		<p>Return to your Porch Page and add performers and times.</p>
-	</li>
-	<li>
-		<p>Send an email to towerporchinfo@gmail.com - letting us know you are ready to go live.</p>
-	</li>
-	<li>
-		<p>If things change, come back and update your porch and performers. All porch lineups must be completed by April 1.</p>
-	</li>
-</ol> -->
+<h2>DESKTOP ONLY!</h2>
 
 <div style="position: absolute; top:55px; font-weight:bolder;" id="porch_arrow">
 	&larr; Head <a href="<?=get_site_url();?>/wp-admin/edit.php?post_type=porch">here</a> to see your porch or make a new one!
