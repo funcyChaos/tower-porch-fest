@@ -1,4 +1,5 @@
 <?php
+
 /**
  * towerpf-site functions and definitions
  *
@@ -7,9 +8,9 @@
  * @package towerpf-site
  */
 
-if ( ! defined( '_S_VERSION' ) ) {
+if (! defined('_S_VERSION')) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
+	define('_S_VERSION', '1.0.0');
 }
 
 /**
@@ -19,17 +20,18 @@ if ( ! defined( '_S_VERSION' ) ) {
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
-function towerpf_site_setup() {
+function towerpf_site_setup()
+{
 	/*
 		* Make theme available for translation.
 		* Translations can be filed in the /languages/ directory.
 		* If you're building a theme based on towerpf-site, use a find and replace
 		* to change 'towerpf-site' to the name of your theme in all the template files.
 		*/
-	load_theme_textdomain( 'towerpf-site', get_template_directory() . '/languages' );
+	load_theme_textdomain('towerpf-site', get_template_directory() . '/languages');
 
 	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support('automatic-feed-links');
 
 	/*
 		* Let WordPress manage the document title.
@@ -37,20 +39,20 @@ function towerpf_site_setup() {
 		* hard-coded <title> tag in the document head, and expect WordPress to
 		* provide it for us.
 		*/
-	add_theme_support( 'title-tag' );
+	add_theme_support('title-tag');
 
 	/*
 		* Enable support for Post Thumbnails on posts and pages.
 		*
 		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		*/
-	add_theme_support( 'post-thumbnails' );
+	add_theme_support('post-thumbnails');
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'towerpf-site' ),
-			'footer-menu' => __('Footer Menu', 'towerpf-site' ),
+			'menu-1' => esc_html__('Primary', 'towerpf-site'),
+			'footer-menu' => __('Footer Menu', 'towerpf-site'),
 		)
 	);
 
@@ -84,7 +86,7 @@ function towerpf_site_setup() {
 	);
 
 	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+	add_theme_support('customize-selective-refresh-widgets');
 
 	/**
 	 * Add support for core custom logo.
@@ -101,7 +103,7 @@ function towerpf_site_setup() {
 		)
 	);
 }
-add_action( 'after_setup_theme', 'towerpf_site_setup' );
+add_action('after_setup_theme', 'towerpf_site_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -110,22 +112,24 @@ add_action( 'after_setup_theme', 'towerpf_site_setup' );
  *
  * @global int $content_width
  */
-function towerpf_site_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'towerpf_site_content_width', 640 );
+function towerpf_site_content_width()
+{
+	$GLOBALS['content_width'] = apply_filters('towerpf_site_content_width', 640);
 }
-add_action( 'after_setup_theme', 'towerpf_site_content_width', 0 );
+add_action('after_setup_theme', 'towerpf_site_content_width', 0);
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function towerpf_site_widgets_init() {
+function towerpf_site_widgets_init()
+{
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'towerpf-site' ),
+			'name'          => esc_html__('Sidebar', 'towerpf-site'),
 			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'towerpf-site' ),
+			'description'   => esc_html__('Add widgets here.', 'towerpf-site'),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -133,64 +137,71 @@ function towerpf_site_widgets_init() {
 		)
 	);
 }
-add_action( 'widgets_init', 'towerpf_site_widgets_init' );
+add_action('widgets_init', 'towerpf_site_widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
-function towerpf_site_scripts(){
-	wp_enqueue_style( 'towerpf-site-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'towerpf-site-style', 'rtl', 'replace' );
-	wp_enqueue_script( 'towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-	
-	if(is_page(54)){
-		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key='. map_api_key . '&loading=async&callback=initMap', [], false, true);
-		wp_register_script( 'map-script', get_template_directory_uri().'/js/map.js', [], '1.0', true);
+function towerpf_site_scripts()
+{
+	wp_enqueue_style('towerpf-site-style', get_stylesheet_uri(), array(), _S_VERSION);
+
+	// -- social icon fix: moved fontawesome bootstrap injection from header.php to here to use CDN
+	wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1');
+	// -- end
+
+	wp_style_add_data('towerpf-site-style', 'rtl', 'replace');
+	wp_enqueue_script('towerpf-site-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
+
+	if (is_page(54)) {
+		wp_enqueue_script('map-api', 'https://maps.googleapis.com/maps/api/js?key=' . map_api_key . '&loading=async&callback=initMap', [], false, true);
+		wp_register_script('map-script', get_template_directory_uri() . '/js/map.js', [], '1.0', true);
 		wp_localize_script('map-script', 'wpVars', [
 			'homeURL' => home_url(),
-			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
+			'defaultImageURL' => get_the_post_thumbnail_url(5, 'full'),
 			'genres'	=> get_field_object('field_6491fdd624af4')['choices'],
-		]); 
+		]);
 		wp_enqueue_script('map-script');
 	}
-	
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
+
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
 	}
-	
-	if(is_front_page()){
-		wp_register_script( 'countdown', get_template_directory_uri() . '/js/countdown.js', [], _S_VERSION, true );
+
+	if (is_front_page()) {
+		wp_register_script('countdown', get_template_directory_uri() . '/js/countdown.js', [], _S_VERSION, true);
 		$fields = get_field('front_page_group_where_when_and_countdown_timer_festival_date');
 		wp_localize_script('countdown', 'wpVars', ['acfDate' => $fields]);
 		wp_enqueue_script('countdown');
-		wp_enqueue_script('home-page', get_template_directory_uri() . '/js/home-page.js',array('jquery'), _S_VERSION, true );
+		wp_enqueue_script('home-page', get_template_directory_uri() . '/js/home-page.js', array('jquery'), _S_VERSION, true);
 		/* homepage countdown */
 	}
 }
-add_action( 'wp_enqueue_scripts', 'towerpf_site_scripts' );
+add_action('wp_enqueue_scripts', 'towerpf_site_scripts');
 
-add_action('admin_enqueue_scripts', function(){
+add_action('admin_enqueue_scripts', function () {
 	$screen = get_current_screen();
-	if('porch' == $screen->post_type || 'performer' == $screen->post_type){
-		wp_register_script( 'rm-f-img', get_template_directory_uri() . '/js/remove-featured-img.js', [], _S_VERSION, true );
+	if ('porch' == $screen->post_type || 'performer' == $screen->post_type) {
+		wp_register_script('rm-f-img', get_template_directory_uri() . '/js/remove-featured-img.js', [], _S_VERSION, true);
 		wp_enqueue_script('rm-f-img');
 	}
 });
 
-add_filter( 'script_loader_tag', function ( $tag, $handle ) {
-	if ( 'map-api' !== $handle ) {
+add_filter('script_loader_tag', function ($tag, $handle) {
+	if ('map-api' !== $handle) {
 		return $tag;
 	}
 	// return str_replace( ' src', ' defer src', $tag ); // defer the script
-	return str_replace( ' src', ' async src', $tag ); // OR async the script
+	return str_replace(' src', ' async src', $tag); // OR async the script
 	//return str_replace( ' src', ' async defer src', $tag ); // OR do both!
-}, 10, 2 );
+}, 10, 2);
 
 /**
  * Enqueue Countdown Timer ACF variable to JS script
  */
-function countdown_enqueue_scripts() {
-  wp_enqueue_script( 'countdown', get_template_directory_uri() . '/js/countdown.js', array( 'jquery' ), '1.0', true );
+function countdown_enqueue_scripts()
+{
+	wp_enqueue_script('countdown', get_template_directory_uri() . '/js/countdown.js', array('jquery'), '1.0', true);
 }
 // add_action( 'wp_enqueue_scripts', 'countdown_enqueue_scripts' );
 /** End */
@@ -218,24 +229,26 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
+if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
-add_action('admin_menu', function(){
+add_action('admin_menu', function () {
 	add_menu_page(
 		'Start Here',
 		'Start Here',
 		'edit_porches',
 		'start-here',
-		function(){get_template_part('template-parts/start-here');},
+		function () {
+			get_template_part('template-parts/start-here');
+		},
 		'dashicons-visibility',
 		1
 	);
 });
 
 // Remove Dashboard and Post menus
-add_action('admin_menu', function(){
+add_action('admin_menu', function () {
 	remove_menu_page('edit.php');
 	remove_menu_page('index.php');
 });
@@ -245,7 +258,7 @@ require get_template_directory() . '/inc/porches.php';
 require get_template_directory() . '/inc/itinerary.php';
 
 // Add porch post type:
-add_action('init', function(){
+add_action('init', function () {
 	register_post_type('performer', array(
 		'public'        	=> true,
 		'labels'					=> [
@@ -276,11 +289,12 @@ add_action('init', function(){
 
 	// Organize Porches and Performers as first two menu items after Dashboard
 
-	function custom_new_user_notification_email($wp_new_user_notification_email, $user, $blogname){
-		$user_login 																= stripslashes( $user->user_login );
-		$user_email 																= stripslashes( $user->user_email );
-		$key 																				= get_password_reset_key( $user );
-		$wp_new_user_notification_email['subject'] 	= sprintf( __( 'Welcome to %s!' ), $blogname);
+	function custom_new_user_notification_email($wp_new_user_notification_email, $user, $blogname)
+	{
+		$user_login 																= stripslashes($user->user_login);
+		$user_email 																= stripslashes($user->user_email);
+		$key 																				= get_password_reset_key($user);
+		$wp_new_user_notification_email['subject'] 	= sprintf(__('Welcome to %s!'), $blogname);
 		$reset_link 																= network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login');
 		$wp_new_user_notification_email['message'] 	= '
 			<html>
@@ -321,11 +335,11 @@ add_action('init', function(){
 				</head>
 				<body>
 					<div class="email-container">
-						<h2>Welcome to ' . esc_html( $blogname ) . '!</h2>
-						<p>Hi <strong>' . esc_html( $user_login ) . '</strong>,</p>
+						<h2>Welcome to ' . esc_html($blogname) . '!</h2>
+						<p>Hi <strong>' . esc_html($user_login) . '</strong>,</p>
 						<p>We’re excited to have you on board. Click the button below to set your password and access your account:</p>
 						<p style="text-align: center;">
-							<a class="btn" href="' . esc_url( $reset_link ) . '">Set Your Password</a>
+							<a class="btn" href="' . esc_url($reset_link) . '">Set Your Password</a>
 						</p>
 						<p>Review this short walkthrough</p>
 						<br/>
@@ -336,92 +350,97 @@ add_action('init', function(){
 						<p>Fill out the form with the necessary information. Add Performers as depicted in the figure below. When you are done just click "Publish" to save your changes.</p>
 						<img src="http://sandbox.local/wp-content/uploads/2025/03/porch-page.png" alt="Porch Page">
 						<p>If you have any questions, feel free to reach out.</p>
-						<p>Best,<br><strong>' . esc_html( $blogname ) . ' Team</strong></p>
+						<p>Best,<br><strong>' . esc_html($blogname) . ' Team</strong></p>
 					</div>
 				</body>
 			</html>
 		';
-	
+
 		return $wp_new_user_notification_email;
 	}
 	add_filter('wp_new_user_notification_email', 'custom_new_user_notification_email', 10, 3);
-	add_filter('wp_mail_content_type', function(){return 'text/html';});
-	
-	
-	if(current_user_can( 'edit_posts' )){
-		add_action('admin_head', function(){
-		//			global $menu;
-		//	$menu[8] = $menu[4];
-		//	unset($menu[4]);
-		//	$menu[9] = $menu[6];
-		//	unset($menu[6]);
-		//	ksort($menu);
-		});
-	}
+	add_filter('wp_mail_content_type', function () {
+		return 'text/html';
 	});
 
-add_filter('excerpt_length', function($l){return 30;});
+
+	if (current_user_can('edit_posts')) {
+		add_action('admin_head', function () {
+			//			global $menu;
+			//	$menu[8] = $menu[4];
+			//	unset($menu[4]);
+			//	$menu[9] = $menu[6];
+			//	unset($menu[6]);
+			//	ksort($menu);
+		});
+	}
+});
+
+add_filter('excerpt_length', function ($l) {
+	return 30;
+});
 
 // *********** Social Media Accounts Custom Post Type *****************//
-function social_custom_post_type() {
-  
+function social_custom_post_type()
+{
+
 	// Set UI labels for Custom Post Type
-			$labels = array(
-					'name'                => _x( 'Socials', 'Post Type General Name', 'towerpf-site' ),
-					'singular_name'       => _x( 'Social', 'Post Type Singular Name', 'towerpf-site' ),
-					'menu_name'           => __( 'Socials', 'towerpf-site' ),
-					'parent_item_colon'   => __( 'Parent Social', 'towerpf-site' ),
-					'all_items'           => __( 'All Socials', 'towerpf-site' ),
-					'view_item'           => __( 'View Social', 'towerpf-site' ),
-					'add_new_item'        => __( 'Add New Social', 'towerpf-site' ),
-					'add_new'             => __( 'Add New', 'towerpf-site' ),
-					'edit_item'           => __( 'Edit Social', 'towerpf-site' ),
-					'update_item'         => __( 'Update Social', 'towerpf-site' ),
-					'search_items'        => __( 'Search Social', 'towerpf-site' ),
-					'not_found'           => __( 'Not Found', 'towerpf-site' ),
-					'not_found_in_trash'  => __( 'Not found in Trash', 'towerpf-site' ),
-			);
-			 
+	$labels = array(
+		'name'                => _x('Socials', 'Post Type General Name', 'towerpf-site'),
+		'singular_name'       => _x('Social', 'Post Type Singular Name', 'towerpf-site'),
+		'menu_name'           => __('Socials', 'towerpf-site'),
+		'parent_item_colon'   => __('Parent Social', 'towerpf-site'),
+		'all_items'           => __('All Socials', 'towerpf-site'),
+		'view_item'           => __('View Social', 'towerpf-site'),
+		'add_new_item'        => __('Add New Social', 'towerpf-site'),
+		'add_new'             => __('Add New', 'towerpf-site'),
+		'edit_item'           => __('Edit Social', 'towerpf-site'),
+		'update_item'         => __('Update Social', 'towerpf-site'),
+		'search_items'        => __('Search Social', 'towerpf-site'),
+		'not_found'           => __('Not Found', 'towerpf-site'),
+		'not_found_in_trash'  => __('Not found in Trash', 'towerpf-site'),
+	);
+
 	// Set other options for Custom Post Type
-			 
-			$args = array(
-					'label'               => __( 'socials', 'towerpf-site' ),
-					'description'         => __( 'Social Media Accounts', 'towerpf-site' ),
-					'labels'              => $labels,
-					// Features this CPT supports in Post Editor
-					'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-					// You can associate this CPT with a taxonomy or custom taxonomy. 
-					'taxonomies'          => array( 'social', 'socials' ),
-					/* A hierarchical CPT is like Pages and can have
+
+	$args = array(
+		'label'               => __('socials', 'towerpf-site'),
+		'description'         => __('Social Media Accounts', 'towerpf-site'),
+		'labels'              => $labels,
+		// Features this CPT supports in Post Editor
+		'supports'            => array('title', 'editor', 'excerpt', 'thumbnail', 'comments', 'revisions', 'custom-fields',),
+		// You can associate this CPT with a taxonomy or custom taxonomy. 
+		'taxonomies'          => array('social', 'socials'),
+		/* A hierarchical CPT is like Pages and can have
 					* Parent and child items. A non-hierarchical CPT
 					* is like Posts.
 					*/
-					'hierarchical'        => false,
-					'public'              => true,
-					'show_ui'             => true,
-					'show_in_menu'        => true,
-					'show_in_nav_menus'   => true,
-					'show_in_admin_bar'   => true,
-					'menu_position'       => 5,
-					'menu_icon'						=> "dashicons-share",
-					'can_export'          => true,
-					'has_archive'         => true,
-					'exclude_from_search' => false,
-					'publicly_queryable'  => true,
-					'capability_type'     => 'post',
-					'show_in_rest' => true,
-	 
-			);
-			 
-			// Registering your Custom Post Type
-			register_post_type( 'socials', $args );
-	}
+		'hierarchical'        => false,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_admin_bar'   => true,
+		'menu_position'       => 5,
+		'menu_icon'						=> "dashicons-share",
+		'can_export'          => true,
+		'has_archive'         => true,
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'capability_type'     => 'post',
+		'show_in_rest' => true,
 
- /* Hook into the 'init' action so that the function
+	);
+
+	// Registering your Custom Post Type
+	register_post_type('socials', $args);
+}
+
+/* Hook into the 'init' action so that the function
  * Containing our post type registration is not 
  * unnecessarily executed. 
  */
-	 
- add_action( 'init', 'social_custom_post_type', 0 );
+
+add_action('init', 'social_custom_post_type', 0);
 	
 // *********** End *****************//
