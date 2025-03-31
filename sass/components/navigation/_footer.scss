@@ -1,3 +1,61 @@
+// variables specific to footer
+$footer-bg-color: $dark-blue; // Uses global
+$footer-padding-y: 2rem;
+$footer-height-mobile: 688px;
+$footer-height-sm-tablet: 550px;
+$footer-height-md-tablet: 520px;
+$footer-height-lg-tablet: 500px;
+$footer-height-desktop: 450px;
+$footer-transition-duration: 0.3s;
+
+// values for the responsive link mixin
+$footer-nav-link-font-size-sm: 14px;
+$footer-nav-link-font-size-lg: 20px;
+$footer-nav-link-height-sm: 32px;
+$footer-nav-link-height-lg: 40px;
+$footer-nav-link-padding-y-sm: 0.25rem;
+$footer-nav-link-padding-y-lg: 0.5rem;
+$footer-nav-link-padding-x-sm: 0.25rem;
+$footer-nav-link-padding-x-lg: 0.4rem;
+
+// footer nav item variables
+$footer-nav-item-font-size: .8rem;
+$footer-nav-item-font-weight: 500;
+$footer-nav-item-padding-base: .5rem;
+$footer-nav-item-padding-sm-tablet: .3rem;
+$footer-nav-item-padding-md-tablet: .35rem;
+$footer-nav-item-padding-lg-tablet: .4rem;
+$footer-nav-link-margin-x: 0.15em;
+$footer-nav-padding-horizontal-desktop: 1rem;
+
+// FootContent variables
+$footer-content-padding-top: 25px;
+$footer-content-padding-bottom: 15px;
+
+$footer-heading-font-weight: 500;
+$footer-heading-font-size-mobile: 40px;
+$footer-heading-font-size-sm: 32px;
+$footer-heading-font-size-lg: 40px;
+$footer-heading-font-size-range: $footer-heading-font-size-lg - $footer-heading-font-size-sm; // Used for clamp
+
+$social-icons-width: 160px;
+$social-icons-height: 50px;
+$social-icon-size: 30px;
+$social-icon-padding-left: 3px;
+$social-icon-bg-color: $teal; // Uses global
+
+$copyright-border-width: 0.01rem;
+$copyright-font-size: 0.7rem;
+$copyright-margin-top: 5rem;
+$copyright-margin-x: 1rem;
+$copyright-letter-spacing: 1px;
+$copyright-width-mobile: 330px;
+$copyright-padding-top: 5px;
+$copyright-width-desktop: 80%;
+$copyright-max-width-desktop: 1200px;
+$copyright-padding-desktop: 10px;
+
+// Assume $font-weight-light, $white, $violet, $dark-blue, $teal, $copyright-border are global
 
 .entry-footer{
     display: none;
@@ -7,36 +65,44 @@
 }
 
 footer {
-    background-color: $black;
-    height: auto;
-    padding: 2rem 0;
-    height: 688px;
-/* nav items */
+    background-color: $footer-bg-color;
+    padding: $footer-padding-y 0;
+    height: $footer-height-mobile; // Mobile first height
+    transition: height $footer-transition-duration ease;
+
     ul{
         list-style-type: none;
         text-align: center;
         margin: 0;
         padding: 0;
         display: flex;
-        flex-direction: column;
+        flex-direction: column; // Mobile first
+        transition: all $footer-transition-duration ease;
     
         li{
             display: inline-block;
-            font-size: .8rem;
-            font-weight: 490;
-            padding: .5rem;
+            font-size: $footer-nav-item-font-size;
+            font-weight: $footer-nav-item-font-weight;
+            padding: $footer-nav-item-padding-base;
+            transition: all $footer-transition-duration ease;
     
             a{ 
                 text-decoration: none;
-                color: #fff;
-                font-weight: 100;
-                background-color: #F2B814;
-                padding: 0.5rem;
+                color: $white;
+                font-weight: $font-weight-light;
+                background-color: $violet;
+                padding: $footer-nav-link-padding-y-sm $footer-nav-link-padding-x-sm; // Base mobile padding
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
-                height: 40px;
-                font-size: 20px;
+                height: $footer-nav-link-height-sm; // Base mobile height
+                font-size: $footer-nav-link-font-size-sm; // Base mobile font size
+                margin: 0 $footer-nav-link-margin-x;
+                transition: all $footer-transition-duration ease;
+                // Base link styles needed for mixin context
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             a:visited{
@@ -52,59 +118,152 @@ footer {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 25px;
-    padding-bottom: 15px;
+    padding-top: $footer-content-padding-top;
+    padding-bottom: $footer-content-padding-bottom;
+    transition: padding $footer-transition-duration ease;
 }
 .heading2{
-    font-weight: 500;
+    font-weight: $footer-heading-font-weight;
     text-align: center;
     color: $white;
-    font-size: 40px;
+    font-size: $footer-heading-font-size-mobile; // Mobile first size
+    transition: font-size $footer-transition-duration ease;
 }
 .social-icons {
-    width: 160px;
+    width: $social-icons-width;
     display: flex;
-    height: 50px;
+    height: $social-icons-height;
     justify-content: space-evenly;
     align-items: center;
     max-width: 100%;
+    transition: all $footer-transition-duration ease;
     a {
-        width: 30px;
-        height: 30px;
-        background-color: $teal;
-        color: #fff;
+        width: $social-icon-size;
+        height: $social-icon-size;
+        background-color: $social-icon-bg-color;
+        color: $white;
         align-items: center;
         display: flex;
         justify-content: center;
         text-decoration: none;
-        padding-left: 3px;
+        padding-left: $social-icon-padding-left;
+        transition: all $footer-transition-duration ease;
+        
+        i {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 }
 .copyright{
-    border-top: 0.01rem solid #9d9d9d !important;
-    color: #fff;
+    border-top: $copyright-border-width solid $copyright-border !important;
+    color: $white;
     text-align: center;
-    font-size: 0.7rem;
-    margin: 5rem 1rem 0 1rem;
-    font-family: open sans;
+    font-size: $copyright-font-size;
+    margin: $copyright-margin-top $copyright-margin-x 0 $copyright-margin-x;
+    font-family: open sans; // TODO: use globals
     text-transform: none;
-    letter-spacing: 1px;
-    width: 330px;
-    padding-top: 5px;
+    letter-spacing: $copyright-letter-spacing;
+    width: $copyright-width-mobile; // Mobile first width
+    padding-top: $copyright-padding-top;
+    transition: all $footer-transition-duration ease;
 }
+
 /************* Media Queries **************/
-@media screen and (min-width: 992px) {
+
+/** Tablet and Desktop **/ 
+@media screen and (min-width: $breakpoint-nav-start) {
     footer {
-        height: 450px;
+        // Heights still stepped; could be clamped if smooth transition desired.
         ul {
             flex-direction: row;
+            flex-wrap: nowrap; // Force single line, allow shrinking
+            justify-content: center;
+            width: 100%;
+            padding: 0 $footer-nav-padding-horizontal-desktop;
+            box-sizing: border-box;
+            
+            li {
+                flex: 0 1 auto;
+                // Padding adjusted slightly via breakpoint below.
+                
+                a {
+                    // Apply responsive styles using the mixin
+                    @include responsive-nav-link(
+                        $footer-nav-link-font-size-sm, $footer-nav-link-font-size-lg,
+                        $footer-nav-link-height-sm, $footer-nav-link-height-lg,
+                        $footer-nav-link-padding-y-sm, $footer-nav-link-padding-y-lg,
+                        $footer-nav-link-padding-x-sm, $footer-nav-link-padding-x-lg
+                    );
+                    margin: 0 0.15em; // Explicitly set reduced margin here
+                }
+            }
         }
     }
-    .copyright{
-        width: 80%;
-        box-sizing: border-box;
-        padding: 10px;
-        max-width: 1200px;
+    
+    .heading2 {
+        font-size: clamp($footer-heading-font-size-sm, calc(#{$footer-heading-font-size-sm} + #{$footer-heading-font-size-range} * (100vw - #{$breakpoint-nav-start}) / #{$breakpoint-nav-range}), $footer-heading-font-size-lg);
     }
-   
+    
+    .copyright {
+         width: auto; // Reset mobile width
+         max-width: $copyright-max-width-desktop;
+    }
+}
+
+// Specific overrides for footer height and list item padding at intermediate sizes.
+// The responsive link styles are now handled by the mixin via the main media query block above.
+
+/** Extra breakpoint for very small tablets **/ 
+@media screen and (min-width: $breakpoint-nav-start) and (max-width: 699px) {
+    footer {
+        height: $footer-height-sm-tablet;
+        ul {
+            li {
+                padding: $footer-nav-item-padding-sm-tablet;
+            }
+        }
+    }
+}
+
+/** Small to medium tablets **/ 
+@media screen and (min-width: 700px) and (max-width: 850px) {
+    footer {
+        height: $footer-height-md-tablet;
+        ul {
+            li {
+                padding: $footer-nav-item-padding-md-tablet;
+            }
+        }
+    }
+}
+
+/** Medium to large tablets **/ 
+@media screen and (min-width: 851px) and (max-width: 991px) {
+    footer {
+        height: $footer-height-lg-tablet;
+        ul {
+            // max-width: 100%; // Removed - was default behavior
+            li {
+                padding: $footer-nav-item-padding-lg-tablet;
+            }
+        }
+    }
+}
+
+/** Desktop and larger screens **/ 
+@media screen and (min-width: $breakpoint-nav-end) {
+    footer {
+        height: $footer-height-desktop;
+    }
+    
+    .copyright{
+        width: $copyright-width-desktop;
+        box-sizing: border-box;
+        padding: $copyright-padding-desktop;
+        max-width: $copyright-max-width-desktop;
+    }
 }

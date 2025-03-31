@@ -1,0 +1,11 @@
+// Breakpoints
+// ==========================================================================
+
+$breakpoint-nav-start: 600px;
+$breakpoint-nav-end:   992px;
+
+// clculated range for use in clamp() functions or mixins
+$breakpoint-nav-range: $breakpoint-nav-end - $breakpoint-nav-start;
+
+// max width for mobile-specific styles like ( start - 1px)
+$breakpoint-nav-mobile-max: $breakpoint-nav-start - 1px; 

@@ -2,4 +2,5 @@ style.css
 style.css.map
 style-rtl.css
 .env
-# .vscode/
+node_modules
+.DS_Store

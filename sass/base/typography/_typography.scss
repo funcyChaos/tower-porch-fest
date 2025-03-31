@@ -1,3 +1,9 @@
+// Font Variables
+$font-path:   'fonts/';
+$font-antonio: 'Antonio';
+$font-open-sans: 'Open Sans';
+$font-open-sans-italic: 'Open Sans Italic';
+
 body,
 button,
 input,
@@ -11,27 +17,30 @@ textarea {
 }
 
 @font-face {
-  font-family: 'Antonio';
-  src: url('/wp-content/themes/Tower-Porchfest/fonts/Antonio-VariableFont_wght.ttf') format('truetype');
+  font-family: $font-antonio;
+  src: url('#{$font-path}Antonio-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-stretch: 75% 125%;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: 'Open Sans Italic';
-  src: url('/wp-content/themes/Tower-Porchfest/fonts/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-family: $font-open-sans-italic;
+  src: url('#{$font-path}OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
   font-weight: 100 900;
   font-stretch: 75% 125%;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  src: url('/wp-content/themes/Tower-Porchfest/fonts/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+  font-family: $font-open-sans;
+  src: url('#{$font-path}OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
   font-weight: 100 900;
   font-stretch: 75% 125%;
   font-style: normal;
+  font-display: swap;
 }
 
 @import "headings";

@@ -1,3 +1,5 @@
+
+
 // Center block
 @mixin center-block {
 	display: block;
@@ -7,5 +9,34 @@
 
 // Column width with margin
 @mixin column-width($numberColumns: 3) {
+
 	width: map-get($columns, $numberColumns) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+}
+
+// Responsive Navigation Link Styling using clamp()
+// Assumption breakpoint variables ($breakpoint-nav-start, $breakpoint-nav-range) are available globally
+@mixin responsive-nav-link(
+    $font-size-sm, $font-size-lg,
+    $height-sm, $height-lg,
+    $padding-y-sm, $padding-y-lg,
+    $padding-x-sm, $padding-x-lg
+) {
+    $font-size-range: $font-size-lg - $font-size-sm;
+    $height-range: $height-lg - $height-sm;
+    $padding-y-range: $padding-y-lg - $padding-y-sm;
+    $padding-x-range: $padding-x-lg - $padding-x-sm;
+
+    // this is the 'clamp()' function; it works by calculating the font size and other styles based on the viewport width
+    font-size: clamp($font-size-sm, calc(#{$font-size-sm} + #{$font-size-range} * (100vw - #{$breakpoint-nav-start}) / #{$breakpoint-nav-range}), $font-size-lg);
+    height: clamp($height-sm, calc(#{$height-sm} + #{$height-range} * (100vw - #{$breakpoint-nav-start}) / #{$breakpoint-nav-range}), $height-lg);
+    padding-top: clamp($padding-y-sm, calc(#{$padding-y-sm} + #{$padding-y-range} * (100vw - #{$breakpoint-nav-start}) / #{$breakpoint-nav-range}), $padding-y-lg);
+    padding-bottom: clamp($padding-y-sm, calc(#{$padding-y-sm} + #{$padding-y-range} * (100vw - #{$breakpoint-nav-start}) / #{$breakpoint-nav-range}), $padding-y-lg);
+    padding-left: clamp($padding-x-sm, calc(#{$padding-x-sm} + #{$padding-x-range} * (100vw - #{$breakpoint-nav-start}) / #{$breakpoint-nav-range}), $padding-x-lg);
+    padding-right: clamp($padding-x-sm, calc(#{$padding-x-sm} + #{$padding-x-range} * (100vw - #{$breakpoint-nav-start}) / #{$breakpoint-nav-range}), $padding-x-lg);
+
+    // Common styles that were alongside the clamp()
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0; // for flex shrinking
 }

@@ -1,24 +1,40 @@
-@use '../../abstracts/variables/colors';
+// variables specific to main navigation
+$nav-header-font-size: 20px;
+$nav-header-letter-spacing: 3px;
+$transition-duration-fast: 0.3s;
+$header-height: 4.4rem;
+$nav-ul-margin-top: -0.5rem;
+$nav-submenu-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+$z-index-nav-submenu: 99999;
+$nav-submenu-link-width: 200px;
+$nav-link-margin-horizontal: 0.48em;
+$font-weight-light: 100;
 
-header, footer {
+// for the responsive link mixin
+$nav-link-font-size-sm: 14px;
+$nav-link-font-size-lg: 20px;
+$nav-link-height-sm: 32px;
+$nav-link-height-lg: 40px;
+$nav-link-padding-y-sm: 0.25rem;
+$nav-link-padding-y-lg: 0.5rem;
+$nav-link-padding-x-sm: 0.25rem;
+$nav-link-padding-x-lg: 0.4rem;
+
+$nav-padding-horizontal-desktop: 1rem;
+$mobile-menu-item-margin-vertical: 40px;
+
+header, footer { 
 	font-family: 'Antonio', sans-serif;
 	text-transform: uppercase;
-	font-size: 20px;
-	letter-spacing: 3px !important;
+	font-size: $nav-header-font-size;
+	letter-spacing: $nav-header-letter-spacing !important;
 }
 
-$black: #212133;
-$white: #fff;
-// $violet: #a33c97;
-// $violetdark: #7a0f6e ;
-// $teal: #4fc3c9;
-// $plum: #1A2E47;
-$transition: cubic-bezier(.17,.67,.42,1.36);
+$transition: cubic-bezier(.17,.67,.42,1.36); // adjust if want reduced 'rubber band' effect but seems ok
 
 .site-header{
-	background-color: #212133;
-	background-color: #91b1a6;
-	height: 4.4rem;
+	background-color: $sage; 
+	height: $header-height;
 	display: flex;
 	flex-direction: row;
 	align-items: end;
@@ -32,17 +48,17 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 	ul {
 		display: none;
 		list-style: none;
-		margin: -0.5rem 0 0 0;
+		margin: $nav-ul-margin-top 0 0 0;
 		padding-left: 0;
 		justify-content: center;
 
 		ul {
-			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+			box-shadow: $nav-submenu-box-shadow;
 			float: left;
 			position: absolute;
 			top: 100%;
 			left: -999em;
-			z-index: 99999;
+			z-index: $z-index-nav-submenu;
 
 			ul {
 				left: -999em;
@@ -59,15 +75,7 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 			}
 
 			a {
-				width: 200px;
-			}
-
-			:hover > a,
-			.focus > a {
-			}
-
-			a:hover,
-			a.focus {
+				width: $nav-submenu-link-width;
 			}
 		}
 
@@ -79,57 +87,65 @@ $transition: cubic-bezier(.17,.67,.42,1.36);
 
 	li {
 		position: relative;
-
-		&:hover > a,
-		&.focus > a {
-		}
+		transition: all $transition-duration-fast ease;
 	}
 
 	a {
-		margin: 0 0.6rem;
-    text-decoration: none;
-    color: #000;
-    font-weight: 100;
-    background-color: #F2B814;
-    padding: 0.5rem;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    font-size: 20px;
+		margin: 0 $nav-link-margin-horizontal;
+		text-decoration: none;
+		color: $pure-black; 
+		font-weight: $font-weight-light;
+		background-color: $violet; 
+		padding: $nav-link-padding-y-sm $nav-link-padding-x-sm; // Base mobile padding
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		height: $nav-link-height-sm; // Base mobile height
+		font-size: $nav-link-font-size-sm; // Base mobile font size
+		transition: all $transition-duration-fast ease;
 	}
 }
 
-/****** Media Queries *******/
+/****** Media Queries ******/
 
-	/** Toggles between mobile and desktop menu **/
-	@media screen and (min-width: 37.5em) {
-
-		.menu-toggle {
-			display: none;
-		}
-
-		.main-navigation ul {
-			display: flex;
-		}
+/** Toggles between mobile and desktop menu **/ 
+@media screen and (min-width: $breakpoint-nav-start) {
+	.menu-toggle {
+		display: none;
 	}
 
-	/** Custom Style for Responsive Menu Plugin **/
-	@media screen and (max-width: 599px) {
-		#rmp-menu-wrap-789 .rmp-menu-item {
-			width: 100%;
-			list-style: none;
-			margin: 0;
-			margin: 40px 0;
-			font-family: 'Antonio', sans-serif;
-			text-transform: uppercase;
-			font-size: 20px;
-			letter-spacing: 3px !important;
-		}
+	.main-navigation ul {
+		display: flex;
+		flex-wrap: nowrap;
+		width: 100%;
+		justify-content: center;
+		padding: 0 $nav-padding-horizontal-desktop;
+		box-sizing: border-box;
 	}
-	@media screen and (min-width: 600px) and (max-width: 608px) {
-		.main-navigation a {
-			font-size: 19px;
-		}
+	
+	.main-navigation li {
+		flex: 0 1 auto;
 	}
-//}
+	
+	.main-navigation a {
+		@include responsive-nav-link(
+			$nav-link-font-size-sm, $nav-link-font-size-lg,
+			$nav-link-height-sm, $nav-link-height-lg,
+			$nav-link-padding-y-sm, $nav-link-padding-y-lg,
+			$nav-link-padding-x-sm, $nav-link-padding-x-lg
+		);
+	}
+}
+
+/** Mobile menu **/ 
+@media screen and (max-width: $breakpoint-nav-mobile-max) {
+	#rmp-menu-wrap-789 .rmp-menu-item { //  might be plugin-specific?
+		width: 100%;
+		list-style: none;
+		margin: $mobile-menu-item-margin-vertical 0;
+		font-family: 'Antonio', sans-serif;
+		text-transform: uppercase;
+		font-size: $nav-header-font-size;
+		letter-spacing: $nav-header-letter-spacing !important;
+	}
+}
