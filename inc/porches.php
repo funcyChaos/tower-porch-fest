@@ -1,6 +1,6 @@
 <?php
 
-add_action('init', function(){
+add_action('init', function () {
 	register_post_type('porch', array(
 		'public'        	=> true,
 		'labels'					=> [
@@ -26,32 +26,43 @@ add_action('init', function(){
 			'read_post'						=> 'read_porch',
 			'read_private_posts'	=> 'read_private_porches',
 			'delete_posts'				=> 'delete_porches',
+			'delete_published_posts' => 'delete_published_performers',
 		],
 		'map_meta_cap'		=> true,
 	));
 });
 
-add_action('rest_api_init', function(){
+add_action('rest_api_init', function () {
 	register_rest_field('porch', 'performers', [
-		'get_callback' => function($object){
-			$performers = [];
-			for($i = 1; $i < 13; $i++){
-				$field = get_field("performer_{$i}", $object['id']);
-				if(!is_null($field)){
-					if($field['performer']){
-						$post = get_post($field['performer']);
-						$genre = get_field("genre", $field['performer']);
-						$performers[] = [$post, $genre];
+		'get_callback' => function ($object) {
+			$lineup = get_field('performer_lineup', $object['id']);
+			$performers_data = [];
+
+			if ($lineup && is_array($lineup)) {
+				foreach ($lineup as $row) {
+					$performer_post = isset($row['performer']) ? $row['performer'] : null;
+					$start_time = isset($row['start_time']) ? $row['start_time'] : null;
+					$end_time = isset($row['end_time']) ? $row['end_time'] : null;
+
+					if ($performer_post instanceof WP_Post) {
+						$genre = get_field("genre", $performer_post->ID);
+						$performers_data[] = [
+							'performer'  => $performer_post,
+							'genre'      => $genre,
+							'start_time' => $start_time,
+							'end_time'   => $end_time,
+						];
 					}
-				}else break;
+				}
 			}
-			return $performers;
+
+			return $performers_data;
 		},
 		'update_callback' => null,
 		'schema' => null,
 	]);
 	register_rest_field('porch', 'acff', [
-		'get_callback' => function($object){
+		'get_callback' => function ($object) {
 			return get_fields($object['id']);
 		},
 		'update_callback' => null,
@@ -59,69 +70,74 @@ add_action('rest_api_init', function(){
 	]);
 });
 
-add_filter('block_editor_settings_all', function($editor_settings){
+add_filter('block_editor_settings_all', function ($editor_settings) {
 	$screen = get_current_screen();
-	if('porch' == $screen->post_type){
-		$editor_settings['bodyPlaceholder']='Describe your porch here, have fun with it!';
+	if ('porch' == $screen->post_type) {
+		$editor_settings['bodyPlaceholder'] = 'Describe your porch here, have fun with it!';
 	}
 	return $editor_settings;
 });
 
-add_action('wp_login', function($user_login, $user){
-	if(in_array('um_porch-operator', $user->roles)){
+add_action('wp_login', function ($user_login, $user) {
+	if (in_array('um_porch-operator', $user->roles)) {
 		exit(wp_redirect('wp-admin/admin.php?page=start-here'));
 	}
-},10,2);
+}, 10, 2);
 
-add_filter('enter_title_here', function($title){
+add_filter('enter_title_here', function ($title) {
 	$screen = get_current_screen();
-	if('porch' == $screen->post_type){
+	if ('porch' == $screen->post_type) {
 		$title = 'Enter your porch name here';
 	}
 	return $title;
 });
 
-add_action('admin_footer', function(){
-	if(did_action('wp_enqueue_media')){
-		?>
-			<script type="text/javascript">
-				jQuery(document).ready(function($){
-					wp.media.controller.Library.prototype.defaults.contentUserSetting = false
-					wp.media.controller.FeaturedImage.prototype.defaults.contentUserSetting = false
-				})
-			</script>
-		<?php
+add_action('admin_footer', function () {
+	if (did_action('wp_enqueue_media')) {
+?>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				wp.media.controller.Library.prototype.defaults.contentUserSetting = false
+				wp.media.controller.FeaturedImage.prototype.defaults.contentUserSetting = false
+			})
+		</script>
+	<?php
 	}
 });
 
-add_action('add_meta_boxes', function(){
-	add_meta_box('instructionsdiv', 'Porch Instructions', function(){
-		?>
-			<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
-			<p>Add up to 12 performers. If your performer is not in the dropdown, head to the porches pages <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create a new performer.</p>
-		<?php
+add_action('add_meta_boxes', function () {
+	add_meta_box('instructionsdiv', 'Porch Instructions', function () {
+	?>
+		<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
+		<p>In Porch Fields you will find Performer Lineup:</p>
+		<p>Click "Add Row" for every performer you want to add to your lineup. If your performer is not in the dropdown, be sure to save your porch as a draft and head <a href="<?= site_url(); ?>/wp-admin/edit.php?post_type=performer">here</a> to create your performer(s)</p>
+	<?php
 	}, 'porch', 'normal', 'high');
 
-	add_meta_box('postimagediv', 'Picture of your porch', function($post){
-		add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
+	add_meta_box('postimagediv', 'Picture of your porch', function ($post) {
+		add_filter('admin_post_thumbnail_size', function () {
+			return 'full';
+		}, 10, 3);
 		$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
-		echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px." );
+		echo nl2br("Set the Featured Image for your porch! \n \n Recommended dimensions are 728px by 90px.");
 		echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
 	}, 'porch', 'normal', 'high');
 
-	add_meta_box('postimagediv', 'Featured image!', function($post){
-		add_filter('admin_post_thumbnail_size', function(){return 'full';}, 10, 3);		
+	add_meta_box('postimagediv', 'Featured image!', function ($post) {
+		add_filter('admin_post_thumbnail_size', function () {
+			return 'full';
+		}, 10, 3);
 		$thumbnail_id = get_post_meta($post->ID, '_thumbnail_id', true);
-		echo nl2br("Set a Featured Image! \n \n Recommended dimensions are 728px by 90px." );
+		echo nl2br("Set a Featured Image! \n \n Recommended dimensions are 728px by 90px.");
 		echo _wp_post_thumbnail_html($thumbnail_id, $post->ID);
 	}, 'performer', 'normal', 'high');
 }, 1);
 
-add_action('rest_api_init', function(){
+add_action('rest_api_init', function () {
 	register_rest_route('porches/v1', '/adds', [
 		[
 			'methods'	=> 'POST',
-			'callback'	=> function(WP_REST_Request $req){
+			'callback'	=> function (WP_REST_Request $req) {
 				update_field('longitude', $req->get_param('lon'), $req->get_param('id'));
 				update_field('latitude', $req->get_param('lat'), $req->get_param('id'));
 				return [
@@ -134,8 +150,8 @@ add_action('rest_api_init', function(){
 	]);
 });
 
-add_action('save_post', function($post_id, $obj, $updating){
-	if(get_post_type($post_id) == 'porch' && $updating){
+add_action('save_post', function ($post_id, $obj, $updating) {
+	if (get_post_type($post_id) == 'porch' && $updating) {
 		$key = map_api_key;
 		$address = urlencode(get_field('porch_address', $post_id));
 		$url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key={$key}";
@@ -163,66 +179,66 @@ add_action('save_post', function($post_id, $obj, $updating){
 // 	wp_enqueue_script( 'user-profile', "/wp-admin/js/user-profile$suffix.js", array( 'jquery', 'wp-util' ), false, 1 );
 // });
 
-add_action('wp_ajax_email-porch-hosts', function(){
-	if(!wp_verify_nonce($_REQUEST['nonce'], 'super_secret_code')){
-		wp_send_json(['response'=>'bad nonce']);
+add_action('wp_ajax_email-porch-hosts', function () {
+	if (!wp_verify_nonce($_REQUEST['nonce'], 'super_secret_code')) {
+		wp_send_json(['response' => 'bad nonce']);
 		wp_die();
 	}
 	ob_start();
 	?>
-		<p><?=$_REQUEST['body']?></p>
+	<p><?= $_REQUEST['body'] ?></p>
 	<?php
 	$content = ob_get_clean();
-	$users = get_users(['role'=>'um_porch-operator']);
-	foreach($users as $key => $value){
-		$email_success[] = wp_mail($value->data->user_email,$_REQUEST['subject'], $content, array('Content-Type: text/html; charset=UTF-8'));
+	$users = get_users(['role' => 'um_porch-operator']);
+	foreach ($users as $key => $value) {
+		$email_success[] = wp_mail($value->data->user_email, $_REQUEST['subject'], $content, array('Content-Type: text/html; charset=UTF-8'));
 	}
-	if($email_success){
-		wp_send_json(['response'=>'success']);
-	}else{
-		wp_send_json(['response'=>'failed']);
+	if ($email_success) {
+		wp_send_json(['response' => 'success']);
+	} else {
+		wp_send_json(['response' => 'failed']);
 	}
 	wp_die();
 });
 
-add_action('wp_ajax_nopriv_email-porch-hosts', function(){
-	wp_send_json(['response'=>'nopriv']);
+add_action('wp_ajax_nopriv_email-porch-hosts', function () {
+	wp_send_json(['response' => 'nopriv']);
 	wp_die();
 });
 
-add_action('admin_menu', function(){
+add_action('admin_menu', function () {
 	add_menu_page(
 		'Porch Admin Tools',
 		'Porch Admin Tools',
 		'administrator',
 		'porch-admin-tools',
-		function(){
-			?>
-				<form id="email_porch_hosts_form" style="display:flex;flex-direction:column;padding:1rem;padding-right:2rem;">
-					<label for="Email Subject">Email Subject</label>
-					<input type="text" name="Email Subject" id="email_subject">
-					<label for="Email Body">Email Body</label>
-					<textarea name="Email Body" id="email_body" cols="30" rows="10" wrap="hard"></textarea>
-					<button type="submit">Send Email</button>
-				</form>
-				<script>
-					const emailForm = document.getElementById('email_porch_hosts_form')
-					emailForm.addEventListener('submit', (e)=>{
-						e.preventDefault()
-						const subject = document.getElementById('email_subject').value
-						const body = document.getElementById('email_body').value.replace(/\n/g, "<br />");
-						fetch('<?=admin_url('admin-ajax.php')?>', {
-							method: 'POST',
-							headers: {
-								'content-Type': 'application/x-www-form-urlencoded; charset-UTF-8'
-							},
-							body: `action=email-porch-hosts&nonce=<?=wp_create_nonce('super_secret_code')?>&subject=${subject}&body=${body}`,
-						})
-						.then(heck=>heck.json())
-						.then(flubber=>console.log(flubber))
+		function () {
+	?>
+		<form id="email_porch_hosts_form" style="display:flex;flex-direction:column;padding:1rem;padding-right:2rem;">
+			<label for="Email Subject">Email Subject</label>
+			<input type="text" name="Email Subject" id="email_subject">
+			<label for="Email Body">Email Body</label>
+			<textarea name="Email Body" id="email_body" cols="30" rows="10" wrap="hard"></textarea>
+			<button type="submit">Send Email</button>
+		</form>
+		<script>
+			const emailForm = document.getElementById('email_porch_hosts_form')
+			emailForm.addEventListener('submit', (e) => {
+				e.preventDefault()
+				const subject = document.getElementById('email_subject').value
+				const body = document.getElementById('email_body').value.replace(/\n/g, "<br />");
+				fetch('<?= admin_url('admin-ajax.php') ?>', {
+						method: 'POST',
+						headers: {
+							'content-Type': 'application/x-www-form-urlencoded; charset-UTF-8'
+						},
+						body: `action=email-porch-hosts&nonce=<?= wp_create_nonce('super_secret_code') ?>&subject=${subject}&body=${body}`,
 					})
-				</script>
-			<?php
+					.then(heck => heck.json())
+					.then(flubber => console.log(flubber))
+			})
+		</script>
+	<?php
 		},
 		'dashicons-admin-tools
 		',
@@ -230,32 +246,33 @@ add_action('admin_menu', function(){
 	);
 });
 
-function updatePorchesTemp(){
+function updatePorchesTemp()
+{
 	?><script>
-		class FetchQueue{
-			constructor(){
+		class FetchQueue {
+			constructor() {
 				this.queue = []
 				this.isProcessing = false
 			}
 
-			add(fetchPromise){
+			add(fetchPromise) {
 				this.queue.push(fetchPromise)
-				if(!this.isProcessing){
+				if (!this.isProcessing) {
 					this.processQueue()
 				}
 			}
 
-			async processQueue(){
-				if(this.queue.length > 0){
+			async processQueue() {
+				if (this.queue.length > 0) {
 					this.isProcessing = true
 					const fetchPromise = this.queue.shift()
-					try{
+					try {
 						await fetchPromise()
-					}catch(error){
+					} catch (error) {
 						console.error('Error in fetch:', error)
 					}
 					this.processQueue()
-				}else{
+				} else {
 					this.isProcessing = false
 				}
 			}
@@ -263,10 +280,10 @@ function updatePorchesTemp(){
 
 		const fetchQueue = new FetchQueue()
 
-		async function updateCoords(address, id){
-			const coords = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=<?=map_api_key?>`)
-			const cData		= await coords.json()
-			const cObject	= await cData
+		async function updateCoords(address, id) {
+			const coords = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=<?= map_api_key ?>`)
+			const cData = await coords.json()
+			const cObject = await cData
 			const lon = cObject.results[0].geometry.location.lng
 			const lat = cObject.results[0].geometry.location.lat
 			const update = await fetch('/wp-json/porches/v1/adds', {
@@ -285,12 +302,12 @@ function updatePorchesTemp(){
 			console.log(uObject, cObject)
 		}
 	</script><?php
-	while(have_posts()){
-		the_post();
-		?>
-			<script>
-				fetchQueue.add(()=>updateCoords("<?php the_field('porch_address');?>", <?=get_the_id()?>))
-			</script>
-		<?php
-	}
-}
+				while (have_posts()) {
+					the_post();
+				?>
+		<script>
+			fetchQueue.add(() => updateCoords("<?php the_field('porch_address'); ?>", <?= get_the_id() ?>))
+		</script>
+<?php
+				}
+			}
