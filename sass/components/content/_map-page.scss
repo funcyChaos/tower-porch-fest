@@ -1,11 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;200;300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
+$popup-color: white;
+
 .popup-bubble{
-	// visibility: hidden;
-	// opacity: 0;
-	max-height: 250px;
-	width: 350px;
-	border: 2px black dashed;
+	/* Position the bubble centred-above its parent. */
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translate(-50%, -100%);
+	/* Style the bubble. */
+	background-color: $popup-color;
+	padding: 5px;
+	border-radius: 5px;
+	font-family: sans-serif;
+	overflow-y: auto;
+	// max-height: 250px;
+	box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.5);
+
+	height: 500px;
+	width: calc(100vw - 1rem);
+	// border: 2px black dashed;
 
 	display: flex;
 	flex-direction: column;
@@ -45,24 +59,8 @@
 }
 
 
-$popup-color: white;
 
-	/* The popup bubble styling. */
-	.popup-bubble {
-		/* Position the bubble centred-above its parent. */
-		position: absolute;
-		top: 0;
-		left: 0;
-		transform: translate(-50%, -100%);
-		/* Style the bubble. */
-		background-color: $popup-color;
-		padding: 5px;
-		border-radius: 5px;
-		font-family: sans-serif;
-		overflow-y: auto;
-		max-height: 250px;
-		box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.5);
-	}
+
 
 	/* The parent of the bubble. A zero-height div at the top of the tip. */
 	.popup-bubble-anchor {
@@ -115,7 +113,7 @@ $blue: #14a4ab;
 	position: absolute;
 	top: 0;
 	height: 100px;
-	width: 100vw;
+	width: calc(100vw - 55px); // For normal menu button
 	z-index: 1000;
 	background-color: blue;
 	color: white;
@@ -125,6 +123,87 @@ $blue: #14a4ab;
 	justify-content: center;
 	h3{margin: 0;}
 }
+#rmp_menu_trigger-1585{
+	display: none;
+	top: 0;
+	right: 0;
+	height: 100px;
+}
+
+.menu-btn-wrap{
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100px;
+	width: 55px; // For normal menu button
+	z-index: 1000;
+	background-color: black;
+	color: white;
+	font-size: 2rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	#map_menu_btn{
+		cursor: pointer;
+		// &:hover{
+		// 	color: #14A4AB;
+		// }
+	}
+}
+
+#map_menu{
+	position: absolute;
+	z-index: 2000;
+	width: 100vw;
+	height: calc(var(--vh, 1vh) * 100);
+	padding: .5rem;
+
+	background-color: black;
+	color: white;
+
+	// display: flex;
+	// justify-content: space-between;
+
+	.map-menu-header{
+		display: flex;
+		justify-content: space-between;
+		i{font-size: 3rem;cursor: pointer;}
+		margin-bottom: 1rem;
+	}
+	#map_filter{
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+
+		.search-and-time, .other-options{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1rem;
+		}
+		
+		.search-and-time{
+			label{width: 100px;font-size: 1.5rem;}
+		}
+		
+		input[type="text"], input[type="time"]{
+			// flex: 1;
+			// min-width: 170px;
+			// max-width: 250px;
+			width: 170px;
+		}
+		// .filter-search{
+		// 	// display: flex;
+		// }
+
+		input{
+			font-size: 2rem;
+			padding: 8px;
+			border-radius: 8px;
+		}
+	}
+}
+
 
 #map {
 	height: calc(var(--vh, 1vh) * 100);

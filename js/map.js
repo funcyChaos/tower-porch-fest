@@ -67,24 +67,23 @@ async function initMap(){
 
   popup = new Popup(
     new google.maps.LatLng(-33.866, 151.196),
-		// document.getElementById("content"),
 		contentDiv,
   )
-
-  // Create an array of alphabetical characters used to label the markers.
-  const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  // Add some markers to the map.
   const markers = wpVars.porches.map((porch, i)=>{
-    const label = labels[i % labels.length];
-    const pinGlyph = new google.maps.marker.PinElement({
-      glyph: label,
-      glyphColor: "white",
-    })
 		const lat = parseFloat(porch.acf.latitude)
 		const lng = parseFloat(porch.acf.longitude)
+		const glyph = document.createElement("img")
+		console.log(porch.acf)
+		if(porch.acf.sponsored){
+			glyph.src = `${wpVars.themeURL}/img/map/glyph-sponsor.svg`
+		}else{
+			glyph.src = `${wpVars.themeURL}/img/map/glyph.svg`
+		}
+		glyph.style.height = "40px";
     const marker = new google.maps.marker.AdvancedMarkerElement({
+			map,
       position: {lat, lng},
-      content: pinGlyph.element,
+			content: glyph,
     })
 		const imgurl = porch.img ? porch.img : "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png"
 
@@ -103,7 +102,7 @@ async function initMap(){
 			contentDiv.innerHTML = `<div id="content"><h3>${porch.porch.post_title}</h3><img src="${imgurl}" alt="Default"><div class="header"><p>${porch.acf.porch_address}</p></div><div class="content"><p>${porch.porch.post_content}</p></div><div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div></div>`
 			popup.setMap(map)
 			const newCenter = {
-				lat: popup.position.lat() + 100 / Math.pow(2, map.getZoom()),
+				lat: popup.position.lat() + 300 / Math.pow(2, map.getZoom()),
 				lng: popup.position.lng(),
 			}
 			map.panTo(newCenter)
@@ -118,3 +117,22 @@ async function initMap(){
 		popup.setMap(null)
 	})
 }
+
+const menu = document.getElementById("map_menu")
+document.getElementById("map_menu_btn").addEventListener("click", ()=>{
+	menu.style.display = "block"
+})
+document.getElementById("close_menu").addEventListener("click", ()=>{
+	menu.style.display = "none"
+})
+
+
+const form		= document.getElementById("map_filter")
+const search = document.getElementById("filter_search")
+
+form.addEventListener("submit", (e)=>{
+	e.preventDefault()
+	fetch(`https://towerporchfest.org/wp-json/wp/v2/porches?search=${search.value}`)
+	.then(response=>response.json())
+	.then(data=>console.log(data))
+})
