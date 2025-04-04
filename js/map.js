@@ -160,6 +160,7 @@ async function initMap(){
 		}else{
 			buildMarkers(values)
 		}
+		document.getElementById("map_menu").style.display = "none"
 	})
 }
 
@@ -198,7 +199,24 @@ function filterData(data, formData){
 		}
 	}
 	if(formData.genre != "none"){
-
+		let hasGenre = []
+		if(hasLineup){
+			hasLineup.forEach(porch=>{
+				let bool = false
+				porch.performers.forEach(performer=>{
+					if(bool) return
+					if(performer.genres){
+						if(performer.genres.filter(genre=>genre == formData.genre).length != 0){
+							bool = true
+						}
+					}
+				})
+				if(bool){
+					hasGenre.push(porch)
+				}
+			})
+			data = hasGenre
+		}
 	}
 	return data
 }
