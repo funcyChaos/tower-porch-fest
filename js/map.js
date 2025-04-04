@@ -165,7 +165,7 @@ async function initMap(){
 }
 
 function filterData(data, formData){
-	hasLineup = data.filter(porch=>porch.acf.performer_lineup)
+	data = data.filter(porch=>porch.acf.performer_lineup)
 	if(formData.vendor){
 		data = data.filter(porch=>porch.acf.sponsored)
 	}
@@ -174,49 +174,45 @@ function filterData(data, formData){
 	}
 	if(formData.time){
 		let afterTime = []
-		if(hasLineup){
-			hasLineup.forEach(porch=>{
-				let bool = false
-				porch.acf.performer_lineup.forEach(performer=>{
-					if(bool) return
-					let [hours, minutes] = formData.time.split(':').map(Number)
-					const now = new Date()
-					const formDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
-					const [time, modifier] = performer.start_time.trim().split(" ");
-					[hours, minutes] = time.split(":").map(Number)
-					if (modifier === "pm" && hours !== 12) hours += 12
-					if (modifier === "am" && hours === 12) hours = 0
-					const performanceDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
-					if(formDate <= performanceDate){
-						bool = true
-					}
-				})
-				if(bool){
-					afterTime.push(porch)
+		data.forEach(porch=>{
+			let bool = false
+			porch.acf.performer_lineup.forEach(performer=>{
+				if(bool) return
+				let [hours, minutes] = formData.time.split(':').map(Number)
+				const now = new Date()
+				const formDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
+				const [time, modifier] = performer.start_time.trim().split(" ");
+				[hours, minutes] = time.split(":").map(Number)
+				if (modifier === "pm" && hours !== 12) hours += 12
+				if (modifier === "am" && hours === 12) hours = 0
+				const performanceDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
+				if(formDate <= performanceDate){
+					bool = true
 				}
 			})
-			data = afterTime
-		}
+			if(bool){
+				afterTime.push(porch)
+			}
+		})
+		data = afterTime
 	}
 	if(formData.genre != "none"){
 		let hasGenre = []
-		if(hasLineup){
-			hasLineup.forEach(porch=>{
-				let bool = false
-				porch.performers.forEach(performer=>{
-					if(bool) return
-					if(performer.genres){
-						if(performer.genres.filter(genre=>genre == formData.genre).length != 0){
-							bool = true
-						}
+		data.forEach(porch=>{
+			let bool = false
+			porch.performers.forEach(performer=>{
+				if(bool) return
+				if(performer.genres){
+					if(performer.genres.filter(genre=>genre == formData.genre).length != 0){
+						bool = true
 					}
-				})
-				if(bool){
-					hasGenre.push(porch)
 				}
 			})
-			data = hasGenre
-		}
+			if(bool){
+				hasGenre.push(porch)
+			}
+		})
+		data = hasGenre
 	}
 	return data
 }
