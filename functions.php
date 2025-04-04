@@ -155,20 +155,16 @@ function towerpf_site_scripts(){
 
 			$porches_with_performers = array_map(function($porch){
 				$performers = [];
-				for($i = 1; $i <= 12; $i++){
-					$field = get_field("performer_{$i}", $porch->ID);
-					if(!is_null($field) && isset($field['performer'])){
-						$performer = get_post($field['performer']);
-						$genre = get_field("genre", $field['performer']);
-
-						if ($performer) {
-							$performers[] = [
-								'performer'		=> $performer,
-								'genre' 			=> $genre,
-							];
-						}
-					}else{
-						break;
+				if(have_rows('performer_lineup', $porch->ID)){
+					while(have_rows('performer_lineup', $porch->ID)){
+						the_row();
+						$performer = get_sub_field('performer');
+						$performers[] = [
+							'performer' => $performer,
+							'start_time' => get_sub_field('start_time'),
+							'end_time' => get_sub_field('end_time'),
+							'genres' => get_field("genre", $performer->ID),
+						];
 					}
 				}
 				$imgurl = get_the_post_thumbnail_url($porch->ID, 'full');
@@ -186,6 +182,7 @@ function towerpf_site_scripts(){
 		wp_localize_script('map-script', 'wpVars', [
 			'porches'	=> porches_with_performances(),
 			'homeURL' => home_url(),
+			'themeURL' => get_template_directory_uri(),
 			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
 			'genres'	=> get_field_object('field_6491fdd624af4')['choices'],
 		]);
@@ -305,10 +302,12 @@ add_action('init', function(){
 			'edit_post'						=> 'edit_performer',
 			'edit_posts'					=> 'edit_performers',
 			'edit_others_posts'		=> 'edit_others_performers',
+			'edit_published_posts'	=> 'edit_published_porches',
 			'publish_posts'				=> 'publish_performers',
 			'read_post'						=> 'read_performer',
 			'read_private_posts'	=> 'read_private_performers',
 			'delete_posts'				=> 'delete_performers',
+			'delete_published_posts' => 'delete_published_performers',
 		],
 		'map_meta_cap'		=> true,
 	));
