@@ -71,7 +71,7 @@ async function initMap(){
   )
 
 	let markers = []
-	// let markerClusterer
+	let markerCluster
 	async function buildMarkers(formData){
 		let fPorches = []
 		if(formData){
@@ -85,7 +85,7 @@ async function initMap(){
 				fPorches = filterData(wpVars.porches, formData)
 			}
 			markers.forEach(marker=>marker.setMap(null))
-			// markerCluster.clearMarkers()
+			markerCluster.clearMarkers()
 
 			// return
 		}else{
@@ -131,7 +131,7 @@ async function initMap(){
 			})
 			return marker
 		})
-		// markerCluster = new markerClusterer.MarkerClusterer({markers, map})
+		markerCluster = new markerClusterer.MarkerClusterer({markers, map})
 	}
 	buildMarkers()
 

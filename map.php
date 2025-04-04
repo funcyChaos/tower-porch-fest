@@ -9,7 +9,6 @@
 <?php
 	get_header("map");
 	$genres	= get_field_object('field_6491fdd624af4')['choices'];	
-	
 ?>
 
 <div class="map-menu" id="map_menu">

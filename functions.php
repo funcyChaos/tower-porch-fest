@@ -186,7 +186,7 @@ function towerpf_site_scripts(){
 			'defaultImageURL' => get_the_post_thumbnail_url( 5, 'full' ),
 			'genres'	=> get_field_object('field_6491fdd624af4')['choices'],
 		]);
-		wp_enqueue_script("marker-cluster", "https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js", [], false, true);
+		wp_enqueue_script("marker-cluster", get_template_directory_uri()."/js/clusterer.min.js", [], false, true);
 		wp_enqueue_script('map-script');
 		wp_enqueue_script("map-api", "https://maps.googleapis.com/maps/api/js?key=".map_api_key."&loading=async&callback=initMap&libraries=marker", ["map-script"], false, true);
 	}
