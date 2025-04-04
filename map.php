@@ -53,7 +53,11 @@
 					<option selected value="none">none</option>
 					<option value="something">something</option>
 				</select>
+			</div>
 		</div>
+		<div class="filter-submit">
+			<input type="button" value="Reset" id="reset_filter">
+			<input type="submit" value="Filter">
 		</div>
 	</form>
 </div>

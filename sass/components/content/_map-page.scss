@@ -161,9 +161,7 @@ $blue: #14a4ab;
 
 	background-color: black;
 	color: white;
-
-	// display: flex;
-	// justify-content: space-between;
+	// display: none;
 
 	.map-menu-header{
 		display: flex;
@@ -186,18 +184,19 @@ $blue: #14a4ab;
 			label{width: 100px;font-size: 1.5rem;}
 		}
 		
-		input[type="text"], input[type="time"]{
+		input[type="text"]{
 			// flex: 1;
 			// min-width: 170px;
 			// max-width: 250px;
 			width: 170px;
+			font-size: 2rem;
 		}
 		// .filter-search{
 		// 	// display: flex;
 		// }
 
 		input{
-			font-size: 2rem;
+			// font-size: 2rem;
 			padding: 8px;
 			border-radius: 8px;
 		}
