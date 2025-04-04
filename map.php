@@ -8,18 +8,8 @@
 ?>  
 <?php
 	get_header("map");
-	if(!empty($_REQUEST['srch'])){
-		$s = ['s'=>$_REQUEST['srch']];
-		$query = new WP_Query($s);
-		if($query->have_posts()){
-			$query_results = [];
-			while($query->have_posts()){
-				$query->the_post();
-				$query_results[] = get_the_ID();
-			}
-			?><script>const searchResults = <?=json_encode($query_results)?></script><?php
-		}
-	}
+	$genres	= get_field_object('field_6491fdd624af4')['choices'];	
+	
 ?>
 
 <div class="map-menu" id="map_menu">
@@ -51,6 +41,11 @@
 				<label for="genre">genre</label>
 				<select name="genre" id="filter_genre">
 					<option selected value="none">none</option>
+					<?php
+						foreach($genres as $genre){
+							?><option value="<?=$genre?>"><?=$genre?></option><?php
+						}
+					?>
 					<option value="something">something</option>
 				</select>
 			</div>
