@@ -45,7 +45,6 @@
 							?><option value="<?=$genre?>"><?=$genre?></option><?php
 						}
 					?>
-					<option value="something">something</option>
 				</select>
 			</div>
 		</div>
@@ -56,7 +55,9 @@
 	</form>
 </div>
 
-<div class="map-header"><h3>Advertisement and Header Area</h3></div><div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
-<div id="map"></div>
+<div class="map-height-wrapper">
+	<div class="map-header"><h3>Advertisement and Header Area</h3></div><div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
+	<div id="map"></div>
+</div>
 
 <?php get_footer("map");?>
