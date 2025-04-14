@@ -74,8 +74,24 @@ async function initMap(){
 		let fPorches = []
 		if(formData){
 			if(formData.search){
-				const searched = wpVars.porches.filter(porch=>formData.search.some(searchPorch=>porch.porch.ID === searchPorch.id))
-				fPorches = filterData(searched, formData)
+				const filterPerformers = wpVars.porches.filter(porch=>{
+					let performermatch = false
+					porch.performers.map(performer=>{
+						if(performermatch)return
+						const performerTitle = performer.performer.post_title?.toLowerCase()
+						if(performerTitle){
+							if(performerTitle.includes(formData.search))performermatch = true
+						}
+					})
+					return performermatch
+				})
+				
+				const searched = wpVars.porches.filter(porch=>formData.wp_search.some(searchPorch=>porch.porch.ID === searchPorch.id))
+				const combined = [...filterPerformers, ...searched]
+				const deduped = Array.from(
+					new Map(combined.map(porch => [porch.porch.ID, porch])).values()
+				)
+				fPorches = filterData(deduped, formData)
 			}else{
 				fPorches = filterData(wpVars.porches, formData)
 			}
@@ -106,7 +122,6 @@ async function initMap(){
 
 			glyph.src = `${wpVars.themeURL}/img/map/glyph.svg`
 			let zIndex = 1000
-			// console.log(porch)
 			if(porch.acf.sponsored){
 				glyph.src = `${wpVars.themeURL}/img/map/glyph-sponsor.svg`
 			}else if(porch.acf.porta_potty){
@@ -136,7 +151,7 @@ async function initMap(){
 	
 			marker.addListener("gmp-click", ()=>{
 				popup.position = new google.maps.LatLng(lat, lng)
-				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link}"><h3>${porch.porch.post_title}</h3></a><img src="${imgurl}" alt="Default"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank"><button>Get Directions!</button><a/></div>${lineup}<div class="content"><p>${porch.porch.post_content}</p></div></div>`
+				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link}"><h3>${porch.porch.post_title}</h3></a><img src="${imgurl}" alt="Default"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank"><button>Get Directions!</button><a/></div>${lineup}<div class="content"><p>${porch.porch.post_content}</p></div></div>`
 				const close = document.createElement("i")
 				close.classList.add("fas", "fa-times-circle", "popup-close")
 				contentDiv.appendChild(close)
@@ -180,7 +195,7 @@ async function initMap(){
 			fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?search=${search.value}`)
 			.then(response=>response.json())
 			.then(data=>{
-				values.search = data
+				values["wp_search"] = data
 				buildMarkers(values)
 			})
 		}else{
@@ -201,9 +216,7 @@ function filterData(data, formData){
 		data = data.filter(porch=>porch.acf.sponsored)
 	}
 	if(formData.porta){
-		console.log(data)
 		data = data.filter(porch=>porch.acf.porta_potty)
-		console.log(data)
 	}
 	if(formData.time){
 		let afterTime = []
