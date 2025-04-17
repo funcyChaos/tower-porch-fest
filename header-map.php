@@ -22,16 +22,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
 	<!-- font awesome -->
-	<script src="https://kit.fontawesome.com/3c576d03cf.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/aebdbe8212.js" crossorigin="anonymous"></script>
 	<?php wp_head(); ?>
-	<style>
-		#rmp_menu_trigger-1585{
-			display: none;
-			top: 0;
-			right: 0;
-			height: 100px;
-		}
-	</style>
 </head>
 
 <body <?php body_class(); ?>>
