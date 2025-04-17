@@ -84,33 +84,23 @@ while(have_posts()){
 					<?php
 				}
 
-			if(get_field('performer_1')){
-				for($i=1; $i < 13; $i++){
-					$band = get_field("performer_{$i}");
-					if(!$band['performer'])break;
-					$genres = get_field('genre', $band['performer']);
+			if(have_rows("performer_lineup")){
+				while(have_rows('performer_lineup')){
+					the_row();
+					$performer = get_sub_field("performer");
 					?>
 						<div class="band-card">
 							<div class="TagContent">
 								<?php
-									?><script>console.log('<?=$band['start_time']?>')</script><?php
-									$th_starts[] = date("h:i A", strtotime($band['start_time']));
-									$th_ends[] = date("h:i A", strtotime($band['end_time']));
-									?><script>console.log('twelve hour: ', '<?=date("h:i A", strtotime($band['end_time']))?>')</script><?php
+									$th_starts = date("h:i A", strtotime(get_sub_field("start_time")));
+									$th_ends = date("h:i A", strtotime(get_sub_field("end_time")));
 								?>
-								<a href="#" class="singleButton"><?=$th_starts[$i - 1]?> - <?=$th_ends[$i - 1]?></a>
-								<h2 class="tagHeading"><?=get_the_title($band['performer']);?></h2>
+								<a href="#" class="singleButton"><?=$th_starts?> - <?=$th_ends?></a>
+								<h2 class="tagHeading"><?=get_the_title($performer->ID);?></h2>
 									<p class="tag">
 										<?php
-											if(is_array($genres)){
-												$genreCount = count($genres);
-												for($g=0; $g < $genreCount; $g++){ 
-													if($g == $genreCount - 1){
-														echo $genres[$g];
-													}else{
-														echo $genres[$g] . ', ';
-													}
-												}
+											foreach(get_field("genre", $performer->ID) as $value){
+												echo $value . " ";
 											}
 										?>
 									</p>

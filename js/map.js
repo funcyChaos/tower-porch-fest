@@ -1,3 +1,5 @@
+let matches = []
+
 async function initMap(){
 	const {ColorScheme} 				= await google.maps.importLibrary("core")
 	const zoom = 14.2
@@ -72,6 +74,9 @@ async function initMap(){
 	let markerCluster
 	async function buildMarkers(formData){
 		let fPorches = []
+		if(markerCluster)markerCluster.clearMarkers()
+		popup.setMap(null)
+		allMarkers.forEach(marker=>marker.marker.setMap(null))
 		if(formData){
 			if(formData.search){
 				const filterPerformers = wpVars.porches.filter(porch=>{
@@ -80,12 +85,16 @@ async function initMap(){
 						if(performermatch)return
 						const performerTitle = performer.performer.post_title?.toLowerCase()
 						if(performerTitle){
-							if(performerTitle.includes(formData.search))performermatch = true
+							if(performerTitle.includes(formData.search)){
+								performermatch = true
+								if(!matches.includes(performer.performer.post_title)){
+									matches.push(performer.performer.post_title)
+								}
+							}
 						}
 					})
 					return performermatch
 				})
-				
 				const searched = wpVars.porches.filter(porch=>formData.wp_search.some(searchPorch=>porch.porch.ID === searchPorch.id))
 				const combined = [...filterPerformers, ...searched]
 				const deduped = Array.from(
@@ -95,9 +104,6 @@ async function initMap(){
 			}else{
 				fPorches = filterData(wpVars.porches, formData)
 			}
-			popup.setMap(null)
-			allMarkers.forEach(marker=>marker.marker.setMap(null))
-			markerCluster.clearMarkers()
 		}else{
 			fPorches = wpVars.porches
 		}
@@ -144,8 +150,17 @@ async function initMap(){
 			let lineup = ``
 			if(porch.acf.performer_lineup){
 				porch.acf.performer_lineup.forEach((performer, i)=>{
-					lineup += `<tr><td>${performer.start_time}</td><td>${performer.performer.post_title}</td></tr>`
+					let highlight = "initial"
+					if(matches.includes(performer.performer.post_title)){
+						highlight = "#ffb6c1"
+					}
+					lineup += `<tr><td>${performer.start_time}</td><td style="background-color: ${highlight}"><a href="/performer/${performer.performer.post_name}">${performer.performer.post_title}</a></td></tr>`
 				})
+			}
+			if(porch.acf.has_food){
+				lineup += `<tr><td>Vendor</td><td>${porch.acf.food_vendor.food_name}</td></tr>`
+			}
+			if(lineup){
 				lineup = `<div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div>`
 			}
 	
@@ -183,12 +198,12 @@ async function initMap(){
 		popup.setMap(null)
 	})
 
-
 	const form		= document.getElementById("map_filter")
 	const search = document.getElementById("filter_search")
 
 	form.addEventListener("submit", (e)=>{
 		e.preventDefault()
+		matches = []
 		const formData = new FormData(form)
 		const values = Object.fromEntries(formData.entries())
 		if(values.search){
@@ -205,6 +220,7 @@ async function initMap(){
 	})
 	document.getElementById("reset_filter").addEventListener("click", ()=>{
 		form.reset()
+		matches = []
 		buildMarkers()
 		document.getElementById("map_menu").style.display = "none"
 	})
@@ -212,8 +228,11 @@ async function initMap(){
 
 function filterData(data, formData){
 	hasLineup = data.filter(porch=>porch.acf.performer_lineup)
-	if(formData.vendor){
+	if(formData.sponsor){
 		data = data.filter(porch=>porch.acf.sponsored)
+	}
+	if(formData.vendor){
+		data = data.filter(porch=>porch.acf.has_food)
 	}
 	if(formData.porta){
 		data = data.filter(porch=>porch.acf.porta_potty)
@@ -223,6 +242,9 @@ function filterData(data, formData){
 		if(hasLineup.length != 0){
 			hasLineup.forEach(porch=>{
 				let bool = false
+				if(porch.porch.ID == 983){
+					console.log(porch)
+				}
 				porch.acf.performer_lineup.forEach(performer=>{
 					if(bool) return
 					let [hours, minutes] = formData.time.split(':').map(Number)
@@ -253,6 +275,9 @@ function filterData(data, formData){
 					if(bool) return
 					if(performer.genres){
 						if(performer.genres.filter(genre=>genre == formData.genre).length != 0){
+							if(!matches.includes(performer.performer.post_title)){
+								matches.push(performer.performer.post_title)
+							}
 							bool = true
 						}
 					}

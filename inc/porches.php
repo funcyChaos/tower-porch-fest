@@ -31,33 +31,54 @@ add_action('init', function(){
 	));
 });
 
-add_action('rest_api_init', function(){
-	register_rest_field('porch', 'performers', [
-		'get_callback' => function($object){
-			$performers = [];
-			for($i = 1; $i < 13; $i++){
-				$field = get_field("performer_{$i}", $object['id']);
-				if(!is_null($field)){
-					if($field['performer']){
-						$post = get_post($field['performer']);
-						$genre = get_field("genre", $field['performer']);
-						$performers[] = [$post, $genre];
-					}
-				}else break;
+function enqueue_admin_time_restriction_script($hook) {
+	// Only load on post edit/create pages
+	if ($hook === 'post-new.php' || $hook === 'post.php') {
+		$screen = get_current_screen();
+		
+		// Check for the correct post type
+		if ($screen->post_type === 'porch') {
+			wp_enqueue_script(
+				'porch-time-restrict',
+				get_template_directory_uri() . '/js/porch-time.js',
+				['jquery'],
+				'1.0',
+				true
+			);
+		}
+	}
+}
+add_action('admin_enqueue_scripts', 'enqueue_admin_time_restriction_script');
+
+
+register_rest_field('porch', 'performers', [
+	'get_callback' => function ($object) {
+		$lineup = get_field('performer_lineup', $object['id']);
+		$performers_data = [];
+
+		if ($lineup && is_array($lineup)) {
+			foreach ($lineup as $row) {
+				$performer_post = isset($row['performer']) ? $row['performer'] : null;
+				$start_time = isset($row['start_time']) ? $row['start_time'] : null;
+				$end_time = isset($row['end_time']) ? $row['end_time'] : null;
+
+				if ($performer_post instanceof WP_Post) {
+					$genre = get_field("genre", $performer_post->ID);
+					$performers_data[] = [
+						'performer'  => $performer_post,
+						'genre'      => $genre,
+						'start_time' => $start_time,
+						'end_time'   => $end_time,
+					];
+				}
 			}
-			return $performers;
-		},
-		'update_callback' => null,
-		'schema' => null,
-	]);
-	register_rest_field('porch', 'acff', [
-		'get_callback' => function($object){
-			return get_fields($object['id']);
-		},
-		'update_callback' => null,
-		'schema' => null,
-	]);
-});
+		}
+
+		return $performers_data;
+	},
+	'update_callback' => null,
+	'schema' => null,
+]);
 
 add_filter('block_editor_settings_all', function($editor_settings){
 	$screen = get_current_screen();
@@ -98,7 +119,8 @@ add_action('add_meta_boxes', function(){
 	add_meta_box('instructionsdiv', 'Porch Instructions', function(){
 		?>
 			<p style="font-size: larger;">Complete this form to create/edit your porch entry. When you are ready to publish send an email to <a href="mailto:towerporchinfo@gmail.com">towerporchinfo@gmail.com</a>.</p>
-			<p>Add up to 12 performers. If your performer is not in the dropdown, head to the porches pages <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create a new performer.</p>
+			<p>In Porch Fields you will find Performer Lineup:</p>
+			<p>Click "Add Row" for every performer you want to add to your lineup. If your performer is not in the dropdown, be sure to save your porch as a draft ad head <a href="<?=site_url();?>/wp-admin/edit.php?post_type=performer">here</a> to create your performer(s)</p>
 		<?php
 	}, 'porch', 'normal', 'high');
 

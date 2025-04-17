@@ -65,6 +65,9 @@ $popup-color: white;
 		a{
 			color: black;
 		}
+		h3{
+			width: calc(100% - 1rem);
+		}
 	}
 	p{font-size: 1.5rem;}
 	.popup-close{
@@ -126,32 +129,31 @@ $blue: #14a4ab;
 	top: 17px;
 }
 
+
+$header-height: 60px;
 .map-header{
 	position: absolute;
 	top: 0;
-	height: 100px;
-	width: calc(100vw - 55px); // For normal menu button
+	height: $header-height;
+	width: calc(100vw - 55px);
 	z-index: 1000;
-	background-color: blue;
-	color: white;
+	background-color: #FAF1D5;
 
 	display: flex;
 	align-items: flex-end;
 	justify-content: center;
-	h3{margin: 0;}
+	padding: 10px;
+	img{
+		height: 100%;
+	}
 }
-#rmp_menu_trigger-1585{
-	display: none;
-	top: 0;
-	right: 0;
-	height: 100px;
-}
+
 
 .menu-btn-wrap{
 	position: absolute;
 	top: 0;
 	right: 0;
-	height: 100px;
+	height: $header-height;
 	width: 55px; // For normal menu button
 	z-index: 1000;
 	background-color: black;

@@ -13,7 +13,7 @@
 
 <div class="map-menu" id="map_menu">
 	<div class="map-menu-header">
-		<i class="fas fa-home"></i>
+		<a href="/"><i class="fas fa-home"></i></a>
 		<i class="fas fa-times-circle" id="close_menu"></i>
 	</div>
 	<form action="" id="map_filter">
@@ -36,6 +36,10 @@
 				<label for="porta">Bathroom</label>
 				<input type="checkbox" name="porta" id="filter_porta">
 			</div>
+			<div class="filter-sponsored">
+				<label for="sponsor">Sponsored</label>
+				<input type="checkbox" name="sponsor" id="filter_sponsor">
+			</div>
 			<div class="filter-genre">
 				<label for="genre">genre</label>
 				<select name="genre" id="filter_genre">
@@ -56,7 +60,8 @@
 </div>
 
 <div class="map-height-wrapper">
-	<div class="map-header"><h3>Advertisement and Header Area</h3></div><div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
+	<div class="map-header"><img src="<?=get_template_directory_uri()?>/img/map/fresno-teachers.png" alt=""></div>
+	<div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
 	<div id="map"></div>
 </div>
 
