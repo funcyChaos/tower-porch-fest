@@ -86,12 +86,12 @@ async function initMap() {
 	 *  - Marker icon paths assigned in `buildMarkers()`.
 	 */
 	const markerTypes = {
-		'default': { label: 'Porch', icon: `${wpVars.themeURL}/img/map/glyph.svg` },
-		'sponsored': { label: 'Sponsor', icon: `${wpVars.themeURL}/img/map/glyph-sponsor.svg` },
-		'porta': { label: 'Restroom', icon: `${wpVars.themeURL}/img/map/glyph-porta.svg` },
-		'info': { label: 'Info Booth', icon: `${wpVars.themeURL}/img/map/glyph-info.svg` },
-		'parking': { label: 'Parking', icon: `${wpVars.themeURL}/img/map/glyph-parking.svg` },
-		'vendor': { label: 'Vendor', icon: `${wpVars.themeURL}/img/map/glyph-food.svg` }
+		'default': { label: 'Porch', iconBase: `${wpVars.themeURL}/img/map/glyph.svg`, iconFood: `${wpVars.themeURL}/img/map/glyph-food.svg` },
+		'sponsored': { label: 'Sponsor', iconBase: `${wpVars.themeURL}/img/map/glyph-sponsor.svg`, iconFood: `${wpVars.themeURL}/img/map/glyph-sponsor-food.svg` },
+		'porta': { label: 'Restroom', iconBase: `${wpVars.themeURL}/img/map/glyph-porta.svg` }, // No food variant i hope!
+		'info': { label: 'Info Booth', iconBase: `${wpVars.themeURL}/img/map/glyph-info.svg` }, // No food variant, but we could replace !
+		'parking': { label: 'Parking', iconBase: `${wpVars.themeURL}/img/map/glyph-parking.svg` }, // No food variant
+		'food_available': { label: 'Food', iconBase: `${wpVars.themeURL}/img/map/glyph-utensils-only.svg`, isLegendOnly: true } // Legend only - Uses utensils icon
 	};
 
 	let allMarkers = []
@@ -116,7 +116,7 @@ async function initMap() {
 			listItem.classList.add('is-active');
 
 			const iconImg = document.createElement('img');
-			iconImg.src = details.icon;
+			iconImg.src = details.iconBase; // Use iconBase for legend
 			iconImg.alt = details.label;
 			iconImg.classList.add('legend-icon');
 
@@ -198,13 +198,20 @@ async function initMap() {
 				markerType = 'info';
 			} else if (porch.acf.parking) {
 				markerType = 'parking';
-			} else if (porch.acf.has_food) {
-				markerType = 'vendor';
+			}
+
+			// Determine icon path
+			let iconPath = markerTypes[markerType].iconBase; // Default to base icon
+			const hasFood = porch.acf.has_food;
+
+			// Check if food variant exists and should be used
+			if (hasFood && markerTypes[markerType].iconFood) {
+				iconPath = markerTypes[markerType].iconFood;
 			}
 
 			// Assign icon using the determined type and the markerTypes object
 			const glyph = document.createElement("img");
-			glyph.src = markerTypes[markerType].icon;
+			glyph.src = iconPath; // Use the determined icon path
 
 			// Assign zIndex based on type (can be expanded if needed)
 			let zIndex = 1000;
