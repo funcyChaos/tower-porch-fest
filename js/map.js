@@ -1,156 +1,93 @@
 let matches = []
 
-async function initMap() {
-	const { ColorScheme } = await google.maps.importLibrary("core")
-	// --- START: Constants ---
-	const INITIAL_CENTER = { lat: 36.7650533, lng: -119.7995578 }; // Seems to be info booth
-	const INITIAL_ZOOM = 14.2;
-	const MIN_ZOOM_OFFSET = 2;
-	const MAX_ZOOM_OFFSET = 3;
-	const MARKER_OFFSET_FACTOR = 0.0002;
-	const POPUP_PAN_PIXEL_OFFSET = 300; // Pixel offset used for panning when popup opens
-	const DEFAULT_FALLBACK_IMAGE_URL = "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png";
-	// --- END: Constants ---
-
+async function initMap(){
+	const {ColorScheme} 				= await google.maps.importLibrary("core")
+	const zoom = 14.2
 	const map = new google.maps.Map(document.getElementById("map"), {
-		zoom: INITIAL_ZOOM,
-		center: INITIAL_CENTER,
-		mapId: "4049b264513558e3",
-		minZoom: INITIAL_ZOOM - MIN_ZOOM_OFFSET,
-		maxZoom: INITIAL_ZOOM + MAX_ZOOM_OFFSET,
-		colorScheme: ColorScheme.DARK,
-		mapTypeControl: false,
-		fullscreenControl: false,
-	})
+    zoom,
+    center: {lat: 36.7650533, lng: -119.7995578},
+    mapId: "4049b264513558e3",
+		minZoom: zoom - 2,
+    maxZoom: zoom + 3,
+		colorScheme:							ColorScheme.DARK,
+		mapTypeControl: 					false,
+		fullscreenControl:				false,
+  })
 	class Popup extends google.maps.OverlayView {
-		position
-		containerDiv
-		constructor(position, content) {
-			super()
-			content.classList.add("popup-bubble")
+    position
+    containerDiv
+    constructor(position, content){
+      super()
+      content.classList.add("popup-bubble")
 
-			// This zero-height div is positioned at the top of the bubble.
-			const bubbleAnchor = document.createElement("div")
+      // This zero-height div is positioned at the top of the bubble.
+      const bubbleAnchor = document.createElement("div")
 
-			bubbleAnchor.classList.add("popup-bubble-anchor")
-			bubbleAnchor.appendChild(content)
-			// This zero-height div is positioned at the bottom of the tip.
-			this.containerDiv = document.createElement("div")
-			this.containerDiv.classList.add("popup-container")
-			this.containerDiv.appendChild(bubbleAnchor)
-			// Optionally stop clicks, etc., from bubbling up to the map.
-			Popup.preventMapHitsAndGesturesFrom(this.containerDiv)
-		}
-		/** Called when the popup is added to the map. */
-		onAdd() {
-			this.getPanes().floatPane.appendChild(this.containerDiv)
-		}
-		/** Called when the popup is removed from the map. */
-		onRemove() {
-			if (this.containerDiv.parentElement) {
-				this.containerDiv.parentElement.removeChild(this.containerDiv)
-			}
-		}
-		/** Called each frame when the popup needs to draw itself. */
-		draw() {
-			const divPosition = this.getProjection().fromLatLngToDivPixel(
-				this.position,
-			)
-			// Hide the popup when it is far out of view.
-			const display =
-				Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
-					? "block"
-					: "none"
-			if (display === "block") {
-				this.containerDiv.style.left = divPosition.x + "px"
-				this.containerDiv.style.top = divPosition.y + "px"
-			}
-			if (this.containerDiv.style.display !== display) {
-				this.containerDiv.style.display = display;
-			}
-		}
-	}
+      bubbleAnchor.classList.add("popup-bubble-anchor")
+      bubbleAnchor.appendChild(content)
+      // This zero-height div is positioned at the bottom of the tip.
+      this.containerDiv = document.createElement("div")
+      this.containerDiv.classList.add("popup-container")
+      this.containerDiv.appendChild(bubbleAnchor)
+      // Optionally stop clicks, etc., from bubbling up to the map.
+      Popup.preventMapHitsAndGesturesFrom(this.containerDiv)
+    }
+    /** Called when the popup is added to the map. */
+    onAdd(){
+      this.getPanes().floatPane.appendChild(this.containerDiv)
+    }
+    /** Called when the popup is removed from the map. */
+    onRemove(){
+      if (this.containerDiv.parentElement){
+        this.containerDiv.parentElement.removeChild(this.containerDiv)
+      }
+    }
+    /** Called each frame when the popup needs to draw itself. */
+    draw() {
+      const divPosition = this.getProjection().fromLatLngToDivPixel(
+        this.position,
+      )
+      // Hide the popup when it is far out of view.
+      const display =
+        Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
+          ? "block"
+          : "none"
+      if(display === "block"){
+        this.containerDiv.style.left = divPosition.x + "px"
+        this.containerDiv.style.top = divPosition.y + "px"
+      }
+      if(this.containerDiv.style.display !== display){
+        this.containerDiv.style.display = display;
+      }
+    }
+  }
 
 	const contentDiv = document.createElement("div");
 	contentDiv.id = "content";
 
-	const popup = new Popup(
-		new google.maps.LatLng(INITIAL_CENTER.lat, INITIAL_CENTER.lng),
+  const popup = new Popup(
+    new google.maps.LatLng(-33.866, 151.196),
 		contentDiv,
-	)
-
-	/**
-	 * Defines all marker categories and their associated label/icon.
-	 * Source of truth for:
-	 *  - Legend items generated by `buildLegend()`.
-	 *  - Marker icon paths assigned in `buildMarkers()`.
-	 */
-	const markerTypes = {
-		'default': { label: 'Porch', icon: `${wpVars.themeURL}/img/map/glyph.svg` },
-		'sponsored': { label: 'Sponsor', icon: `${wpVars.themeURL}/img/map/glyph-sponsor.svg` },
-		'porta': { label: 'Restroom', icon: `${wpVars.themeURL}/img/map/glyph-porta.svg` },
-		'info': { label: 'Info Booth', icon: `${wpVars.themeURL}/img/map/glyph-info.svg` },
-		'parking': { label: 'Parking', icon: `${wpVars.themeURL}/img/map/glyph-parking.svg` },
-		'vendor': { label: 'Vendor', icon: `${wpVars.themeURL}/img/map/glyph-food.svg` }
-	};
+  )
 
 	let allMarkers = []
 	let markerCluster
-
-	/* --- START: Dynamic Legend --- */
-	/**
-	 * Populates the #map-legend element by generating list items based on
-	 * the `markerTypes` object.
-	 */
-	function buildLegend() {
-		const legendDiv = document.getElementById("map-legend");
-		if (!legendDiv) return;
-
-		const legendContent = document.createElement('div');
-		legendContent.id = 'legend-content';
-		const legendList = document.createElement('ul');
-
-		Object.entries(markerTypes).forEach(([type, details]) => {
-			const listItem = document.createElement('li');
-			listItem.dataset.filterType = type;
-			listItem.classList.add('is-active');
-
-			const iconImg = document.createElement('img');
-			iconImg.src = details.icon;
-			iconImg.alt = details.label;
-			iconImg.classList.add('legend-icon');
-
-			const labelSpan = document.createElement('span');
-			labelSpan.textContent = details.label;
-			labelSpan.classList.add('legend-label');
-
-			listItem.appendChild(iconImg);
-			listItem.appendChild(labelSpan);
-			legendList.appendChild(listItem);
-		});
-
-		legendContent.appendChild(legendList);
-		legendDiv.innerHTML = '';
-		legendDiv.appendChild(legendContent);
-	}
-	/* --- END: Dynamic Legend --- */
-
-	async function buildMarkers(formData) {
+	async function buildMarkers(formData){
 		let fPorches = []
-		if (markerCluster) markerCluster.clearMarkers()
+		if(markerCluster)markerCluster.clearMarkers()
 		popup.setMap(null)
-		allMarkers.forEach(marker => marker.marker.setMap(null))
-		if (formData) {
-			if (formData.search) {
-				const filterPerformers = wpVars.porches.filter(porch => {
+		allMarkers.forEach(marker=>marker.marker.setMap(null))
+		if(formData){
+			if(formData.search){
+				const filterPerformers = wpVars.porches.filter(porch=>{
 					let performermatch = false
-					porch.performers.map(performer => {
-						if (performermatch) return
+					porch.performers.map(performer=>{
+						if(performermatch)return
 						const performerTitle = performer.performer.post_title?.toLowerCase()
-						if (performerTitle) {
-							if (performerTitle.includes(formData.search)) {
+						if(performerTitle){
+							if(performerTitle.includes(formData.search)){
 								performermatch = true
-								if (!matches.includes(performer.performer.post_title)) {
+								if(!matches.includes(performer.performer.post_title)){
 									matches.push(performer.performer.post_title)
 								}
 							}
@@ -158,16 +95,16 @@ async function initMap() {
 					})
 					return performermatch
 				})
-				const searched = wpVars.porches.filter(porch => formData.wp_search.some(searchPorch => porch.porch.ID === searchPorch.id))
+				const searched = wpVars.porches.filter(porch=>formData.wp_search.some(searchPorch=>porch.porch.ID === searchPorch.id))
 				const combined = [...filterPerformers, ...searched]
 				const deduped = Array.from(
 					new Map(combined.map(porch => [porch.porch.ID, porch])).values()
 				)
 				fPorches = filterData(deduped, formData)
-			} else {
+			}else{
 				fPorches = filterData(wpVars.porches, formData)
 			}
-		} else {
+		}else{
 			fPorches = wpVars.porches
 		}
 
@@ -175,81 +112,70 @@ async function initMap() {
 		// 	fPorches = filterData(wpVars.porches, {search: [window.location.hash.replace("#", "")]})
 		// }
 		const seenCoords = {}
-		allMarkers = fPorches.map((porch, i) => {
+		allMarkers = fPorches.map((porch, i)=>{
 			let lat = parseFloat(porch.acf.latitude)
 			let lng = parseFloat(porch.acf.longitude)
+			const glyph = document.createElement("img")
 			const key = `${lat.toFixed(5)},${lng.toFixed(5)}`
-			if (seenCoords[key]) {
-				const offset = MARKER_OFFSET_FACTOR * seenCoords[key];
+			if(seenCoords[key]){
+				const offset = 0.0002 * seenCoords[key]
 				lat += Math.cos(i) * offset
 				lng += Math.sin(i) * offset
 				seenCoords[key]++
-			} else {
+			}else{
 				seenCoords[key] = 1
 			}
 
-			// Determine marker type string based on ACF fields
-			let markerType = 'default'; // Start with default
-			if (porch.acf.sponsored) {
-				markerType = 'sponsored';
-			} else if (porch.acf.porta_potty) {
-				markerType = 'porta';
-			} else if (porch.acf.info_booth) {
-				markerType = 'info';
-			} else if (porch.acf.parking) {
-				markerType = 'parking';
-			} else if (porch.acf.has_food) {
-				markerType = 'vendor';
+			glyph.src = `${wpVars.themeURL}/img/map/glyph.svg`
+			let zIndex = 1000
+			if(porch.acf.sponsored){
+				glyph.src = `${wpVars.themeURL}/img/map/glyph-sponsor.svg`
+			}else if(porch.acf.porta_potty){
+				glyph.src = `${wpVars.themeURL}/img/map/glyph-porta.svg`
+				zIndex = 30000
+			}else if(porch.acf.info_booth){
+				glyph.src = `${wpVars.themeURL}/img/map/glyph-info.svg`
+			}else if(porch.acf.parking){
+				glyph.src = `${wpVars.themeURL}/img/map/glyph-parking.svg`
 			}
-
-			// Assign icon using the determined type and the markerTypes object
-			const glyph = document.createElement("img");
-			glyph.src = markerTypes[markerType].icon;
-
-			// Assign zIndex based on type (can be expanded if needed)
-			let zIndex = 1000;
-			if (markerType === 'porta') {
-				zIndex = 30000;
-			}
-
 			glyph.style.height = "40px";
 			const marker = new google.maps.marker.AdvancedMarkerElement({
 				map,
-				position: { lat, lng },
+				position: {lat, lng},
 				content: glyph,
 				zIndex,
 			})
-			const imgurl = porch.img ? porch.img : DEFAULT_FALLBACK_IMAGE_URL;
-
+			const imgurl = porch.img ? porch.img : "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png"
+	
 			let lineup = ``
-			if (porch.acf.performer_lineup) {
-				porch.acf.performer_lineup.forEach((performer, i) => {
+			if(porch.acf.performer_lineup){
+				porch.acf.performer_lineup.forEach((performer, i)=>{
 					let highlight = "initial"
-					if (matches.includes(performer.performer.post_title)) {
+					if(matches.includes(performer.performer.post_title)){
 						highlight = "#ffb6c1"
 					}
 					lineup += `<tr><td>${performer.start_time}</td><td style="background-color: ${highlight}"><a href="/performer/${performer.performer.post_name}">${performer.performer.post_title}</a></td></tr>`
 				})
 			}
-			if (porch.acf.has_food) {
+			if(porch.acf.has_food){
 				lineup += `<tr><td>Vendor</td><td>${porch.acf.food_vendor.food_name}</td></tr>`
 			}
-			if (lineup) {
+			if(lineup){
 				lineup = `<div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div>`
 			}
-
-			marker.addListener("gmp-click", () => {
+	
+			marker.addListener("gmp-click", ()=>{
 				popup.position = new google.maps.LatLng(lat, lng)
 				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link}"><h3>${porch.porch.post_title}</h3></a><img src="${imgurl}" alt="Default"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank"><button>Get Directions!</button><a/></div>${lineup}<div class="content"><p>${porch.porch.post_content}</p></div></div>`
 				const close = document.createElement("i")
 				close.classList.add("fas", "fa-times-circle", "popup-close")
 				contentDiv.appendChild(close)
 				popup.setMap(map)
-				close.addEventListener("click", () => {
+				close.addEventListener("click", ()=>{
 					popup.setMap(null)
 				})
 				const newCenter = {
-					lat: popup.position.lat() + POPUP_PAN_PIXEL_OFFSET / Math.pow(2, map.getZoom()),
+					lat: popup.position.lat() + 300 / Math.pow(2, map.getZoom()),
 					lng: popup.position.lng(),
 				}
 				map.panTo(newCenter)
@@ -267,33 +193,32 @@ async function initMap() {
 		})
 	}
 	buildMarkers()
-	buildLegend()
-
-	map.addListener("click", () => {
+	
+	map.addListener("click", ()=>{
 		popup.setMap(null)
 	})
 
-	const form = document.getElementById("map_filter")
+	const form		= document.getElementById("map_filter")
 	const search = document.getElementById("filter_search")
 
-	form.addEventListener("submit", (e) => {
+	form.addEventListener("submit", (e)=>{
 		e.preventDefault()
 		matches = []
 		const formData = new FormData(form)
 		const values = Object.fromEntries(formData.entries())
-		if (values.search) {
+		if(values.search){
 			fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?search=${search.value}`)
-				.then(response => response.json())
-				.then(data => {
-					values["wp_search"] = data
-					buildMarkers(values)
-				})
-		} else {
+			.then(response=>response.json())
+			.then(data=>{
+				values["wp_search"] = data
+				buildMarkers(values)
+			})
+		}else{
 			buildMarkers(values)
 		}
 		document.getElementById("map_menu").style.display = "none"
 	})
-	document.getElementById("reset_filter").addEventListener("click", () => {
+	document.getElementById("reset_filter").addEventListener("click", ()=>{
 		form.reset()
 		matches = []
 		buildMarkers()
@@ -301,27 +226,27 @@ async function initMap() {
 	})
 }
 
-function filterData(data, formData) {
-	hasLineup = data.filter(porch => porch.acf.performer_lineup)
-	if (formData.sponsor) {
-		data = data.filter(porch => porch.acf.sponsored)
+function filterData(data, formData){
+	hasLineup = data.filter(porch=>porch.acf.performer_lineup)
+	if(formData.sponsor){
+		data = data.filter(porch=>porch.acf.sponsored)
 	}
-	if (formData.vendor) {
-		data = data.filter(porch => porch.acf.has_food)
+	if(formData.vendor){
+		data = data.filter(porch=>porch.acf.has_food)
 	}
-	if (formData.porta) {
-		data = data.filter(porch => porch.acf.porta_potty)
+	if(formData.porta){
+		data = data.filter(porch=>porch.acf.porta_potty)
 	}
-	if (formData.time) {
+	if(formData.time){
 		let afterTime = []
-		if (hasLineup.length != 0) {
-			hasLineup.forEach(porch => {
+		if(hasLineup.length != 0){
+			hasLineup.forEach(porch=>{
 				let bool = false
-				if (porch.porch.ID == 983) {
+				if(porch.porch.ID == 983){
 					console.log(porch)
 				}
-				porch.acf.performer_lineup.forEach(performer => {
-					if (bool) return
+				porch.acf.performer_lineup.forEach(performer=>{
+					if(bool) return
 					let [hours, minutes] = formData.time.split(':').map(Number)
 					const now = new Date()
 					const formDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
@@ -330,34 +255,34 @@ function filterData(data, formData) {
 					if (modifier === "pm" && hours !== 12) hours += 12
 					if (modifier === "am" && hours === 12) hours = 0
 					const performanceDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
-					if (formDate <= performanceDate) {
+					if(formDate <= performanceDate){
 						bool = true
 					}
 				})
-				if (bool) {
+				if(bool){
 					afterTime.push(porch)
 				}
 			})
 			data = afterTime
 		}
 	}
-	if (formData.genre != "none") {
+	if(formData.genre != "none"){
 		let hasGenre = []
-		if (hasLineup.length != 0) {
-			hasLineup.forEach(porch => {
+		if(hasLineup.length != 0){
+			hasLineup.forEach(porch=>{
 				let bool = false
-				porch.performers.forEach(performer => {
-					if (bool) return
-					if (performer.genres) {
-						if (performer.genres.filter(genre => genre == formData.genre).length != 0) {
-							if (!matches.includes(performer.performer.post_title)) {
+				porch.performers.forEach(performer=>{
+					if(bool) return
+					if(performer.genres){
+						if(performer.genres.filter(genre=>genre == formData.genre).length != 0){
+							if(!matches.includes(performer.performer.post_title)){
 								matches.push(performer.performer.post_title)
 							}
 							bool = true
 						}
 					}
 				})
-				if (bool) {
+				if(bool){
 					hasGenre.push(porch)
 				}
 			})
@@ -368,17 +293,17 @@ function filterData(data, formData) {
 }
 
 const menu = document.getElementById("map_menu")
-document.getElementById("map_menu_btn").addEventListener("click", () => {
+document.getElementById("map_menu_btn").addEventListener("click", ()=>{
 	menu.style.display = "block"
 })
-document.getElementById("close_menu").addEventListener("click", () => {
+document.getElementById("close_menu").addEventListener("click", ()=>{
 	menu.style.display = "none"
 })
 
 window.addEventListener('resize', setVhUnit)
 
-function setVhUnit() {
-	const vh = window.innerHeight * 0.01;
-	document.documentElement.style.setProperty('--vh', `${vh}px`)
+function setVhUnit(){
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`)
 }
 setVhUnit()
