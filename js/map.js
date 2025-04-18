@@ -2,13 +2,22 @@ let matches = []
 
 async function initMap() {
 	const { ColorScheme } = await google.maps.importLibrary("core")
-	const zoom = 14.2
+	// --- START: Constants ---
+	const INITIAL_CENTER = { lat: 36.7650533, lng: -119.7995578 }; // Seems to be info booth
+	const INITIAL_ZOOM = 14.2;
+	const MIN_ZOOM_OFFSET = 2;
+	const MAX_ZOOM_OFFSET = 3;
+	const MARKER_OFFSET_FACTOR = 0.0002;
+	const POPUP_PAN_PIXEL_OFFSET = 300; // Pixel offset used for panning when popup opens
+	const DEFAULT_FALLBACK_IMAGE_URL = "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png";
+	// --- END: Constants ---
+
 	const map = new google.maps.Map(document.getElementById("map"), {
-		zoom,
-		center: { lat: 36.7650533, lng: -119.7995578 },
+		zoom: INITIAL_ZOOM,
+		center: INITIAL_CENTER,
 		mapId: "4049b264513558e3",
-		minZoom: zoom - 2,
-		maxZoom: zoom + 3,
+		minZoom: INITIAL_ZOOM - MIN_ZOOM_OFFSET,
+		maxZoom: INITIAL_ZOOM + MAX_ZOOM_OFFSET,
 		colorScheme: ColorScheme.DARK,
 		mapTypeControl: false,
 		fullscreenControl: false,
@@ -66,7 +75,7 @@ async function initMap() {
 	contentDiv.id = "content";
 
 	const popup = new Popup(
-		new google.maps.LatLng(-33.866, 151.196),
+		new google.maps.LatLng(INITIAL_CENTER.lat, INITIAL_CENTER.lng),
 		contentDiv,
 	)
 
@@ -171,7 +180,7 @@ async function initMap() {
 			let lng = parseFloat(porch.acf.longitude)
 			const key = `${lat.toFixed(5)},${lng.toFixed(5)}`
 			if (seenCoords[key]) {
-				const offset = 0.0002 * seenCoords[key]
+				const offset = MARKER_OFFSET_FACTOR * seenCoords[key];
 				lat += Math.cos(i) * offset
 				lng += Math.sin(i) * offset
 				seenCoords[key]++
@@ -210,7 +219,7 @@ async function initMap() {
 				content: glyph,
 				zIndex,
 			})
-			const imgurl = porch.img ? porch.img : "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png"
+			const imgurl = porch.img ? porch.img : DEFAULT_FALLBACK_IMAGE_URL;
 
 			let lineup = ``
 			if (porch.acf.performer_lineup) {
@@ -240,7 +249,7 @@ async function initMap() {
 					popup.setMap(null)
 				})
 				const newCenter = {
-					lat: popup.position.lat() + 300 / Math.pow(2, map.getZoom()),
+					lat: popup.position.lat() + POPUP_PAN_PIXEL_OFFSET / Math.pow(2, map.getZoom()),
 					lng: popup.position.lng(),
 				}
 				map.panTo(newCenter)
@@ -260,7 +269,7 @@ async function initMap() {
 	buildMarkers()
 	buildLegend()
 
-	map.addListener("gmp-click", () => {
+	map.addListener("click", () => {
 		popup.setMap(null)
 	})
 
