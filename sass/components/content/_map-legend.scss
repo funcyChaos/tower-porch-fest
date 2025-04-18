@@ -1,0 +1,88 @@
+@use "sass:color"; // If color functions are needed
+
+/* Map legend styles - glassmorphism, position fixed top left */
+#map-legend {
+    position: fixed;
+    top: 70px; // Position below header
+    left: 10px; // Position on left
+    right: auto; // Ensure right is not set
+    width: auto;
+    max-width: 170px; // sIncreased max-width
+
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1001; // Above map, below potential modals
+}
+
+#legend-content {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); // Two columns for screens
+        gap: 5px 12px; // Increased column gap
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+
+        // Style for non-active items (when filtering is implemented)
+        &:not(.is-active) {
+            opacity: 0.5;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .legend-icon {
+        width: 20px; // Slightly increased size
+        height: 20px; // Explicit height for consistency
+        display: block; // Ensure proper layout
+    }
+
+    // TODO: Specific style for cluster icon if needed
+    li img[src$="/porch.svg"] {
+        width: 20px; // Slightly larger? Adjust as needed
+        // Other specific styles
+    }
+
+    .legend-label {
+        font-size: 0.75rem;
+        color: #f0f0f0; // Light color for dark background
+    }
+}
+
+// Responsive adjustments for smaller screens
+@media (max-width: 600px) {
+    #map-legend {
+        top: 68px; // Adjust positioning slightly
+        left: 8px; // Keep on left
+        right: auto;
+        padding: 6px;
+        max-width: 120px; // Narrower on small screens
+    }
+
+    #legend-content {
+        ul {
+            grid-template-columns: 1fr; // Single column on small screens
+            gap: 4px;
+        }
+
+        .legend-label {
+            font-size: 0.7rem;
+        }
+    }
+}

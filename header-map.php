@@ -24,6 +24,14 @@
 	<!-- font awesome -->
 	<script src="https://kit.fontawesome.com/aebdbe8212.js" crossorigin="anonymous"></script>
 	<?php wp_head(); ?>
+	<style>
+		#rmp_menu_trigger-1585{
+			display: none;
+			top: 0;
+			right: 0;
+			height: 100px;
+		}
+	</style>
 </head>
 
 <body <?php body_class(); ?>>

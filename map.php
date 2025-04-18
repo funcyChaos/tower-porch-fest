@@ -63,6 +63,7 @@
 	<div class="map-header"><img src="<?=get_template_directory_uri()?>/img/map/fresno-teachers.png" alt=""></div>
 	<div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
 	<div id="map"></div>
+	<div id="map-legend"></div>
 </div>
 
 <?php get_footer("map");?>
