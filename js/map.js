@@ -91,7 +91,8 @@ async function initMap() {
 		'porta': { label: 'Restroom', icon: `${wpVars.themeURL}/img/map/glyph-porta.svg` },
 		'info': { label: 'Info Booth', icon: `${wpVars.themeURL}/img/map/glyph-info.svg` },
 		'parking': { label: 'Parking', icon: `${wpVars.themeURL}/img/map/glyph-parking.svg` },
-		'vendor': { label: 'Vendor', icon: `${wpVars.themeURL}/img/map/glyph-food.svg` }
+		'vendor': { label: 'Vendor', icon: `${wpVars.themeURL}/img/map/glyph-vendor.svg` },
+		'sponsored_vendor': { label: 'Sponsor & Vendor', icon: `${wpVars.themeURL}/img/map/glyph-vendor-sponsor.svg` }
 	};
 
 	let allMarkers = []
@@ -111,6 +112,7 @@ async function initMap() {
 		const legendList = document.createElement('ul');
 
 		Object.entries(markerTypes).forEach(([type, details]) => {
+			if(type === 'sponsored_vendor')return
 			const listItem = document.createElement('li');
 			listItem.dataset.filterType = type;
 			listItem.classList.add('is-active');
@@ -190,7 +192,9 @@ async function initMap() {
 
 			// Determine marker type string based on ACF fields
 			let markerType = 'default'; // Start with default
-			if (porch.acf.sponsored) {
+			if (porch.acf.sponsored && porch.acf.has_food) {
+				markerType = 'sponsored_vendor'
+			} else if(porch.acf.sponsored){
 				markerType = 'sponsored';
 			} else if (porch.acf.porta_potty) {
 				markerType = 'porta';
