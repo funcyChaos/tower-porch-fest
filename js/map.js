@@ -1,4 +1,5 @@
 let matches = []
+let activeLegendFilter = null;
 
 async function initMap() {
 	const { ColorScheme } = await google.maps.importLibrary("core")
@@ -9,6 +10,15 @@ async function initMap() {
 	const MAX_ZOOM_OFFSET = 3;
 	const MARKER_OFFSET_FACTOR = 0.0002;
 	const POPUP_PAN_PIXEL_OFFSET = 300; // Pixel offset used for panning when popup opens
+	const POPUP_VISIBILITY_THRESHOLD = 4000; // Hide popup if its pixel coords are beyond this
+	const ZINDEX_DEFAULT = 1000;
+	const ZINDEX_INFO = 20000;
+	const ZINDEX_PORTA = 30000;
+	const FIT_BOUNDS_PADDING = 20; // Base padding for fitBounds
+	const FIT_BOUNDS_PADDING_BUFFER = 20; // Extra buffer for top padding calculation
+	const FALLBACK_HEADER_HEIGHT = 60; // Fallback header height in pixels
+	const VH_CONVERSION_FACTOR = 0.01; // To convert innerHeight to vh units
+	const RESIZE_DEBOUNCE_MS = 100; // Debounce timer for resize listener
 	const DEFAULT_FALLBACK_IMAGE_URL = "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png";
 	// --- END: Constants ---
 
@@ -22,16 +32,15 @@ async function initMap() {
 		mapTypeControl: false,
 		fullscreenControl: false,
 	})
+
 	class Popup extends google.maps.OverlayView {
 		position
 		containerDiv
 		constructor(position, content) {
 			super()
 			content.classList.add("popup-bubble")
-
 			// This zero-height div is positioned at the top of the bubble.
 			const bubbleAnchor = document.createElement("div")
-
 			bubbleAnchor.classList.add("popup-bubble-anchor")
 			bubbleAnchor.appendChild(content)
 			// This zero-height div is positioned at the bottom of the tip.
@@ -42,28 +51,20 @@ async function initMap() {
 			Popup.preventMapHitsAndGesturesFrom(this.containerDiv)
 		}
 		/** Called when the popup is added to the map. */
-		onAdd() {
-			this.getPanes().floatPane.appendChild(this.containerDiv)
-		}
+		onAdd() { this.getPanes()?.floatPane?.appendChild(this.containerDiv) }
 		/** Called when the popup is removed from the map. */
-		onRemove() {
-			if (this.containerDiv.parentElement) {
-				this.containerDiv.parentElement.removeChild(this.containerDiv)
-			}
-		}
+		onRemove() { if (this.containerDiv.parentElement) { this.containerDiv.parentElement.removeChild(this.containerDiv) } }
 		/** Called each frame when the popup needs to draw itself. */
 		draw() {
-			const divPosition = this.getProjection().fromLatLngToDivPixel(
-				this.position,
-			)
+			const projection = this.getProjection();
+			if (!projection) return;
+			const divPosition = projection.fromLatLngToDivPixel(this.position);
+			if (!divPosition) return;
 			// Hide the popup when it is far out of view.
-			const display =
-				Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
-					? "block"
-					: "none"
+			const display = Math.abs(divPosition.x) < POPUP_VISIBILITY_THRESHOLD && Math.abs(divPosition.y) < POPUP_VISIBILITY_THRESHOLD ? "block" : "none";
 			if (display === "block") {
-				this.containerDiv.style.left = divPosition.x + "px"
-				this.containerDiv.style.top = divPosition.y + "px"
+				this.containerDiv.style.left = divPosition.x + "px";
+				this.containerDiv.style.top = divPosition.y + "px";
 			}
 			if (this.containerDiv.style.display !== display) {
 				this.containerDiv.style.display = display;
@@ -73,11 +74,7 @@ async function initMap() {
 
 	const contentDiv = document.createElement("div");
 	contentDiv.id = "content";
-
-	const popup = new Popup(
-		new google.maps.LatLng(INITIAL_CENTER.lat, INITIAL_CENTER.lng),
-		contentDiv,
-	)
+	const popup = new Popup(new google.maps.LatLng(INITIAL_CENTER.lat, INITIAL_CENTER.lng), contentDiv);
 
 	/**
 	 * Defines all marker categories and their associated label/icon.
@@ -91,11 +88,105 @@ async function initMap() {
 		'porta': { label: 'Restroom', iconBase: `${wpVars.themeURL}/img/map/glyph-porta.svg` }, // No food variant i hope!
 		'info': { label: 'Info Booth', iconBase: `${wpVars.themeURL}/img/map/glyph-info.svg` }, // No food variant, but we could replace !
 		'parking': { label: 'Parking', iconBase: `${wpVars.themeURL}/img/map/glyph-parking.svg` }, // No food variant
-		'food_available': { label: 'Food', iconBase: `${wpVars.themeURL}/img/map/glyph-utensils-only.svg`, isLegendOnly: true } // Legend only - Uses utensils icon
+		'food_available': { label: 'Food', iconBase: `${wpVars.themeURL}/img/map/glyph-utensils-only.svg` } // Linked to Vendor checkbox
 	};
 
-	let allMarkers = []
-	let markerCluster
+	let allMarkers = [];
+	let markerCluster;
+	const form = document.getElementById("map_filter");
+	const searchInput = document.getElementById("filter_search");
+	const menuElement = document.getElementById("map_menu");
+
+	function _handleFormSubmit() {
+		activeLegendFilter = null; 
+		updateLegendVisuals(); 
+		
+		matches = [];
+		const formData = new FormData(form);
+		const values = Object.fromEntries(formData.entries());
+		if (values.search && searchInput.value) {
+			fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?search=${encodeURIComponent(searchInput.value)}`)
+				.then(response => {
+					if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
+					return response.json();
+				})
+				.then(data => {
+					values["wp_search"] = data;
+					buildMarkers(values);
+				})
+				.catch(error => {
+					console.error("Error fetching search results:", error);
+					values["wp_search"] = [];
+					buildMarkers(values); 
+				});
+		} else {
+			buildMarkers(values);
+		}
+		if (menuElement) menuElement.style.display = "none";
+	}
+
+	function _handleFormReset() {
+		activeLegendFilter = null; 
+		updateLegendVisuals(); 
+
+		if (form) form.reset(); 
+		matches = [];
+		buildMarkers();
+		if (menuElement) menuElement.style.display = "none";
+	}
+
+	function updateLegendVisuals() {
+		if (!form) return; 
+		const vendorCheckbox = form.elements['vendor'];
+		const allLegendItems = document.querySelectorAll('#map-legend li');
+		if (!allLegendItems.length) return;
+		allLegendItems.forEach(item => {
+			const type = item.dataset.filterType;
+			if (type === 'food_available') {
+				item.classList.toggle('is-active', vendorCheckbox?.checked || false);
+			} else {
+				item.classList.toggle('is-active', !activeLegendFilter || activeLegendFilter === type);
+			}
+		});
+	}
+
+	function handleLegendItemClick(event) {
+		if (!form) return; 
+		const filterType = event.currentTarget.dataset.filterType;
+		const vendorCheckbox = form.elements['vendor'];
+
+		if (filterType === 'food_available') {
+			if (vendorCheckbox) {
+				vendorCheckbox.checked = !vendorCheckbox.checked;
+				_handleFormSubmit(); 
+			}
+		} else {
+			if (filterType === activeLegendFilter) {
+				_handleFormReset(); 
+			} else {
+				activeLegendFilter = filterType;
+				form.reset(); 
+				updateLegendVisuals();
+				matches = [];
+				buildMarkers(); 
+				if (menuElement) menuElement.style.display = "none";
+			}
+		}
+	}
+
+	function filterPorchesByType(type, porches) {
+		if (!type) return porches;
+		return porches.filter(porch => {
+			switch (type) {
+				case 'sponsored': return porch.acf.sponsored === true;
+				case 'porta': return porch.acf.porta_potty === true;
+				case 'info': return porch.acf.info_booth === true;
+				case 'parking': return porch.acf.parking === true;
+				case 'default': return !porch.acf.sponsored && !porch.acf.porta_potty && !porch.acf.info_booth && !porch.acf.parking;
+				default: return true;
+			}
+		});
+	}
 
 	/* --- START: Dynamic Legend --- */
 	/**
@@ -105,287 +196,357 @@ async function initMap() {
 	function buildLegend() {
 		const legendDiv = document.getElementById("map-legend");
 		if (!legendDiv) return;
-
-		const legendContent = document.createElement('div');
-		legendContent.id = 'legend-content';
 		const legendList = document.createElement('ul');
 
 		Object.entries(markerTypes).forEach(([type, details]) => {
 			const listItem = document.createElement('li');
 			listItem.dataset.filterType = type;
-			listItem.classList.add('is-active');
-
 			const iconImg = document.createElement('img');
-			iconImg.src = details.iconBase; // Use iconBase for legend
+			iconImg.src = details.iconBase;
 			iconImg.alt = details.label;
 			iconImg.classList.add('legend-icon');
-
 			const labelSpan = document.createElement('span');
 			labelSpan.textContent = details.label;
 			labelSpan.classList.add('legend-label');
-
 			listItem.appendChild(iconImg);
 			listItem.appendChild(labelSpan);
+			listItem.addEventListener('click', handleLegendItemClick); 
 			legendList.appendChild(listItem);
 		});
 
+		const legendContent = document.createElement('div');
+		legendContent.id = 'legend-content';
 		legendContent.appendChild(legendList);
 		legendDiv.innerHTML = '';
 		legendDiv.appendChild(legendContent);
 	}
 	/* --- END: Dynamic Legend --- */
 
+	// Helper function to fit bounds and then zoom out one level
+	function fitBoundsWithHeaderPadding(map, bounds) {
+		const headerElement = document.querySelector('.map-header');
+		const headerHeight = headerElement ? headerElement.offsetHeight : FALLBACK_HEADER_HEIGHT;
+		const padding = {
+			top: headerHeight + FIT_BOUNDS_PADDING_BUFFER,
+			bottom: FIT_BOUNDS_PADDING,
+			left: FIT_BOUNDS_PADDING,
+			right: FIT_BOUNDS_PADDING
+		};
+		map.fitBounds(bounds, padding); 
+	}
+
 	async function buildMarkers(formData) {
-		let fPorches = []
-		if (markerCluster) markerCluster.clearMarkers()
-		popup.setMap(null)
-		allMarkers.forEach(marker => marker.marker.setMap(null))
+		let fPorches = []; 
+
+		const bounds = new google.maps.LatLngBounds();
+
+		if (markerCluster) {
+			markerCluster.clearMarkers();
+		}
+		popup.setMap(null);
+		allMarkers.forEach(markerInfo => markerInfo.marker.setMap(null)); 
+		allMarkers = []; 
+
+
 		if (formData) {
 			if (formData.search) {
-				const filterPerformers = wpVars.porches.filter(porch => {
-					let performermatch = false
-					porch.performers.map(performer => {
-						if (performermatch) return
-						const performerTitle = performer.performer.post_title?.toLowerCase()
-						if (performerTitle) {
-							if (performerTitle.includes(formData.search)) {
-								performermatch = true
-								if (!matches.includes(performer.performer.post_title)) {
-									matches.push(performer.performer.post_title)
+				if (formData.wp_search) {
+					const filterPerformers = wpVars.porches.filter(porch => {
+						let performermatch = false;
+						if (porch.performers && Array.isArray(porch.performers)) {
+							porch.performers.forEach(performer => { 
+								if (performermatch) return;
+								const performerTitle = performer.performer?.post_title?.toLowerCase();
+								if (performerTitle?.includes(formData.search)) {
+									performermatch = true;
+									if (!matches.includes(performer.performer.post_title)) {
+										matches.push(performer.performer.post_title);
+									}
 								}
-							}
+							});
 						}
-					})
-					return performermatch
-				})
-				const searched = wpVars.porches.filter(porch => formData.wp_search.some(searchPorch => porch.porch.ID === searchPorch.id))
-				const combined = [...filterPerformers, ...searched]
-				const deduped = Array.from(
-					new Map(combined.map(porch => [porch.porch.ID, porch])).values()
-				)
-				fPorches = filterData(deduped, formData)
+						return performermatch;
+					});
+					const searched = wpVars.porches.filter(porch => formData.wp_search.some(searchPorch => porch.porch.ID === searchPorch.id));
+					const combined = [...filterPerformers, ...searched];
+					const deduped = Array.from(new Map(combined.map(porch => [porch.porch.ID, porch])).values());
+				fPorches = filterData(deduped, formData);
+				} else {
+					console.warn("Search term provided but wp_search data missing. Applying other filters only.");
+					fPorches = filterData(wpVars.porches, formData);
+				}
 			} else {
-				fPorches = filterData(wpVars.porches, formData)
+				fPorches = filterData(wpVars.porches, formData);
 			}
 		} else {
-			fPorches = wpVars.porches
+			// If no form data, check for active legend filter
+            if (activeLegendFilter) {
+                fPorches = filterPorchesByType(activeLegendFilter, wpVars.porches);
+            } else {
+                // Otherwise, show all
+                fPorches = wpVars.porches;
+            }
 		}
 
-		// else if(window.location.hash){
-		// 	fPorches = filterData(wpVars.porches, {search: [window.location.hash.replace("#", "")]})
-		// }
-		const seenCoords = {}
+		// Marker Creation Logic w safety checks
+		const seenCoords = {};
+		const googleMapsMarker = await google.maps.importLibrary("marker"); 
+
 		allMarkers = fPorches.map((porch, i) => {
-			let lat = parseFloat(porch.acf.latitude)
-			let lng = parseFloat(porch.acf.longitude)
-			const key = `${lat.toFixed(5)},${lng.toFixed(5)}`
+			let lat = parseFloat(porch.acf.latitude);
+			let lng = parseFloat(porch.acf.longitude);
+
+			if (isNaN(lat) || isNaN(lng)) {
+				console.warn(`Invalid coordinates for porch: ${porch.porch?.post_title || porch.porch?.ID}`, porch.acf);
+				return null; 
+			}
+
+			// Extend the bounds to include this marker's position
+			bounds.extend({ lat, lng });
+
+			const key = `${lat.toFixed(5)},${lng.toFixed(5)}`;
 			if (seenCoords[key]) {
 				const offset = MARKER_OFFSET_FACTOR * seenCoords[key];
-				lat += Math.cos(i) * offset
-				lng += Math.sin(i) * offset
-				seenCoords[key]++
+				lat += Math.cos(i) * offset;
+				lng += Math.sin(i) * offset;
+				seenCoords[key]++;
 			} else {
-				seenCoords[key] = 1
+				seenCoords[key] = 1;
 			}
 
 			// Determine marker type string based on ACF fields
-			let markerType = 'default'; // Start with default
-			if (porch.acf.sponsored) {
-				markerType = 'sponsored';
-			} else if (porch.acf.porta_potty) {
-				markerType = 'porta';
-			} else if (porch.acf.info_booth) {
-				markerType = 'info';
-			} else if (porch.acf.parking) {
-				markerType = 'parking';
-			}
+			let markerType = 'default';
+			if (porch.acf.sponsored) { markerType = 'sponsored'; }
+			else if (porch.acf.porta_potty) { markerType = 'porta'; }
+			else if (porch.acf.info_booth) { markerType = 'info'; }
+			else if (porch.acf.parking) { markerType = 'parking'; }
 
 			// Determine icon path
-			let iconPath = markerTypes[markerType].iconBase; // Default to base icon
+			let iconPath = markerTypes[markerType]?.iconBase || markerTypes['default'].iconBase;
 			const hasFood = porch.acf.has_food;
-
 			// Check if food variant exists and should be used
-			if (hasFood && markerTypes[markerType].iconFood) {
+			if (hasFood && markerTypes[markerType]?.iconFood) {
 				iconPath = markerTypes[markerType].iconFood;
 			}
 
 			// Assign icon using the determined type and the markerTypes object
 			const glyph = document.createElement("img");
-			glyph.src = iconPath; // Use the determined icon path
-
-			// Assign zIndex based on type (can be expanded if needed)
-			let zIndex = 1000;
-			if (markerType === 'porta') {
-				zIndex = 30000;
-			}
-
+			glyph.src = iconPath;
 			glyph.style.height = "40px";
-			const marker = new google.maps.marker.AdvancedMarkerElement({
+			glyph.style.width = "auto"; 
+			glyph.alt = markerTypes[markerType]?.label || 'Map Marker'; 
+
+			// Assign zIndex based on type
+			let zIndex = ZINDEX_DEFAULT;
+			if (markerType === 'porta') { zIndex = ZINDEX_PORTA; }
+			else if (markerType === 'info') { zIndex = ZINDEX_INFO; }
+
+
+			const marker = new googleMapsMarker.AdvancedMarkerElement({
 				map,
 				position: { lat, lng },
 				content: glyph,
 				zIndex,
-			})
-			const imgurl = porch.img ? porch.img : DEFAULT_FALLBACK_IMAGE_URL;
-
-			let lineup = ``
-			if (porch.acf.performer_lineup) {
-				porch.acf.performer_lineup.forEach((performer, i) => {
-					let highlight = "initial"
-					if (matches.includes(performer.performer.post_title)) {
-						highlight = "#ffb6c1"
-					}
-					lineup += `<tr><td>${performer.start_time}</td><td style="background-color: ${highlight}"><a href="/performer/${performer.performer.post_name}">${performer.performer.post_title}</a></td></tr>`
-				})
-			}
-			if (porch.acf.has_food) {
-				lineup += `<tr><td>Vendor</td><td>${porch.acf.food_vendor.food_name}</td></tr>`
-			}
-			if (lineup) {
-				lineup = `<div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div>`
-			}
+				title: porch.porch?.post_title || 'Porch Location' 
+			});
 
 			marker.addListener("gmp-click", () => {
-				popup.position = new google.maps.LatLng(lat, lng)
-				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link}"><h3>${porch.porch.post_title}</h3></a><img src="${imgurl}" alt="Default"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank"><button>Get Directions!</button><a/></div>${lineup}<div class="content"><p>${porch.porch.post_content}</p></div></div>`
-				const close = document.createElement("i")
-				close.classList.add("fas", "fa-times-circle", "popup-close")
-				contentDiv.appendChild(close)
-				popup.setMap(map)
-				close.addEventListener("click", () => {
-					popup.setMap(null)
-				})
-				const newCenter = {
-					lat: popup.position.lat() + POPUP_PAN_PIXEL_OFFSET / Math.pow(2, map.getZoom()),
-					lng: popup.position.lng(),
+				popup.position = new google.maps.LatLng(lat, lng); 
+
+				const imgurl = porch.img ? porch.img : DEFAULT_FALLBACK_IMAGE_URL;
+				let lineup = ``;
+				if (porch.acf.performer_lineup && Array.isArray(porch.acf.performer_lineup)) {
+					porch.acf.performer_lineup.forEach((perfEntry) => { 
+						if (perfEntry && perfEntry.performer && perfEntry.start_time) {
+						   let highlight = "initial";
+						   if (matches.includes(perfEntry.performer.post_title)) { highlight = "#ffb6c1"; }
+						   lineup += `<tr><td>${perfEntry.start_time}</td><td style="background-color: ${highlight}"><a href="/performer/${perfEntry.performer.post_name}">${perfEntry.performer.post_title}</a></td></tr>`;
+						}
+					});
 				}
-				map.panTo(newCenter)
-			})
-			return {
-				marker,
-				clusterable: !porch.acf.info_booth && !porch.acf.porta_potty
-			}
-		})
-		const clusteredMarkers = allMarkers.filter(m => m.clusterable).map(m => m.marker)
-		const nonClusteredMarkers = allMarkers.filter(m => !m.clusterable).map(m => m.marker)
+				if (porch.acf.has_food && porch.acf.food_vendor?.food_name) { 
+					lineup += `<tr><td>Vendor</td><td>${porch.acf.food_vendor.food_name}</td></tr>`;
+				}
+				if (lineup) {
+					lineup = `<div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div>`;
+				}
+
+				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link || '#'}"><h3>${porch.porch?.post_title || 'Porch'}</h3></a><img src="${imgurl}" alt="Image for ${porch.porch?.post_title || 'Porch'}"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank"><button>Get Directions!</button></a></div>${lineup}<div class="content"><p>${porch.porch?.post_content || ''}</p></div></div>`;
+
+				const close = document.createElement("i");
+				close.classList.add("fas", "fa-times-circle", "popup-close");
+				close.setAttribute('aria-label', 'Close popup'); 
+				close.setAttribute('role', 'button'); 
+				close.tabIndex = 0; 
+
+				contentDiv.appendChild(close);
+				popup.setMap(map);
+
+				const closePopup = () => popup.setMap(null);
+				close.addEventListener("click", closePopup);
+				close.addEventListener("keydown", (e) => { 
+				   if (e.key === 'Enter' || e.key === ' ') {
+					   closePopup();
+				   }
+				});
+
+				const mapZoom = map.getZoom();
+				if(mapZoom) { 
+					const newCenterLat = lat + POPUP_PAN_PIXEL_OFFSET / Math.pow(2, mapZoom);
+					map.panTo({ lat: newCenterLat, lng: lng });
+				} else {
+					map.panTo({ lat, lng }); 
+				}
+			});
+
+			return { marker, clusterable: !porch.acf.info_booth && !porch.acf.porta_potty };
+		}).filter(markerInfo => markerInfo !== null); 
+
+		// Clustering
+		const clusteredMarkers = allMarkers.filter(m => m.clusterable).map(m => m.marker);
+		
 		markerCluster = new markerClusterer.MarkerClusterer({
 			markers: clusteredMarkers,
 			map
-		})
-	}
-	buildMarkers()
-	buildLegend()
+		});
 
-	map.addListener("click", () => {
-		popup.setMap(null)
-	})
-
-	const form = document.getElementById("map_filter")
-	const search = document.getElementById("filter_search")
-
-	form.addEventListener("submit", (e) => {
-		e.preventDefault()
-		matches = []
-		const formData = new FormData(form)
-		const values = Object.fromEntries(formData.entries())
-		if (values.search) {
-			fetch(`${wpVars.homeURL}/wp-json/wp/v2/porches?search=${search.value}`)
-				.then(response => response.json())
-				.then(data => {
-					values["wp_search"] = data
-					buildMarkers(values)
-				})
-		} else {
-			buildMarkers(values)
+		// Fit map to bounds if there are markers
+		if (allMarkers.length > 0 && !bounds.isEmpty()) {
+			fitBoundsWithHeaderPadding(map, bounds);
 		}
-		document.getElementById("map_menu").style.display = "none"
-	})
-	document.getElementById("reset_filter").addEventListener("click", () => {
-		form.reset()
-		matches = []
-		buildMarkers()
-		document.getElementById("map_menu").style.display = "none"
-	})
+	}
+	
+	buildLegend();
+	buildMarkers(); 
+	updateLegendVisuals(); 
+
+	map.addListener("click", () => { popup.setMap(null); });
+
+	if(form) { 
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+			_handleFormSubmit();
+		});
+
+		const resetButton = document.getElementById("reset_filter");
+		if(resetButton) { 
+			resetButton.addEventListener("click", () => {
+				_handleFormReset();
+			});
+		}
+	}
+
+	const menuBtn = document.getElementById("map_menu_btn");
+	const closeMenuBtn = document.getElementById("close_menu");
+
+	if (menuBtn && menuElement) {
+		menuBtn.addEventListener("click", () => {
+			menuElement.style.display = "block";
+		});
+	}
+	if(closeMenuBtn && menuElement) {
+		closeMenuBtn.addEventListener("click", () => {
+			menuElement.style.display = "none";
+		});
+	}
+
+	window.addEventListener('resize', setVhUnit);
+
+	function setVhUnit() {
+		const vh = window.innerHeight * VH_CONVERSION_FACTOR;
+		document.documentElement.style.setProperty('--vh', `${vh}px`)
+
+		// Adjust map height here, now that --vh is set and header height is known
+		// ... existing code ...
+
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(adjustMapLayoutOnResize, RESIZE_DEBOUNCE_MS);
+		// Ensure vh unit update also happens on resize
+		setVhUnit(); 
+	}
+	setVhUnit(); 
 }
 
 function filterData(data, formData) {
-	hasLineup = data.filter(porch => porch.acf.performer_lineup)
+	let hasLineup = data.filter(porch => porch.acf.performer_lineup);
 	if (formData.sponsor) {
-		data = data.filter(porch => porch.acf.sponsored)
+		data = data.filter(porch => porch.acf.sponsored);
 	}
 	if (formData.vendor) {
-		data = data.filter(porch => porch.acf.has_food)
+		data = data.filter(porch => porch.acf.has_food);
 	}
 	if (formData.porta) {
-		data = data.filter(porch => porch.acf.porta_potty)
+		data = data.filter(porch => porch.acf.porta_potty);
 	}
 	if (formData.time) {
-		let afterTime = []
-		if (hasLineup.length != 0) {
+		let afterTime = [];
+		if (hasLineup && Array.isArray(hasLineup) && hasLineup.length !== 0) {
 			hasLineup.forEach(porch => {
-				let bool = false
-				if (porch.porch.ID == 983) {
-					console.log(porch)
-				}
-				porch.acf.performer_lineup.forEach(performer => {
-					if (bool) return
-					let [hours, minutes] = formData.time.split(':').map(Number)
-					const now = new Date()
-					const formDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
-					const [time, modifier] = performer.start_time.trim().split(" ");
-					[hours, minutes] = time.split(":").map(Number)
-					if (modifier === "pm" && hours !== 12) hours += 12
-					if (modifier === "am" && hours === 12) hours = 0
-					const performanceDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
-					if (formDate <= performanceDate) {
-						bool = true
-					}
-				})
-				if (bool) {
-					afterTime.push(porch)
-				}
-			})
-			data = afterTime
-		}
-	}
-	if (formData.genre != "none") {
-		let hasGenre = []
-		if (hasLineup.length != 0) {
-			hasLineup.forEach(porch => {
-				let bool = false
-				porch.performers.forEach(performer => {
-					if (bool) return
-					if (performer.genres) {
-						if (performer.genres.filter(genre => genre == formData.genre).length != 0) {
-							if (!matches.includes(performer.performer.post_title)) {
-								matches.push(performer.performer.post_title)
+				let bool = false;
+				if (porch.acf.performer_lineup && Array.isArray(porch.acf.performer_lineup)) {
+					porch.acf.performer_lineup.forEach(performer => {
+						if (bool || !performer?.start_time) return; 
+
+						try {
+							let [hours, minutes] = formData.time.split(':').map(Number);
+							const now = new Date();
+							const formDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+
+							const timeParts = performer.start_time.trim().split(" ");
+							if (timeParts.length < 2) return; 
+							const [timeStr, modifier] = timeParts;
+							const timeStrParts = timeStr.split(":");
+							if (timeStrParts.length < 2) return; 
+
+							[hours, minutes] = timeStrParts.map(Number);
+
+							if (isNaN(hours) || isNaN(minutes)) return; 
+
+							if (modifier.toLowerCase() === "pm" && hours !== 12) hours += 12;
+							if (modifier.toLowerCase() === "am" && hours === 12) hours = 0; 
+
+							const performanceDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+							if (!isNaN(formDate) && !isNaN(performanceDate) && formDate <= performanceDate) { 
+								bool = true;
 							}
-							bool = true
+						} catch (e) {
+							console.error("Error parsing time:", e, "FormData:", formData.time, "Performer Time:", performer.start_time);
 						}
-					}
-				})
-				if (bool) {
-					hasGenre.push(porch)
+					});
 				}
-			})
-			data = hasGenre
+				if (bool) {
+					afterTime.push(porch);
+				}
+			});
+			data = afterTime;
 		}
 	}
-	return data
+	if (formData.genre && formData.genre !== "none") {
+		let hasGenre = [];
+		if (hasLineup && Array.isArray(hasLineup) && hasLineup.length !== 0) {
+			hasLineup.forEach(porch => {
+				let bool = false;
+				if (porch.performers && Array.isArray(porch.performers)) {
+					porch.performers.forEach(performer => {
+						if (bool) return;
+						if (performer.genres && Array.isArray(performer.genres)) {
+							if (performer.genres.some(genre => genre == formData.genre)) { 
+								if (performer.performer?.post_title && !matches.includes(performer.performer.post_title)) {
+									matches.push(performer.performer.post_title);
+								}
+								bool = true;
+							}
+						}
+					});
+				}
+				if (bool) {
+					hasGenre.push(porch);
+				}
+			});
+			data = hasGenre;
+		}
+	}
+	return data;
 }
 
-const menu = document.getElementById("map_menu")
-document.getElementById("map_menu_btn").addEventListener("click", () => {
-	menu.style.display = "block"
-})
-document.getElementById("close_menu").addEventListener("click", () => {
-	menu.style.display = "none"
-})
-
-window.addEventListener('resize', setVhUnit)
-
-function setVhUnit() {
-	const vh = window.innerHeight * 0.01;
-	document.documentElement.style.setProperty('--vh', `${vh}px`)
-}
-setVhUnit()
+initMap();
