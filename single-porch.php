@@ -105,7 +105,7 @@ while(have_posts()){
 										?>
 									</p>
 								</div>
-							<p class="porchDescription"><?=get_the_content(null, false, $band['performer']);?></p>
+							<p class="porchDescription"><?=get_the_content(null, false, $performer->ID);?></p>
 						</div>
 					<?php
 				}
