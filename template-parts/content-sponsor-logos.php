@@ -10,7 +10,7 @@
 ?>
 
 <?php if( have_rows('sponsor_tier_1') ): ?>
-    <?php while( have_rows('sponsor_tier_1') ): the_row(); 
+    <?php while( have_rows('sponsor_tier_1') ): the_row();
 
       $tier_1_title = get_sub_field('tier_1_title');
       $sponsor_logo_1 = get_sub_field('sponsor_logo_1'); 
@@ -229,3 +229,22 @@
         </div>
     <?php endwhile; ?>
   <?php endif; ?>
+	<?php
+		$low_section_sponsors[] = get_field("ragging");
+		$low_section_sponsors[] = get_field("spokeasy");
+		$low_section_sponsors[] = get_field("neighborhood_thrift");
+		$low_section_sponsors[] = get_field("hi-top_coffee");
+		$low_section_sponsors[] = get_field("the_brass_unicorn");
+		$low_section_sponsors[] = get_field("cf");
+		$low_section_sponsors[] = get_field("blkmktplc");
+	?>
+	<div class="logo-container">
+		<?php
+			foreach ($low_section_sponsors as $key => $value) {
+				if($value){
+					?><script>console.log("hello: <?=$value?>")</script><?php
+					?><img class="logo-style" src="<?=$value?>" alt=""><?php
+				}
+			}
+		?>
+	</div>
