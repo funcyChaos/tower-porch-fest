@@ -14,7 +14,6 @@
   <?php
   if ( has_post_thumbnail() ) {
     $image_url = get_the_post_thumbnail_url();
-		?><script>console.log("<?=$image_url?>")</script><?php
     echo '<div class="featured-image" style="background-image: url(' . $image_url . ');">';
     echo '</div>';
   }
@@ -88,71 +87,15 @@
           </div>
         <?php endwhile; ?>
       <?php endif; ?>
+			
   <!-- end -->
-  <!-- Text and Three Up Images -->
-      <?php if( have_rows('text_and_three_up_images') ): ?>
-        <?php while( have_rows('text_and_three_up_images') ): the_row(); 
-          // Get sub field values.
-          $title = get_sub_field('title');
-          $paragraph = get_sub_field('paragraph');
-          $button_text = get_sub_field('button_text');
-          $button_link = get_sub_field('button_link');
-          $big_image = get_sub_field('big_image');
-          $small_left_image = get_sub_field('small_left_image');
-          $small_right_image = get_sub_field('small_right_image');
-        ?>
-          <section class="section-wrapper">
-          <!-- light text section -->
-            <div class="light-section text-and-button">
-              <div class="wrapper">
-                <h2><?php echo $title;?></h2>
-                <p><?php echo $paragraph;?></p>
-                <a href="<? echo $button_link?>">
-                  <button><?php echo $button_text;?></button>
-                </a>
-              </div>
-            </div>
-          <!-- three up images -->
-            <div class="three-up">
-              <div class="three-up-wrapper">
-                <img src="<?php echo $big_image;?>" alt="">
-                <div class="image-row">
-                  <img src="<?php echo $small_left_image;?>" alt="">
-                  <img src="<?php echo $small_right_image;?>" alt="">
-                </div>
-              </div>
-            </div>
+        </section>
+				<section class="container icons-cards-container">
+              <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
           </section>
-        <?php endwhile; ?>
-      <?php endif; ?>
-  <!-- end -->
-  <!-- Text and Carousel -->    
-        <!-- dark text section -->
-      <?php if( have_rows('text_and_carousel') ): ?>
-        <?php while( have_rows('text_and_carousel') ): the_row(); 
-          // Get sub field values.
-          $title = get_sub_field('title');
-          $paragraph = get_sub_field('paragraph');
-          $button_text = get_sub_field('button_text');
-          $button_link = get_sub_field('button_link');
-        ?>  
-          <section class="dark-section text-and-button">
-            <div class="wrapper">
-              <h2><?php echo $title;?></h2>
-              <p><?php echo $paragraph;?></p>
-              <a href="<? echo $button_link?>">
-                <button><?php echo $button_text;?></button>
-              </a>
-            </div>
-            <!-- Future Carousel -->
-            <!-- <div class="wrapper">
-              <h2>Placeholder for Carousel</h2>
-            </div> -->
-          </section>
-        <?php endwhile; ?>
-      <?php endif; ?>
-  <!-- Text and Map Image -->     
-      <!-- light text section -->
+				  <!-- dark text section -->
+					
+			<!-- light text section -->
       <?php if( have_rows('text_and_map_image') ): ?>
         <?php while( have_rows('text_and_map_image') ): the_row(); 
           // Get sub field values.
@@ -178,14 +121,27 @@
           </section>
         <?php endwhile; ?>
       <?php endif; ?>
-  <!-- icons + cards section -->
-
-          <section class="container icons-cards-container">
-              <? get_template_part( 'template-parts/content', 'icons-cards' ); ?>
-          </section>
-
-  <!-- Sponsors Section -->
-      <?php if( have_rows('sponsor_text') ): ?>
+  <!-- Text and Three Up Images -->
+      <?php if( have_rows('text_and_three_up_images') ): ?>
+        <?php while( have_rows('text_and_three_up_images') ): the_row(); 
+          // Get sub field values.
+          $title = get_sub_field('title');
+          $paragraph = get_sub_field('paragraph');
+          $button_text = get_sub_field('button_text');
+          $button_link = get_sub_field('button_link');
+          $big_image = get_sub_field('big_image');
+          $small_left_image = get_sub_field('small_left_image');
+          $small_right_image = get_sub_field('small_right_image');
+        ?>
+          
+        <?php endwhile; ?>
+      <?php endif; ?>
+			
+					   <!-- Sponsors Section -->
+						 <div class="sponsors">
+            <? get_template_part( 'template-parts/content', 'sponsor-logos' ); ?>
+          </div>
+					<?php if( have_rows('sponsor_text') ): ?>
         <?php while( have_rows('sponsor_text') ): the_row(); 
 
         $title = get_sub_field('title');
@@ -204,12 +160,40 @@
               </a>
             </div>
           </div>
+				</section>
           <?php endwhile; ?>
         <?php endif; ?>
-          <div class="sponsors">
-            <? get_template_part( 'template-parts/content', 'sponsor-logos' ); ?>
-          </div>
-        </section>
+					<?php if( have_rows('text_and_carousel') ): ?>
+        <?php while( have_rows('text_and_carousel') ): the_row(); 
+          // Get sub field values.
+          $title = get_sub_field('title');
+          $paragraph = get_sub_field('paragraph');
+          $button_text = get_sub_field('button_text');
+          $button_link = get_sub_field('button_link');
+        ?>  
+          <section class="dark-section text-and-button">
+            <div class="wrapper">
+              <h2><?php echo $title;?></h2>
+              <p><?php echo $paragraph;?></p>
+              <a href="<? echo $button_link?>">
+                <button><?php echo $button_text;?></button>
+              </a>
+            </div>
+            <!-- Future Carousel -->
+            <!-- <div class="wrapper">
+              <h2>Placeholder for Carousel</h2>
+            </div> -->
+          </section>
+        <?php endwhile; ?>
+      <?php endif; ?>
+  <!-- end -->
+  <!-- Text and Carousel -->    
+      
+  <!-- Text and Map Image -->     
+      
+  <!-- icons + cards section -->
+
+          
       </main>
 
 
