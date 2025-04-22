@@ -144,12 +144,14 @@
         margin-top: 2rem;
       }
 			a{
+				word-break: break-word;
 				color: black;
 				&:visited{
 					color: black;
 				}
 			}
       p {
+				word-break: break-word;
         margin-top: 0.5rem;
         margin-bottom: 0;
       }
