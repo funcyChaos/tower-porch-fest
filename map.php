@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<div class="bus">
-			<label for="show_bus">Show Bus: </label>
+			<label for="show_bus">Show Trolley: </label>
 			<input type="checkbox" name="show_bus" id="show_bus">
 		</div>
 		<div class="filter-submit">
