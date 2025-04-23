@@ -52,6 +52,10 @@
 				</select>
 			</div>
 		</div>
+		<div class="bus">
+			<label for="show_bus">Show Bus: </label>
+			<input type="checkbox" name="show_bus" id="show_bus">
+		</div>
 		<div class="filter-submit">
 			<input type="button" value="Reset" id="reset_filter">
 			<input type="submit" value="Filter">

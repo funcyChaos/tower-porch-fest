@@ -22,6 +22,40 @@ async function initMap() {
 		mapTypeControl: false,
 		fullscreenControl: false,
 	})
+
+	const trolleyPath = new google.maps.Polyline({
+		path: [
+			{lat: 36.76499756442535, 		lng: -119.79898676073246},
+			{lat: 36.76493481691089, 		lng: -119.7989826567562},
+			{lat: 36.76495642400253, 		lng: -119.79634088202028},
+			{lat: 36.76508606642457, 		lng: -119.79633491954776},
+			{lat: 36.76505957380197, 		lng: -119.79898258411826},
+			{lat: 36.76499756442535, 		lng: -119.79898676073246},
+			{lat: 36.76497392052814, 		lng: -119.8010560470801},
+			{lat: 36.757276833053425, 	lng: -119.80104330058255},
+			{lat: 36.75695599895826, 		lng: -119.80094172815676},
+			{lat: 36.75673524935291, 		lng: -119.80074325330153},
+			{lat: 36.75653040063636, 		lng: -119.80046655600141},
+			{lat: 36.7562301419388, 		lng: -119.800289096131},
+			{lat: 36.7504125518585, 		lng: -119.80036587536627},
+			{lat: 36.75039926645446, 		lng: -119.80285847982687},
+			{lat: 36.75063812285461, 		lng: -119.80283660334874},
+			{lat: 36.75765247439101, 		lng: -119.802858812864},
+			{lat: 36.7576463078158, 		lng: -119.80575299684742},
+			{lat: 36.762494940188596, 	lng: -119.80578027260596},
+			{lat: 36.762508871267, 			lng: -119.80456208103357},
+			{lat: 36.76498699846067, 		lng: -119.80457387882751},
+			{lat: 36.76498300280249, 		lng: -119.80410004432838},
+			{lat: 36.7684952509903, 		lng: -119.80411777845197},
+			{lat: 36.768521259690694, 	lng: -119.80105965926045},
+			{lat: 36.76497392052814, 		lng: -119.8010560470801},
+		],
+		geodesic: true,
+		strokeColor: "#FF000088",
+		strokeOpacity: 1.0,
+		strokeWeight: 4
+	})
+	
 	class Popup extends google.maps.OverlayView {
 		position
 		containerDiv
@@ -143,6 +177,11 @@ async function initMap() {
 		popup.setMap(null)
 		allMarkers.forEach(marker => marker.marker.setMap(null))
 		if (formData) {
+			if(formData.show_bus){
+				trolleyPath.setMap(map)
+			} else if (trolleyPath) {
+				trolleyPath.setMap(null)
+			}
 			if (formData.search) {
 				const filterPerformers = wpVars.porches.filter(porch => {
 					let performermatch = false
