@@ -51,9 +51,9 @@ async function initMap() {
 			{lat: 36.76497392052814, 		lng: -119.8010560470801},
 		],
 		geodesic: true,
-		strokeColor: "#FF000088",
-		strokeOpacity: 1.0,
-		strokeWeight: 4
+		strokeColor: "#FFA500",
+		strokeOpacity: 0.7,
+		strokeWeight: 12
 	})
 	
 	class Popup extends google.maps.OverlayView {
@@ -210,6 +210,7 @@ async function initMap() {
 			}
 		} else {
 			fPorches = wpVars.porches
+			trolleyPath.setMap(null)
 		}
 
 		// else if(window.location.hash){
@@ -302,6 +303,32 @@ async function initMap() {
 				clusterable: !porch.acf.info_booth && !porch.acf.porta_potty
 			}
 		})
+
+		const trolleyStops = [
+			{lat: 36.76519733738659, 		lng: -119.79805882890179},
+			{lat: 36.76469739172577, 		lng: -119.80134302791159},
+			{lat: 36.762119306178015, 	lng: -119.80130066665852},
+			{lat: 36.75812094163349, 		lng: -119.80132113053851},
+			{lat: 36.754195136917694, 	lng: -119.80061573212695},
+			{lat: 36.750676988342896, 	lng: -119.80063996251968},
+			{lat: 36.7579521229005, 		lng: -119.8054374422218},
+			{lat: 36.762504287017435, 	lng: -119.80424099454666},
+			{lat: 36.766280784439516, 	lng: -119.80377414029049},
+			{lat: 36.76821008036845, 		lng: -119.80384808424272}
+		]
+		trolleyMarkers = trolleyStops.map(stop=>{
+			const trolleyGlyph				= document.createElement("img");
+			trolleyGlyph.src 					= `${wpVars.themeURL}/img/map/glyph-bus.svg`
+			trolleyGlyph.style.height = "25px"
+			const trolleyMarker = new google.maps.marker.AdvancedMarkerElement({
+				map,
+				position: stop,
+				content: trolleyGlyph,
+			})
+			return trolleyMarker
+		})
+		console.log(trolleyMarkers)
+
 		const clusteredMarkers = allMarkers.filter(m => m.clusterable).map(m => m.marker)
 		const nonClusteredMarkers = allMarkers.filter(m => !m.clusterable).map(m => m.marker)
 		markerCluster = new markerClusterer.MarkerClusterer({

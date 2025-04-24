@@ -64,8 +64,14 @@
 </div>
 
 <div class="map-height-wrapper">
-	<div class="map-header"><img src="<?=get_template_directory_uri()?>/img/map/fresno-teachers.png" alt=""></div>
-	<div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
+	<div class="banner-header-map">
+		<div class="home-wrapper">
+			<a href="/"><i class="fas fa-home map-home-btn"></i></a>
+		</div>
+		<div class="map-header"><img src="<?=get_template_directory_uri()?>/img/map/fresno-teachers.png" alt=""></div>
+		<div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
+	</div>
+	
 	<div id="map"></div>
 	<div id="map-legend"></div>
 </div>
