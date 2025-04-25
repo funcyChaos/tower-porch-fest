@@ -26,6 +26,10 @@
 				<label for="time">Time</label>
 				<input type="time" name="time" id="filter_time">
 			</div>
+			<div class="filter-now">
+				<label for="now_time">Playing Now</label>
+				<input type="checkbox" name="now_time" id="filter_now_time">
+			</div>
 		</div>
 		<div class="other-options">
 			<div class="filter-vendor">

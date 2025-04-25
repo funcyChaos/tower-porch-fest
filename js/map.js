@@ -396,14 +396,50 @@ function filterData(data, formData) {
 	if (formData.porta) {
 		data = data.filter(porch => porch.acf.porta_potty)
 	}
+	if(formData.now_time){
+		let playingNow = []
+		const THIRTY_MINUTES = 30 * 60 * 1000
+		const rightNow = new Date()
+		// rightNow.setHours(17, 0, 0, 0) // Set to 2:00 PM for testing
+
+		if (hasLineup.length != 0) {
+			hasLineup.forEach(porch => {
+				let bool = false
+					porch.acf.performer_lineup.forEach(performer => {
+						if (bool) return
+						const [startTime, startModifier] = performer.start_time.trim().split(" ");
+						[startHours, startMinutes] = startTime.split(":").map(Number)
+						if (startModifier === "pm" && startHours !== 12) startHours += 12
+						if (startModifier === "am" && startHours === 12) startHours = 0
+						const starts = new Date(rightNow.getFullYear(), rightNow.getMonth(), rightNow.getDate(), startHours, startMinutes, 0, 0)
+						
+						const [endTime, endModifier] = performer.end_time.trim().split(" ");
+						[endHours, endMinutes] = endTime.split(":").map(Number)
+						if (endModifier === "pm" && endHours !== 12) endHours += 12
+						if (endModifier === "am" && endHours === 12) endHours = 0
+						const ends = new Date(rightNow.getFullYear(), rightNow.getMonth(), rightNow.getDate(), endHours, endMinutes, 0, 0)
+						
+						const startsWithin30Min = starts.getTime() - rightNow.getTime() <= THIRTY_MINUTES && starts >= rightNow
+						const endsIn30MinutesOrMore = ends.getTime() - rightNow.getTime() >= THIRTY_MINUTES;
+						if(startsWithin30Min || endsIn30MinutesOrMore){
+							bool = true
+							if (!matches.includes(performer.performer.post_title)) {
+								matches.push(performer.performer.post_title)
+							}
+						}
+					})
+					if (bool) {
+						playingNow.push(porch)
+					}
+				})
+			data = playingNow
+		}
+	}
 	if (formData.time) {
 		let afterTime = []
 		if (hasLineup.length != 0) {
 			hasLineup.forEach(porch => {
 				let bool = false
-				if (porch.porch.ID == 983) {
-					console.log(porch)
-				}
 				porch.acf.performer_lineup.forEach(performer => {
 					if (bool) return
 					let [hours, minutes] = formData.time.split(':').map(Number)
