@@ -449,6 +449,9 @@ function filterData(data, formData) {
 					if (modifier === "am" && hours === 12) hours = 0
 					const performanceDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0)
 					if (formDate <= performanceDate) {
+						if (!matches.includes(performer.performer.post_title)) {
+							matches.push(performer.performer.post_title)
+						}
 						bool = true
 					}
 				})
