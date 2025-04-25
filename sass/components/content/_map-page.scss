@@ -19,6 +19,7 @@ $popup-color: white;
 
 	height: 400px;
 	width: calc(100vw - 1rem);
+	max-width: 400px;
 	// border: 2px black dashed;
 
 	display: flex;
@@ -268,6 +269,22 @@ $header-height: 60px;
 		text-transform: uppercase;
 	}
 }
+
+.custom-cluster {
+  background: radial-gradient(circle at center, gold 0%, orange 100%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 0 10px 5px rgba(255, 204, 0, 0.7);
+}
+
+
 #contents {
   height: 100%;
   width: 330px;

@@ -8,7 +8,7 @@
 ?>  
 <?php
 	get_header("map");
-	$genres	= get_field_object('field_6491fdd624af4')['choices'];	
+	$genres	= get_field_object('field_6491fdd624af4')['choices'];
 ?>
 
 <div class="map-menu" id="map_menu">
@@ -68,7 +68,7 @@
 		<div class="home-wrapper">
 			<a href="/"><i class="fas fa-home map-home-btn"></i></a>
 		</div>
-		<div class="map-header"><img src="<?=get_template_directory_uri()?>/img/map/fresno-teachers.png" alt=""></div>
+		<a href="https://fresnoschoolwatch.com" target="_blank" class="map-header"><img src="<?=get_template_directory_uri()?>/img/map/fresno-teachers.png" alt=""></a>
 		<div class="menu-btn-wrap"><i class="fas fa-bars" id="map_menu_btn"></i></div>
 	</div>
 	

@@ -300,7 +300,7 @@ async function initMap() {
 			})
 			return {
 				marker,
-				clusterable: !porch.acf.info_booth && !porch.acf.porta_potty
+				clusterable: !porch.acf.info_booth && !porch.acf.porta_potty && !porch.acf.parking
 			}
 		})
 
@@ -327,13 +327,27 @@ async function initMap() {
 			})
 			return trolleyMarker
 		})
-		console.log(trolleyMarkers)
 
 		const clusteredMarkers = allMarkers.filter(m => m.clusterable).map(m => m.marker)
 		const nonClusteredMarkers = allMarkers.filter(m => !m.clusterable).map(m => m.marker)
+
+		const renderer = {
+			render: ({ count, position }) => {
+				const div = document.createElement("div");
+				div.className = "custom-cluster";
+				div.textContent = count;
+		
+				return new google.maps.marker.AdvancedMarkerElement({
+					position,
+					content: div,
+					zIndex: 1000 + count,
+				});
+			}
+		};
 		markerCluster = new markerClusterer.MarkerClusterer({
 			markers: clusteredMarkers,
-			map
+			map,
+			// renderer,
 		})
 	}
 	buildMarkers()
