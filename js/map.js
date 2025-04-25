@@ -420,7 +420,7 @@ function filterData(data, formData) {
 						const ends = new Date(rightNow.getFullYear(), rightNow.getMonth(), rightNow.getDate(), endHours, endMinutes, 0, 0)
 						
 						const startsWithin30Min = starts.getTime() - rightNow.getTime() <= THIRTY_MINUTES && starts >= rightNow
-						const endsIn30MinutesOrMore = ends.getTime() - rightNow.getTime() >= THIRTY_MINUTES;
+						const endsIn30MinutesOrMore = ends.getTime() - rightNow.getTime() >= THIRTY_MINUTES
 						if(startsWithin30Min || endsIn30MinutesOrMore){
 							bool = true
 							if (!matches.includes(performer.performer.post_title)) {
