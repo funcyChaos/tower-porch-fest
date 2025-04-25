@@ -398,9 +398,10 @@ function filterData(data, formData) {
 	}
 	if(formData.now_time){
 		let playingNow = []
-		const THIRTY_MINUTES = 30 * 60 * 1000
 		const rightNow = new Date()
-		// rightNow.setHours(17, 0, 0, 0) // Set to 2:00 PM for testing
+		rightNow.setHours(17, 0, 0, 0) // Set to 2:00 PM for testing
+		const THIRTY_MINUTES = 30 * 60 * 1000
+		const thirtyOutDate = new Date(rightNow.getTime() + THIRTY_MINUTES)
 
 		if (hasLineup.length != 0) {
 			hasLineup.forEach(porch => {
@@ -412,16 +413,13 @@ function filterData(data, formData) {
 						if (startModifier === "pm" && startHours !== 12) startHours += 12
 						if (startModifier === "am" && startHours === 12) startHours = 0
 						const starts = new Date(rightNow.getFullYear(), rightNow.getMonth(), rightNow.getDate(), startHours, startMinutes, 0, 0)
-						
 						const [endTime, endModifier] = performer.end_time.trim().split(" ");
 						[endHours, endMinutes] = endTime.split(":").map(Number)
 						if (endModifier === "pm" && endHours !== 12) endHours += 12
 						if (endModifier === "am" && endHours === 12) endHours = 0
 						const ends = new Date(rightNow.getFullYear(), rightNow.getMonth(), rightNow.getDate(), endHours, endMinutes, 0, 0)
-						
-						const startsWithin30Min = starts.getTime() - rightNow.getTime() <= THIRTY_MINUTES && starts >= rightNow
-						const endsIn30MinutesOrMore = ends.getTime() - rightNow.getTime() >= THIRTY_MINUTES
-						if(startsWithin30Min || endsIn30MinutesOrMore){
+						const isPlayingNow = (ends >= rightNow && ends <= thirtyOutDate) || (starts >= rightNow && starts <= thirtyOutDate)
+						if(isPlayingNow){
 							bool = true
 							if (!matches.includes(performer.performer.post_title)) {
 								matches.push(performer.performer.post_title)
