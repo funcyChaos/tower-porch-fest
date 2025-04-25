@@ -399,7 +399,7 @@ function filterData(data, formData) {
 	if(formData.now_time){
 		let playingNow = []
 		const rightNow = new Date()
-		rightNow.setHours(17, 0, 0, 0) // Set to 2:00 PM for testing
+		// rightNow.setHours(17, 0, 0, 0) // Set to 2:00 PM for testing
 		const THIRTY_MINUTES = 30 * 60 * 1000
 		const thirtyOutDate = new Date(rightNow.getTime() + THIRTY_MINUTES)
 
