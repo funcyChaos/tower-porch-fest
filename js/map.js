@@ -282,9 +282,12 @@ async function initMap() {
 				lineup = `<div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div>`
 			}
 
+			let portaAddress = ``
+			if (porch.acf.porta_potty) portaAddress = `<p>${porch.acf.porch_address}</p>`
+
 			marker.addListener("gmp-click", () => {
 				popup.position = new google.maps.LatLng(lat, lng)
-				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link}"><h3>${porch.porch.post_title}</h3></a><img src="${imgurl}" alt="Default"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank"><button>Get Directions!</button><a/></div>${lineup}<div class="content"><p>${porch.porch.post_content}</p></div></div>`
+				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link}"><h3>${porch.porch.post_title}</h3></a><img src="${imgurl}" alt="Default"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank"><button>Get Directions!</button><a/></div>${lineup}<div class="content">${portaAddress}<p>${porch.porch.post_content}</p></div></div>`
 				const close = document.createElement("i")
 				close.classList.add("fas", "fa-times-circle", "popup-close")
 				contentDiv.appendChild(close)
