@@ -246,6 +246,14 @@ async function initMap() {
 		allMarkers = fPorches.map((porch, i) => {
 			let lat = parseFloat(porch.acf.latitude)
 			let lng = parseFloat(porch.acf.longitude)
+
+			// --- Add Check for Invalid Coordinates ---
+			if (isNaN(lat) || isNaN(lng)) {
+				console.warn(`Skipping porch due to invalid coordinates: ${porch.porch?.post_title || porch.porch?.ID}`, { lat, lng, porchData: porch });
+				return null; // Skip this iteration
+			}
+			// --- End Check ---
+
 			const key = `${lat.toFixed(5)},${lng.toFixed(5)}`
 			if (seenCoords[key]) {
 				const offset = MARKER_OFFSET_FACTOR * seenCoords[key];
@@ -365,6 +373,9 @@ async function initMap() {
 			marker.addListener("gmp-click", () => {
 				if (!detailsPanel || !panelContent || !panelFooter) return; // Safety check
 
+				// Log coordinates when clicked
+				console.log('Marker clicked:', { title: porch.porch.post_title, lat, lng });
+
 				// Set panel theme based on marker type
 				detailsPanel.dataset.markerType = markerType;
 
@@ -385,6 +396,7 @@ async function initMap() {
 				// Pan map - Center marker vertically between header and panel
 				// Needs a slight delay for offsetHeight to be accurate after panel appears
 				setTimeout(() => {
+					console.log('Panning map for:', { title: porch.porch.post_title, lat, lng }); // Log before panning
 					const panelHeight = detailsPanel.offsetHeight;
 					if (panelHeight > 0) {
 						map.panTo({ lat, lng }); // Center horizontally first
@@ -400,6 +412,8 @@ async function initMap() {
 				clusterable: !porch.acf.info_booth && !porch.acf.porta_potty && !porch.acf.parking
 			}
 		})
+		// Filter out any null entries from skipped markers
+		.filter(markerData => markerData !== null);
 
 		const trolleyStops = [
 			{lat: 36.76519733738659, 		lng: -119.79805882890179},
