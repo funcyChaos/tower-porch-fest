@@ -344,14 +344,20 @@ async function initMap() {
 
 			const lineupViewHTML = `
 				<div class="panel-view" id="panel-lineup-view" data-marker-type="${markerType}">
-					<h3>Lineup</h3>
 					${lineupHTML || '<p>No lineup information available.</p>'}
 				</div>
 			`;
 
+			// --- Generate Footer Buttons (Conditionally) --- 
+			let lineupButtonHTML = '';
+			// Check if lineup data exists and is not empty
+			if (porch.acf.performer_lineup && porch.acf.performer_lineup.length > 0) {
+				lineupButtonHTML = '<button class="panel-button" data-view-target="panel-lineup-view">Lineup</button>';
+			}
+
 			const footerButtonsHTML = `
 				<button class="panel-button is-active" data-view-target="panel-details-view">Details</button>
-				<button class="panel-button" data-view-target="panel-lineup-view">Lineup</button>
+				${lineupButtonHTML} 
 				<a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank" class="panel-button directions-button">Directions</a>
 			`;
 			// --- End Generate Panel Content ---
@@ -376,16 +382,18 @@ async function initMap() {
 				// Show panel
 				showPanel();
 
-				// Pan map - Adjust offset for bottom panel
-				const mapZoom = map.getZoom();
-				if(mapZoom) { 
-					// Pan slightly *up* to keep marker visible above the panel
-					// const newCenterLat = lat - PANEL_PAN_OFFSET_Y / Math.pow(2, mapZoom);
-					// Simpler pan for now, rely on map padding or adjust offset later
-					map.panTo({ lat, lng }); 
-				} else {
-					map.panTo({ lat, lng }); 
-				}
+				// Pan map - Center marker vertically between header and panel
+				// Needs a slight delay for offsetHeight to be accurate after panel appears
+				setTimeout(() => {
+					const panelHeight = detailsPanel.offsetHeight;
+					if (panelHeight > 0) {
+						map.panTo({ lat, lng }); // Center horizontally first
+						map.panBy(0, panelHeight / 2); // Then pan up by half panel height
+					} else {
+						// Fallback if height isn't read correctly immediately
+						map.panTo({ lat, lng }); 
+					}
+				}, 50); // 50ms delay, adjust if needed
 			})
 			return {
 				marker,
