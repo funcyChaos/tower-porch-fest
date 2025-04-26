@@ -1,0 +1,499 @@
+@use "sass:color"; // Needed for color.adjust
+
+// --- Local Variables & Mixin for Panel Image --- 
+$panel-img-min-width : 150px;
+$panel-img-ideal-width : 30%;
+$panel-img-max-width : 200px; // Adjusted max width for panel context
+$panel-img-margin : 1rem;
+
+@mixin panel-float-clamp-image(
+  $direction  : left,
+  $min-width  : $panel-img-min-width,
+  $ideal-width: $panel-img-ideal-width,
+  $max-width  : $panel-img-max-width,
+  $margin     : $panel-img-margin
+) {
+  float: $direction;
+  margin: if($direction == left, 0 $margin $margin 0, 0 0 $margin $margin);
+  width: clamp($min-width, $ideal-width, $max-width);
+  max-width: 100%; // Prevent overflow even with clamp
+  height: auto;
+  max-height: 20vh; // <<< ADDED max-height constraint (still not working as planned. YALP AUTSIN)
+  display: block;
+  object-fit: cover;
+  border-radius: 4px; // Added radius here
+}
+// --- End Local Vars & Mixin ---
+
+/* STYLES FOR THE VIEW-SWITCHING PORCH DETAILS PANEL */
+#porch-details-display {
+    display: none; /* Hidden by default, shown via .is-visible */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(40, 40, 40, 0.95); /* Dark semi-transparent background */
+    color: #f1f1f1;
+    z-index: 1001; /* Ensure it's above the map */
+    border-top: 1px solid #555;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+    max-height: calc(var(--vh, 1vh) * 50); /* Limit panel to 50% viewport height initially */
+    flex-direction: column;
+    transition: max-height 0.4s ease-in-out; /* Smooth height transition */
+
+    &.is-visible {
+        display: flex; /* Use flex to show and layout */
+    }
+
+    /* Expand/Collapse Toggle Button */
+    .panel-toggle-btn {
+        position: absolute;
+        top: -20px; // Position above the panel content area
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(60, 60, 60, 0.9); // Slightly lighter than panel bg
+        border: 1px solid #555;
+        border-bottom: none;
+        border-radius: 8px 8px 0 0; // Rounded top corners
+        color: #ccc;
+        padding: 2px 15px;
+        cursor: pointer;
+        z-index: 1002; // Above panel content but below header maybe?
+        font-size: 1.2rem;
+        line-height: 1;
+
+        &:hover {
+            background-color: rgba(80, 80, 80, 0.95);
+            color: #fff;
+        }
+    }
+
+    /* Close Button */
+    .close-panel-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: #ccc;
+        font-size: 1.8rem;
+        line-height: 1;
+        cursor: pointer;
+        padding: 5px;
+        &:hover {
+            color: #fff;
+        }
+        /* Apply base font and color with higher specificity */
+        font-family: $font__text; // Use central font variable
+        color: $color__panel-text; // Use central color variable
+    }
+
+    /* Panel Content Area */
+    .panel-content {
+        padding: 15px 15px 5px 15px;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        // Apply base font and color with higher specificity
+        font-family: $font__text; // Use central font variable
+        color: $color__panel-text; // Use central color variable
+
+        h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #f9d71c; 
+            font-size: 1.4rem;
+            font-family: 'Antonio', sans-serif;
+            transition: color 0.3s ease;
+
+            a {
+                color: inherit; // Inherit H3 color (yellow or type-specific)
+                text-decoration: underline; // Always underline
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        a {
+            color: #f9d71c; /* Example yellow */
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        // --- Styles for the Preview Container --- 
+        .panel-preview {
+            // Contains floated image and initial content block
+            // Inherits general panel styles
+            h3 {
+                margin-top: 0;
+                margin-bottom: 10px;
+                color: #f9d71c; 
+                font-size: 1.4rem;
+                font-family: 'Antonio', sans-serif;
+                transition: color 0.3s ease;
+            }
+            
+            .popup-image-section img {
+                 @include panel-float-clamp-image(left);
+            }
+
+            .content {
+                 display: flow-root; // Contain the float
+                 p {
+                    color: $color__panel-text; 
+                    margin-top: 0; 
+                    margin-bottom: 1em;
+                    line-height: 1.6;
+                    font-size: 0.95rem;
+                 }
+                 .porta-address { // Style specifically if needed
+                    font-style: italic;
+                    font-size: 0.9rem;
+                    margin-bottom: 0.5em;
+                 }
+            }
+        }
+
+        // --- Styles for the Full Content Container --- 
+        .panel-full-content {
+             display: none; // Hidden by default
+             // Styles for when it becomes visible are below in .is-expanded
+            h3 { // Reuse styles or customize
+                 margin-top: 0;
+                 margin-bottom: 15px; // More space before full content
+                 color: #f9d71c;
+                 font-size: 1.6rem; // Slightly larger title maybe?
+                 font-family: 'Antonio', sans-serif;
+                 transition: color 0.3s ease;
+             }
+             .porta-address { // Style specifically if needed
+                font-style: italic;
+                font-size: 0.9rem;
+                margin-bottom: 0.5em;
+             }
+             // Target the injected content for specific WP styling if needed
+             .content-target {
+                // Reset any potential float issues
+                clear: both;
+                 
+                 // Basic WP content styling overrides (make more specific if needed)
+                img { 
+                     max-width: 100%; // Ensure images don't overflow
+                     height: auto; 
+                     max-height: 20vh; // <<< ADDED max-height constraint
+                     display: block; // Prevent extra space below images
+                     margin: 1em 0; // Add space around images
+                     object-fit: contain; // Use contain to show the whole image within constraints
+                }
+                p {
+                     margin-bottom: 1em;
+                     line-height: 1.6;
+                }
+                a {
+                    color: #f9d71c; /* Match panel links */
+                    text-decoration: underline;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+                 // Add more styles as needed for headings, lists, etc. from WP
+            }
+        }
+    }
+
+    /* View Visibility */
+    .panel-view {
+        display: none; /* Hide views by default */
+        overflow-y: auto; /* Enable vertical scrolling when content overflows */
+        flex-grow: 1; /* Allow view to take up available space */
+        padding-bottom: 15px;
+        position: relative; // Needed for absolute positioning of toggle btn maybe?
+        
+        &.is-active {
+            display: block; /* Show the active view */
+        }
+    }
+
+    /* Style for the secondary images container and images within details view */
+    #panel-details-view .secondary-images {
+        margin-top: 1rem; // Space above the images
+        // Optional: Use flex for layout if needed
+        // display: flex;
+        // flex-direction: column;
+        // align-items: center;
+        img {
+            display: block; // Ensure images are block elements
+            max-width: 90%; // Limit width relative to container
+            height: auto;    // Maintain aspect ratio
+            margin: 10px auto; // Center images horizontally, add vertical spacing
+            border-radius: 4px; // Optional: rounded corners
+            box-shadow: 0 1px 3px rgba(255,255,255,0.2); // Subtle shadow for depth
+        }
+    }
+
+    /* Panel Footer */
+    .panel-footer {
+        display: flex;
+        justify-content: space-around; /* Distribute buttons */
+        padding: 10px 5px;
+        background-color: rgba(20, 20, 20, 0.8); /* Slightly darker footer */
+        border-top: 1px solid #444;
+        flex-shrink: 0; /* Prevent footer from shrinking */
+    }
+
+    /* Footer Buttons */
+    .panel-button { 
+        background-color: transparent;
+        border: none;
+        color: #ccc;
+        padding: 8px 10px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-family: sans-serif; // Or match theme
+        text-transform: uppercase;
+        text-decoration: none; /* For <a> */
+        display: inline-flex; /* For <a> */
+        align-items: center; /* For <a> */
+        transition: color 0.2s ease, background-color 0.2s ease; // Add transition
+
+        &:hover {
+            color: #fff;
+        }
+
+        &.is-active {
+            // Default active button color (can be overridden below)
+            color: #f9d71c; 
+            font-weight: bold;
+        }
+
+        &.directions-button {
+             background-color: #f9d71c; // Default directions bg (Yellow)
+             color: #333;
+             border-radius: 0; // <<< SHARP EDGES
+             padding: 8px 12px;
+             &:hover {
+                background-color: #e7c408;
+                color: #000;
+            }
+             // Default directions styles remain unless overridden below
+        }
+    }
+
+    /* Styles for EXPANDED Panel State */
+    &.is-expanded {
+        max-height: calc(var(--vh, 1vh) * 95); // Allow panel to grow almost full height
+
+        .panel-toggle-btn {
+             // Style changes for button when expanded (optional)
+             // e.g., background-color: ...
+        }
+
+        #panel-details-view.is-active { // Target only the active details view when expanded
+            .panel-preview {
+                 display: none; // Hide preview content
+             }
+            .panel-full-content {
+                 display: block; // Show full content
+             }
+        }
+    }
+
+    /* Dynamic Styling based on Marker Type - Apply to expanded title etc. if needed */
+    &[data-marker-type="sponsored"] {
+        .panel-preview h3,
+        .panel-full-content h3, 
+        .panel-footer .panel-button.is-active {
+            color: #208f95; // Restore color for H3s
+            // Active button color remains default (yellow)
+        }
+        .panel-footer .directions-button {
+            background-color: #208f95; // Teal bg
+            color: #ffffff; // White text for teal bg
+             &:hover { background-color: color.adjust(#208f95, $lightness: -10%); }
+        }
+    }
+    &[data-marker-type="porta"] {
+         .panel-preview h3,
+         .panel-full-content h3, 
+         .panel-footer .panel-button.is-active {
+             color: #ffff00; // Restore color for H3s
+             // Specific active button style for porta:
+             background-color: #ffff00; // Keep yellow background
+             color: #333333; // Keep dark text for this specific case
+        }
+         .panel-footer .directions-button {
+            background-color: #ffff00; // Yellow for porta potty (from SVG)
+            color: #333333; // Dark text for yellow bg
+            &:hover { background-color: color.adjust(#ffff00, $lightness: -10%); }
+        }
+    }
+    &[data-marker-type="info"] {
+         .panel-preview h3,
+         .panel-full-content h3, 
+         .panel-footer .panel-button.is-active {
+            color: #F45050; // Restore color for H3s
+            // Active button color remains default (yellow)
+        }
+         .panel-footer .directions-button {
+            background-color: #F45050; // Red bg
+             color: #ffffff; // White text for red bg
+            &:hover { background-color: color.adjust(#F45050, $lightness: -10%); }
+        }
+    }
+     &[data-marker-type="parking"] {
+         .panel-preview h3,
+         .panel-full-content h3, 
+         .panel-footer .panel-button.is-active {
+            color: #3498db; // Restore color for H3s
+            // Active button color remains default (yellow)
+        }
+          .panel-footer .directions-button {
+            background-color: #3498db;
+            color: #ffffff; // White text for blue bg
+             &:hover { background-color: color.adjust(#3498db, $lightness: -10%); }
+        }
+    }
+    // Style for Sponsored Vendors (uses Teal like regular sponsors)
+    &[data-marker-type="sponsored_vendor"] {
+        .panel-preview h3,
+        .panel-full-content h3, 
+        .panel-footer .panel-button.is-active {
+            color: #208f95; // Teal
+            // Active button color remains default (yellow text)
+        }
+        .panel-footer .directions-button {
+            background-color: #208f95; // Teal bg
+            color: #ffffff; // White text for teal bg
+             &:hover { background-color: color.adjust(#208f95, $lightness: -10%); }
+        }
+    }
+    // Default uses #f9d71c (set above)
+
+    /* Lineup Table Styling (within panel) */
+    .lineup-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px 5px;
+            font-size: 1.2rem;
+        }
+
+        th {
+            color: #f9d71c;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        th:first-child {
+            white-space: nowrap; // Prevent header wrapping
+        }
+
+        td:first-child {
+            width: 75px; // Set fixed small width
+            font-weight: bold;
+            // Style as WHITE block with BLACK text, no wrapping
+            background-color: $white; // White background
+            color: $black;            // Black text
+            white-space: nowrap;   // Prevent time text from wrapping
+            text-align: center; // Center text within the block
+        }
+        
+        // Add padding to performer column for breathing room
+        td:nth-child(2) {
+             padding-left: 1em; 
+        }
+        
+        // Style for the new 'Add to Itinerary' cell and button
+        td:nth-child(3) {
+            text-align: center;
+            vertical-align: middle; // Vertically center the button
+            border: none; // Ensure no borders
+        }
+        
+        .add-to-itinerary-btn {
+            display: inline-block;
+            background-color: $black; // Match time block style
+            color: $white;
+            font-weight: bold;
+            font-size: 1.5rem; // Increased font size for larger '+'
+            line-height: 1.8em; // Adjust line-height to match height for centering
+            text-decoration: none;
+            border: 1px solid $white; // White border
+            width: 1.8em; // Keep fixed size (relative to new font-size)
+            height: 1.8em;
+            text-align: center;
+            transition: background-color 0.2s, color 0.2s;
+            
+            &:hover {
+                background-color: $white;
+                color: $black;
+                border-color: $black;
+            }
+        }
+    }
+
+    /* Optional: Responsive adjustments for smaller screens */
+    @media (max-width: 480px) {
+        // REMOVED .panel-view max-height override, parent now controls overall max height
+        // .panel-view {
+        //     max-height: calc(100vh - 120px);
+        // }
+        
+        // Stack image and text vertically on mobile
+        #panel-details-view.is-active .popup-image-section img {
+             float: none; // Remove float
+             width: 90%; // Example mobile width
+             max-width: 250px; // Max width on mobile
+             max-height: 20vh; // <<< ADDED max-height constraint
+             margin: 0 auto 1rem auto; // Center block, add bottom margin
+             display: block; // Ensure block display when not floated
+             object-fit: cover; // Keep cover for preview image on mobile
+        }
+        // Adjust content section for stacked layout
+        #porch-details-display .panel-view.is-active .content {
+            display: block; // Revert from flow-root
+            // REMOVED max-height override
+            // max-height: calc(100vh - 120px);
+        }
+
+        .panel-footer .panel-button {
+            font-size: 0.8rem;
+            padding: 6px 8px;
+        }
+        .panel-content {
+            padding: 10px 10px 5px 10px;
+        }
+        .close-panel-btn {
+             top: 2px;
+             right: 5px;
+             font-size: 1.6rem;
+        }
+    }
+
+    // Adjust content section for stacked layout
+    #porch-details-display .panel-view.is-active .content {
+        display: block; // Revert from flow-root
+        // REMOVED max-height override
+        // max-height: calc(100vh - 120px);
+    }
+
+    // Styles for full content on mobile (within expanded view)
+    &.is-expanded #panel-details-view.is-active .panel-full-content {
+        // Add any mobile-specific overrides for the full content if needed
+        .content-target {
+            // Example: reduce image margins on mobile
+            img { margin: 0.5em 0; }
+        }
+    }
+
+    .panel-footer .panel-button {
+        // ... existing code ...
+    }
+} 

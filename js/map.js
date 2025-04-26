@@ -8,7 +8,7 @@ async function initMap() {
 	const MIN_ZOOM_OFFSET = 2;
 	const MAX_ZOOM_OFFSET = 3;
 	const MARKER_OFFSET_FACTOR = 0.0002;
-	const POPUP_PAN_PIXEL_OFFSET = 300; // Pixel offset used for panning when popup opens
+	const PANEL_PAN_OFFSET_Y = 0.005; // Adjust this value experimentally for bottom panel panning
 	const DEFAULT_FALLBACK_IMAGE_URL = "https://towerporchfest.org/wp-content/uploads/2025/01/Untitled-1803-x-670-px1.png";
 	// --- END: Constants ---
 
@@ -22,6 +22,90 @@ async function initMap() {
 		mapTypeControl: false,
 		fullscreenControl: false,
 	})
+
+	// Get header height and apply map padding
+	const headerElement = document.querySelector('.banner-header-map'); // Use the correct selector for your header
+	const fallbackHeaderHeight = 60; // Use a fallback height
+	let headerHeight = fallbackHeaderHeight;
+	if (headerElement) {
+		// Use ResizeObserver to handle dynamic header height changes (optional but robust)
+		const resizeObserver = new ResizeObserver(entries => {
+			for (let entry of entries) {
+				const currentHeight = entry.contentRect.height;
+				if (currentHeight !== headerHeight) {
+					headerHeight = currentHeight;
+					map.setOptions({ padding: { top: headerHeight, bottom: 0, left: 0, right: 0 } });
+					console.log('Setting map top padding (observer):', headerHeight); // Log observer update
+					// Optional: Adjust fitBounds padding too if needed dynamically
+				}
+			}
+		});
+		resizeObserver.observe(headerElement);
+		headerHeight = headerElement.offsetHeight; // Set initial height
+	} else {
+		console.warn('Map header element not found, using fallback height for padding.');
+	}
+	map.setOptions({ padding: { top: headerHeight, bottom: 0, left: 0, right: 0 } });
+	console.log('Setting map top padding (initial):', headerHeight); // Log initial set
+
+	// --- START: Panel References and Logic ---
+	const detailsPanel = document.getElementById('porch-details-display');
+	const panelContent = detailsPanel?.querySelector('.panel-content');
+	const panelFooter = detailsPanel?.querySelector('.panel-footer');
+	const panelCloseBtn = detailsPanel?.querySelector('.close-panel-btn');
+
+	function showPanel() {
+		if (detailsPanel) detailsPanel.classList.add('is-visible');
+	}
+
+	function hidePanel() {
+		if (detailsPanel) detailsPanel.classList.remove('is-visible');
+	}
+
+	panelCloseBtn?.addEventListener('click', hidePanel);
+
+	function setActiveView(viewId) {
+		if (!panelContent) return;
+		panelContent.querySelectorAll('.panel-view').forEach(view => {
+			view.classList.toggle('is-active', view.id === viewId);
+		});
+		panelFooter?.querySelectorAll('.panel-button').forEach(button => {
+			button.classList.toggle('is-active', button.dataset.viewTarget === viewId);
+		});
+	}
+	// --- END: Panel References and Logic ---
+
+	// --- START: Helper Functions --- 
+	/**
+	 * Converts time string (e.g., "2:00 pm") to 24-hour format string "HHMM" (e.g., "1400").
+	 * Returns empty string if format is invalid.
+	 */
+	function timeTo24HourFormat(timeStr) {
+		if (!timeStr) return '';
+		const timeLower = timeStr.toLowerCase().trim();
+		const match = timeLower.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/);
+		if (!match) return ''; // Invalid format
+
+		let hours = parseInt(match[1], 10);
+		const minutes = parseInt(match[2], 10);
+		const modifier = match[3];
+
+		if (isNaN(hours) || isNaN(minutes) || hours < 1 || hours > 12 || minutes < 0 || minutes > 59) {
+			return ''; // Invalid time values
+		}
+
+		if (modifier === 'pm' && hours !== 12) {
+			hours += 12;
+		} else if (modifier === 'am' && hours === 12) {
+			hours = 0; // Midnight case
+		}
+
+		const hoursStr = hours.toString().padStart(2, '0');
+		const minutesStr = minutes.toString().padStart(2, '0');
+		
+		return `${hoursStr}${minutesStr}`;
+	}
+	// --- END: Helper Functions ---
 
 	const trolleyPath = new google.maps.Polyline({
 		path: [
@@ -56,63 +140,6 @@ async function initMap() {
 		strokeWeight: 12
 	})
 	
-	class Popup extends google.maps.OverlayView {
-		position
-		containerDiv
-		constructor(position, content) {
-			super()
-			content.classList.add("popup-bubble")
-
-			// This zero-height div is positioned at the top of the bubble.
-			const bubbleAnchor = document.createElement("div")
-
-			bubbleAnchor.classList.add("popup-bubble-anchor")
-			bubbleAnchor.appendChild(content)
-			// This zero-height div is positioned at the bottom of the tip.
-			this.containerDiv = document.createElement("div")
-			this.containerDiv.classList.add("popup-container")
-			this.containerDiv.appendChild(bubbleAnchor)
-			// Optionally stop clicks, etc., from bubbling up to the map.
-			Popup.preventMapHitsAndGesturesFrom(this.containerDiv)
-		}
-		/** Called when the popup is added to the map. */
-		onAdd() {
-			this.getPanes().floatPane.appendChild(this.containerDiv)
-		}
-		/** Called when the popup is removed from the map. */
-		onRemove() {
-			if (this.containerDiv.parentElement) {
-				this.containerDiv.parentElement.removeChild(this.containerDiv)
-			}
-		}
-		/** Called each frame when the popup needs to draw itself. */
-		draw() {
-			const divPosition = this.getProjection().fromLatLngToDivPixel(
-				this.position,
-			)
-			// Hide the popup when it is far out of view.
-			const display =
-				Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
-					? "block"
-					: "none"
-			if (display === "block") {
-				this.containerDiv.style.left = divPosition.x + "px"
-				this.containerDiv.style.top = divPosition.y + "px"
-			}
-			if (this.containerDiv.style.display !== display) {
-				this.containerDiv.style.display = display;
-			}
-		}
-	}
-
-	const contentDiv = document.createElement("div");
-	contentDiv.id = "content";
-
-	const popup = new Popup(
-		new google.maps.LatLng(INITIAL_CENTER.lat, INITIAL_CENTER.lng),
-		contentDiv,
-	)
-
 	/**
 	 * Defines all marker categories and their associated label/icon.
 	 * Source of truth for:
@@ -174,7 +201,6 @@ async function initMap() {
 	async function buildMarkers(formData) {
 		let fPorches = []
 		if (markerCluster) markerCluster.clearMarkers()
-		popup.setMap(null)
 		allMarkers.forEach(marker => marker.marker.setMap(null))
 		if (formData) {
 			if(formData.show_bus){
@@ -263,43 +289,103 @@ async function initMap() {
 				content: glyph,
 				zIndex,
 			})
+
+			// --- Generate Panel Content --- 
 			const imgurl = porch.img ? porch.img : DEFAULT_FALLBACK_IMAGE_URL;
-
-			let lineup = ``
+			let lineupHTML = ``;
 			if (porch.acf.performer_lineup) {
-				porch.acf.performer_lineup.forEach((performer, i) => {
-					let highlight = "initial"
-					if (matches.includes(performer.performer.post_title)) {
-						highlight = "#ffb6c1"
-					}
-					lineup += `<tr><td>${performer.start_time}</td><td style="background-color: ${highlight}"><a href="/performer/${performer.performer.post_name}">${performer.performer.post_title}</a></td></tr>`
-				})
-			}
-			if (porch.acf.has_food) {
-				lineup += `<tr><td>Vendor</td><td>${porch.acf.food_vendor.food_name}</td></tr>`
-			}
-			if (lineup) {
-				lineup = `<div class="lineup"><table class="lineup-table"><tbody><tr><th>START TIME</th><th>PERFORMER</th></tr>${lineup}</tbody></table></div>`
-			}
+				let tableRows = '';
+				porch.acf.performer_lineup.forEach((performer) => {
+					let highlightStyle = matches.includes(performer.performer.post_title) ? ' style="background-color: #ffb6c1"' : ''; // Keep highlight logic if needed
+					
+					// --- Generate Planner URL ---
+					let planUrl = '#'; // Default if data missing
+					const performerSlug = performer.performer?.post_name;
+					const porchSlug = porch.porch?.post_name;
+					const startTime24h = timeTo24HourFormat(performer.start_time);
 
-			let portaAddress = ``
-			if (porch.acf.porta_potty) portaAddress = `<p>${porch.acf.porch_address}</p>`
+					if (performerSlug && porchSlug && startTime24h) {
+						const viewSlug = `${performerSlug}-at-${porchSlug}-${startTime24h}`;
+						const callbackUrl = `${window.location.origin}/map/#porch-${porchSlug}`;
+						const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+						planUrl = `https://plan.towerporchfest.org/?viewSlugs=${viewSlug}&callbackUrl=${encodedCallbackUrl}`;
+					} else {
+						console.warn('Missing data for planner link:', { performerSlug, porchSlug, startTime: performer.start_time });
+					}
+					// --- End Generate Planner URL ---
+
+					tableRows += `<tr>
+						<td>${performer.start_time}</td>
+						<td${highlightStyle}><a href="/performer/${performer.performer.post_name}">${performer.performer.post_title}</a></td>
+						<td><a href="${planUrl}" class="add-to-itinerary-btn" target="_blank" title="Add to Plan Your Day">+</a></td>
+					</tr>`;
+				});
+				if (porch.acf.has_food && porch.acf.food_vendor?.food_name) {
+					tableRows += `<tr><td>Vendor</td><td>${porch.acf.food_vendor.food_name}</td><td></td></tr>`; // Add empty cell for consistency
+				}
+				if(tableRows) {
+					lineupHTML = `<div class="lineup"><table class="lineup-table"><thead><tr><th>Start Time</th><th>Performer</th><th>Add to Itinerary</th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
+				}
+			}
+			let portaAddress = porch.acf.porta_potty ? `<p>${porch.acf.porch_address}</p>` : '';
+
+			const detailsViewHTML = `
+				<div class="panel-view is-active" id="panel-details-view" data-marker-type="${markerType}">
+					<h3><a href="${porch.link}" target="_blank">${porch.porch.post_title || 'Porch'}</a></h3> 
+					<div class="popup-image-section">
+						<img src="${imgurl}" alt="Image for ${porch.porch.post_title || 'Porch'}">
+					</div>
+					<div class="content">
+						${portaAddress}
+						<p>${porch.porch.post_content || ''}</p>
+					</div>
+				</div>
+			`;
+
+			const lineupViewHTML = `
+				<div class="panel-view" id="panel-lineup-view" data-marker-type="${markerType}">
+					<h3>Lineup</h3>
+					${lineupHTML || '<p>No lineup information available.</p>'}
+				</div>
+			`;
+
+			const footerButtonsHTML = `
+				<button class="panel-button is-active" data-view-target="panel-details-view">Details</button>
+				<button class="panel-button" data-view-target="panel-lineup-view">Lineup</button>
+				<a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank" class="panel-button directions-button">Directions</a>
+			`;
+			// --- End Generate Panel Content ---
 
 			marker.addListener("gmp-click", () => {
-				popup.position = new google.maps.LatLng(lat, lng)
-				contentDiv.innerHTML = `<div class="inner-container"><a href="${porch.link}"><h3>${porch.porch.post_title}</h3></a><img src="${imgurl}" alt="Default"><div class="header"><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking" target="_blank"><button>Get Directions!</button><a/></div>${lineup}<div class="content">${portaAddress}<p>${porch.porch.post_content}</p></div></div>`
-				const close = document.createElement("i")
-				close.classList.add("fas", "fa-times-circle", "popup-close")
-				contentDiv.appendChild(close)
-				popup.setMap(map)
-				close.addEventListener("click", () => {
-					popup.setMap(null)
-				})
-				const newCenter = {
-					lat: popup.position.lat() + POPUP_PAN_PIXEL_OFFSET / Math.pow(2, map.getZoom()),
-					lng: popup.position.lng(),
+				if (!detailsPanel || !panelContent || !panelFooter) return; // Safety check
+
+				// Set panel theme based on marker type
+				detailsPanel.dataset.markerType = markerType;
+
+				// Inject content
+				panelContent.innerHTML = detailsViewHTML + lineupViewHTML;
+				panelFooter.innerHTML = footerButtonsHTML;
+
+				// Add listeners to NEW footer buttons
+				panelFooter.querySelectorAll('.panel-button[data-view-target]').forEach(button => {
+					button.addEventListener('click', (e) => {
+						setActiveView(e.target.dataset.viewTarget);
+					});
+				});
+
+				// Show panel
+				showPanel();
+
+				// Pan map - Adjust offset for bottom panel
+				const mapZoom = map.getZoom();
+				if(mapZoom) { 
+					// Pan slightly *up* to keep marker visible above the panel
+					// const newCenterLat = lat - PANEL_PAN_OFFSET_Y / Math.pow(2, mapZoom);
+					// Simpler pan for now, rely on map padding or adjust offset later
+					map.panTo({ lat, lng }); 
+				} else {
+					map.panTo({ lat, lng }); 
 				}
-				map.panTo(newCenter)
 			})
 			return {
 				marker,
@@ -339,7 +425,7 @@ async function initMap() {
 				const div = document.createElement("div");
 				div.className = "custom-cluster";
 				div.textContent = count;
-		
+			
 				return new google.maps.marker.AdvancedMarkerElement({
 					position,
 					content: div,
@@ -357,7 +443,7 @@ async function initMap() {
 	buildLegend()
 
 	map.addListener("click", () => {
-		popup.setMap(null)
+		hidePanel(); // Hide panel when clicking map background
 	})
 
 	const form = document.getElementById("map_filter")

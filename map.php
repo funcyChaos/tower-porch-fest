@@ -78,6 +78,19 @@
 	
 	<div id="map"></div>
 	<div id="map-legend"></div>
+
+	<!-- New Porch Details Panel Structure -->
+	<div id="porch-details-display" class=""> <!-- Start hidden (no .is-visible class) -->
+		<button class="close-panel-btn" aria-label="Close details panel">&times;</button>
+		<div class="panel-content">
+			<!-- Views (Details, Lineup) will be injected here by JS -->
+		</div>
+		<div class="panel-footer">
+			<!-- Tab buttons (Details, Lineup) and Directions link will be injected here by JS -->
+		</div>
+	</div>
+	<!-- End Porch Details Panel -->
+
 </div>
 
 <?php get_footer("map");?>
